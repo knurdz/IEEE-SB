@@ -17,10 +17,15 @@ export default function EventsPage() {
 
       {/* Hero Separator (Header Line) */}
       <div className="w-full flex justify-center py-6 bg-ieee-bg relative z-10">
-        <div className="w-full max-w-[85%] sm:max-w-md h-[2px] bg-gradient-to-r from-transparent via-[#00A3FF] to-transparent shadow-[0_0_20px_rgba(0,163,255,0.8)]" />
+        <div className="w-full max-w-[90%] sm:max-w-5xl h-[2px] bg-gradient-to-r from-transparent via-[#00A3FF] to-transparent shadow-[0_0_25px_rgba(0,163,255,0.8)]" />
       </div>
 
       <Roadmap />
+
+      {/* Roadmap Separator */}
+      <div className="w-full flex justify-center py-8 bg-ieee-bg relative z-10 overflow-hidden">
+        <div className="w-full max-w-[90%] sm:max-w-5xl h-[2px] bg-gradient-to-r from-transparent via-[#00A3FF] to-transparent shadow-[0_0_25px_rgba(0,163,255,0.8)]" />
+      </div>
 
       <ClosingCTA />
 
