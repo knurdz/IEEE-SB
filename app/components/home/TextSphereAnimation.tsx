@@ -11,7 +11,11 @@ export default function TextSphereAnimation() {
     if (initialized.current) return;
     initialized.current = true;
 
-    // Preload earth texture image from local assets
+    // [SCENARIO A FIX: SOLID CONTINENTS]
+    // To remove the "holes" caused by inland lakes, you must replace the image below.
+    // The current 'earth_specular_2048.jpg' contains detailed rivers/lakes that are read as empty space.
+    // Replace it with a solid landmass equirectangular map (e.g., download a basic 2048x1024 
+    // black/white vector world map without lakes, save it to /public, and update the URL below).
     const earthImage = new Image();
     earthImage.src = '/earth_specular_2048.jpg';
 
@@ -381,6 +385,7 @@ export default function TextSphereAnimation() {
         const material = new THREE.MeshBasicMaterial({
           map: earthTexture,
           transparent: true,
+          side: THREE.FrontSide, // Explicitly cull the backside to prevent any dot bleed-through
           opacity: 0,
           color: 0xffffff,
         });
@@ -401,7 +406,7 @@ export default function TextSphereAnimation() {
           return { x, y, z };
         };
 
-        const pinColor = 0x0A2463;
+        const pinColor = 0x0A2540;
         const pinMaterial = new THREE.MeshBasicMaterial({ color: pinColor, transparent: true });
 
         function create3DPinMesh(colorMat: any) {
@@ -477,7 +482,7 @@ export default function TextSphereAnimation() {
             lineGeom.vertices.push(pinTopPos.clone());
             lineGeom.vertices.push(labelPos.clone());
             const lineMat = new THREE.LineBasicMaterial({
-              color: 0x0056B3,
+              color: 0x0A2540,
               transparent: true,
               opacity: 0.8,
               linewidth: 1,
@@ -489,7 +494,7 @@ export default function TextSphereAnimation() {
             // Small dot at the bend / connection point on pin top
             const dotGeom = new THREE.SphereGeometry(1.5, 8, 8);
             const dotMat = new THREE.MeshBasicMaterial({
-              color: 0x0056B3,
+              color: 0x0A2540,
               transparent: true,
             });
             const dot = new THREE.Mesh(dotGeom, dotMat);
@@ -521,24 +526,101 @@ export default function TextSphereAnimation() {
 
       // Use the preloaded earth image
       const processEarthTexture = () => {
-        ctx.drawImage(earthImage, 0, 0, canvas.width, canvas.height);
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        // ── Offscreen mask: very gentle blur to suppress inland lake holes ──
+        // CRITICAL: blur must be small enough not to wash out small islands.
+        // At 2048×1024px, Sri Lanka is only ~20px wide — a 3px blur averages
+        // its pixels with surrounding bright ocean and erases it entirely.
+        // 1.5px blur is sufficient to close river/lake pixels (1–3px bright spots)
+        // without smearing small-island interiors into the ocean brightness range.
+        const maskCanvas = document.createElement('canvas');
+        maskCanvas.width = canvas.width;
+        maskCanvas.height = canvas.height;
+        const mCtx = maskCanvas.getContext('2d')!;
+        mCtx.filter = 'blur(1.5px)';
+        mCtx.drawImage(earthImage, 0, 0, canvas.width, canvas.height);
+        mCtx.filter = 'none';
 
-        // Clear to fully transparent — only the Electric Blue dots will be drawn
+        // ── Explicitly stamp Sri Lanka onto the mask ──
+        // At 2048×1024 Sri Lanka is only ~12×23px, easily washed out by blur.
+        // We paint a black polygon at its equirectangular position, enlarged ~35%
+        // around its centroid so the dot sampler always covers the island fully.
+        const toMapXY = (lat: number, lon: number) => ({
+          x: ((lon + 180) / 360) * maskCanvas.width,
+          y: ((90 - lat) / 180) * maskCanvas.height,
+        });
+        const slCentroid = toMapXY(7.85, 80.77);
+        // Accurately plotted high-resolution Sri Lanka coastline control points (lat, lon)
+        const slOutline: [number, number][] = [
+          [9.83, 80.23], // Point Pedro (North tip)
+          [9.50, 80.45], // Chundikkulam
+          [9.27, 80.81], // Mullaitivu
+          [8.85, 81.00], // Kuchchaveli
+          [8.58, 81.23], // Trincomalee
+          [8.23, 81.43], // Kathiraveli
+          [7.91, 81.55], // Valaichchenai
+          [7.72, 81.70], // Batticaloa
+          [7.42, 81.83], // Kalmunai
+          [7.02, 81.87], // Sangamankanda Point (East tip)
+          [6.87, 81.83], // Pottuvil
+          [6.37, 81.52], // Yala
+          [6.12, 81.12], // Hambantota
+          [5.92, 80.59], // Dondra Head (South tip)
+          [6.03, 80.22], // Galle
+          [6.42, 79.99], // Bentota
+          [6.93, 79.84], // Colombo
+          [7.21, 79.83], // Negombo
+          [7.58, 79.79], // Chilaw
+          [8.03, 79.70], // Kalpitiya
+          [8.35, 79.80], // Wilpattu
+          [8.78, 79.92], // Silavathurai
+          [8.98, 79.90], // Mannar coast
+          [9.30, 80.02], // Illuppaikkadavai
+          [9.60, 80.03], // Pooneryn
+          [9.74, 79.88], // Karainagar
+          [9.81, 80.04], // Kankesanthurai
+        ];
+        const scaleFactor = 1.6; // 60% enlargement — gives enough internal area to render multiple dot layers
+        const slPts = slOutline.map(([lat, lon]) => {
+          const p = toMapXY(lat, lon);
+          return {
+            x: slCentroid.x + (p.x - slCentroid.x) * scaleFactor,
+            y: slCentroid.y + (p.y - slCentroid.y) * scaleFactor,
+          };
+        });
+        mCtx.fillStyle = '#000000';
+        mCtx.beginPath();
+        mCtx.moveTo(slPts[0].x, slPts[0].y);
+        for (let k = 1; k < slPts.length; k++) mCtx.lineTo(slPts[k].x, slPts[k].y);
+        mCtx.closePath();
+        mCtx.fill();
+
+        const maskData = mCtx.getImageData(0, 0, canvas.width, canvas.height);
+
+        // ── Main canvas: transparent background to blend cleanly with light theme ──
+        // Ensure the base sphere is invisible, rendering only the hexagon/dots.
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        ctx.fillStyle = '#0052FF';
+        ctx.fillStyle = '#0A2540';
 
-        const dotSize = 1.2;
-        const dotSpacing = 4;
+        // ── Restored original values ──
+        // dotSize 1.6  →  diameter 3.2px
+        // dotSpacing 3.0  →  gap between dot edges ≈ 3.0 − 3.2 = −0.2px
+        // (dots just barely kiss — classic "dotted globe" look with thin hairline gaps)
+        // The original brightness < 45 threshold on an unblurred image; here we use
+        // < 60 on the lightly-blurred mask to catch lake edges without over-expanding land.
+        const dotSize = 1.6;
+        const dotSpacing = 3.0;
 
         for (let y = 0; y < canvas.height; y += dotSpacing) {
           for (let x = 0; x < canvas.width; x += dotSpacing) {
-            const i = (y * canvas.width + x) * 4;
+            const i = (Math.floor(y) * canvas.width + Math.floor(x)) * 4;
             const brightness =
-              (imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2]) / 3;
+              (maskData.data[i] + maskData.data[i + 1] + maskData.data[i + 2]) / 3;
 
-            if (brightness < 80) {
+            // Threshold 75: high enough to catch lake-edge pixels (brightness ~60–75
+            // after the gentle 1.5px blur) while remaining well below ocean (>180)
+            // and below the blurred coastline of small islands like Sri Lanka (~80–100).
+            if (brightness < 75) {
               ctx.beginPath();
               ctx.arc(x, y, dotSize, 0, Math.PI * 2);
               ctx.fill();
@@ -653,18 +735,35 @@ export default function TextSphereAnimation() {
         });
 
         document.body.style.cursor = 'pointer';
+        let pendingReverse: ReturnType<typeof setTimeout> | null = null;
+
         window.addEventListener('click', () => {
+          // Cancel any pending delayed reverse (prevents stale callbacks
+          // from firing if the user clicks again before 300ms is up)
+          if (pendingReverse !== null) {
+            clearTimeout(pendingReverse);
+            pendingReverse = null;
+          }
+
           if (tl.reversed()) {
+            // Reverse is complete or in progress — play forward from current position
             tl.reversed(false);
             TweenMax.to(idleSpeed, 1.5, { value: 0, ease: Power1.easeOut });
-          } else {
-            // Immediately fade out subText
+
+            // Restore visibility of inner children so the timeline parent tween can reveal them properly
             if (subText) {
-              TweenMax.to(subText, 0.3, { opacity: 0, ease: Power1.easeOut });
+              TweenMax.to(subText.querySelectorAll('p'), 0.3, { opacity: 1, ease: Power1.easeOut });
             }
-            // 400ms delay, then start the main reverse
-            setTimeout(() => {
-              tl.time(4.5);
+          } else {
+            // Immediately fade out subText children instead of the parent container
+            // This prevents GSAP from permanently killing the main timeline's tween!
+            if (subText) {
+              TweenMax.to(subText.querySelectorAll('p'), 0.3, { opacity: 0, ease: Power1.easeOut });
+            }
+            // Short delay to let subText flex, then reverse from CURRENT position
+            // (no tl.time() call — GSAP reverses from wherever the playhead is)
+            pendingReverse = setTimeout(() => {
+              pendingReverse = null;
               tl.reversed(true);
               const durationLeft = Math.max(tl.time(), 0.1);
               TweenMax.to(idleSpeed, durationLeft, { value: 0.003, ease: Power1.easeIn });
@@ -720,12 +819,19 @@ export default function TextSphereAnimation() {
           font-family: 'JetBrains Mono', monospace;
         }
 
+        /* ── Soft Glow for WebGL Globe Outline ── */
+        #three-container canvas {
+          filter: none !important;
+        }
+
         /* ── Static typography overrides (animations untouched) ── */
         .hero-tagline-1 {
           font-family: 'Inter', system-ui, -apple-system, sans-serif;
-          font-weight: 700;
-          letter-spacing: 0.15em;
+          font-weight: 800;
+          font-size: 13px;
+          letter-spacing: 0.2em;
           color: #2563EB;
+          margin-bottom: 0.5rem;
           text-shadow: none !important;
           -webkit-text-stroke: 0 !important;
           background: none !important;
@@ -737,8 +843,9 @@ export default function TextSphereAnimation() {
 
         .hero-tagline-2 {
           font-family: 'Inter', system-ui, -apple-system, sans-serif;
-          font-weight: 500;
-          letter-spacing: 0.15em;
+          font-weight: 300;
+          font-size: 18px;
+          letter-spacing: 0.05em;
           color: #475569;
           text-shadow: none !important;
           -webkit-text-stroke: 0 !important;
@@ -764,8 +871,7 @@ export default function TextSphereAnimation() {
         <div
           className="absolute inset-0"
           style={{
-            background:
-              'radial-gradient(circle at center, rgba(10, 36, 99, 0.06) 0%, rgba(0, 86, 179, 0.02) 45%, transparent 70%)',
+            background: 'transparent',
           }}
         />
       </div>
@@ -778,10 +884,10 @@ export default function TextSphereAnimation() {
         id="sub-text"
         className="absolute top-[67%] left-1/2 -translate-x-1/2 text-center z-20 w-full opacity-0 pointer-events-none"
       >
-        <p className="hero-tagline-1 text-xl sm:text-2xl mt-6 mb-2">
+        <p className="hero-tagline-1 mt-6">
           INSPIRED BY PASSION
         </p>
-        <p className="hero-tagline-2 text-xl sm:text-2xl">
+        <p className="hero-tagline-2">
           TO TRANSFORM BEYOND EXCELLENCE.
         </p>
       </div>
