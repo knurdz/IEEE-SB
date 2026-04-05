@@ -202,34 +202,34 @@ export default function AboutSection() {
             gsap.to(mat.uniforms.uOpacity, { value: 0, duration: 1 });
         };
 
-        const observer = new IntersectionObserver((entries) => {
+        const mainObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.target.id === 'about-main') {
-                    if (entry.isIntersecting) {
-                        sectionRef.current?.classList.remove('state-exit');
-                        sectionRef.current?.classList.add('state-enter');
-                        setTimeout(runCounters, 800);
-                        animateIn();
-                    } else {
-                        if (sectionRef.current?.classList.contains('state-enter')) {
-                            sectionRef.current?.classList.remove('state-enter');
-                            sectionRef.current?.classList.add('state-exit');
-                            resetCounters();
-                            animateOut();
-                        }
-                    }
+                if (entry.isIntersecting) {
+                    sectionRef.current?.classList.remove('state-exit');
+                    sectionRef.current?.classList.add('state-enter');
+                    setTimeout(runCounters, 800);
+                    animateIn();
                 } else {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                    } else {
-                        entry.target.classList.remove('is-visible');
+                    if (sectionRef.current?.classList.contains('state-enter')) {
+                        sectionRef.current?.classList.remove('state-enter');
+                        sectionRef.current?.classList.add('state-exit');
+                        resetCounters();
+                        animateOut();
                     }
                 }
             });
         }, { root: null, rootMargin: '0px', threshold: 0.5 });
 
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        document.querySelectorAll('.observer-element').forEach(el => observer.observe(el));
+        const elementObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { root: null, rootMargin: '0px', threshold: 0.15 });
+
+        if (sectionRef.current) mainObserver.observe(sectionRef.current);
+        document.querySelectorAll('.observer-element').forEach(el => elementObserver.observe(el));
 
         return () => {
             cancelAnimationFrame(animationFrameId);
@@ -238,7 +238,8 @@ export default function AboutSection() {
                 container.removeChild(renderer.domElement);
             }
             renderer.dispose();
-            observer.disconnect();
+            mainObserver.disconnect();
+            elementObserver.disconnect();
         };
     }
   }, []);
@@ -279,7 +280,7 @@ export default function AboutSection() {
         @keyframes drift-grid { 0% { transform: translateY(0) translateX(0); } 100% { transform: translateY(30px) translateX(30px); } }
         .scan-line { position: absolute; left: 0; top: 0; width: 100%; height: 2px; background: var(--cyan); box-shadow: 0 0 15px 2px var(--cyan); opacity: 0; z-index: 10; pointer-events: none; will-change: transform, opacity; }
         .state-enter .scan-line { animation: scan-sweep-down 2.5s var(--ease-enter) forwards; }
-        .state-exit .scan-line { animation: scan-sweep-up 1.5s var(--ease-enter) forwards; }
+        .state-exit .scan-line { animation: scan-sweep-up 1.2s linear forwards; }
         @keyframes scan-sweep-down { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.8; } 100% { transform: translateY(100vh); opacity: 0; } }
         @keyframes scan-sweep-up { 0% { transform: translateY(100vh); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.8; } 100% { transform: translateY(0); opacity: 0; } }
         
@@ -296,12 +297,12 @@ export default function AboutSection() {
         @keyframes shimmer-text { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
         
         .state-enter .eyebrow { opacity: 1; transform: translateX(0); transition: opacity 0.6s, transform 0.6s var(--ease-enter); transition-delay: 0.8s; }
-        .state-exit .eyebrow { opacity: 0; transform: translateX(20px); transition: opacity 0.4s, transform 0.4s var(--ease-exit); }
+        .state-exit .eyebrow { opacity: 0; transform: translateX(20px); transition: opacity 0.4s 1.0s, transform 0.4s var(--ease-exit) 1.0s; }
         
         .headline { font-family: var(--font-head); font-size: clamp(1.8rem, 3vw, 2.8rem); line-height: 1.1; font-weight: 700; color: #ffffff; margin: 0; text-transform: uppercase; }
         
         .state-enter :global(.word) { opacity: 1 !important; transform: translateY(0) !important; filter: blur(0) !important; transition: opacity 0.8s, transform 0.8s var(--ease-enter), filter 0.8s ease; }
-        .state-exit :global(.word) { opacity: 0 !important; transform: translateY(-30px) !important; filter: blur(8px) !important; transition: opacity 0.6s, transform 0.6s var(--ease-exit), filter 0.6s ease; }
+        .state-exit :global(.word) { opacity: 0 !important; transform: translateY(-30px) !important; filter: blur(8px) !important; transition: opacity 0.4s 0.7s, transform 0.4s var(--ease-exit) 0.7s, filter 0.4s ease 0.7s; }
         
         .body-wrapper { position: relative; padding-left: 2rem; display: flex; flex-direction: column; gap: 1rem; }
         .body-line { position: absolute; left: 0; top: 0; width: 4px; border-radius: 10px; height: 0; background: var(--cyan); box-shadow: 0 0 10px var(--cyan), 0 0 20px var(--cyan); will-change: height; overflow: hidden; }
@@ -309,17 +310,17 @@ export default function AboutSection() {
         @keyframes shimmer-line-v { 0% { transform: translateY(800px); } 100% { transform: translateY(-100px); } }
         
         .state-enter .body-line { height: 100%; transition: height 1.8s var(--ease-enter) 1.2s; }
-        .state-exit .body-line { height: 0; bottom: 0; top: auto; transition: height 0.6s var(--ease-exit); }
+        .state-exit .body-line { height: 0; bottom: 0; top: auto; transition: height 0.4s var(--ease-exit) 0.5s; }
         
         .body-text-p { font-size: 1.1rem; line-height: 1.7; color: #a0aec0; font-weight: 300; opacity: 0; transform: translateX(-20px); will-change: transform, opacity; font-family: var(--font-body); }
         .state-enter .body-text-p { opacity: 1; transform: translateX(0); transition: opacity 0.8s, transform 0.8s var(--ease-enter); }
-        .state-exit .body-text-p { opacity: 0; transform: translateX(20px); transition: opacity 0.8s, transform 0.8s var(--ease-exit); }
+        .state-exit .body-text-p { opacity: 0; transform: translateX(20px); transition: opacity 0.4s 0.5s, transform 0.4s var(--ease-exit) 0.5s; }
         .body-text-p strong { color: #fff; font-weight: 400; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
         
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 0.5rem; border-top: 1px solid rgba(0, 200, 255, 0.15); padding-top: 2rem; }
         .stat-item { display: flex; flex-direction: column; gap: 0.5rem; border-left: 1px solid transparent; padding-left: 0; cursor: default; opacity: 0; filter: blur(10px); transform: translateY(20px); will-change: transform, opacity, filter, text-shadow; }
         .state-enter .stat-item { opacity: 1; filter: blur(0); transform: translateY(0); transition: opacity 0.8s, filter 0.8s, transform 0.8s var(--ease-enter); }
-        .state-exit .stat-item { opacity: 0; filter: blur(10px); transform: translateY(-20px); transition: opacity 0.5s, filter 0.5s, transform 0.5s var(--ease-exit); }
+        .state-exit .stat-item { opacity: 0; filter: blur(10px); transform: translateY(-20px); transition: opacity 0.4s 0.2s, filter 0.4s 0.2s, transform 0.4s var(--ease-exit) 0.2s; }
         .stat-item:hover { animation: surge 0.4s var(--ease-enter); }
         .stat-item:hover .stat-top { color: var(--cyan); text-shadow: 0 0 20px rgba(0, 200, 255, 0.6); }
         @keyframes surge { 0% { transform: scale(1); } 50% { transform: scale(1.06); } 100% { transform: scale(1); } }
@@ -353,7 +354,7 @@ export default function AboutSection() {
                   <div className="body-wrapper">
                       <div className="body-line"></div>
                       <p className="body-text-p" style={{ transitionDelay: '1.4s' }}>
-                          Since our inception, the <strong>IEEE Student Branch at the University of Moratuwa</strong> has operated as an incubator for next-generation technological leadership. We bridge the gap between academic theory and industry reality, cultivating engineers who don't just participate in the future—they build it. Our branch is recognized globally for executing high-impact solutions, securing international awards, and pioneering precision-driven initiatives across computing, robotics, and electrical systems. We operate with an uncompromising standard, treating every project like a critical mission. Through unwavering team dedication and a network of specialized technical societies, we empower students to deliver world-class innovation that defines the technical edge of Region 10 and beyond.
+                          Being the leading IEEE student branch in Sri Lanka, IEEE student branch of University of Moratuwa provides a major platform in flourishing innovative and creative ideas of the undergraduates. Currently around 650+ subscribers together with an extensive number of fervent volunteers are involved in many aspects. In spite of developing technological and professional skills, it’s vividly concerned about uplifting unity and harmony among the members too. Therefore we as IEEE UOM community believe that it is not only a student branch but also a family hand in hand with togetherness and humanity.
                       </p>
                   </div>
                   <div className="stats-grid">
@@ -406,7 +407,7 @@ export default function AboutSection() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
                   {/* Card 1 */}
                   <div className="group bg-[#070d18] rounded-xl border border-gray-800 p-0 flex flex-col transition-all duration-300 hover:border-cyan-500 hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] relative overflow-hidden">
-                      <div className="w-full h-48 sm:h-56 animate-on-scroll rise-hidden observer-element" style={{ overflow: 'hidden' }}>
+                      <div className="w-full h-80 sm:h-[450px] animate-on-scroll rise-hidden observer-element" style={{ overflow: 'hidden' }}>
                           <img src="/award.jpg" alt="Award Banner" className="w-full h-full object-cover block relative z-10 transform transition-transform duration-500 group-hover:scale-110" />
                       </div>
                       
@@ -421,7 +422,7 @@ export default function AboutSection() {
                   
                   {/* Card 2 */}
                   <div className="group bg-[#070d18] rounded-xl border border-gray-800 p-0 flex flex-col transition-all duration-300 hover:border-cyan-500 hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] relative overflow-hidden">
-                      <div className="w-full h-48 sm:h-56 animate-on-scroll rise-hidden observer-element" style={{ transitionDelay: '100ms', overflow: 'hidden' }}>
+                      <div className="w-full h-80 sm:h-[450px] animate-on-scroll rise-hidden observer-element" style={{ transitionDelay: '100ms', overflow: 'hidden' }}>
                           <img src="/award.jpg" alt="Award Banner" className="w-full h-full object-cover block relative z-10 transform transition-transform duration-500 group-hover:scale-110" />
                       </div>
                       
@@ -436,7 +437,7 @@ export default function AboutSection() {
                   
                   {/* Card 3 */}
                   <div className="group bg-[#070d18] rounded-xl border border-gray-800 p-0 flex flex-col transition-all duration-300 hover:border-cyan-500 hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] relative overflow-hidden">
-                      <div className="w-full h-48 sm:h-56 animate-on-scroll rise-hidden observer-element" style={{ transitionDelay: '200ms', overflow: 'hidden' }}>
+                      <div className="w-full h-80 sm:h-[450px] animate-on-scroll rise-hidden observer-element" style={{ transitionDelay: '200ms', overflow: 'hidden' }}>
                           <img src="/award.jpg" alt="Award Banner" className="w-full h-full object-cover block relative z-10 transform transition-transform duration-500 group-hover:scale-110" />
                       </div>
                       
