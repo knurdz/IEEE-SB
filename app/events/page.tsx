@@ -15,19 +15,20 @@ export default function EventsPage() {
     <main className="bg-ieee-bg min-h-screen text-white font-body selection:bg-ieee-blue selection:text-ieee-bg">
       <EventsHero />
 
-      {/* Separator */}
-      <div className="w-full flex justify-center py-4 bg-ieee-bg relative z-10">
-        <div className="w-full max-w-[95%] 2xl:max-w-[1400px] h-[2px] bg-gradient-to-r from-transparent via-ieee-blue/80 to-transparent shadow-[0_0_15px_rgba(0,163,255,0.4)]" />
+      {/* Hero Separator (Header Line) */}
+      <div className="w-full flex justify-center py-6 bg-ieee-bg relative z-10">
+        <div className="w-full max-w-[85%] sm:max-w-md h-[2px] bg-gradient-to-r from-transparent via-[#00A3FF] to-transparent shadow-[0_0_20px_rgba(0,163,255,0.8)]" />
       </div>
 
       <Roadmap />
 
-      {/* Separator */}
-      <div className="w-full flex justify-center py-4 bg-ieee-bg relative z-10">
-        <div className="w-full max-w-[95%] 2xl:max-w-[1400px] h-[2px] bg-gradient-to-r from-transparent via-ieee-blue/80 to-transparent shadow-[0_0_15px_rgba(0,163,255,0.4)]" />
-      </div>
-
       <ClosingCTA />
+
+      {/* Footer Separator */}
+      <div className="w-full flex justify-center py-8 bg-ieee-bg relative z-10 overflow-hidden">
+        <div className="w-full max-w-[95%] 2xl:max-w-[1400px] h-[1px] bg-gradient-to-r from-transparent via-ieee-blue/40 to-transparent shadow-[0_0_15px_rgba(0,163,255,0.2)]" />
+      </div>
+      
       <Footer />
     </main>
   );

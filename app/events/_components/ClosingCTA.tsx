@@ -26,7 +26,7 @@ export default function ClosingCTA() {
         events and workshops.
       </p>
 
-      <button className="bg-ieee-blue hover:bg-ieee-cyan text-ieee-bg font-display font-bold py-3.5 px-8 rounded-lg transition-all transform hover:scale-[1.03] focus:outline-none focus:ring-4 focus:ring-ieee-blue/50">
+      <button className="bg-[#00A3FF] hover:bg-[#00E0FF] text-white font-display font-bold py-3.5 px-10 rounded-lg transition-all transform hover:scale-[1.05] shadow-[0_0_30px_rgba(0,163,255,0.4)] hover:shadow-[0_0_40px_rgba(0,163,255,0.6)] focus:outline-none focus:ring-4 focus:ring-ieee-blue/50">
         Join IEEE UOM
       </button>
 
