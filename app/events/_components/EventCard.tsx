@@ -81,12 +81,12 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
   return (
     <motion.div
       ref={ref}
-      className="relative w-full bg-ieee-surface border border-ieee-border rounded-xl shadow-lg flex flex-col md:grid md:grid-cols-12 overflow-hidden"
+      className="relative w-full bg-ieee-surface/80 backdrop-blur-sm border border-ieee-blue/20 rounded-xl shadow-[0_0_20px_rgba(0,163,255,0.1)] flex flex-col md:grid md:grid-cols-12 overflow-hidden"
       initial="hidden"
       animate={inView ? 'visible' : 'hidden'}
       variants={finalAnim}
       transition={{ duration: 0.8, ease: [0.34, 1.56, 0.64, 1] }}
-      whileHover={{ y: -6, boxShadow: '0 0 0 2px #00A3FF, 0 0 45px rgba(0,163,255,0.45)' }}
+      whileHover={{ y: -6, boxShadow: '0 0 0 1px #00A3FF, 0 0 50px rgba(0,163,255,0.4)' }}
     >
       {/* Image Carousel */}
       {!imgFailed && images.length > 0 && (
