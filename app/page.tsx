@@ -1,3 +1,5 @@
+import Footer from './components/Footer';
+import StrategicPartnerSection from './components/StrategicPartnerSection';
 import TextSphereAnimation from './components/TextSphereAnimation';
 import AboutSection from './components/AboutSection';
 import EventsSection from './components/EventsSection';
@@ -7,7 +9,9 @@ export default function Home() {
     <main className="min-h-screen" id="home">
       <TextSphereAnimation />
       <AboutSection />
+      <StrategicPartnerSection />
       <EventsSection />
+      <Footer />
     </main>
   );
 }
