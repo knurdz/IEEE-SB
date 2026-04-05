@@ -199,9 +199,14 @@ export default function TextSphereAnimation() {
           }
         }
 
-        const material = new THREE.BAS.PhongAnimationMaterial(
+        // Use BasicAnimationMaterial (lights: false) so the text colour is
+        // always the flat diffuse #0052FF regardless of lighting angle or
+        // how much the sphere group has rotated. PhongAnimationMaterial was
+        // recomputing Phong shading every frame, making faces look near-black
+        // when the directional light hit them at a glancing angle — that is
+        // what caused the continuous black-to-blue flicker.
+        const material = new THREE.BAS.BasicAnimationMaterial(
           {
-            shading: THREE.FlatShading,
             side: THREE.DoubleSide,
             transparent: true,
             uniforms: {
@@ -231,7 +236,7 @@ export default function TextSphereAnimation() {
               'transformed = rotateVector(tQuat, transformed);',
             ],
           },
-          { diffuse: 0x444444, specular: 0xcccccc, shininess: 4 }
+          { diffuse: 0x0A2540 }
         );
 
         THREE.Mesh.call(this, bufferGeometry, material);
@@ -276,28 +281,28 @@ export default function TextSphereAnimation() {
         const THREE = (window as any).THREE;
 
         const ieeeGeometry = generateTextGeometry('IEEE', {
-          size: 90,
-          height: 8,
+          size: 140,
+          height: 0.1,
           curveSegments: 24,
-          bevelSize: 1.5,
-          bevelThickness: 1.5,
-          bevelEnabled: true,
+          bevelSize: 0,
+          bevelThickness: 0,
+          bevelEnabled: false,
           anchor: { x: 0.5, y: 0.5, z: 0.0 },
         });
 
-        ieeeGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, 50, 0));
+        ieeeGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, 70, 0));
 
         const uniGeometry = generateTextGeometry('UNIVERSITY OF MORATUWA', {
-          size: 18,
-          height: 2,
+          size: 30,
+          height: 0.1,
           curveSegments: 24,
-          bevelSize: 0.5,
-          bevelThickness: 0.5,
-          bevelEnabled: true,
+          bevelSize: 0,
+          bevelThickness: 0,
+          bevelEnabled: false,
           anchor: { x: 0.5, y: 0.5, z: 0.0 },
         });
 
-        uniGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, -35, 0));
+        uniGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, -60, 0));
 
         ieeeGeometry.merge(uniGeometry);
         ieeeGeometry.computeBoundingBox();
@@ -376,7 +381,7 @@ export default function TextSphereAnimation() {
         const material = new THREE.MeshBasicMaterial({
           map: earthTexture,
           transparent: true,
-          opacity: 1,
+          opacity: 0,
           color: 0xffffff,
         });
         const earth = new THREE.Mesh(geometry, material);
@@ -396,7 +401,7 @@ export default function TextSphereAnimation() {
           return { x, y, z };
         };
 
-        const pinColor = 0xffffff;
+        const pinColor = 0x0A2463;
         const pinMaterial = new THREE.MeshBasicMaterial({ color: pinColor, transparent: true });
 
         function create3DPinMesh(colorMat: any) {
@@ -472,9 +477,9 @@ export default function TextSphereAnimation() {
             lineGeom.vertices.push(pinTopPos.clone());
             lineGeom.vertices.push(labelPos.clone());
             const lineMat = new THREE.LineBasicMaterial({
-              color: 0x60a5fa,
+              color: 0x0056B3,
               transparent: true,
-              opacity: 0.6,
+              opacity: 0.8,
               linewidth: 1,
             });
             const connectorLine = new THREE.Line(lineGeom, lineMat);
@@ -484,7 +489,7 @@ export default function TextSphereAnimation() {
             // Small dot at the bend / connection point on pin top
             const dotGeom = new THREE.SphereGeometry(1.5, 8, 8);
             const dotMat = new THREE.MeshBasicMaterial({
-              color: 0x60a5fa,
+              color: 0x0056B3,
               transparent: true,
             });
             const dot = new THREE.Mesh(dotGeom, dotMat);
@@ -511,7 +516,7 @@ export default function TextSphereAnimation() {
       canvas.height = 1024;
       const ctx = canvas.getContext('2d')!;
 
-      ctx.fillStyle = '#000000';
+      ctx.fillStyle = '#F8F9FA';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Use the preloaded earth image
@@ -519,10 +524,10 @@ export default function TextSphereAnimation() {
         ctx.drawImage(earthImage, 0, 0, canvas.width, canvas.height);
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-        ctx.fillStyle = '#060e1a';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // Clear to fully transparent — only the Electric Blue dots will be drawn
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        ctx.fillStyle = '#60a5fa';
+        ctx.fillStyle = '#0052FF';
 
         const dotSize = 1.2;
         const dotSpacing = 4;
@@ -533,7 +538,7 @@ export default function TextSphereAnimation() {
             const brightness =
               (imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2]) / 3;
 
-            if (brightness < 120) {
+            if (brightness < 80) {
               ctx.beginPath();
               ctx.arc(x, y, dotSize, 0, Math.PI * 2);
               ctx.fill();
@@ -591,7 +596,6 @@ export default function TextSphereAnimation() {
         const bgGlobe = document.getElementById('bg-globe');
         const bgText = document.getElementById('bg-text');
         const subText = document.getElementById('sub-text');
-        const bgSlideshow = document.getElementById('bg-slideshow');
 
         tl.fromTo(
           sphereGroup.rotation,
@@ -634,10 +638,6 @@ export default function TextSphereAnimation() {
           tl.fromTo(bgText, 3, { opacity: 0 }, { opacity: 1, ease: Power1.easeInOut }, 1.5);
         }
 
-        if (bgSlideshow) {
-          tl.fromTo(bgSlideshow, 3, { opacity: 0 }, { opacity: 1, ease: Power1.easeInOut }, 1.5);
-        }
-
         if (subText) {
           tl.fromTo(subText, 2, { opacity: 0 }, { opacity: 1, ease: Power1.easeInOut }, 4.5);
         }
@@ -650,51 +650,45 @@ export default function TextSphereAnimation() {
           if (bgGlobe) bgGlobe.style.opacity = '1';
           if (bgText) bgText.style.opacity = '0';
           if (subText) subText.style.opacity = '0';
-          if (bgSlideshow) bgSlideshow.style.opacity = '0';
         });
 
         document.body.style.cursor = 'pointer';
         window.addEventListener('click', () => {
-  if (tl.reversed()) {
-          tl.reversed(false);
-          TweenMax.to(idleSpeed, 1.5, { value: 0, ease: Power1.easeOut });
-        } else {
-          // Immediately fade out subText
-          if (subText) {
-            TweenMax.to(subText, 0.3, { opacity: 0, ease: Power1.easeOut });
+          if (tl.reversed()) {
+            tl.reversed(false);
+            TweenMax.to(idleSpeed, 1.5, { value: 0, ease: Power1.easeOut });
+          } else {
+            // Immediately fade out subText
+            if (subText) {
+              TweenMax.to(subText, 0.3, { opacity: 0, ease: Power1.easeOut });
+            }
+            // 400ms delay, then start the main reverse
+            setTimeout(() => {
+              tl.time(4.5);
+              tl.reversed(true);
+              const durationLeft = Math.max(tl.time(), 0.1);
+              TweenMax.to(idleSpeed, durationLeft, { value: 0.003, ease: Power1.easeIn });
+            }, 300);
           }
-          // 400ms delay, then start the main reverse
-          setTimeout(() => {
-            tl.time(4.5);
-            tl.reversed(true);
-            const durationLeft = Math.max(tl.time(), 0.1);
-            TweenMax.to(idleSpeed, durationLeft, { value: 0.003, ease: Power1.easeIn });
-          }, 300);
-        }
-      });
+        });
       }
     };
 
     loadAllScripts();
   }, []);
 
-  const circuitPaths = [
-    { id: 1, d: 'M -20 280 L 480 280 L 480 780 L 1940 780', delay: '0s' },
-    { id: 2, d: 'M 1300 -20 L 1300 450 L 820 450 L 820 1100', delay: '12s' },
-    { id: 3, d: 'M 1940 520 L 1650 520 L 1650 100 L -20 100', delay: '24s' },
-  ];
 
   return (
-    <div className="relative w-full h-screen bg-background overflow-hidden">
+    <div className="relative w-full h-screen bg-[#F8F9FA] overflow-hidden">
       {/* Loading Indicator */}
       {isLoading && (
-        <div className="absolute inset-0 z-50 flex items-center justify-center bg-background">
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#F8F9FA]">
           <div className="text-center">
             <div className="relative w-20 h-20 mx-auto mb-6">
-              <div className="absolute inset-0 border-4 border-primary/20 rounded-full"></div>
-              <div className="absolute inset-0 border-4 border-transparent border-t-primary rounded-full animate-spin"></div>
+              <div className="absolute inset-0 border-4 border-blue-700/20 rounded-full"></div>
+              <div className="absolute inset-0 border-4 border-transparent border-t-blue-700 rounded-full animate-spin"></div>
             </div>
-            <p className="text-primary/80 text-sm font-jetbrains tracking-[0.3em] animate-pulse">
+            <p className="text-blue-700/80 text-sm font-jetbrains tracking-[0.3em] animate-pulse">
               LOADING GLOBE
             </p>
           </div>
@@ -702,31 +696,8 @@ export default function TextSphereAnimation() {
       )}
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;700;800&display=swap');
         
-        @keyframes crossfade-bg {
-          0% { opacity: 0; }
-          10% { opacity: 0.4; }
-          25% { opacity: 0.4; }
-          35% { opacity: 0; }
-          100% { opacity: 0; }
-        }
-        
-        .slideshow-img {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          opacity: 0;
-          animation: crossfade-bg 24s infinite;
-        }
-        
-        .slide-1 { animation-delay: 0s; }
-        .slide-2 { animation-delay: 6s; }
-        .slide-3 { animation-delay: 12s; }
-        .slide-4 { animation-delay: 18s; }
-
         @keyframes circuit-pulse {
           0% { stroke-dashoffset: 120; opacity: 0; }
           1% { opacity: 1; }
@@ -748,11 +719,40 @@ export default function TextSphereAnimation() {
         .font-jetbrains {
           font-family: 'JetBrains Mono', monospace;
         }
+
+        /* ── Static typography overrides (animations untouched) ── */
+        .hero-tagline-1 {
+          font-family: 'Inter', system-ui, -apple-system, sans-serif;
+          font-weight: 700;
+          letter-spacing: 0.15em;
+          color: #2563EB;
+          text-shadow: none !important;
+          -webkit-text-stroke: 0 !important;
+          background: none !important;
+          -webkit-background-clip: unset !important;
+          -webkit-text-fill-color: #2563EB !important;
+          background-clip: unset !important;
+          fill: solid !important;
+        }
+
+        .hero-tagline-2 {
+          font-family: 'Inter', system-ui, -apple-system, sans-serif;
+          font-weight: 500;
+          letter-spacing: 0.15em;
+          color: #475569;
+          text-shadow: none !important;
+          -webkit-text-stroke: 0 !important;
+          background: none !important;
+          -webkit-background-clip: unset !important;
+          -webkit-text-fill-color: #475569 !important;
+          background-clip: unset !important;
+          fill: solid !important;
+        }
       `}</style>
 
       {/* --- SLIDESHOW BACKGROUND --- */}
       <div id="bg-slideshow" className="absolute inset-0 z-0 opacity-0 pointer-events-none">
-        <div className="absolute inset-0 bg-background/50 z-10" />
+        <div className="absolute inset-0 bg-[#000408]/50 z-10" />
         <img src="/1.jpeg" alt="Slide 1" className="slideshow-img slide-1" />
         <img src="/2.jpeg" alt="Slide 2" className="slideshow-img slide-2" />
         <img src="/3.jpeg" alt="Slide 3" className="slideshow-img slide-3" />
@@ -765,94 +765,7 @@ export default function TextSphereAnimation() {
           className="absolute inset-0"
           style={{
             background:
-              'radial-gradient(circle at center, var(--primary-glow) 0%, var(--accent-glow) 35%, var(--background) 70%)',
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-30"
-          style={{
-            backgroundImage:
-              'radial-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 1px)',
-            backgroundSize: '100px 100px',
-            backgroundPosition: '0 0, 50px 50px',
-          }}
-        />
-      </div>
-
-      {/* --- TEXT BACKGROUND --- */}
-      <div id="bg-text" className="absolute inset-0 pointer-events-none opacity-0 z-0">
-        <svg
-          className="absolute inset-0 w-full h-full"
-          preserveAspectRatio="none"
-          viewBox="0 0 1920 1080"
-        >
-          <defs>
-            <filter id="blur-large" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="20" />
-            </filter>
-            <filter id="blur-medium" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="6" />
-            </filter>
-            <filter id="blur-small" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="0.5" />
-            </filter>
-          </defs>
-
-          <g stroke="rgba(255, 255, 255, 0.07)" strokeWidth="1">
-            <line x1="120" y1="0" x2="120" y2="1080" />
-            <line x1="350" y1="0" x2="350" y2="1080" />
-            <line x1="480" y1="0" x2="480" y2="1080" />
-            <line x1="820" y1="0" x2="820" y2="1080" />
-            <line x1="950" y1="0" x2="950" y2="1080" />
-            <line x1="1300" y1="0" x2="1300" y2="1080" />
-            <line x1="1650" y1="0" x2="1650" y2="1080" />
-            <line x1="1780" y1="0" x2="1780" y2="1080" />
-
-            <line x1="0" y1="100" x2="1920" y2="100" />
-            <line x1="0" y1="280" x2="1920" y2="280" />
-            <line x1="0" y1="450" x2="1920" y2="450" />
-            <line x1="0" y1="520" x2="1920" y2="520" />
-            <line x1="0" y1="780" x2="1920" y2="780" />
-            <line x1="0" y1="910" x2="1920" y2="910" />
-          </g>
-
-          {circuitPaths.map((path) => (
-            <g key={path.id} fill="none">
-              <path
-                d={path.d}
-                pathLength="100"
-                stroke="rgba(255, 255, 255, 0.08)"
-                strokeWidth="30"
-                filter="url(#blur-large)"
-                className="animate-path"
-                style={{ animationDelay: path.delay }}
-              />
-              <path
-                d={path.d}
-                pathLength="100"
-                stroke="rgba(255, 255, 255, 0.2)"
-                strokeWidth="10"
-                filter="url(#blur-medium)"
-                className="animate-path"
-                style={{ animationDelay: path.delay }}
-              />
-              <path
-                d={path.d}
-                pathLength="100"
-                stroke="rgba(255, 255, 255, 0.6)"
-                strokeWidth="0.5"
-                filter="url(#blur-small)"
-                className="animate-path"
-                style={{ animationDelay: path.delay }}
-              />
-            </g>
-          ))}
-        </svg>
-
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] pointer-events-none"
-          style={{
-            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 60%)',
+              'radial-gradient(circle at center, rgba(10, 36, 99, 0.06) 0%, rgba(0, 86, 179, 0.02) 45%, transparent 70%)',
           }}
         />
       </div>
@@ -863,34 +776,34 @@ export default function TextSphereAnimation() {
       {/* --- TEXT CONTAINER --- */}
       <div
         id="sub-text"
-        className="absolute top-[67%] left-1/2 -translate-x-1/2 text-center text-white z-20 w-full opacity-0 pointer-events-none font-jetbrains"
+        className="absolute top-[67%] left-1/2 -translate-x-1/2 text-center z-20 w-full opacity-0 pointer-events-none"
       >
-        <p className="text-2xl md:text-3xl font-extrabold tracking-[0.3em] mb-2 bg-clip-text text-transparent bg-gradient-to-r from-primary via-white to-primary font-orbitron">
+        <p className="hero-tagline-1 text-xl sm:text-2xl mt-6 mb-2">
           INSPIRED BY PASSION
         </p>
-        <p className="text-xs md:text-sm text-gray-400 tracking-[0.4em] font-light">
+        <p className="hero-tagline-2 text-xl sm:text-2xl">
           TO TRANSFORM BEYOND EXCELLENCE.
         </p>
       </div>
 
       {/* --- LEFT VERTICAL LABEL --- */}
       <div className="absolute left-6 md:left-12 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-6 opacity-0 animate-[fadeIn_2s_ease-out_3s_forwards]">
-        <div className="w-px h-16 md:h-32 bg-gradient-to-b from-transparent to-primary/50" />
+        <div className="w-px h-16 md:h-32 bg-gradient-to-b from-transparent to-[#94A3B8]" />
         <p
-          className="text-primary/60 text-xs font-mono tracking-[0.4em] uppercase"
-          style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+          className="text-[#94A3B8] text-xs font-jetbrains uppercase font-semibold"
+          style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)', letterSpacing: '0.15em' }}
         >
           Since 2008
         </p>
-        <div className="w-px h-16 md:h-32 bg-gradient-to-t from-transparent to-primary/50" />
+        <div className="w-px h-16 md:h-32 bg-gradient-to-t from-transparent to-[#94A3B8]" />
       </div>
 
-      {/* Global Vignette */}
+      {/* Global Vignette - subtle on light bg */}
       <div
         className="absolute inset-0 pointer-events-none z-30"
         style={{
           background:
-            'radial-gradient(circle at center, transparent 30%, rgba(0, 4, 8, 0.95) 100%)',
+            'radial-gradient(circle at center, transparent 40%, rgba(248, 249, 250, 0.7) 100%)',
         }}
       />
     </div>
