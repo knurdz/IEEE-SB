@@ -7,6 +7,7 @@ import { motion, useInView } from 'framer-motion';
 function TeamCard({
   member,
   index,
+  position,
 }: {
   member: {
     name: string;
@@ -15,6 +16,7 @@ function TeamCard({
     socials: { type: string; url: string }[];
   };
   index: number;
+  position: 'left' | 'middle' | 'right';
 }) {
   return (
     <motion.div
@@ -26,13 +28,27 @@ function TeamCard({
     >
       <div className="relative p-1 rounded-2xl bg-gradient-to-br from-cyan-500/20 via-transparent to-blue-500/20 group-hover:from-cyan-500/40 group-hover:to-blue-500/40 transition-all duration-500">
         <div className="relative overflow-hidden rounded-2xl bg-[#0a1520]">
-          {/* Image placeholder with initials */}
-          <div className="aspect-square relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/50 to-blue-900/50 flex items-center justify-center">
-              <span className="text-4xl font-bold text-cyan-400/50">
-                {member.name.split(' ').map(n => n[0]).join('')}
-              </span>
-            </div>
+          {/* Image placeholder with conditional name positioning */}
+          <div className="aspect-square relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/50 to-blue-900/50" />
+            
+            {/* Vertical Name - don't show for middle member */}
+            {position !== 'middle' && (
+              <div className={`absolute top-0 bottom-0 w-16 bg-black/20 flex flex-col items-center justify-center z-20 gap-4 ${position === 'left' ? 'left-0 border-r' : 'right-0 border-l'} border-cyan-500/20`}>
+                <span 
+                  className="text-xs font-medium text-white/60 tracking-[0.2em] uppercase whitespace-nowrap"
+                  style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+                >
+                  {member.role}
+                </span>
+                <span 
+                  className="text-xl font-bold text-cyan-400 tracking-[0.3em] uppercase whitespace-nowrap"
+                  style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+                >
+                  {member.name}
+                </span>
+              </div>
+            )}
 
             {/* Fiber overlay effect */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -58,11 +74,15 @@ function TeamCard({
           </div>
 
           {/* Info */}
-          <div className="p-5">
-            <h3 className="text-lg font-semibold text-white group-hover:text-cyan-100 transition-colors">
-              {member.name}
-            </h3>
-            <p className="text-sm text-cyan-400/70 mb-4">{member.role}</p>
+          <div className="p-5 relative z-10 min-h-[100px]">
+            {position === 'middle' && (
+              <>
+                <h3 className="text-lg font-semibold text-white group-hover:text-cyan-100 transition-colors mb-1">
+                  {member.name}
+                </h3>
+                <p className="text-sm font-medium text-cyan-400/90 tracking-wide mb-4 uppercase">{member.role}</p>
+              </>
+            )}
 
             {/* Social links */}
             <div className="flex items-center gap-3">
@@ -283,9 +303,16 @@ export default function TeamSection() {
 
         {/* Team grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {team.map((member, index) => (
-            <TeamCard key={member.name} member={member} index={index} />
-          ))}
+          {team.map((member, index) => {
+            const midIndex = Math.floor(team.length / 2);
+            let position: 'left' | 'middle' | 'right' = 'left';
+            
+            if (index === midIndex) position = 'middle';
+            else if (index < midIndex) position = 'left';
+            else position = 'right';
+
+            return <TeamCard key={member.name} member={member} index={index} position={position} />;
+          })}
         </div>
 
         {/* Join the team CTA */}

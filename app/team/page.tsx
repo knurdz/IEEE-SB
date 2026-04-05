@@ -78,10 +78,12 @@ function MemberCard({
   member,
   index,
   variant,
+  position,
 }: {
   member: Member;
   index: number;
   variant: Variant;
+  position: 'left' | 'middle' | 'right';
 }) {
   const [hovered, setHovered] = useState(false);
 
@@ -125,9 +127,31 @@ function MemberCard({
           sizes="(max-width: 768px) 50vw, 220px"
         />
 
+        {/* Vertical or Horizontal Name based on position */}
+        {position !== 'middle' ? (
+          <div className={`absolute top-0 bottom-0 w-12 flex flex-col items-center justify-center z-20 gap-3 ${position === 'left' ? 'left-0' : 'right-0'}`}>
+            <p
+              className="text-cyan-400/80 text-[10px] tracking-widest uppercase whitespace-nowrap"
+              style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+            >
+              {member.role}
+            </p>
+            <h3
+              className={`font-semibold tracking-[0.2em] uppercase transition-colors duration-300 whitespace-nowrap ${hovered ? 'text-cyan-100' : 'text-white/90 shadow-black drop-shadow-md'}`}
+              style={{
+                writingMode: 'vertical-rl',
+                transform: 'rotate(180deg)',
+                ...(member.nameSize ? { fontSize: member.nameSize } : { fontSize: '1.1rem' })
+              }}
+            >
+              {member.name}
+            </h3>
+          </div>
+        ) : null}
+
         {/* Bottom gradient overlay + info */}
         <div
-          className="absolute inset-x-0 bottom-0 z-20 text-center transition-all duration-500"
+          className={`absolute inset-x-0 bottom-0 z-20 text-center transition-all duration-500 ${position === 'left' ? 'pl-12' : position === 'right' ? 'pr-12' : ''}`}
           style={{
             padding: hovered ? '120px 10px 45px' : '100px 10px 20px',
             background: hovered
@@ -135,13 +159,17 @@ function MemberCard({
               : 'linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, transparent 100%)',
           }}
         >
-          <h3
-            className={`font-semibold mb-1 transition-colors duration-300 ${hovered ? 'text-cyan-100' : 'text-white'}`}
-            style={member.nameSize ? { fontSize: member.nameSize } : { fontSize: '1.05rem' }}
-          >
-            {member.name}
-          </h3>
-          <p className="text-cyan-400/80 text-xs mb-2">{member.role}</p>
+          {position === 'middle' ? (
+            <>
+              <h3
+                className={`font-semibold mb-1 transition-colors duration-300 ${hovered ? 'text-cyan-100' : 'text-white'}`}
+                style={member.nameSize ? { fontSize: member.nameSize } : { fontSize: '1.05rem' }}
+              >
+                {member.name}
+              </h3>
+              <p className="text-cyan-400/80 text-xs mb-2">{member.role}</p>
+            </>
+          ) : null}
 
           {member.linkedin && (
             <p>
@@ -251,9 +279,18 @@ function TeamSection({
           className="relative flex items-center justify-center"
           style={{ height: '520px', overflow: 'visible' }}
         >
-          {members.map((member, i) => (
-            <MemberCard key={i} member={member} index={i} variant={variant} />
-          ))}
+          {members.map((member, i) => {
+            const midIndex = Math.floor(members.length / 2);
+            let position: 'left' | 'middle' | 'right' = 'left';
+            
+            if (i === midIndex) position = 'middle';
+            else if (i < midIndex) position = 'left';
+            else position = 'right';
+
+            return (
+              <MemberCard key={i} member={member} index={i} variant={variant} position={position} />
+            );
+          })}
         </div>
       </div>
     </motion.div>
