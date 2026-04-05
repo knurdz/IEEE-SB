@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -8,13 +9,14 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
-  const [activeLink, setActiveLink] = useState('#home');
+  const pathname = usePathname();
+  const [activeLink, setActiveLink] = useState('/');
 
   const navLinks = [
-    { href: '#home', label: 'Home' },
-    { href: '#events', label: 'Events' },
-    { href: '#team', label: 'Team' },
-    { href: '#about', label: 'About' },
+    { href: '/', label: 'Home' },
+    { href: '/events', label: 'Events' },
+    { href: '/#team', label: 'Team' },
+    { href: '/#about', label: 'About' },
   ];
 
   useEffect(() => {
@@ -24,6 +26,15 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Update active link based on pathname
+  useEffect(() => {
+    if (pathname === '/events') {
+      setActiveLink('/events');
+    } else if (pathname === '/') {
+      setActiveLink('/');
+    }
+  }, [pathname]);
 
   return (
     <>
@@ -40,6 +51,7 @@ export default function Navbar() {
             <Link
               href="/"
               className="relative flex items-center hover:scale-105 active:scale-95 transition-transform"
+              onClick={() => setActiveLink('/')}
             >
               <Image
                   src="/logo/ieeesblogo-light2.png"
@@ -120,7 +132,10 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 className="text-3xl font-light text-white/80 hover:text-white transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setActiveLink(link.href);
+                }}
               >
                 {link.label}
               </Link>
