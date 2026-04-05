@@ -715,8 +715,11 @@ export default function TextSphereAnimation() {
           1.5
         );
 
-        if (bgGlobe && bgText) {
-          tl.fromTo(bgGlobe, 3, { opacity: 1 }, { opacity: 0, ease: Power1.easeInOut }, 1.5);
+        if (bgGlobe) {
+          // Shrink the CSS edge glow perfectly in sync with the 3D sphere
+          tl.fromTo(bgGlobe, 3, { scale: 1, opacity: 1 }, { scale: 0.001, opacity: 0, ease: Power1.easeInOut }, 1.5);
+        }
+        if (bgText) {
           tl.fromTo(bgText, 3, { opacity: 0 }, { opacity: 1, ease: Power1.easeInOut }, 1.5);
         }
 
@@ -729,7 +732,10 @@ export default function TextSphereAnimation() {
           (earthSphere as any).pinMaterials.forEach((mat: any) => (mat.opacity = 1));
           textAnimation.material.opacity = 0;
           earthSphere.scale.set(1, 1, 1);
-          if (bgGlobe) bgGlobe.style.opacity = '1';
+          if (bgGlobe) {
+            bgGlobe.style.opacity = '1';
+            TweenMax.set(bgGlobe, { scale: 1 });
+          }
           if (bgText) bgText.style.opacity = '0';
           if (subText) subText.style.opacity = '0';
         });
@@ -866,15 +872,18 @@ export default function TextSphereAnimation() {
         <img src="/4.jpeg" alt="Slide 4" className="slideshow-img slide-4" />
       </div>
 
-      {/* --- GLOBE BACKGROUND --- */}
-      <div id="bg-globe" className="absolute inset-0 pointer-events-none opacity-100 z-0">
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'transparent',
-          }}
-        />
-      </div>
+      {/* --- GLOBE EDGE GLOW --- */}
+      <div
+        id="bg-globe"
+        className="absolute inset-0 m-auto rounded-full pointer-events-none"
+        style={{
+          width: '75.6vh', // Mathematical screen projection of r=240 from exactly 600 z-units in fov 60
+          height: '75.6vh',
+          zIndex: 5,
+          border: '1px solid rgba(0, 82, 255, 0.12)',
+          boxShadow: '0 0 20px rgba(0, 82, 255, 0.08), 0 0 40px rgba(0, 82, 255, 0.04)'
+        }}
+      />
 
       {/* 3D Animation Container */}
       <div id="three-container" ref={containerRef} className="relative w-full h-full z-10" />
