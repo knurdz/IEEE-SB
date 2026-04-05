@@ -54,7 +54,7 @@ export default function AboutSection() {
         const span = document.createElement('span');
         span.classList.add('word', 'inline-block', 'opacity-0', 'translate-y-[30px]', 'blur-sm', 'transition-all', 'will-change-transform');
         span.innerText = word;
-        span.style.transitionDelay = `${(index * 50) + 300}ms`;
+        span.style.transitionDelay = `${(index * 50) + 1200}ms`;
         headlineRef.current?.appendChild(span);
         headlineRef.current?.appendChild(document.createTextNode(' '));
       });
@@ -226,7 +226,7 @@ export default function AboutSection() {
                     }
                 }
             });
-        }, { root: null, rootMargin: '0px', threshold: 0.15 });
+        }, { root: null, rootMargin: '0px', threshold: 0.5 });
 
         if (sectionRef.current) observer.observe(sectionRef.current);
         document.querySelectorAll('.observer-element').forEach(el => observer.observe(el));
@@ -278,8 +278,8 @@ export default function AboutSection() {
         .about-grid { position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background-image: radial-gradient(rgba(0, 200, 255, 0.8) 1px, transparent 1px); background-size: 30px 30px; opacity: 0.03; z-index: -2; animation: drift-grid 30s linear infinite; pointer-events: none; }
         @keyframes drift-grid { 0% { transform: translateY(0) translateX(0); } 100% { transform: translateY(30px) translateX(30px); } }
         .scan-line { position: absolute; left: 0; top: 0; width: 100%; height: 2px; background: var(--cyan); box-shadow: 0 0 15px 2px var(--cyan); opacity: 0; z-index: 10; pointer-events: none; will-change: transform, opacity; }
-        .state-enter .scan-line { animation: scan-sweep-down 1.2s var(--ease-enter) forwards; }
-        .state-exit .scan-line { animation: scan-sweep-up 1.2s var(--ease-enter) forwards; }
+        .state-enter .scan-line { animation: scan-sweep-down 2.5s var(--ease-enter) forwards; }
+        .state-exit .scan-line { animation: scan-sweep-up 1.5s var(--ease-enter) forwards; }
         @keyframes scan-sweep-down { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.8; } 100% { transform: translateY(100vh); opacity: 0; } }
         @keyframes scan-sweep-up { 0% { transform: translateY(100vh); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.8; } 100% { transform: translateY(0); opacity: 0; } }
         
@@ -295,7 +295,7 @@ export default function AboutSection() {
         .eyebrow-text { font-family: var(--font-head); font-size: 2.4rem; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 700; background: linear-gradient(90deg, var(--cyan) 0%, #ffffff 50%, var(--cyan) 100%); background-size: 200% auto; -webkit-background-clip: text; color: transparent; animation: shimmer-text 3.3s linear infinite; filter: drop-shadow(0 0 8px var(--cyan)); }
         @keyframes shimmer-text { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
         
-        .state-enter .eyebrow { opacity: 1; transform: translateX(0); transition: opacity 0.6s, transform 0.6s var(--ease-enter); transition-delay: 0.2s; }
+        .state-enter .eyebrow { opacity: 1; transform: translateX(0); transition: opacity 0.6s, transform 0.6s var(--ease-enter); transition-delay: 0.8s; }
         .state-exit .eyebrow { opacity: 0; transform: translateX(20px); transition: opacity 0.4s, transform 0.4s var(--ease-exit); }
         
         .headline { font-family: var(--font-head); font-size: clamp(1.8rem, 3vw, 2.8rem); line-height: 1.1; font-weight: 700; color: #ffffff; margin: 0; text-transform: uppercase; }
@@ -308,7 +308,7 @@ export default function AboutSection() {
         .body-line::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 80px; background: linear-gradient(180deg, transparent, rgba(255,255,255,1), transparent); animation: shimmer-line-v 3.3s linear infinite; }
         @keyframes shimmer-line-v { 0% { transform: translateY(800px); } 100% { transform: translateY(-100px); } }
         
-        .state-enter .body-line { height: 100%; transition: height 1.2s var(--ease-enter) 0.5s; }
+        .state-enter .body-line { height: 100%; transition: height 1.8s var(--ease-enter) 1.2s; }
         .state-exit .body-line { height: 0; bottom: 0; top: auto; transition: height 0.6s var(--ease-exit); }
         
         .body-text-p { font-size: 1.1rem; line-height: 1.7; color: #a0aec0; font-weight: 300; opacity: 0; transform: translateX(-20px); will-change: transform, opacity; font-family: var(--font-body); }
@@ -352,20 +352,20 @@ export default function AboutSection() {
                   <h2 ref={headlineRef} className="headline split-text">Pushing the Boundaries of Innovation and Excellence</h2>
                   <div className="body-wrapper">
                       <div className="body-line"></div>
-                      <p className="body-text-p" style={{ transitionDelay: '0.6s' }}>
+                      <p className="body-text-p" style={{ transitionDelay: '1.4s' }}>
                           Since our inception, the <strong>IEEE Student Branch at the University of Moratuwa</strong> has operated as an incubator for next-generation technological leadership. We bridge the gap between academic theory and industry reality, cultivating engineers who don't just participate in the future—they build it. Our branch is recognized globally for executing high-impact solutions, securing international awards, and pioneering precision-driven initiatives across computing, robotics, and electrical systems. We operate with an uncompromising standard, treating every project like a critical mission. Through unwavering team dedication and a network of specialized technical societies, we empower students to deliver world-class innovation that defines the technical edge of Region 10 and beyond.
                       </p>
                   </div>
                   <div className="stats-grid">
-                      <div className="stat-item" style={{ transitionDelay: '0.8s' }}>
+                      <div className="stat-item" style={{ transitionDelay: '1.8s' }}>
                           <div className="stat-top"><span className="stat-num" data-target="25">0</span><span className="stat-plus">+</span></div>
                           <span className="stat-label">Years of Excellence</span>
                       </div>
-                      <div className="stat-item" style={{ transitionDelay: '0.95s' }}>
+                      <div className="stat-item" style={{ transitionDelay: '2.0s' }}>
                           <div className="stat-top"><span className="stat-num" data-target="500">0</span><span className="stat-plus">+</span></div>
                           <span className="stat-label">Active Members</span>
                       </div>
-                      <div className="stat-item" style={{ transitionDelay: '1.1s' }}>
+                      <div className="stat-item" style={{ transitionDelay: '2.2s' }}>
                           <div className="stat-top"><span className="stat-num" data-target="100">0</span><span className="stat-plus">+</span></div>
                           <span className="stat-label">Events Annually</span>
                       </div>
