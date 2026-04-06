@@ -1,336 +1,494 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
-// Event card with data stream effect
-function EventCard({
-  event,
-  index,
-  isActive,
+interface Event {
+  id: number;
+  title: string;
+  date: string;
+  category: string;
+  description: string;
+  image: string;
+  subImages?: string[];
+}
+
+const events: Event[] = [
+  {
+    id: 1,
+    title: 'Cybersecurity CTF',
+    date: 'Nov 10, 2027',
+    category: 'Competition',
+    description: 'Test your hacking and defense skills in our immersive Capture The Flag competition. Secure the flags to win.',
+    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800',
+    subImages: [
+      'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800', // Main
+      'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=800', // Code
+      'https://images.unsplash.com/photo-1563206767-5b18f218e8de?auto=format&fit=crop&q=80&w=800', // Hack
+      'https://images.unsplash.com/photo-1614064641913-6b7596eff522?auto=format&fit=crop&q=80&w=800', // Security
+    ],
+  },
+  {
+    id: 2,
+    title: 'Techxplore',
+    date: 'Oct 24, 2026',
+    category: 'Symposium',
+    description: 'A national-level technical symposium bringing together the brightest minds to showcase groundbreaking projects and attend workshops.',
+    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=800',
+    subImages: [
+      'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1559223607-a43c990c692c?auto=format&fit=crop&q=80&w=800',
+    ],
+  },
+  {
+    id: 3,
+    title: 'Innovate-A-Thon',
+    date: 'Mar 12, 2027',
+    category: 'Hackathon',
+    description: 'Our premier 24-hour hackathon where students build creative technological solutions to solve real-world problems.',
+    image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=800',
+    subImages: [
+      'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=800',
+    ],
+  },
+  {
+    id: 4,
+    title: 'AI Workshop',
+    date: 'Jan 15, 2027',
+    category: 'Workshop',
+    description: 'Dive deep into Artificial Intelligence and Machine Learning basics with hands-on labs and expert-led sessions.',
+    image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=800',
+    subImages: [
+      'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1678505504264-7e80f4f9543e?auto=format&fit=crop&q=80&w=800',
+    ],
+  },
+  {
+    id: 5,
+    title: 'Code Relay',
+    date: 'Apr 05, 2027',
+    category: 'Contest',
+    description: 'A fast-paced competitive programming relay where teams code in shifting phases. Communication is key!',
+    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800',
+    subImages: [
+      'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&fit=crop&q=80&w=800',
+    ],
+  },
+  {
+    id: 6,
+    title: 'Web Dev Bootcamp',
+    date: 'May 18, 2027',
+    category: 'Workshop',
+    description: 'A comprehensive weekend bootcamp covering modern web technologies from React to full-stack deployment.',
+    image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&q=80&w=800',
+    subImages: [
+      'https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1618477247222-ac60c8059fa4?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=800',
+    ],
+  },
+  {
+    id: 7,
+    title: 'Data Science Summit',
+    date: 'Aug 22, 2027',
+    category: 'Conference',
+    description: 'Join industry experts to explore the latest trends in Data Analytics, Big Data, and predictive modeling.',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
+    subImages: [
+      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1661956602116-aa6865609028?auto=format&fit=crop&q=80&w=800',
+    ],
+  },
+  {
+    id: 8,
+    title: 'Hardware Hackathon',
+    date: 'Oct 10, 2027',
+    category: 'Hackathon',
+    description: 'Bring your IoT and robotics ideas to life in this 48-hour hardware building marathon.',
+    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800',
+    subImages: [
+      'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1555664424-778a1e5e1b48?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1576400883215-7083980b6193?auto=format&fit=crop&q=80&w=800',
+    ],
+  },
+];
+
+function EventCard({ 
+  event, 
+  offset, 
+  dragOffset,
   onClick,
-}: {
-  event: {
-    id: number;
-    title: string;
-    date: string;
-    category: string;
-    description: string;
-    status: 'upcoming' | 'ongoing' | 'past';
-  };
-  index: number;
-  isActive: boolean;
+  onExplore
+}: { 
+  event: Event; 
+  offset: number;
+  dragOffset: number;
   onClick: () => void;
+  onExplore: (event: Event) => void;
 }) {
-  const statusColors = {
-    upcoming: 'from-cyan-500 to-blue-500',
-    ongoing: 'from-green-500 to-cyan-500',
-    past: 'from-gray-500 to-gray-600',
-  };
-
-  const statusLabels = {
-    upcoming: 'Upcoming',
-    ongoing: 'Live Now',
-    past: 'Completed',
-  };
+  // Convert discrete offset to a continuous one based on drag position
+  const continuousOffset = offset + dragOffset / 260; // 260 is approx card width + gap
+  const absOffset = Math.abs(continuousOffset);
+  const direction = Math.sign(continuousOffset);
+  const isCenter = absOffset < 0.5;
 
   return (
     <motion.div
-      className={`group relative cursor-pointer ${isActive ? 'col-span-2 row-span-2' : ''}`}
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
+      initial={false}
+      animate={{
+        x: continuousOffset * 180, // Tighter horizontal spread for smaller cards
+        z: -absOffset * 180,       // Push side cards slightly less deep but still clearly behind
+        rotateY: direction * -45 * Math.min(absOffset, 1), // Stronger 3D rotation (45 deg)
+        scale: isCenter ? 1.05 : Math.max(0.8, 1 - absOffset * 0.1),
+        opacity: absOffset > 2 ? 0 : (isCenter ? 1 : Math.max(0.3, 0.7 - absOffset * 0.2)),
+        zIndex: 50 - Math.round(absOffset * 10),
+        pointerEvents: absOffset > 2 ? 'none' : 'auto',
+      }}
+      style={{
+        transformStyle: "preserve-3d"
+      }}
+      transition={{ type: 'spring', stiffness: 300, damping: 30, mass: 0.8 }}
       onClick={onClick}
-      layout
+      className="absolute w-64 sm:w-72 h-[380px] sm:h-[420px] shrink-0 group pointer-events-none"
     >
-      <div
-        className={`h-full p-6 md:p-8 rounded-2xl bg-gradient-to-br from-[#0a1520] to-[#050a10] border transition-all duration-500 ${
-          isActive
-            ? 'border-cyan-500/50 shadow-lg shadow-cyan-500/20'
-            : 'border-cyan-500/10 hover:border-cyan-500/30'
-        }`}
+      {/* Card Container */}
+      <div 
+        className="relative w-full h-full rounded-[30px] overflow-hidden shadow-2xl transition-all duration-500 border border-white/10 bg-[#121212] pointer-events-auto cursor-pointer"
       >
-        {/* Data stream line */}
-        <div className="absolute top-0 left-0 right-0 h-px overflow-hidden rounded-t-2xl">
-          <motion.div
-            className={`h-full bg-gradient-to-r ${statusColors[event.status]}`}
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.1 + 0.3, duration: 0.8 }}
-          />
-          <motion.div
-            className="absolute top-0 left-0 w-8 h-full bg-white/50 blur-sm"
-            animate={{ x: ['-100%', '500%'] }}
-            transition={{ duration: 3, repeat: Infinity, delay: index * 0.5 }}
-          />
-        </div>
-
-        {/* Status badge */}
-        <div className="flex items-center justify-between mb-4">
-          <span
-            className={`inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full bg-gradient-to-r ${statusColors[event.status]} text-white`}
-          >
-            {event.status === 'ongoing' && (
-              <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-            )}
-            {statusLabels[event.status]}
-          </span>
-          <span className="text-xs text-white/40">{event.category}</span>
-        </div>
-
+        {/* Background Image */}
+        <Image
+          src={event.image}
+          alt={event.title}
+          fill
+          className="object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+        
+        {/* Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/90" />
+        
         {/* Content */}
-        <h3 className="text-xl md:text-2xl font-semibold text-white mb-2 group-hover:text-cyan-100 transition-colors">
-          {event.title}
-        </h3>
+        <div className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-between items-center text-center">
+          {/* Top Badges */}
+          <div className="flex gap-2 w-full justify-center">
+            <span className="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/10 backdrop-blur-md text-[10px] font-medium text-white/90 border border-white/10 uppercase tracking-widest leading-none flex items-center">
+              {event.date}
+            </span>
+            <span className="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/10 backdrop-blur-md text-[10px] font-medium text-white/90 border border-white/10 uppercase tracking-widest leading-none flex items-center">
+              {event.category}
+            </span>
+          </div>
 
-        <p className="text-sm text-cyan-400/80 mb-3 flex items-center gap-2">
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-          {event.date}
-        </p>
+          {/* Middle/Bottom Text */}
+          <div className="w-full">
+            <h3 className={`font-bold text-white mb-3 sm:mb-4 transition-all duration-300 ${isCenter ? 'text-3xl sm:text-4xl' : 'text-xl sm:text-2xl'}`}>
+              {event.title}
+            </h3>
+            
+            <AnimatePresence>
+              {isCenter && (
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className="text-white/70 text-[13px] sm:text-sm leading-relaxed mb-6 sm:mb-8 px-2"
+                >
+                  {event.description}
+                </motion.p>
+              )}
+            </AnimatePresence>
 
-        <AnimatePresence>
-          {isActive && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
+            {/* Button */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onExplore(event);
+              }}
+              className={`w-full py-3 sm:py-4 rounded-[20px] text-sm sm:text-base font-semibold transition-all duration-300 ${
+                isCenter 
+                ? 'bg-white text-black' 
+                : 'bg-white/20 text-white backdrop-blur-md border border-white/20'
+              }`}
             >
-              <p className="text-white/50 text-sm leading-relaxed mb-4">
-                {event.description}
-              </p>
-              <motion.button
-                className="px-6 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-medium rounded-full"
-                whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(0,212,255,0.4)' }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Register Now
-              </motion.button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {!isActive && (
-          <p className="text-white/40 text-sm line-clamp-2">{event.description}</p>
-        )}
-
-        {/* Corner accent */}
-        <div className="absolute bottom-0 right-0 w-16 h-16 pointer-events-none">
-          <svg viewBox="0 0 100 100" className="w-full h-full opacity-10">
-            <path
-              d="M0,100 Q100,100 100,0"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className="text-cyan-400"
-            />
-          </svg>
+              Explore Event
+            </motion.button>
+          </div>
         </div>
       </div>
     </motion.div>
   );
 }
 
-// Timeline connector
-function TimelineConnector() {
-  return (
-    <div className="hidden lg:flex absolute left-0 top-0 bottom-0 w-px items-center">
-      <div className="w-full h-3/4 bg-gradient-to-b from-transparent via-cyan-500/30 to-transparent" />
-      <motion.div
-        className="absolute w-2 h-2 bg-cyan-400 rounded-full -left-[3px]"
-        animate={{ y: ['0%', '100%', '0%'] }}
-        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-      />
-    </div>
-  );
-}
-
 export default function EventsSection() {
-  const [activeEvent, setActiveEvent] = useState<number | null>(null);
-  const [mounted, setMounted] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [centerIndex, setCenterIndex] = useState(2); // By default, focus middle of 5 events
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [modalImage, setModalImage] = useState<string>('');
 
+  // Handle arrow key navigation for the modal
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!selectedEvent || !selectedEvent.subImages) return;
+      const currentIdx = selectedEvent.subImages.indexOf(modalImage);
+      if (currentIdx === -1) return;
 
-  const events = [
-    {
-      id: 1,
-      title: 'IEEE Xtreme 18.0',
-      date: 'October 26, 2024',
-      category: 'Competition',
-      description: 'A 24-hour global coding competition challenging teams to solve complex algorithmic problems. Join thousands of engineers worldwide in this ultimate test of skill.',
-      status: 'upcoming' as const,
-    },
-    {
-      id: 2,
-      title: 'TechTalk: AI in Modern Networks',
-      date: 'November 5, 2024',
-      category: 'Workshop',
-      description: 'Explore how artificial intelligence is revolutionizing network optimization, fiber optic communications, and data transmission technologies.',
-      status: 'upcoming' as const,
-    },
-    {
-      id: 3,
-      title: 'Fiber Optics Workshop',
-      date: 'November 15, 2024',
-      category: 'Hands-on',
-      description: 'Hands-on workshop covering fiber optic fundamentals, splicing techniques, and modern communication systems. Perfect for aspiring telecommunications engineers.',
-      status: 'upcoming' as const,
-    },
-    {
-      id: 4,
-      title: 'Annual Tech Summit',
-      date: 'December 1-3, 2024',
-      category: 'Conference',
-      description: 'Our flagship event bringing together industry leaders, researchers, and students to discuss the future of technology and innovation.',
-      status: 'upcoming' as const,
-    },
-    {
-      id: 5,
-      title: 'Hackathon 2024',
-      date: 'September 20, 2024',
-      category: 'Competition',
-      description: 'A 48-hour hackathon where teams built innovative solutions for real-world problems. Over 50 teams participated in this exciting event.',
-      status: 'past' as const,
-    },
-    {
-      id: 6,
-      title: 'Industry Visit: Dialog Axiata',
-      date: 'August 15, 2024',
-      category: 'Field Trip',
-      description: 'Exclusive tour of Dialog\'s NOC and data centers, exploring their fiber optic infrastructure and 5G network deployment.',
-      status: 'past' as const,
-    },
-  ];
+      if (e.key === 'ArrowRight') {
+        const nextIdx = (currentIdx + 1) % selectedEvent.subImages.length;
+        setModalImage(selectedEvent.subImages[nextIdx]);
+      } else if (e.key === 'ArrowLeft') {
+        const prevIdx = (currentIdx - 1 + selectedEvent.subImages.length) % selectedEvent.subImages.length;
+        setModalImage(selectedEvent.subImages[prevIdx]);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedEvent, modalImage]);
+
+  // Auto-play interval to move slides seamlessly in an infinite loop
+  useEffect(() => {
+    if (isPaused) return;
+
+    const timer = setInterval(() => {
+      setCenterIndex((prev) => prev + 1);
+    }, 3000); // changes position every 3 seconds
+
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  const handleDrag = (event: any, info: any) => {
+    // Dampen the drag a bit to make it feel heavier
+    const maxOffset = 260; // 1 card drag per pull
+    let actualOffset = info.offset.x;
+    
+    // We remove the hard stops so it can be dragged infinitely
+    setDragOffset(Math.max(-maxOffset, Math.min(maxOffset, actualOffset)));
+  };
+
+  const handleDragEnd = (event: any, info: any) => {
+    const swipeThreshold = 50;
+    const velocityThreshold = 500;
+    const velocity = info.velocity.x;
+    
+    if (info.offset.x < -swipeThreshold || velocity < -velocityThreshold) {
+      setCenterIndex((prev) => prev + 1); // Slide Left -> Next Card
+    } else if (info.offset.x > swipeThreshold || velocity > velocityThreshold) {
+      setCenterIndex((prev) => prev - 1); // Slide Right -> Prev Card
+    }
+    
+    // Snap back
+    setDragOffset(0);
+  };
 
   return (
-    <section
-      ref={containerRef}
-      id="events"
-      className="relative py-32 bg-[#000408] overflow-hidden"
-    >
-      {/* Animated background grid */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(0,212,255,0.3) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(0,212,255,0.3) 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px',
-          }}
-        />
-      </div>
-
-      {/* Floating data particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {mounted && [...Array(10)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-cyan-400 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -500],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: i * 0.5,
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12">
-        {/* Section header */}
-        <div className="text-center mb-16">
-          <motion.span
-            className="inline-block px-4 py-1.5 text-xs tracking-[0.3em] text-cyan-400 uppercase bg-cyan-500/10 rounded-full border border-cyan-500/20 mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            Data Stream
-          </motion.span>
-
+    <section id="events" className="relative py-20 sm:py-32 overflow-hidden bg-black">
+      {/* Background Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[1000px] h-[400px] sm:h-[600px] bg-cyan-500/5 blur-[80px] sm:blur-[120px] rounded-full pointer-events-none" />
+      
+      <div className="container mx-auto px-4 mb-8 sm:mb-12">
+        <div className="text-center">
           <motion.h2
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-          >
-            Upcoming{' '}
-            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-              Events
-            </span>
-          </motion.h2>
-
-          <motion.p
-            className="text-lg text-white/50 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
+            className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 sm:mb-6 uppercase tracking-tighter"
           >
-            Stay connected with our data stream of events, workshops, and competitions.
-            Each event is a pulse of knowledge transmitted directly to you.
-          </motion.p>
+            Flagship Events
+          </motion.h2>
+          <div className="w-16 sm:w-24 h-1 bg-cyan-500 mx-auto rounded-full" />
         </div>
-
-        {/* Events grid */}
-        <div className="relative">
-          <TimelineConnector />
-          <motion.div
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-            layout
-          >
-            {events.map((event, index) => (
-              <EventCard
-                key={event.id}
-                event={event}
-                index={index}
-                isActive={activeEvent === event.id}
-                onClick={() => setActiveEvent(activeEvent === event.id ? null : event.id)}
-              />
-            ))}
-          </motion.div>
-        </div>
-
-        {/* View all button */}
-        <motion.div
-          className="text-center mt-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <motion.button
-            className="group inline-flex items-center gap-3 px-8 py-4 border border-cyan-500/30 text-cyan-400 rounded-full hover:bg-cyan-500/10 transition-all"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span>View All Events</span>
-            <motion.span
-              className="inline-block"
-              animate={{ x: [0, 5, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
-              →
-            </motion.span>
-          </motion.button>
-        </motion.div>
       </div>
+
+      <motion.div 
+        className="relative w-full h-[500px] flex justify-center items-center [perspective:800px] overflow-hidden cursor-grab active:cursor-grabbing"
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0}
+        onDrag={handleDrag}
+        onDragEnd={handleDragEnd}
+        onHoverStart={() => setIsPaused(true)}
+        onHoverEnd={() => setIsPaused(false)}
+      >
+        {events.map((event, index) => {
+          // Infinite loop math: map the actual index to a wrapping position around `centerIndex`
+          let diff = index - (centerIndex % events.length);
+          if (diff < 0) diff += events.length; // normalize to positive
+          let safeDiff = diff % events.length; 
+          if (safeDiff < 0) safeDiff += events.length; // Handle negative centerIndex dragging indefinitely back
+
+          // Force the array values to map symmetrically around 0 (e.g. for 5 items: -2, -1, 0, 1, 2)
+          if (safeDiff > Math.floor(events.length / 2)) {
+            safeDiff -= events.length;
+          }
+
+          const offset = safeDiff;
+
+          return (
+            <EventCard
+              key={event.id}
+              event={event}
+              offset={offset}
+              dragOffset={dragOffset}
+              onClick={() => {
+                // If they click a card on the left/right, we shift center by that offset
+                setCenterIndex(centerIndex + offset);
+              }}
+              onExplore={(evt) => {
+                setSelectedEvent(evt);
+                setModalImage(evt.image);
+                setIsPaused(true);
+              }}
+            />
+          );
+        })}
+      </motion.div>
+
+      {/* Navigation Indicators */}
+      <div className="flex justify-center gap-3 mt-4 sm:mt-8 z-20 relative">
+        {events.map((event, index) => {
+          let diff = index - (centerIndex % events.length);
+          if (diff < 0) diff += events.length;
+          let safeDiff = diff % events.length; 
+          if (safeDiff < 0) safeDiff += events.length;
+          if (safeDiff > Math.floor(events.length / 2)) {
+            safeDiff -= events.length;
+          }
+
+          const isActive = index === ((centerIndex % events.length) + events.length) % events.length;
+
+          return (
+            <button
+              key={event.id}
+              onClick={() => setCenterIndex(centerIndex + safeDiff)}
+              className={`h-1.5 rounded-full transition-all duration-500 ${
+                isActive ? 'w-8 sm:w-12 bg-white' : 'w-2 bg-white/20'
+              }`}
+            />
+          );
+        })}
+      </div>
+
+      {/* Event Modal */}
+      <AnimatePresence>
+        {selectedEvent && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-8"
+            onClick={() => {
+              setSelectedEvent(null);
+              setIsPaused(false);
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-5xl bg-[#111] rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex flex-col max-h-[90vh]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-white/20 transition-colors"
+                onClick={() => {
+                  setSelectedEvent(null);
+                  setIsPaused(false);
+                }}
+              >
+                &times;
+              </button>
+              
+              <div className="flex-1 overflow-y-auto w-full p-4 sm:p-6 custom-scrollbar flex flex-col items-center">
+                {/* Main Modal Image */}
+                <div className="group relative shrink-0 w-full lg:w-[85%] h-[40vh] sm:h-[50vh] lg:h-[65vh] min-h-[40vh] sm:min-h-[50vh] lg:min-h-[65vh] rounded-3xl overflow-hidden mb-8 bg-black">
+                  <Image
+                    src={modalImage || selectedEvent.image}
+                    alt={selectedEvent.title}
+                    fill
+                    className="object-cover"
+                  />
+                  {/* Left Button */}
+                  <button
+                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 text-white w-10 sm:w-12 h-10 sm:h-12 flex items-center justify-center rounded-full hover:bg-white/20 transition-all opacity-0 sm:opacity-100 group-hover:opacity-100 z-10"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (selectedEvent.subImages) {
+                        const currentIdx = selectedEvent.subImages.indexOf(modalImage || selectedEvent.image);
+                        const prevIdx = (currentIdx - 1 + selectedEvent.subImages.length) % selectedEvent.subImages.length;
+                        setModalImage(selectedEvent.subImages[prevIdx]);
+                      }
+                    }}
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+                  </button>
+                  {/* Right Button */}
+                  <button
+                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 text-white w-10 sm:w-12 h-10 sm:h-12 flex items-center justify-center rounded-full hover:bg-white/20 transition-all opacity-0 sm:opacity-100 group-hover:opacity-100 z-10"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (selectedEvent.subImages) {
+                        const currentIdx = selectedEvent.subImages.indexOf(modalImage || selectedEvent.image);
+                        const nextIdx = (currentIdx + 1) % selectedEvent.subImages.length;
+                        setModalImage(selectedEvent.subImages[nextIdx]);
+                      }
+                    }}
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                  </button>
+                </div>
+                
+                {/* Thumbnails */}
+                {selectedEvent.subImages && selectedEvent.subImages.length > 0 && (
+                  <div className="grid grid-cols-4 gap-2 sm:gap-4 mb-10 w-[90%] sm:w-[85%] lg:w-[75%]">
+                    {selectedEvent.subImages.map((img, idx) => (
+                      <button
+                        key={idx}
+                        className={`relative aspect-video rounded-lg overflow-hidden border-2 transition-all ${modalImage === img ? 'border-cyan-500' : 'border-transparent hover:border-white/50'}`}
+                        onClick={() => setModalImage(img)}
+                      >
+                        <Image src={img} alt={`${selectedEvent.title} - ${idx}`} fill className="object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                )}
+                
+                {/* Content */}
+                <div className="text-white w-[90%] sm:w-[85%] lg:w-[75%]">
+                  <h2 className="text-3xl sm:text-4xl font-bold mb-2">{selectedEvent.title}</h2>
+                  <div className="flex gap-4 text-cyan-400 text-sm mb-6">
+                    <span>{selectedEvent.date}</span>
+                    <span>&bull;</span>
+                    <span>{selectedEvent.category}</span>
+                  </div>
+                  <p className="text-white/80 leading-relaxed max-w-3xl text-lg">
+                    {selectedEvent.description}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
