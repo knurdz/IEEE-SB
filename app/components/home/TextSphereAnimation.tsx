@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { getSolidMapDataUrl } from './mapGenerator';
 
 export default function TextSphereAnimation() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -18,10 +17,7 @@ export default function TextSphereAnimation() {
     // Replace it with a solid landmass equirectangular map (e.g., download a basic 2048x1024 
     // black/white vector world map without lakes, save it to /public, and update the URL below).
     const earthImage = new Image();
-
-    // We dynamically generate the solid equirectangular map without lakes using topojson
-    // and set it as the image source.
-    earthImage.src = getSolidMapDataUrl();
+    earthImage.src = '/earth_specular_2048.jpg';
 
     const loadScript = (src: string): Promise<void> => {
       return new Promise((resolve, reject) => {
@@ -431,7 +427,7 @@ export default function TextSphereAnimation() {
           return { x, y, z };
         };
 
-        const pinColor = 0x2563EB; // blue-600 — matches hero tagline and globe accent
+        const pinColor = 0x0A2540; // updated to match requested dark blue
         const pinMaterial = new THREE.MeshBasicMaterial({ color: pinColor, transparent: true, depthWrite: false });
 
         function create3DPinMesh(colorMat: any) {
@@ -513,7 +509,7 @@ export default function TextSphereAnimation() {
             lineGeom.vertices.push(pinTopPos.clone());
             lineGeom.vertices.push(labelPos.clone());
             const lineMat = new THREE.LineBasicMaterial({
-              color: 0x2563EB,
+              color: 0x0A2540,
               transparent: true,
               opacity: 0.8,
               linewidth: 1,
@@ -527,7 +523,7 @@ export default function TextSphereAnimation() {
             // Small dot at the bend / connection point on pin top
             const dotGeom = new THREE.SphereGeometry(1.5, 8, 8);
             const dotMat = new THREE.MeshBasicMaterial({
-              color: 0x2563EB,
+              color: 0x0A2540,
               transparent: true,
               depthWrite: false,
             });
@@ -627,8 +623,7 @@ export default function TextSphereAnimation() {
             y: slCentroid.y + (p.y - slCentroid.y) * scaleFactor,
           };
         });
-        mCtx.fillStyle = '#ffffff'; // In our new map white is land. We need to match it! Wait, we draw a solid map where land is white. So we should paint white here.
-        // Let's modify the above to #ffffff so Sri Lanka is registered as land
+        mCtx.fillStyle = '#000000';
         mCtx.beginPath();
         mCtx.moveTo(slPts[0].x, slPts[0].y);
         for (let k = 1; k < slPts.length; k++) mCtx.lineTo(slPts[k].x, slPts[k].y);
@@ -640,18 +635,18 @@ export default function TextSphereAnimation() {
         // ── Main canvas ──
         const imageData = ctx.createImageData(canvas.width, canvas.height);
         for (let p = 0; p < imageData.data.length; p += 4) {
-          imageData.data[p] = 10;  // R
-          imageData.data[p + 1] = 37;  // G
-          imageData.data[p + 2] = 64;  // B
+          imageData.data[p] = 143; // R (#8ff4f7)
+          imageData.data[p + 1] = 244; // G
+          imageData.data[p + 2] = 247; // B
           imageData.data[p + 3] = 0;   // A = fully transparent
         }
         ctx.putImageData(imageData, 0, 0);
 
         // Step 2: Draw fully-opaque hexagons over the land pixels.
-        ctx.fillStyle = 'rgba(10,37,64,1)';
+        ctx.fillStyle = '#2691c7ff';
 
-        // Use a larger radius (3.5) for crisp, readable hexagon cells instead of tiny noise
-        const hexRadius = 3.5;
+        // MODIFIED: Reduced size and spacing
+        const hexRadius = 2.8;
         const hexWidth = hexRadius * Math.sqrt(3);
         const rowHeight = hexRadius * 1.5;
 
@@ -666,20 +661,16 @@ export default function TextSphereAnimation() {
             if (px < 0 || px >= canvas.width || py < 0 || py >= canvas.height) continue;
 
             const i = (py * canvas.width + px) * 4;
-            // Since our generated map has white land and black oceans, brightness > 150 means LAND
-            const brightness =
-              (maskData.data[i] + maskData.data[i + 1] + maskData.data[i + 2]) / 3;
+            const brightness = (maskData.data[i] + maskData.data[i + 1] + maskData.data[i + 2]) / 3;
 
-            // Wait, original map used black/dark for land? Let's check original code: "if (brightness < 150)".
-            // That implies original map had DARK land and BRIGHT ocean.
-            // Our generated map has WHITE land and BLACK ocean. So we need `brightness > 100` instead of `< 150`.
-            if (brightness > 100) {
+            // Slightly stricter threshold (150) so coastlines don't feather into mud
+            if (brightness < 150) {
               ctx.beginPath();
               for (let j = 0; j < 6; j++) {
                 const angle = (Math.PI / 3) * j + (Math.PI / 6);
-                // 0.85 multiplier leaves a sharp crisp gap between hexagonal cells
-                const hx = x + (hexRadius * 0.85) * Math.cos(angle);
-                const hy = y + (hexRadius * 0.85) * Math.sin(angle);
+                // MODIFIED: Increased multiplier to 0.90 to decrease the spacing (gap) between cells
+                const hx = x + (hexRadius * 0.90) * Math.cos(angle);
+                const hy = y + (hexRadius * 0.90) * Math.sin(angle);
                 if (j === 0) ctx.moveTo(hx, hy);
                 else ctx.lineTo(hx, hy);
               }
@@ -785,6 +776,7 @@ export default function TextSphereAnimation() {
         const bgText = document.getElementById('bg-text');
         const subText = document.getElementById('sub-text');
         const sideLabel = document.getElementById('side-label');
+        const sideLabelGlobe = document.getElementById('side-label-globe');
 
         tl.fromTo(
           sphereGroup.rotation,
@@ -848,6 +840,9 @@ export default function TextSphereAnimation() {
         if (sideLabel) {
           tl.fromTo(sideLabel, 3, { opacity: 0 }, { opacity: 1, ease: Power3.easeInOut }, 6.5);
         }
+        if (sideLabelGlobe) {
+          tl.fromTo(sideLabelGlobe, 5, { opacity: 1 }, { opacity: 0, ease: Power3.easeInOut }, 1.5);
+        }
 
         tl.eventCallback('onReverseComplete', () => {
           earthSphere.material.opacity = 1;
@@ -864,6 +859,7 @@ export default function TextSphereAnimation() {
           if (bgText) bgText.style.opacity = '0';
           if (subText) subText.style.opacity = '0';
           if (sideLabel) sideLabel.style.opacity = '0';
+          if (sideLabelGlobe) sideLabelGlobe.style.opacity = '1';
         });
 
         document.body.style.cursor = 'pointer';
@@ -1256,7 +1252,23 @@ export default function TextSphereAnimation() {
         </p>
       </div>
 
-      {/* --- LEFT VERTICAL LABEL --- */}
+      {/* --- LEFT VERTICAL LABEL FOR GLOBE STATE --- */}
+      <div id="side-label-globe" className="absolute left-[13px] md:left-[18px] top-1/2 -translate-y-1/2 z-40 flex flex-col items-center opacity-100 pointer-events-none">
+        <div className="w-[1px] h-24 md:h-36 bg-gradient-to-b from-transparent to-[#173599]/60 mb-6" />
+        <p
+          className="text-[#173599] text-[13px] uppercase font-bold tracking-[0.4em]"
+          style={{
+            fontFamily: "'Inter', sans-serif",
+            writingMode: 'vertical-rl',
+            transform: 'rotate(180deg)'
+          }}
+        >
+          IEEE Student Branch
+        </p>
+        <div className="w-[1px] h-24 md:h-36 bg-gradient-to-t from-transparent to-[#173599]/60 mt-6" />
+      </div>
+
+      {/* --- LEFT VERTICAL LABEL FOR TEXT STATE --- */}
       <div id="side-label" className="absolute left-[13px] md:left-[18px] top-1/2 -translate-y-1/2 z-40 flex flex-col items-center opacity-0 pointer-events-none">
         <div className="w-[1px] h-24 md:h-36 bg-gradient-to-b from-transparent to-[#0A2540]/60 mb-6" />
         <p
