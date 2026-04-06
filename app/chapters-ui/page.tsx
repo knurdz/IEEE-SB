@@ -2,7 +2,6 @@
 
 import { ChaptersCard } from '@/app/components/ChaptersCard'
 import { chapters } from '@/app/lib/chapters-data'
-import { Sparkles } from 'lucide-react'
 
 export default function ChaptersPage() {
   return (
@@ -18,14 +17,10 @@ export default function ChaptersPage() {
       <header className="border-b border-border/40 bg-background/80 backdrop-blur-xl sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-gradient-to-br from-primary to-accent rounded-xl">
-              <Sparkles className="w-6 h-6 text-primary-foreground" />
-            </div>
             <div>
               <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
                 IEEE Technical Societies
               </h1>
-              <p className="text-muted-foreground mt-1">Hexagonal Zig-Zag Design with Scroll Animations</p>
             </div>
           </div>
         </div>
@@ -34,10 +29,6 @@ export default function ChaptersPage() {
       {/* Intro Section */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-            <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-            Premium Storytelling Layout
-          </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Discover Each Society
           </h2>
