@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
 import './chapters.css'
 import { ChaptersThemeProvider } from '@/app/components/ChaptersThemeProvider'
 
@@ -44,7 +43,6 @@ export default function ChaptersLayout({
           disableTransitionOnChange
         >
           {children}
-          <Analytics />
         </ChaptersThemeProvider>
       </body>
     </html>
