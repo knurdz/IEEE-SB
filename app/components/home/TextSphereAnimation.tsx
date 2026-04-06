@@ -386,9 +386,14 @@ export default function TextSphereAnimation() {
         const geometry = new THREE.SphereGeometry(SPHERE_RADIUS * 0.99, 64, 64);
         const material = new THREE.MeshBasicMaterial({
           map: earthTexture,
+          // alphaTest: binary dot cutout — texels below 50% alpha are discarded,
+          // eliminating the semi-transparent fringe pixels that made dots look
+          // lighter at poles and grazing angles (the root cause of the inconsistency).
+          alphaTest: 0.5,
+          // transparent: true is kept so GSAP can still animate the opacity for fade-out.
           transparent: true,
-          side: THREE.FrontSide, // Explicitly cull the backside to prevent any dot bleed-through
-          opacity: 0,
+          side: THREE.FrontSide,
+          opacity: 1,
           color: 0xffffff,
         });
         const earth = new THREE.Mesh(geometry, material);
@@ -600,46 +605,52 @@ export default function TextSphereAnimation() {
 
         const maskData = mCtx.getImageData(0, 0, canvas.width, canvas.height);
 
-        // ── Main canvas: transparent background to blend cleanly with light theme ──
-        // Ensure the base sphere is invisible, rendering only the hexagon/dots.
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // ── Main canvas ──
+        // Step 1: Pre-fill the ENTIRE canvas with the land colour at alpha=0.
+        // This is the "pre-multiplied hue" trick: when LinearFilter blends a
+        // fully-opaque dot pixel with an adjacent transparent gap pixel, it
+        // computes the average of (10,37,64,255) and (10,37,64,0) which gives
+        // (10,37,64,127) — the SAME hue at half opacity. Without this step the
+        // gap pixels are (0,0,0,0) and the blend gives (5,18,32,127), a darker
+        // and differently-toned in-between value that makes dots look lighter
+        // at poles and grazing angles.
+        const imageData = ctx.createImageData(canvas.width, canvas.height);
+        for (let p = 0; p < imageData.data.length; p += 4) {
+          imageData.data[p]     = 10;  // R
+          imageData.data[p + 1] = 37;  // G
+          imageData.data[p + 2] = 64;  // B
+          imageData.data[p + 3] = 0;   // A = fully transparent
+        }
+        ctx.putImageData(imageData, 0, 0);
 
-        ctx.fillStyle = '#0A2540';
+        // Step 2: Draw fully-opaque dots over the land pixels.
+        ctx.fillStyle = 'rgba(10,37,64,1)';
 
-        const dotSize = 1.6;
+        const dotSize = 1.8;
         const dotSpacing = 3.0;
 
         for (let y = 0; y < canvas.height; y += dotSpacing) {
-          // Extract mathematical sphere latitude from the 2D y-coordinate
-          const lat = (Math.PI / 2) - (y / canvas.height) * Math.PI;
-          // Calculate polar squish ratio (limit to 0.1 to avoid infinite poles)
-          const scaleCos = Math.max(Math.cos(lat), 0.1); 
-          const spacingX = dotSpacing / scaleCos;
-
-          for (let x = 0; x < canvas.width; x += spacingX) {
+          for (let x = 0; x < canvas.width; x += dotSpacing) {
             const i = (Math.floor(y) * canvas.width + Math.floor(x)) * 4;
             const brightness =
               (maskData.data[i] + maskData.data[i + 1] + maskData.data[i + 2]) / 3;
 
-            // Absolute solid extraction (< 180). This strictly converts all internal 
-            // gray topological data, rivers, and faint lakes into solid landmasses.
-            // Eliminates all "light patches" and accidental transparency inside continents.
             if (brightness < 180) {
               ctx.beginPath();
-              const radiusX = dotSize / scaleCos;
-              const radiusY = dotSize;
-              // Stretch the 2D canvas draw inversely to counteract WebGL 3D polar squishing
-              if (Math.abs(radiusX - radiusY) < 0.01) {
-                ctx.arc(x, y, dotSize, 0, Math.PI * 2);
-              } else {
-                ctx.ellipse(x, y, radiusX, radiusY, 0, 0, Math.PI * 2);
-              }
+              ctx.arc(x, y, dotSize, 0, Math.PI * 2);
               ctx.fill();
             }
           }
         }
 
         const earthTexture = new THREE.Texture(canvas);
+        earthTexture.generateMipmaps = false;
+        // LinearFilter gives smooth dot edges at globe scale.
+        // The pre-multiplied-hue pre-fill above ensures that LinearFilter
+        // never blends toward a different hue, only toward different opacity
+        // of the same #0A2540 colour, so all land reads as uniformly dark.
+        earthTexture.minFilter = THREE.LinearFilter;
+        earthTexture.magFilter = THREE.LinearFilter;
         earthTexture.needsUpdate = true;
         initScene(earthTexture);
       };
@@ -710,7 +721,8 @@ export default function TextSphereAnimation() {
 
         const fadeTargets = [earthSphere.material, ...(earthSphere as any).pinMaterials];
 
-        tl.fromTo(fadeTargets, 3, { opacity: 1.0 }, { opacity: 0, ease: Power1.easeInOut }, 1.5);
+        // Simple to() — material already starts at opacity:1, so no explicit from needed.
+        tl.to(fadeTargets, 3, { opacity: 0, ease: Power1.easeInOut }, 1.5);
 
         tl.fromTo(
           textAnimation.material,
@@ -926,14 +938,7 @@ export default function TextSphereAnimation() {
         <div className="w-px h-16 md:h-32 bg-gradient-to-t from-transparent to-[#94A3B8]" />
       </div>
 
-      {/* Global Vignette - subtle on light bg */}
-      <div
-        className="absolute inset-0 pointer-events-none z-30"
-        style={{
-          background:
-            'radial-gradient(circle at center, transparent 40%, rgba(248, 249, 250, 0.7) 100%)',
-        }}
-      />
+      {/* Global Vignette Removed - It was artificially casting a white semi-transparent fade over the outer continents causing shade inconsistency */}
     </div>
   );
 }
