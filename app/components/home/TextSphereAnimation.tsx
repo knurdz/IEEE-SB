@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { getSolidMapDataUrl } from './mapGenerator';
 
 export default function TextSphereAnimation() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -17,7 +18,10 @@ export default function TextSphereAnimation() {
     // Replace it with a solid landmass equirectangular map (e.g., download a basic 2048x1024 
     // black/white vector world map without lakes, save it to /public, and update the URL below).
     const earthImage = new Image();
-    earthImage.src = '/earth_specular_2048.jpg';
+
+    // We dynamically generate the solid equirectangular map without lakes using topojson
+    // and set it as the image source.
+    earthImage.src = getSolidMapDataUrl();
 
     const loadScript = (src: string): Promise<void> => {
       return new Promise((resolve, reject) => {
@@ -71,7 +75,7 @@ export default function TextSphereAnimation() {
       const THREE = (window as any).THREE;
       const TweenMax = (window as any).TweenMax;
       const TimelineMax = (window as any).TimelineMax;
-      const Power1 = (window as any).Power1;
+      const Power3 = (window as any).Power3;
       const PNLTRI = (window as any).PNLTRI;
 
       THREE.ShapeUtils.triangulateShape = (function () {
@@ -203,12 +207,6 @@ export default function TextSphereAnimation() {
           }
         }
 
-        // Use BasicAnimationMaterial (lights: false) so the text colour is
-        // always the flat diffuse #0052FF regardless of lighting angle or
-        // how much the sphere group has rotated. PhongAnimationMaterial was
-        // recomputing Phong shading every frame, making faces look near-black
-        // when the directional light hit them at a glancing angle — that is
-        // what caused the continuous black-to-blue flicker.
         const material = new THREE.BAS.BasicAnimationMaterial(
           {
             side: THREE.DoubleSide,
@@ -386,10 +384,9 @@ export default function TextSphereAnimation() {
         const geometry = new THREE.SphereGeometry(SPHERE_RADIUS * 0.99, 64, 64);
         const material = new THREE.MeshBasicMaterial({
           map: earthTexture,
-          // alphaTest: binary dot cutout — texels below 50% alpha are discarded,
-          // eliminating the semi-transparent fringe pixels that made dots look
-          // lighter at poles and grazing angles (the root cause of the inconsistency).
-          alphaTest: 0.5,
+          // alphaTest: 0.05 keeps smooth antialiased edges of hexagons intact
+          // while still discarding fully empty ocean pixels to fix sorting artifacts.
+          alphaTest: 0.05,
           // transparent: true is kept so GSAP can still animate the opacity for fade-out.
           transparent: true,
           side: THREE.FrontSide,
@@ -630,7 +627,8 @@ export default function TextSphereAnimation() {
             y: slCentroid.y + (p.y - slCentroid.y) * scaleFactor,
           };
         });
-        mCtx.fillStyle = '#000000';
+        mCtx.fillStyle = '#ffffff'; // In our new map white is land. We need to match it! Wait, we draw a solid map where land is white. So we should paint white here.
+        // Let's modify the above to #ffffff so Sri Lanka is registered as land
         mCtx.beginPath();
         mCtx.moveTo(slPts[0].x, slPts[0].y);
         for (let k = 1; k < slPts.length; k++) mCtx.lineTo(slPts[k].x, slPts[k].y);
@@ -640,14 +638,6 @@ export default function TextSphereAnimation() {
         const maskData = mCtx.getImageData(0, 0, canvas.width, canvas.height);
 
         // ── Main canvas ──
-        // Step 1: Pre-fill the ENTIRE canvas with the land colour at alpha=0.
-        // This is the "pre-multiplied hue" trick: when LinearFilter blends a
-        // fully-opaque dot pixel with an adjacent transparent gap pixel, it
-        // computes the average of (10,37,64,255) and (10,37,64,0) which gives
-        // (10,37,64,127) — the SAME hue at half opacity. Without this step the
-        // gap pixels are (0,0,0,0) and the blend gives (5,18,32,127), a darker
-        // and differently-toned in-between value that makes dots look lighter
-        // at poles and grazing angles.
         const imageData = ctx.createImageData(canvas.width, canvas.height);
         for (let p = 0; p < imageData.data.length; p += 4) {
           imageData.data[p] = 10;  // R
@@ -657,34 +647,54 @@ export default function TextSphereAnimation() {
         }
         ctx.putImageData(imageData, 0, 0);
 
-        // Step 2: Draw fully-opaque dots over the land pixels.
+        // Step 2: Draw fully-opaque hexagons over the land pixels.
         ctx.fillStyle = 'rgba(10,37,64,1)';
 
-        const dotSize = 1.8;
-        const dotSpacing = 3.0;
+        // Use a larger radius (3.5) for crisp, readable hexagon cells instead of tiny noise
+        const hexRadius = 3.5;
+        const hexWidth = hexRadius * Math.sqrt(3);
+        const rowHeight = hexRadius * 1.5;
 
-        for (let y = 0; y < canvas.height; y += dotSpacing) {
-          for (let x = 0; x < canvas.width; x += dotSpacing) {
-            const i = (Math.floor(y) * canvas.width + Math.floor(x)) * 4;
+        for (let row = 0; row < canvas.height / rowHeight; row++) {
+          const y = row * rowHeight;
+          const xOffset = (row % 2) * (hexWidth / 2);
+          for (let col = 0; col < canvas.width / hexWidth + 1; col++) {
+            const x = col * hexWidth + xOffset;
+
+            const px = Math.floor(x);
+            const py = Math.floor(y);
+            if (px < 0 || px >= canvas.width || py < 0 || py >= canvas.height) continue;
+
+            const i = (py * canvas.width + px) * 4;
+            // Since our generated map has white land and black oceans, brightness > 150 means LAND
             const brightness =
               (maskData.data[i] + maskData.data[i + 1] + maskData.data[i + 2]) / 3;
 
-            if (brightness < 180) {
+            // Wait, original map used black/dark for land? Let's check original code: "if (brightness < 150)".
+            // That implies original map had DARK land and BRIGHT ocean.
+            // Our generated map has WHITE land and BLACK ocean. So we need `brightness > 100` instead of `< 150`.
+            if (brightness > 100) {
               ctx.beginPath();
-              ctx.arc(x, y, dotSize, 0, Math.PI * 2);
+              for (let j = 0; j < 6; j++) {
+                const angle = (Math.PI / 3) * j + (Math.PI / 6);
+                // 0.85 multiplier leaves a sharp crisp gap between hexagonal cells
+                const hx = x + (hexRadius * 0.85) * Math.cos(angle);
+                const hy = y + (hexRadius * 0.85) * Math.sin(angle);
+                if (j === 0) ctx.moveTo(hx, hy);
+                else ctx.lineTo(hx, hy);
+              }
+              ctx.closePath();
               ctx.fill();
             }
           }
         }
 
         const earthTexture = new THREE.Texture(canvas);
-        earthTexture.generateMipmaps = false;
-        // LinearFilter gives smooth dot edges at globe scale.
-        // The pre-multiplied-hue pre-fill above ensures that LinearFilter
-        // never blends toward a different hue, only toward different opacity
-        // of the same #0A2540 colour, so all land reads as uniformly dark.
-        earthTexture.minFilter = THREE.LinearFilter;
+        // Enable Mipmaps and Anisotropy to guarantee sharpness at all viewing angles!
+        earthTexture.generateMipmaps = true;
+        earthTexture.minFilter = THREE.LinearMipmapLinearFilter;
         earthTexture.magFilter = THREE.LinearFilter;
+        earthTexture.anisotropy = 16;
         earthTexture.needsUpdate = true;
         initScene(earthTexture);
       };
@@ -736,12 +746,19 @@ export default function TextSphereAnimation() {
         root.scene.add(ambientLight);
 
         let idleSpeed = { value: 0 };
+        const clock = new THREE.Clock();
 
         // Reusable vector to avoid per-frame allocation inside onUpdate
         const _pinWorldPos = new THREE.Vector3();
 
         root.onUpdate = () => {
-          earthSphere.rotation.y -= idleSpeed.value;
+          const delta = clock.getDelta();
+          // Frame-independent idle rotation based on ~60fps standard for consistent feel
+          const timeScale = Math.min(delta * 60, 3.0);
+
+          // Rotate positively to continue the motion from the timeline's arrival
+          earthSphere.rotation.y += idleSpeed.value * timeScale;
+
           // Hide text completely from WebGL pipeline when invisible to prevent artifact strays
           textAnimation.visible = textAnimation.material.opacity > 0.01;
           // Same guard for the halo layer
@@ -771,65 +788,65 @@ export default function TextSphereAnimation() {
 
         tl.fromTo(
           sphereGroup.rotation,
-          5.5,
-          { y: -Math.PI * 3 },
-          { y: 0, ease: Power1.easeInOut },
+          8,
+          { y: Math.PI * 3 },
+          { y: 0, ease: Power3.easeInOut },
           0
         );
 
         tl.fromTo(
           earthSphere.scale,
-          3,
+          5,
           { x: 1, y: 1, z: 1 },
-          { x: 0.001, y: 0.001, z: 0.001, ease: Power1.easeInOut },
+          { x: 0.001, y: 0.001, z: 0.001, ease: Power3.easeInOut },
           1.5
         );
 
         const fadeTargets = [earthSphere.material, ...(earthSphere as any).pinMaterials];
 
         // Simple to() — material already starts at opacity:1, so no explicit from needed.
-        tl.to(fadeTargets, 3, { opacity: 0, ease: Power1.easeInOut }, 1.5);
+        tl.to(fadeTargets, 5, { opacity: 0, ease: Power3.easeInOut }, 1.5);
 
         tl.fromTo(
           textAnimation.material,
-          3,
+          5,
           { opacity: 0 },
-          { opacity: 1, ease: Power1.easeInOut },
+          { opacity: 1, ease: Power3.easeInOut },
           1.5
         );
 
         tl.fromTo(
           textAnimation,
-          4,
+          6,
           { animationProgress: 0.6 },
-          { animationProgress: 0.0, ease: Power1.easeInOut },
+          { animationProgress: 0.0, ease: Power3.easeInOut },
           1.5
         );
 
         // Halo fades out as the globe transitions, in the same window as the
-        // globe shrink/fade (t=1.5 → t=4.5). Its progress stays at 1.0 throughout
+        // globe shrink/fade (t=1.5 → t=6.5). Its progress stays at 1.0 throughout
         // so scattered particles dissolve away without ever forming into text.
         tl.fromTo(
           particleHalo.material,
-          3,
+          5,
           { opacity: 0.4 },
-          { opacity: 0, ease: Power1.easeInOut },
+          { opacity: 0, ease: Power3.easeInOut },
           1.5
         );
 
         if (bgGlobe) {
           // Shrink the CSS edge glow perfectly in sync with the 3D sphere
-          tl.fromTo(bgGlobe, 3, { scale: 1, opacity: 1 }, { scale: 0.001, opacity: 0, ease: Power1.easeInOut }, 1.5);
+          tl.fromTo(bgGlobe, 5, { scale: 1, opacity: 1 }, { scale: 0.001, opacity: 0, ease: Power3.easeInOut }, 1.5);
         }
         if (bgText) {
-          tl.fromTo(bgText, 3, { opacity: 0 }, { opacity: 1, ease: Power1.easeInOut }, 1.5);
+          tl.fromTo(bgText, 5, { opacity: 0 }, { opacity: 1, ease: Power3.easeInOut }, 1.5);
         }
 
         if (subText) {
-          tl.fromTo(subText, 2, { opacity: 0 }, { opacity: 1, ease: Power1.easeInOut }, 4.5);
+          tl.fromTo(subText, 3, { opacity: 0 }, { opacity: 1, ease: Power3.easeInOut }, 6.5);
         }
         if (sideLabel) {
-          tl.fromTo(sideLabel, 2, { opacity: 0 }, { opacity: 1, ease: Power1.easeInOut }, 4.5);
+          tl.fromTo(sideLabel, 3, { opacity: 0 }, { opacity: 1, ease: Power3.easeInOut }, 6.5);
         }
 
         tl.eventCallback('onReverseComplete', () => {
@@ -850,45 +867,27 @@ export default function TextSphereAnimation() {
         });
 
         document.body.style.cursor = 'pointer';
-        let pendingReverse: ReturnType<typeof setTimeout> | null = null;
 
         window.addEventListener('click', () => {
-          // Cancel any pending delayed reverse (prevents stale callbacks
-          // from firing if the user clicks again before 300ms is up)
-          if (pendingReverse !== null) {
-            clearTimeout(pendingReverse);
-            pendingReverse = null;
-          }
-
           if (tl.reversed()) {
-            // Reverse is complete or in progress — play forward from current position
             tl.reversed(false);
-            TweenMax.to(idleSpeed, 1.5, { value: 0, ease: Power1.easeOut });
-
-            // Restore visibility of inner children so the timeline parent tween can reveal them properly
+            TweenMax.to(idleSpeed, 2.5, { value: 0, ease: Power3.easeOut });
             if (subText) {
-              TweenMax.to(subText.querySelectorAll('p'), 0.3, { opacity: 1, ease: Power1.easeOut });
+              TweenMax.to(subText.querySelectorAll('p'), 0.3, { opacity: 1, ease: Power3.easeOut });
             }
             if (sideLabel) {
-              TweenMax.to(sideLabel.children, 0.3, { opacity: 1, ease: Power1.easeOut });
+              TweenMax.to(sideLabel.children, 0.3, { opacity: 1, ease: Power3.easeOut });
             }
           } else {
-            // Immediately fade out subText children instead of the parent container
-            // This prevents GSAP from permanently killing the main timeline's tween!
             if (subText) {
-              TweenMax.to(subText.querySelectorAll('p'), 0.3, { opacity: 0, ease: Power1.easeOut });
+              TweenMax.to(subText.querySelectorAll('p'), 0.3, { opacity: 0, ease: Power3.easeOut });
             }
             if (sideLabel) {
-              TweenMax.to(sideLabel.children, 0.3, { opacity: 0, ease: Power1.easeOut });
+              TweenMax.to(sideLabel.children, 0.3, { opacity: 0, ease: Power3.easeOut });
             }
-            // Short delay to let subText flex, then reverse from CURRENT position
-            // (no tl.time() call — GSAP reverses from wherever the playhead is)
-            pendingReverse = setTimeout(() => {
-              pendingReverse = null;
-              tl.reversed(true);
-              const durationLeft = Math.max(tl.time(), 0.1);
-              TweenMax.to(idleSpeed, durationLeft, { value: 0.003, ease: Power1.easeIn });
-            }, 300);
+            tl.reversed(true);
+            const durationLeft = Math.max(tl.time(), 0.1);
+            TweenMax.to(idleSpeed, durationLeft, { value: 0.003, ease: Power3.easeInOut });
           }
         });
       }
@@ -948,16 +947,18 @@ export default function TextSphereAnimation() {
         /* ── Static typography overrides (animations untouched) ── */
         .hero-tagline-1 {
           font-family: 'Inter', system-ui, -apple-system, sans-serif;
-          font-weight: 800;
+          font-weight: 700;
           font-size: 13px;
-          letter-spacing: 0.2em;
-          color: #2563EB;
+          letter-spacing: 0.25em;
+          color: #0052FF;
+          margin-top: 3rem;
           margin-bottom: 0.5rem;
+          text-transform: uppercase;
           text-shadow: none !important;
           -webkit-text-stroke: 0 !important;
           background: none !important;
           -webkit-background-clip: unset !important;
-          -webkit-text-fill-color: #2563EB !important;
+          -webkit-text-fill-color: #0052FF !important;
           background-clip: unset !important;
           fill: solid !important;
         }
@@ -966,7 +967,7 @@ export default function TextSphereAnimation() {
           font-family: 'Inter', system-ui, -apple-system, sans-serif;
           font-weight: 300;
           font-size: 18px;
-          letter-spacing: 0.05em;
+          letter-spacing: 0.02em;
           color: #475569;
           text-shadow: none !important;
           -webkit-text-stroke: 0 !important;
@@ -984,109 +985,244 @@ export default function TextSphereAnimation() {
         <svg viewBox="0 0 1920 1080" className="absolute inset-0 w-full h-full opacity-80 md:opacity-100" preserveAspectRatio="xMidYMid slice" fill="none">
           <defs>
             <polygon id="hex" points="0,-80 69.28,-40 69.28,40 0,80 -69.28,40 -69.28,-40" />
+            {/* Left cluster beam gradient */}
+            <linearGradient id="beamGradientLeft" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(120,190,255,0)" />
+              <stop offset="35%" stopColor="rgba(120,190,255,0)" />
+              <stop offset="50%" stopColor="rgba(120,190,255,0.38)" />
+              <stop offset="65%" stopColor="rgba(120,190,255,0)" />
+              <stop offset="100%" stopColor="rgba(120,190,255,0)" />
+            </linearGradient>
+            {/* Right cluster beam gradient — slightly warmer tint for visual distinction */}
+            <linearGradient id="beamGradientRight" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(140,200,255,0)" />
+              <stop offset="35%" stopColor="rgba(140,200,255,0)" />
+              <stop offset="50%" stopColor="rgba(140,200,255,0.38)" />
+              <stop offset="65%" stopColor="rgba(140,200,255,0)" />
+              <stop offset="100%" stopColor="rgba(140,200,255,0)" />
+            </linearGradient>
+            <g id="hexBlock">
+              <use href="#hex" x="0.0" y="0.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="138.6" y="0.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
+              <use href="#hex" transform="translate(277.1, 0.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
+              <use href="#hex" transform="translate(415.7, 0.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
+              <use href="#hex" x="554.2" y="0.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="692.8" y="0.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="831.4" y="0.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="969.9" y="0.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="1247.0" y="0.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="1385.6" y="0.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="1524.2" y="0.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="1662.7" y="0.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="1801.3" y="0.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="1939.8" y="0.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
+              <use href="#hex" x="-69.3" y="120.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="69.3" y="120.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="207.8" y="120.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="346.4" y="120.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="485.0" y="120.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="762.1" y="120.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" transform="translate(900.6, 120.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
+              <use href="#hex" x="1177.8" y="120.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="1316.3" y="120.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
+              <use href="#hex" x="1454.9" y="120.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="1593.4" y="120.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="1732.0" y="120.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
+              <use href="#hex" x="1870.6" y="120.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="0.0" y="240.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="138.6" y="240.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" transform="translate(277.1, 240.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
+              <use href="#hex" x="415.7" y="240.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="1524.2" y="240.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
+              <use href="#hex" x="1662.7" y="240.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="1801.3" y="240.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="1939.8" y="240.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="346.4" y="360.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="485.0" y="360.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="1593.4" y="360.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" transform="translate(1732.0, 360.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
+              <use href="#hex" transform="translate(1870.6, 360.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
+              <use href="#hex" x="415.7" y="480.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="1524.2" y="480.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" transform="translate(1662.7, 480.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
+              <use href="#hex" x="1801.3" y="480.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="1939.8" y="480.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="346.4" y="600.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" transform="translate(1454.9, 600.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
+              <use href="#hex" transform="translate(1593.4, 600.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
+              <use href="#hex" x="1732.0" y="600.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="1870.6" y="600.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="1662.7" y="720.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" transform="translate(1801.3, 720.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
+              <use href="#hex" x="1939.8" y="720.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="-69.3" y="840.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="69.3" y="840.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="207.8" y="840.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="346.4" y="840.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
+              <use href="#hex" x="485.0" y="840.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="1593.4" y="840.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="1732.0" y="840.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="1870.6" y="840.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="0.0" y="960.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="138.6" y="960.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" transform="translate(277.1, 960.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
+              <use href="#hex" x="415.7" y="960.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
+              <use href="#hex" x="1247.0" y="960.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="1385.6" y="960.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" transform="translate(1524.2, 960.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
+              <use href="#hex" x="1662.7" y="960.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
+              <use href="#hex" x="1801.3" y="960.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
+              <use href="#hex" x="1939.8" y="960.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="-69.3" y="1080.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="69.3" y="1080.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" transform="translate(207.8, 1080.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
+              <use href="#hex" x="346.4" y="1080.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="485.0" y="1080.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="623.5" y="1080.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
+              <use href="#hex" x="762.1" y="1080.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="900.6" y="1080.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" transform="translate(1039.2, 1080.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
+              <use href="#hex" x="1177.8" y="1080.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="1316.3" y="1080.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
+              <use href="#hex" x="1454.9" y="1080.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="1593.4" y="1080.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="1732.0" y="1080.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="1870.6" y="1080.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="0.0" y="1200.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="138.6" y="1200.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="277.1" y="1200.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="415.7" y="1200.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="554.2" y="1200.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" transform="translate(692.8, 1200.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
+              <use href="#hex" transform="translate(831.4, 1200.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
+              <use href="#hex" transform="translate(969.9, 1200.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
+              <use href="#hex" transform="translate(1108.5, 1200.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
+              <use href="#hex" x="1247.0" y="1200.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="1385.6" y="1200.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="1524.2" y="1200.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
+              <use href="#hex" x="1662.7" y="1200.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="1801.3" y="1200.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+              <use href="#hex" x="1939.8" y="1200.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+            </g>
+            {/*
+              hexStrokesOnly: a stroke-only copy of each hexagon used exclusively in the beam mask.
+              SVG mask rules: white = show beam, black = block beam.
+              fill="black" = completely opaque in mask (blocks beam in hex interiors).
+              stroke="white" = fully transparent in mask (lets beam through only at the border lines).
+              Only hexagons that have visible strokes in hexBlock are included here.
+            */}
+            {/*
+              hexStrokesLeft: stroke-only hexagons for the LEFT cluster (x ≤ ~1050).
+              hexStrokesRight: stroke-only hexagons for the RIGHT cluster (x ≥ ~1150).
+              SVG mask: white = let beam through, black = block beam (interior blocked).
+            */}
+            <g id="hexStrokesLeft">
+              <use href="#hex" x="0.0" y="0.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="138.6" y="0.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="554.2" y="0.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="692.8" y="0.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="831.4" y="0.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="969.9" y="0.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="-69.3" y="120.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="69.3" y="120.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="207.8" y="120.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="346.4" y="120.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="485.0" y="120.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="762.1" y="120.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="0.0" y="240.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="138.6" y="240.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="415.7" y="240.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="346.4" y="360.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="485.0" y="360.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="346.4" y="600.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="-69.3" y="840.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="69.3" y="840.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="207.8" y="840.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="346.4" y="840.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="485.0" y="840.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="0.0" y="960.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="138.6" y="960.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="415.7" y="960.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="-69.3" y="1080.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="69.3" y="1080.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="346.4" y="1080.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="485.0" y="1080.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="623.5" y="1080.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="762.1" y="1080.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="900.6" y="1080.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="0.0" y="1200.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="138.6" y="1200.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="277.1" y="1200.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="415.7" y="1200.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="554.2" y="1200.0" fill="black" stroke="white" strokeWidth="3" />
+            </g>
+            <g id="hexStrokesRight">
+              <use href="#hex" x="1247.0" y="0.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1385.6" y="0.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1524.2" y="0.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1662.7" y="0.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1801.3" y="0.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1939.8" y="0.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1177.8" y="120.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1316.3" y="120.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1454.9" y="120.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1593.4" y="120.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1732.0" y="120.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1870.6" y="120.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1524.2" y="240.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1662.7" y="240.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1801.3" y="240.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1939.8" y="240.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1593.4" y="360.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1801.3" y="480.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1939.8" y="480.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1732.0" y="600.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1870.6" y="600.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1662.7" y="720.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1939.8" y="720.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1593.4" y="840.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1732.0" y="840.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1870.6" y="840.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1247.0" y="960.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1385.6" y="960.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1662.7" y="960.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1801.3" y="960.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1939.8" y="960.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1177.8" y="1080.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1316.3" y="1080.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1454.9" y="1080.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1593.4" y="1080.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1732.0" y="1080.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1870.6" y="1080.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1247.0" y="1200.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1385.6" y="1200.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1524.2" y="1200.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1662.7" y="1200.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1801.3" y="1200.0" fill="black" stroke="white" strokeWidth="3" />
+              <use href="#hex" x="1939.8" y="1200.0" fill="black" stroke="white" strokeWidth="3" />
+            </g>
+            {/* Left mask: beam only visible at left hexagon outlines */}
+            <mask id="hexMaskLeft">
+              <rect width="1920" height="1080" fill="black" />
+              <use href="#hexStrokesLeft" />
+            </mask>
+            {/* Right mask: beam only visible at right hexagon outlines */}
+            <mask id="hexMaskRight">
+              <rect width="1920" height="1080" fill="black" />
+              <use href="#hexStrokesRight" />
+            </mask>
           </defs>
           <g>
-            <use href="#hex" x="0.0" y="0.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="138.6" y="0.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
-            <use href="#hex" transform="translate(277.1, 0.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
-            <use href="#hex" transform="translate(415.7, 0.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
-            <use href="#hex" x="554.2" y="0.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="692.8" y="0.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="831.4" y="0.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="969.9" y="0.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="1247.0" y="0.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="1385.6" y="0.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="1524.2" y="0.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="1662.7" y="0.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="1801.3" y="0.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="1939.8" y="0.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
-            <use href="#hex" x="-69.3" y="120.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="69.3" y="120.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="207.8" y="120.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="346.4" y="120.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="485.0" y="120.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="762.1" y="120.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" transform="translate(900.6, 120.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
-            <use href="#hex" x="1177.8" y="120.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="1316.3" y="120.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
-            <use href="#hex" x="1454.9" y="120.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="1593.4" y="120.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="1732.0" y="120.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
-            <use href="#hex" x="1870.6" y="120.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="0.0" y="240.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="138.6" y="240.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" transform="translate(277.1, 240.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
-            <use href="#hex" x="415.7" y="240.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="1524.2" y="240.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
-            <use href="#hex" x="1662.7" y="240.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="1801.3" y="240.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="1939.8" y="240.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="346.4" y="360.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="485.0" y="360.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="1593.4" y="360.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" transform="translate(1732.0, 360.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
-            <use href="#hex" transform="translate(1870.6, 360.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
-            <use href="#hex" x="415.7" y="480.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="1524.2" y="480.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" transform="translate(1662.7, 480.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
-            <use href="#hex" x="1801.3" y="480.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="1939.8" y="480.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="346.4" y="600.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" transform="translate(1454.9, 600.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
-            <use href="#hex" transform="translate(1593.4, 600.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
-            <use href="#hex" x="1732.0" y="600.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="1870.6" y="600.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="1662.7" y="720.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" transform="translate(1801.3, 720.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
-            <use href="#hex" x="1939.8" y="720.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="-69.3" y="840.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="69.3" y="840.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="207.8" y="840.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="346.4" y="840.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
-            <use href="#hex" x="485.0" y="840.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="1593.4" y="840.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="1732.0" y="840.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="1870.6" y="840.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="0.0" y="960.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="138.6" y="960.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" transform="translate(277.1, 960.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
-            <use href="#hex" x="415.7" y="960.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
-            <use href="#hex" x="1247.0" y="960.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="1385.6" y="960.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" transform="translate(1524.2, 960.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
-            <use href="#hex" x="1662.7" y="960.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
-            <use href="#hex" x="1801.3" y="960.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
-            <use href="#hex" x="1939.8" y="960.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="-69.3" y="1080.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="69.3" y="1080.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" transform="translate(207.8, 1080.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
-            <use href="#hex" x="346.4" y="1080.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="485.0" y="1080.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="623.5" y="1080.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
-            <use href="#hex" x="762.1" y="1080.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="900.6" y="1080.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" transform="translate(1039.2, 1080.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
-            <use href="#hex" x="1177.8" y="1080.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="1316.3" y="1080.0" fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
-            <use href="#hex" x="1454.9" y="1080.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="1593.4" y="1080.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="1732.0" y="1080.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="1870.6" y="1080.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="0.0" y="1200.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="138.6" y="1200.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="277.1" y="1200.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="415.7" y="1200.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="554.2" y="1200.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" transform="translate(692.8, 1200.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
-            <use href="#hex" transform="translate(831.4, 1200.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
-            <use href="#hex" transform="translate(969.9, 1200.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
-            <use href="#hex" transform="translate(1108.5, 1200.0) scale(0.6)" fill="rgba(37,99,235,0.06)" stroke="none" />
-            <use href="#hex" x="1247.0" y="1200.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="1385.6" y="1200.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="1524.2" y="1200.0" fill="rgba(37,99,235,0.03)" stroke="rgba(59,130,246,0.05)" strokeWidth="1" />
-            <use href="#hex" x="1662.7" y="1200.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="1801.3" y="1200.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
-            <use href="#hex" x="1939.8" y="1200.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
+            {/* The base hexagons */}
+            <use href="#hexBlock" />
+            {/* Left cluster beam — sweeps locally through the left hexagon group only */}
+            <rect y="0" width="750" height="1080" fill="url(#beamGradientLeft)" mask="url(#hexMaskLeft)">
+              <animate attributeName="x" values="-750; 750" dur="10s" repeatCount="indefinite" />
+            </rect>
+            {/* Right cluster beam — sweeps locally through the right hexagon group independently, staggered timing */}
+            <rect y="0" width="850" height="1080" fill="url(#beamGradientRight)" mask="url(#hexMaskRight)">
+              <animate attributeName="x" values="750; 2700" dur="13s" begin="-5s" repeatCount="indefinite" />
+            </rect>
           </g>
         </svg>
       </div>
@@ -1112,7 +1248,7 @@ export default function TextSphereAnimation() {
         id="sub-text"
         className="absolute top-[67%] left-1/2 -translate-x-1/2 text-center z-20 w-full opacity-0 pointer-events-none"
       >
-        <p className="hero-tagline-1 mt-6">
+        <p className="hero-tagline-1">
           INSPIRED BY PASSION
         </p>
         <p className="hero-tagline-2">
@@ -1121,7 +1257,7 @@ export default function TextSphereAnimation() {
       </div>
 
       {/* --- LEFT VERTICAL LABEL --- */}
-      <div id="side-label" className="absolute left-[5px] md:left-[10px] top-1/2 -translate-y-1/2 z-40 flex flex-col items-center opacity-0 pointer-events-none">
+      <div id="side-label" className="absolute left-[13px] md:left-[18px] top-1/2 -translate-y-1/2 z-40 flex flex-col items-center opacity-0 pointer-events-none">
         <div className="w-[1px] h-24 md:h-36 bg-gradient-to-b from-transparent to-[#0A2540]/60 mb-6" />
         <p
           className="text-[#0A2540] text-[13px] uppercase font-bold tracking-[0.4em]"
