@@ -8,13 +8,13 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
-  const [activeLink, setActiveLink] = useState('#home');
+  const [activeLink, setActiveLink] = useState('/#home');
 
   const navLinks = [
-    { href: '#home', label: 'Home' },
-    { href: '#events', label: 'Events' },
+    { href: '/#home', label: 'Home' },
+    { href: '/#events', label: 'Events' },
     { href: '/team', label: 'Team' },
-    { href: '#about', label: 'About' },
+    { href: '/#about', label: 'About' },
   ];
 
   useEffect(() => {
