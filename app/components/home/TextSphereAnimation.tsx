@@ -606,27 +606,34 @@ export default function TextSphereAnimation() {
 
         ctx.fillStyle = '#0A2540';
 
-        // ── Restored original values ──
-        // dotSize 1.6  →  diameter 3.2px
-        // dotSpacing 3.0  →  gap between dot edges ≈ 3.0 − 3.2 = −0.2px
-        // (dots just barely kiss — classic "dotted globe" look with thin hairline gaps)
-        // The original brightness < 45 threshold on an unblurred image; here we use
-        // < 60 on the lightly-blurred mask to catch lake edges without over-expanding land.
         const dotSize = 1.6;
         const dotSpacing = 3.0;
 
         for (let y = 0; y < canvas.height; y += dotSpacing) {
-          for (let x = 0; x < canvas.width; x += dotSpacing) {
+          // Extract mathematical sphere latitude from the 2D y-coordinate
+          const lat = (Math.PI / 2) - (y / canvas.height) * Math.PI;
+          // Calculate polar squish ratio (limit to 0.1 to avoid infinite poles)
+          const scaleCos = Math.max(Math.cos(lat), 0.1); 
+          const spacingX = dotSpacing / scaleCos;
+
+          for (let x = 0; x < canvas.width; x += spacingX) {
             const i = (Math.floor(y) * canvas.width + Math.floor(x)) * 4;
             const brightness =
               (maskData.data[i] + maskData.data[i + 1] + maskData.data[i + 2]) / 3;
 
-            // Threshold 75: high enough to catch lake-edge pixels (brightness ~60–75
-            // after the gentle 1.5px blur) while remaining well below ocean (>180)
-            // and below the blurred coastline of small islands like Sri Lanka (~80–100).
-            if (brightness < 75) {
+            // Absolute solid extraction (< 180). This strictly converts all internal 
+            // gray topological data, rivers, and faint lakes into solid landmasses.
+            // Eliminates all "light patches" and accidental transparency inside continents.
+            if (brightness < 180) {
               ctx.beginPath();
-              ctx.arc(x, y, dotSize, 0, Math.PI * 2);
+              const radiusX = dotSize / scaleCos;
+              const radiusY = dotSize;
+              // Stretch the 2D canvas draw inversely to counteract WebGL 3D polar squishing
+              if (Math.abs(radiusX - radiusY) < 0.01) {
+                ctx.arc(x, y, dotSize, 0, Math.PI * 2);
+              } else {
+                ctx.ellipse(x, y, radiusX, radiusY, 0, 0, Math.PI * 2);
+              }
               ctx.fill();
             }
           }
