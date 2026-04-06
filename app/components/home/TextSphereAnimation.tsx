@@ -213,6 +213,7 @@ export default function TextSphereAnimation() {
           {
             side: THREE.DoubleSide,
             transparent: true,
+            depthWrite: false, // Prevent scattered invisible text triangles from occluding the background
             uniforms: {
               uTime: { type: 'f', value: 0 },
             },
@@ -369,6 +370,7 @@ export default function TextSphereAnimation() {
         const spriteMaterial = new THREE.SpriteMaterial({
           map: texture,
           transparent: true,
+          depthWrite: false, // Prevent transparent label bounding box from punching depth holes
         });
 
         const sprite = new THREE.Sprite(spriteMaterial);
@@ -407,7 +409,7 @@ export default function TextSphereAnimation() {
         };
 
         const pinColor = 0x0A2540;
-        const pinMaterial = new THREE.MeshBasicMaterial({ color: pinColor, transparent: true });
+        const pinMaterial = new THREE.MeshBasicMaterial({ color: pinColor, transparent: true, depthWrite: false });
 
         function create3DPinMesh(colorMat: any) {
           const pinGroup = new THREE.Group();
@@ -486,6 +488,7 @@ export default function TextSphereAnimation() {
               transparent: true,
               opacity: 0.8,
               linewidth: 1,
+              depthWrite: false,
             });
             const connectorLine = new THREE.Line(lineGeom, lineMat);
             earth.add(connectorLine);
@@ -496,6 +499,7 @@ export default function TextSphereAnimation() {
             const dotMat = new THREE.MeshBasicMaterial({
               color: 0x0A2540,
               transparent: true,
+              depthWrite: false,
             });
             const dot = new THREE.Mesh(dotGeom, dotMat);
             dot.position.copy(pinTopPos);
@@ -671,6 +675,8 @@ export default function TextSphereAnimation() {
 
         root.onUpdate = () => {
           earthSphere.rotation.y -= idleSpeed.value;
+          // Hide text completely from WebGL pipeline when invisible to prevent artifact strays
+          textAnimation.visible = textAnimation.material.opacity > 0.01;
         };
 
         const tl = new TimelineMax();
