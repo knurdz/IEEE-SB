@@ -14,7 +14,7 @@ export default function Navbar() {
     { href: '/#home', label: 'Home' },
     { href: '/#events', label: 'Events' },
     { href: '/team', label: 'Team' },
-    { href: '/#about', label: 'About' },
+    { href: '/chapters', label: 'Chapters' },
   ];
 
   useEffect(() => {
