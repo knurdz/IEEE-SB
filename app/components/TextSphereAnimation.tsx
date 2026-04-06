@@ -354,6 +354,8 @@ export default function TextSphereAnimation() {
 
         const texture = new THREE.Texture(labelCanvas);
         texture.needsUpdate = true;
+        texture.minFilter = (THREE as any).LinearFilter;
+        texture.generateMipmaps = false;
 
         const spriteMaterial = new THREE.SpriteMaterial({
           map: texture,
