@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Navbar() {
@@ -41,17 +40,11 @@ export default function Navbar() {
               href="/"
               className="relative flex items-center gap-3 hover:opacity-80 transition-opacity"
             >
-              <Image
+              <img
                 src="/logo/ieeesblogo.png"
                 alt="IEEE SB Logo"
-                width={48}
-                height={48}
-                className="object-contain w-12"
+                className="object-contain h-10 w-auto"
               />
-              <div className="flex flex-col">
-                <span className="text-[#0A2540] font-semibold text-sm leading-tight">University of Moratuwa</span>
-                <span className="text-[#0A2540] font-normal text-xs leading-tight">IEEE Student Branch</span>
-              </div>
             </Link>
 
             {/* Desktop Navigation */}
