@@ -643,7 +643,7 @@ export default function TextSphereAnimation() {
         ctx.putImageData(imageData, 0, 0);
 
         // Step 2: Draw fully-opaque hexagons over the land pixels.
-        ctx.fillStyle = '#2691c7ff';
+        ctx.fillStyle = '#227aa6ff';
 
         // MODIFIED: Reduced size and spacing
         const hexRadius = 2.8;
