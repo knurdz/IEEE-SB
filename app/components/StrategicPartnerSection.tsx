@@ -4,7 +4,6 @@ export default function StrategicPartnerSection() {
   return (
     <section id="strategic-partner-section" className="strategic-partner" aria-label="Strategic partner">
       <div className="partner-card">
-        <div className="card-bg-image" aria-hidden="true" />
         <h2>Strategic Partner</h2>
         <div className="partner-main-row">
           <div className="partner-logo-col">
