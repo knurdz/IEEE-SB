@@ -150,7 +150,7 @@ export default function TextSphereAnimation() {
 
       const SPHERE_RADIUS = 240;
 
-      function TextAnimation(this: any, textGeometry: any) {
+      function TextAnimation(this: any, textGeometry: any, color: number) {
         const bufferGeometry = new THREE.BAS.ModelBufferGeometry(textGeometry);
         const aAnimation = bufferGeometry.createAttribute('aAnimation', 2);
         const aEndPosition = bufferGeometry.createAttribute('aEndPosition', 3);
@@ -241,7 +241,7 @@ export default function TextSphereAnimation() {
               'transformed = rotateVector(tQuat, transformed);',
             ],
           },
-          { diffuse: 0x0A2540 }
+          { diffuse: color || 0x0A2540 }
         );
 
         THREE.Mesh.call(this, bufferGeometry, material);
@@ -282,7 +282,7 @@ export default function TextSphereAnimation() {
         return geometry;
       }
 
-      function createTextAnimation() {
+      function createTextAnimation(color: number) {
         const THREE = (window as any).THREE;
 
         const ieeeGeometry = generateTextGeometry('IEEE', {
@@ -315,7 +315,7 @@ export default function TextSphereAnimation() {
         THREE.BAS.Utils.tessellateRepeat(ieeeGeometry, 1.0, 2);
         THREE.BAS.Utils.separateFaces(ieeeGeometry);
 
-        return new (TextAnimation as any)(ieeeGeometry);
+        return new (TextAnimation as any)(ieeeGeometry, color);
       }
 
       // --- Helper: Create a text label sprite ---
@@ -402,6 +402,27 @@ export default function TextSphereAnimation() {
         earth.visible = true;
         earth.renderOrder = -1;
 
+        // ── Depth-mask sphere ──────────────────────────────────────────────────
+        // The dot-texture globe uses alphaTest:0.5, which means ocean fragments
+        // are DISCARDED and never write to the depth buffer. That leaves a gap
+        // through which back-hemisphere pins can bleed through the globe body.
+        // This invisible opaque sphere is the same shape as the globe but renders
+        // in the OPAQUE pass (transparent:false), so it always writes a solid
+        // depth shield across the entire globe silhouette before any transparent
+        // objects (pins, dot texture) are drawn. Back-side pins are then occluded
+        // by the depth test regardless of whether they're behind ocean or land.
+        const depthMaskGeo = new THREE.SphereGeometry(SPHERE_RADIUS * 0.98, 64, 64);
+        const depthMaskMat = new THREE.MeshBasicMaterial({
+          colorWrite: false, // completely invisible
+          depthWrite: true,  // but writes to depth buffer
+          side: THREE.FrontSide,
+        });
+        const depthMaskSphere = new THREE.Mesh(depthMaskGeo, depthMaskMat);
+        // Being opaque (transparent:false by default) it will be sorted into the
+        // opaque render pass which runs before any transparent draw-calls, so the
+        // depth values are guaranteed to be in place when pins are tested.
+        earth.add(depthMaskSphere);
+
         const calcPos = (lat: number, lon: number, radius: number) => {
           const phi = (lon + 180) * (Math.PI / 180);
           const theta = (90 - lat) * (Math.PI / 180);
@@ -413,14 +434,14 @@ export default function TextSphereAnimation() {
           return { x, y, z };
         };
 
-        const pinColor = 0x0A2540;
+        const pinColor = 0x2563EB; // blue-600 — matches hero tagline and globe accent
         const pinMaterial = new THREE.MeshBasicMaterial({ color: pinColor, transparent: true, depthWrite: false });
 
         function create3DPinMesh(colorMat: any) {
           const pinGroup = new THREE.Group();
 
-          const spikeHeight = 15;
-          const spikeBaseRadius = 2.5;
+          const spikeHeight = 8;        // reduced from 15 — keeps pins anchored near surface
+          const spikeBaseRadius = 1.8;  // slimmer base to match shorter height
 
           const spikeGeometry = new THREE.CylinderGeometry(0, spikeBaseRadius, spikeHeight, 16);
           const spikeMesh = new THREE.Mesh(spikeGeometry, colorMat);
@@ -428,7 +449,7 @@ export default function TextSphereAnimation() {
           spikeMesh.position.y = spikeHeight / 2;
           pinGroup.add(spikeMesh);
 
-          const topSphereRadius = 3.5;
+          const topSphereRadius = 2.2;  // reduced from 3.5 — proportional to shorter spike
           const topSphereGeometry = new THREE.SphereGeometry(topSphereRadius, 16, 16);
           const topSphereMesh = new THREE.Mesh(topSphereGeometry, colorMat);
 
@@ -449,10 +470,12 @@ export default function TextSphereAnimation() {
         ];
 
         const extraMaterials: any[] = [];
+        // pinObjects: used for per-frame back-hemisphere culling (see root.onUpdate)
+        const pinObjects: any[] = [];
 
         pinsData.forEach((pin) => {
           const pinModelGroup = create3DPinMesh(pinMaterial);
-          const pos = calcPos(pin.lat, pin.lon, SPHERE_RADIUS * 1.01);
+          const pos = calcPos(pin.lat, pin.lon, SPHERE_RADIUS * 1.003); // sit close to globe surface
           pinModelGroup.position.set(pos.x, pos.y, pos.z);
           earth.add(pinModelGroup);
 
@@ -461,10 +484,14 @@ export default function TextSphereAnimation() {
             new THREE.Vector3().copy(pos).normalize()
           );
 
+          // Collect connected label elements so they hide/show in sync with this pin
+          const pinExtras: any[] = [];
+
           // --- Label above Sri Lanka pin (in earth's coordinate space) ---
           if (pin.name === 'Sri Lanka') {
-            const spikeHeight = 15;
-            const topSphereRadius = 3.5;
+            // Keep these in sync with create3DPinMesh above
+            const spikeHeight = 8;
+            const topSphereRadius = 2.2;
 
             // Pin top position in earth's local space
             const normal = new THREE.Vector3(pos.x, pos.y, pos.z).normalize();
@@ -489,7 +516,7 @@ export default function TextSphereAnimation() {
             lineGeom.vertices.push(pinTopPos.clone());
             lineGeom.vertices.push(labelPos.clone());
             const lineMat = new THREE.LineBasicMaterial({
-              color: 0x0A2540,
+              color: 0x2563EB,
               transparent: true,
               opacity: 0.8,
               linewidth: 1,
@@ -498,11 +525,12 @@ export default function TextSphereAnimation() {
             const connectorLine = new THREE.Line(lineGeom, lineMat);
             earth.add(connectorLine);
             extraMaterials.push(lineMat);
+            pinExtras.push(connectorLine);
 
             // Small dot at the bend / connection point on pin top
             const dotGeom = new THREE.SphereGeometry(1.5, 8, 8);
             const dotMat = new THREE.MeshBasicMaterial({
-              color: 0x0A2540,
+              color: 0x2563EB,
               transparent: true,
               depthWrite: false,
             });
@@ -510,6 +538,7 @@ export default function TextSphereAnimation() {
             dot.position.copy(pinTopPos);
             earth.add(dot);
             extraMaterials.push(dotMat);
+            pinExtras.push(dot);
 
             // Label sprite
             const { sprite: labelSprite, material: labelMat } =
@@ -517,10 +546,15 @@ export default function TextSphereAnimation() {
             labelSprite.position.copy(labelPos);
             earth.add(labelSprite);
             extraMaterials.push(labelMat);
+            pinExtras.push(labelSprite);
           }
+
+          pinObjects.push({ group: pinModelGroup, extras: pinExtras });
         });
 
         (earth as any).pinMaterials = [pinMaterial, ...extraMaterials];
+        // Expose pin objects for per-frame back-hemisphere culling
+        (earth as any).pinObjects = pinObjects;
 
         return earth;
       }
@@ -674,9 +708,21 @@ export default function TextSphereAnimation() {
         const earthSphere = createEarthSphere(earthTexture);
         sphereGroup.add(earthSphere);
 
-        const textAnimation = createTextAnimation();
+        const textAnimation = createTextAnimation(0x0A2540);
         textAnimation.material.opacity = 0;
         sphereGroup.add(textAnimation);
+
+        // ── Particle halo ──────────────────────────────────────────────────
+        // A second copy of the text geometry, fully scattered (progress = 1.0),
+        // provides the richer two-colour particle cloud during the globe phase.
+        // It uses a lighter blue-300 accent that contrasts the dark globe dots,
+        // recreating the original denser / two-tone first-animation appearance.
+        // It never forms into text — it fades to zero before the primary text
+        // becomes readable, so the final globe state is completely unaffected.
+        const particleHalo = createTextAnimation(0x93C5FD); // blue-300 accent
+        particleHalo.material.opacity = 0.4;
+        particleHalo.animationProgress = 1.0;          // fully scattered — stays scattered
+        sphereGroup.add(particleHalo);
 
         const light = new THREE.DirectionalLight(0xffffff, 1);
         light.position.set(0, 0, 1);
@@ -691,10 +737,29 @@ export default function TextSphereAnimation() {
 
         let idleSpeed = { value: 0 };
 
+        // Reusable vector to avoid per-frame allocation inside onUpdate
+        const _pinWorldPos = new THREE.Vector3();
+
         root.onUpdate = () => {
           earthSphere.rotation.y -= idleSpeed.value;
           // Hide text completely from WebGL pipeline when invisible to prevent artifact strays
           textAnimation.visible = textAnimation.material.opacity > 0.01;
+          // Same guard for the halo layer
+          particleHalo.visible = particleHalo.material.opacity > 0.01;
+
+          // ── Per-frame back-hemisphere culling ──────────────────────────────
+          // Belt-and-suspenders on top of the depth-mask sphere: explicitly hide
+          // any pin whose world-space Z is ≤ 0 (back side, away from camera at
+          // z=600). getWorldPosition() accounts for all parent rotations so this
+          // stays correct as the globe spins. The threshold of -2 softens the
+          // hard pop exactly at the equator.
+          const pinData: any[] = (earthSphere as any).pinObjects || [];
+          pinData.forEach((p: any) => {
+            p.group.getWorldPosition(_pinWorldPos);
+            const onFront = _pinWorldPos.z > -2;
+            p.group.visible = onFront;
+            p.extras.forEach((extra: any) => { extra.visible = onFront; });
+          });
         };
 
         const tl = new TimelineMax();
@@ -740,6 +805,17 @@ export default function TextSphereAnimation() {
           1.5
         );
 
+        // Halo fades out as the globe transitions, in the same window as the
+        // globe shrink/fade (t=1.5 → t=4.5). Its progress stays at 1.0 throughout
+        // so scattered particles dissolve away without ever forming into text.
+        tl.fromTo(
+          particleHalo.material,
+          3,
+          { opacity: 0.4 },
+          { opacity: 0, ease: Power1.easeInOut },
+          1.5
+        );
+
         if (bgGlobe) {
           // Shrink the CSS edge glow perfectly in sync with the 3D sphere
           tl.fromTo(bgGlobe, 3, { scale: 1, opacity: 1 }, { scale: 0.001, opacity: 0, ease: Power1.easeInOut }, 1.5);
@@ -756,6 +832,9 @@ export default function TextSphereAnimation() {
           earthSphere.material.opacity = 1;
           (earthSphere as any).pinMaterials.forEach((mat: any) => (mat.opacity = 1));
           textAnimation.material.opacity = 0;
+          // Restore halo so it’s visible again when the globe reappears
+          particleHalo.material.opacity = 0.4;
+          particleHalo.visible = true;
           earthSphere.scale.set(1, 1, 1);
           if (bgGlobe) {
             bgGlobe.style.opacity = '1';
