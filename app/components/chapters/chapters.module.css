@@ -1,0 +1,492 @@
+.page {
+  --chapters-bg-primary: #060b18;
+  --chapters-text-primary: #e8ecf4;
+  --chapters-text-secondary: #8b95b0;
+  --chapters-text-muted: #5a6580;
+  --chapters-accent-cyan: var(--cyan);
+  --chapters-border-color: rgba(0, 212, 255, 0.08);
+  --chapters-glow-cyan: rgba(0, 212, 255, 0.12);
+  --chapters-transition-fast: 0.2s ease;
+  --chapters-transition-med: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --chapters-transition-slow: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  background: var(--chapters-bg-primary);
+  color: var(--chapters-text-primary);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(0, 212, 255, 0.04) 0%, transparent 60%),
+    var(--chapters-bg-primary);
+}
+
+.heroBgGrid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridFloat 20s linear infinite;
+}
+
+@keyframes gridFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(60px); }
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  padding: 2rem;
+  transition: transform 0.1s linear, opacity 0.1s linear;
+}
+
+.heroBadge {
+  display: inline-block;
+  padding: 8px 24px;
+  background: rgba(0, 212, 255, 0.06);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: 50px;
+  color: var(--chapters-accent-cyan);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  animation: badgePulse 3s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% { box-shadow: 0 0 15px rgba(0, 212, 255, 0.03); }
+  50% { box-shadow: 0 0 25px rgba(0, 212, 255, 0.08); }
+}
+
+.heroTitle {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #c0d0e8 40%, var(--chapters-accent-cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.heroSubtitle {
+  font-size: 1.1rem;
+  color: var(--chapters-text-secondary);
+  max-width: 560px;
+  margin: 0 auto 3rem;
+  line-height: 1.8;
+}
+
+.heroScrollIndicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--chapters-text-muted);
+  font-size: 0.8rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  animation: scrollBounce 2.5s ease-in-out infinite;
+}
+
+.scrollArrow {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--chapters-accent-cyan);
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(10px); opacity: 1; }
+}
+
+.societiesContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 3rem 6rem;
+}
+
+.societyCard {
+  position: relative;
+  padding: 6rem 0;
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.societyCard + .societyCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--chapters-border-color), rgba(0, 212, 255, 0.12), var(--chapters-border-color), transparent);
+}
+
+.societyCard.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.societyCard.slideLeft {
+  animation: slideInLeft 0.7s ease forwards;
+}
+
+.societyCard.slideRight {
+  animation: slideInRight 0.7s ease forwards;
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.societyInner {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+  position: relative;
+  padding: 0 1rem;
+  transition: background 0.2s ease;
+}
+
+.reverse .societyInner {
+  flex-direction: row-reverse;
+}
+
+.reverse .societyContent {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.reverse .socialLinks {
+  justify-content: flex-end;
+}
+
+.reverse .societyLabel {
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+}
+
+.societyImageWrapper {
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.octagonFrame {
+  width: 260px;
+  height: 260px;
+  background: linear-gradient(145deg, #ffffff, #e8ecf4);
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  transition: transform var(--chapters-transition-med);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.societyCard:hover .octagonFrame {
+  transform: scale(1.04) rotate(1deg);
+}
+
+.societyLogo {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.imageGlow {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--chapters-glow-cyan) 0%, transparent 70%);
+  filter: blur(35px);
+  z-index: 1;
+  transition: all var(--chapters-transition-slow);
+}
+
+.societyCard:hover .imageGlow {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.18) 0%, transparent 70%);
+}
+
+.societyContent {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.societyLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--chapters-accent-cyan);
+  margin-bottom: 1.2rem;
+}
+
+.labelLine {
+  display: inline-block;
+  width: 32px;
+  height: 2px;
+  background: var(--chapters-accent-cyan);
+  border-radius: 2px;
+  transition: width var(--chapters-transition-med);
+}
+
+.societyCard:hover .labelLine {
+  width: 48px;
+}
+
+.societyTitle {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.2rem;
+  color: #f0f4fa;
+  transition: color var(--chapters-transition-fast);
+}
+
+.societyCard:hover .societyTitle {
+  background: linear-gradient(135deg, #ffffff, var(--chapters-accent-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.societyDescription {
+  font-size: 0.95rem;
+  color: var(--chapters-text-secondary);
+  line-height: 1.85;
+  margin-bottom: 2rem;
+  max-width: 520px;
+}
+
+.socialLinks {
+  display: flex;
+  gap: 12px;
+}
+
+.socialIcon {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--chapters-text-secondary);
+  text-decoration: none;
+  transition: all var(--chapters-transition-fast);
+}
+
+.socialIcon svg {
+  width: 19px;
+  height: 19px;
+}
+
+.socialIcon:hover {
+  transform: translateY(-2px);
+}
+
+.socialIconWebsite {
+  border-color: rgba(0, 212, 255, 0.2);
+  color: var(--chapters-accent-cyan);
+  background: rgba(0, 212, 255, 0.06);
+}
+
+.socialIconWebsite:hover {
+  border-color: var(--chapters-accent-cyan);
+  background: rgba(0, 212, 255, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 212, 255, 0.2);
+}
+
+.socialIconInstagram {
+  border-color: rgba(225, 48, 108, 0.2);
+  color: #e1306c;
+  background: rgba(225, 48, 108, 0.06);
+}
+
+.socialIconInstagram:hover {
+  border-color: #e1306c;
+  background: rgba(225, 48, 108, 0.15);
+  box-shadow: 0 4px 16px rgba(225, 48, 108, 0.2);
+}
+
+.socialIconLinkedin {
+  border-color: rgba(10, 102, 194, 0.2);
+  color: #0a66c2;
+  background: rgba(10, 102, 194, 0.06);
+}
+
+.socialIconLinkedin:hover {
+  border-color: #0a66c2;
+  background: rgba(10, 102, 194, 0.15);
+  box-shadow: 0 4px 16px rgba(10, 102, 194, 0.2);
+}
+
+.socialIconTwitter {
+  border-color: rgba(29, 161, 242, 0.2);
+  color: #1da1f2;
+  background: rgba(29, 161, 242, 0.06);
+}
+
+.socialIconTwitter:hover {
+  border-color: #1da1f2;
+  background: rgba(29, 161, 242, 0.15);
+  box-shadow: 0 4px 16px rgba(29, 161, 242, 0.2);
+}
+
+.footer {
+  text-align: center;
+  padding: 4rem 2rem;
+  position: relative;
+  border-top: 1px solid var(--chapters-border-color);
+}
+
+.footerContent {
+  position: relative;
+  z-index: 2;
+}
+
+.footerGlow {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  height: 100px;
+  background: radial-gradient(ellipse, rgba(0, 212, 255, 0.06) 0%, transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.footerCopy {
+  color: var(--chapters-text-muted);
+  font-size: 0.85rem;
+}
+
+.footerSub {
+  margin-top: 6px;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--chapters-accent-cyan);
+  opacity: 0.5;
+}
+
+@media (max-width: 900px) {
+  .societyInner {
+    flex-direction: column !important;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .societyContent {
+    align-items: center !important;
+  }
+
+  .reverse .societyContent {
+    text-align: center;
+    align-items: center;
+  }
+
+  .reverse .societyLabel {
+    flex-direction: row;
+  }
+
+  .societyDescription {
+    max-width: 100%;
+  }
+
+  .socialLinks {
+    justify-content: center !important;
+  }
+
+  .societyLabel {
+    justify-content: center !important;
+  }
+
+  .octagonFrame {
+    width: 200px;
+    height: 200px;
+  }
+
+  .imageGlow {
+    width: 180px;
+    height: 180px;
+  }
+
+  .societyCard {
+    padding: 4rem 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .societiesContainer {
+    padding: 2rem 1.2rem 4rem;
+  }
+
+  .octagonFrame {
+    width: 160px;
+    height: 160px;
+  }
+
+  .heroTitle {
+    font-size: 2.2rem;
+  }
+
+  .heroSubtitle {
+    font-size: 0.95rem;
+  }
+
+  .societyTitle {
+    font-size: 1.5rem;
+  }
+
+  .societyDescription {
+    font-size: 0.88rem;
+  }
+
+  .societyCard {
+    padding: 3rem 0;
+  }
+}
