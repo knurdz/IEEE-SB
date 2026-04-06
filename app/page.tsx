@@ -1,4 +1,3 @@
-import Footer from './components/Footer';
 import StrategicPartnerSection from './components/StrategicPartnerSection';
 import TextSphereAnimation from './components/TextSphereAnimation';
 import AboutSection from './components/AboutSection';
@@ -11,7 +10,6 @@ export default function Home() {
       <AboutSection />
       <StrategicPartnerSection />
       <EventsSection />
-      <Footer />
     </main>
   );
 }
