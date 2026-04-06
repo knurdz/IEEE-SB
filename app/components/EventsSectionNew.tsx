@@ -419,7 +419,7 @@ export default function EventsSection() {
               
               <div className="flex-1 overflow-y-auto w-full p-4 sm:p-6 custom-scrollbar flex flex-col items-center">
                 {/* Main Modal Image */}
-                <div className="group relative w-full lg:w-[85%] h-[40vh] sm:h-[50vh] lg:h-[65vh] rounded-3xl overflow-hidden mb-8 bg-black">
+                <div className="group relative shrink-0 w-full lg:w-[85%] h-[40vh] sm:h-[50vh] lg:h-[65vh] min-h-[40vh] sm:min-h-[50vh] lg:min-h-[65vh] rounded-3xl overflow-hidden mb-8 bg-black">
                   <Image
                     src={modalImage || selectedEvent.image}
                     alt={selectedEvent.title}
