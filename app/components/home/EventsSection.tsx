@@ -176,6 +176,7 @@ function EventCard({
           src={event.image}
           alt={event.title}
           fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover transition-transform duration-700 group-hover:scale-110"
         />
         
@@ -422,6 +423,7 @@ export default function EventsSection() {
                     src={modalImage || selectedEvent.image}
                     alt={selectedEvent.title}
                     fill
+                    sizes="(max-width: 1024px) 100vw, 85vw"
                     className="object-cover"
                   />
                   {/* Left Button */}
@@ -463,7 +465,13 @@ export default function EventsSection() {
                         className={`relative aspect-video rounded-lg overflow-hidden border-2 transition-all ${modalImage === img ? 'border-primary' : 'border-transparent hover:border-white/50'}`}
                         onClick={() => setModalImage(img)}
                       >
-                        <Image src={img} alt={`${selectedEvent.title} - ${idx}`} fill className="object-cover" />
+                        <Image 
+                          src={img} 
+                          alt={`${selectedEvent.title} - ${idx}`} 
+                          fill 
+                          sizes="(max-width: 768px) 25vw, 20vw"
+                          className="object-cover" 
+                        />
                       </button>
                     ))}
                   </div>

@@ -251,7 +251,7 @@ export default function AboutSection() {
 
       
       {/* 1. ABOUT SECTION */}
-      <section id="about" className="about-section" ref={sectionRef}>
+      <section id="about" className="about-section relative" ref={sectionRef}>
           <div className="about-grid"></div>
           <div className="scan-line"></div>
           <div className="about-container">

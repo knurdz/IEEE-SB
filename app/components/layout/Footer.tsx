@@ -18,7 +18,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer id="footer-section" className="site-footer" aria-label="IEEE UoM footer">
+    <footer id="footer-section" className="site-footer relative" aria-label="IEEE UoM footer">
       <div className="footer-top-row">
         <Image
           src="/logo/ieeesblogo.png"
