@@ -1,6 +1,7 @@
 import StrategicPartnerSection from './components/home/StrategicPartnerSection';
 import TextSphereAnimation from './components/home/TextSphereAnimation';
 import AboutSection from './components/home/AboutSection';
+import AwardsSection from './components/home/AwardsSection';
 import EventsSection from './components/home/EventsSection';
 
 export default function Home() {
@@ -8,6 +9,7 @@ export default function Home() {
     <main className="min-h-screen relative" id="home">
       <TextSphereAnimation />
       <AboutSection />
+      <AwardsSection />
       <StrategicPartnerSection />
       <EventsSection />
     </main>

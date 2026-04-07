@@ -1,18 +1,6 @@
 import Image from 'next/image';
-
-const socialLinks = [
-  { href: '#', icon: '/social/FB.svg', alt: 'Facebook' },
-  { href: '#', icon: '/social/Insta.svg', alt: 'Instagram' },
-  { href: '#', icon: '/social/You-tube.svg', alt: 'YouTube' },
-  { href: '#', icon: '/social/Linkdin.svg', alt: 'LinkedIn' },
-];
-
-const footerNav = [
-  { href: '#', label: 'Home' },
-  { href: '#', label: 'Events' },
-  { href: '#', label: 'Team' },
-  { href: '#', label: 'Chapters' },
-];
+import Link from 'next/link';
+import { footerSocialItems, primaryNavItems } from '@/lib/site';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -21,7 +9,7 @@ export default function Footer() {
     <footer id="footer-section" className="site-footer relative" aria-label="IEEE UoM footer">
       <div className="footer-top-row">
         <Image
-          src="/logo/ieeesblogo.png"
+          src="/logo/ieeesblogo-light2.png"
           alt="IEEE University of Moratuwa Student Branch"
           className="ieee-logo"
           width={395}
@@ -30,10 +18,10 @@ export default function Footer() {
         />
 
         <nav className="footer-nav" aria-label="Footer main navigation">
-          {footerNav.map((item) => (
-            <a key={item.label} href={item.href}>
+          {primaryNavItems.map((item) => (
+            <Link key={item.label} href={item.href}>
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
       </div>
@@ -41,9 +29,9 @@ export default function Footer() {
       <hr className="footer-divider" />
 
       <div className="social-row" aria-label="Social links">
-        {socialLinks.map((social) => (
-          <a key={social.alt} href={social.href} aria-label={social.alt}>
-            <Image src={social.icon} alt={social.alt} width={40} height={40} />
+        {footerSocialItems.map((social) => (
+          <a key={social.label} href={social.href} aria-label={social.label}>
+            <Image src={social.icon} alt={social.label} width={40} height={40} />
           </a>
         ))}
       </div>
@@ -52,7 +40,7 @@ export default function Footer() {
         <p>© Copyright {currentYear} IEEE - All rights reserved.</p>
         <p>Use of this Web site signifies your agreement to the IEEE Terms and Conditions.</p>
         <p>
-          A not-for-profit organization, IEEE is the world's largest technical professional
+          A not-for-profit organization, IEEE is the world&apos;s largest technical professional
           organization dedicated to advancing technology for the benefit of humanity.
         </p>
       </div>
