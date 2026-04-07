@@ -92,22 +92,37 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
       {/* Image Carousel — right side */}
       {!imgFailed && images.length > 0 && (
         <div
-          className="w-full h-[300px] md:h-full md:col-span-6 md:col-start-7 md:row-start-1 overflow-hidden relative order-first md:order-none bg-black/20"
+          className="w-full h-[250px] md:h-full md:col-span-5 md:col-start-8 md:row-start-1 overflow-hidden relative order-first md:order-none"
+          style={{
+            WebkitMaskImage: isMobile
+              ? 'linear-gradient(to bottom, black 30%, transparent 95%)'
+              : 'linear-gradient(to left, black 25%, transparent 95%)',
+            maskImage: isMobile
+              ? 'linear-gradient(to bottom, black 30%, transparent 95%)'
+              : 'linear-gradient(to left, black 25%, transparent 95%)',
+          }}
         >
           <AnimatePresence mode="wait">
             <motion.div
               key={currentImageIndex}
-              className="absolute inset-0 w-full h-full flex items-center justify-center p-4"
-              initial={{ opacity: 0, scale: 0.95 }}
+              className="absolute inset-0 w-full h-full"
+              initial={{ opacity: 0, scale: 1.1 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.05 }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.8, ease: 'easeInOut' }}
             >
               <motion.img
                 src={images[currentImageIndex]}
                 alt={`${event.name} view ${currentImageIndex + 1}`}
                 loading="lazy"
-                className="max-w-full max-h-full object-contain shadow-2xl rounded-sm"
+                className="w-full h-full object-cover object-center"
+                animate={{ scale: [1, 1.08], x: [0, -5], y: [0, -5] }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  repeatType: 'reverse',
+                  ease: 'linear',
+                }}
                 onError={() => setImgFailed(true)}
               />
             </motion.div>
@@ -162,7 +177,7 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
           </span>
         </div>
 
-        <h3 className="font-display font-bold text-2xl sm:text-[28px] text-white mb-2 tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+        <h3 className="font-display font-bold text-2xl sm:text-[28px] text-white mb-2 tracking-tight">
           {event.name}
         </h3>
 
