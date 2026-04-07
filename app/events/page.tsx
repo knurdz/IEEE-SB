@@ -14,7 +14,7 @@ export default function EventsPage() {
   return (
     <main
       className="min-h-screen text-white font-body selection:bg-ieee-blue selection:text-ieee-bg"
-      style={{ background: 'linear-gradient(180deg, #020B18 0%, #030E23 45%, #020B18 100%)' }}
+      style={{ background: 'linear-gradient(180deg, #000408 0%, #030E23 45%, #000408 100%)' }}
     >
       <EventsHero />
 

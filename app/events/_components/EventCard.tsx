@@ -92,14 +92,14 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
       {/* Image Carousel — right side */}
       {!imgFailed && images.length > 0 && (
         <div
-          className="w-full h-[250px] md:h-full md:col-span-5 md:col-start-8 md:row-start-1 overflow-hidden relative order-first md:order-none"
+          className="w-full h-[250px] md:h-full md:col-span-6 md:col-start-7 md:row-start-1 overflow-hidden relative order-first md:order-none"
           style={{
             WebkitMaskImage: isMobile
               ? 'linear-gradient(to bottom, black 30%, transparent 95%)'
-              : 'linear-gradient(to left, black 25%, transparent 90%)',
+              : 'linear-gradient(to left, black 40%, transparent 80%)',
             maskImage: isMobile
               ? 'linear-gradient(to bottom, black 30%, transparent 95%)'
-              : 'linear-gradient(to left, black 25%, transparent 90%)',
+              : 'linear-gradient(to left, black 40%, transparent 80%)',
           }}
         >
           <AnimatePresence mode="wait">
@@ -177,7 +177,7 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
           </span>
         </div>
 
-        <h3 className="font-display font-bold text-2xl sm:text-[28px] text-white mb-2 tracking-tight">
+        <h3 className="font-display font-bold text-2xl sm:text-[28px] text-white mb-2 tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
           {event.name}
         </h3>
 

@@ -68,8 +68,8 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
           <motion.div
             className="relative w-full overflow-y-auto"
             style={{
-              maxWidth: '900px',
-              maxHeight: '85vh',
+              maxWidth: '1200px',
+              maxHeight: '90vh',
               background: '#0A1628',
               border: '1px solid rgba(0, 163, 255, 0.3)',
               borderRadius: '20px',
@@ -217,26 +217,36 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
               <div
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-                  gap: '12px',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+                  gridAutoRows: '220px',
+                  gridAutoFlow: 'dense',
+                  gap: '16px',
                 }}
               >
-                {(event.gallery ?? []).map((src) => {
+                {(event.gallery ?? []).map((src, index) => {
                   if (failedImages.has(src)) return null;
                   const isLoaded = loadedImages.has(src);
+                  
+                  // Bento grid span logic
+                  let gridSpan = {};
+                  if (index === 0) gridSpan = { gridColumn: 'span 2', gridRow: 'span 2' };
+                  else if (index === 3) gridSpan = { gridColumn: 'span 2', gridRow: 'span 1' };
+                  else if (index === 5) gridSpan = { gridColumn: 'span 1', gridRow: 'span 2' };
+                  else if (index === 10) gridSpan = { gridColumn: 'span 2', gridRow: 'span 2' };
+
                   return (
                     <div
                       key={src}
                       className="gallery-image-cell"
                       style={{
-                        borderRadius: '12px',
+                        borderRadius: '16px',
                         overflow: 'hidden',
-                        aspectRatio: '16/10',
                         background: '#0D1F35',
                         position: 'relative',
                         cursor: 'pointer',
                         border: '1px solid rgba(0,163,255,0.1)',
-                        transition: 'all 0.25s ease',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        ...gridSpan
                       }}
                       onMouseEnter={(e) => {
                         const el = e.currentTarget as HTMLDivElement;
