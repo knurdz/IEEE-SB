@@ -743,10 +743,10 @@ export default function TextSphereAnimation() {
         }
 
         if (subText) {
-          tl.fromTo(subText, 3, { opacity: 0 }, { opacity: 1, ease: Power3.easeInOut }, 6.5);
+          tl.fromTo(subText, 3, { opacity: 0 }, { opacity: 1, ease: Power3.easeInOut }, 5.0);
         }
         if (sideLabel) {
-          tl.fromTo(sideLabel, 3, { opacity: 0 }, { opacity: 1, ease: Power3.easeInOut }, 6.5);
+          tl.fromTo(sideLabel, 3, { opacity: 0 }, { opacity: 1, ease: Power3.easeInOut }, 5.0);
         }
         if (sideLabelGlobe) {
           tl.fromTo(sideLabelGlobe, 5, { opacity: 1 }, { opacity: 0, ease: Power3.easeInOut }, 1.5);
