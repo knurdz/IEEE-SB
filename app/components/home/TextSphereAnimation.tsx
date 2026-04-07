@@ -1150,9 +1150,9 @@ export default function TextSphereAnimation() {
 
       {/* --- LEFT VERTICAL LABEL FOR TEXT STATE --- */}
       <div id="side-label" className="absolute left-[13px] md:left-[18px] top-1/2 -translate-y-1/2 z-40 flex flex-col items-center opacity-0 pointer-events-none">
-        <div className="w-[1px] h-24 md:h-36 bg-gradient-to-b from-transparent to-[#0A2540]/60 mb-6" />
+        <div className="w-[1px] h-24 md:h-36 bg-gradient-to-b from-transparent to-[#173599]/60 mb-6" />
         <p
-          className="text-[#0A2540] text-[13px] uppercase font-bold tracking-[0.4em]"
+          className="text-[#173599] text-[13px] uppercase font-bold tracking-[0.4em]"
           style={{
             fontFamily: "'Inter', sans-serif",
             writingMode: 'vertical-rl',
@@ -1161,7 +1161,7 @@ export default function TextSphereAnimation() {
         >
           Since 2008
         </p>
-        <div className="w-[1px] h-24 md:h-36 bg-gradient-to-t from-transparent to-[#0A2540]/60 mt-6" />
+        <div className="w-[1px] h-24 md:h-36 bg-gradient-to-t from-transparent to-[#173599]/60 mt-6" />
       </div>
     </div>
   );
