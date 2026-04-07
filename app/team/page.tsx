@@ -8,13 +8,13 @@ import { meetOurTeam, executiveCommittee, leadershipBody } from './data';
 /* ─── Page ───────────────────────────────────────────────────────────────── */
 export default function TeamPage() {
   return (
-    <div className="min-h-screen bg-[#000408] text-white overflow-x-hidden">
+    <div className="min-h-screen bg-background text-white overflow-x-hidden pt-20">
       {/* Subtle grid overlay — same as IEEE-SB grid-pattern utility */}
       <div
         className="fixed inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px)',
+            'linear-gradient(rgba(96,165,250,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(96,165,250,0.04) 1px, transparent 1px)',
           backgroundSize: '60px 60px',
         }}
       />
@@ -31,12 +31,12 @@ export default function TeamPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="inline-block px-4 py-1.5 text-xs tracking-[0.3em] text-cyan-400 uppercase bg-cyan-500/10 rounded-full border border-cyan-500/20 mb-6">
+          <span className="inline-block px-4 py-1.5 text-xs tracking-[0.3em] text-primary uppercase bg-primary/10 rounded-full border border-primary/20 mb-6 font-orbitron">
             Network Nodes
           </span>
           <h1 className="text-5xl md:text-6xl font-bold mb-4">
             Meet Our{' '}
-            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent font-orbitron">
               Team
             </span>
           </h1>

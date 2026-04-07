@@ -26,12 +26,12 @@ export default function TeamSection({
       {/* Glassmorphism container — matches IEEE-SB's glass-fiber style */}
       <div className="relative rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] p-10 overflow-visible">
         {/* Top edge glow line */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
 
         {/* Section badge + heading */}
         <div className="text-center mb-10">
           <motion.span
-            className="inline-block px-3 py-1 text-[0.65rem] tracking-[0.3em] text-cyan-400 uppercase bg-cyan-500/10 rounded-full border border-cyan-500/20 mb-4"
+            className="inline-block px-3 py-1 text-[0.65rem] tracking-[0.3em] text-primary uppercase bg-primary/10 rounded-full border border-primary/20 mb-4 font-mono"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -50,7 +50,7 @@ export default function TeamSection({
               i === arr.length - 1 ? (
                 <span
                   key={i}
-                  className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent"
+                  className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent font-orbitron"
                 >
                   {' '}{word}
                 </span>

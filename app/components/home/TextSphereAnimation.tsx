@@ -685,16 +685,16 @@ export default function TextSphereAnimation() {
   ];
 
   return (
-    <div className="relative w-full h-screen bg-[#000408] overflow-hidden">
+    <div className="relative w-full h-screen bg-background overflow-hidden">
       {/* Loading Indicator */}
       {isLoading && (
-        <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#000408]">
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-background">
           <div className="text-center">
             <div className="relative w-20 h-20 mx-auto mb-6">
-              <div className="absolute inset-0 border-4 border-blue-500/20 rounded-full"></div>
-              <div className="absolute inset-0 border-4 border-transparent border-t-blue-500 rounded-full animate-spin"></div>
+              <div className="absolute inset-0 border-4 border-primary/20 rounded-full"></div>
+              <div className="absolute inset-0 border-4 border-transparent border-t-primary rounded-full animate-spin"></div>
             </div>
-            <p className="text-blue-300/80 text-sm font-jetbrains tracking-[0.3em] animate-pulse">
+            <p className="text-primary/80 text-sm font-jetbrains tracking-[0.3em] animate-pulse">
               LOADING GLOBE
             </p>
           </div>
@@ -752,7 +752,7 @@ export default function TextSphereAnimation() {
 
       {/* --- SLIDESHOW BACKGROUND --- */}
       <div id="bg-slideshow" className="absolute inset-0 z-0 opacity-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[#000408]/50 z-10" />
+        <div className="absolute inset-0 bg-background/50 z-10" />
         <img src="/1.jpeg" alt="Slide 1" className="slideshow-img slide-1" />
         <img src="/2.jpeg" alt="Slide 2" className="slideshow-img slide-2" />
         <img src="/3.jpeg" alt="Slide 3" className="slideshow-img slide-3" />
@@ -765,7 +765,7 @@ export default function TextSphereAnimation() {
           className="absolute inset-0"
           style={{
             background:
-              'radial-gradient(circle at center, rgba(96, 165, 250, 0.35) 0%, rgba(0, 102, 255, 0.15) 35%, rgba(0, 4, 8, 1) 70%)',
+              'radial-gradient(circle at center, var(--primary-glow) 0%, var(--accent-glow) 35%, var(--background) 70%)',
           }}
         />
         <div
@@ -865,24 +865,24 @@ export default function TextSphereAnimation() {
         id="sub-text"
         className="absolute top-[67%] left-1/2 -translate-x-1/2 text-center text-white z-20 w-full opacity-0 pointer-events-none font-jetbrains"
       >
-        <p className="text-2xl md:text-3xl font-extrabold tracking-[0.3em] mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-white to-blue-300">
+        <p className="text-2xl md:text-3xl font-extrabold tracking-[0.3em] mb-2 bg-clip-text text-transparent bg-gradient-to-r from-primary via-white to-primary font-orbitron">
           INSPIRED BY PASSION
         </p>
-        <p className="text-sm md:text-base text-gray-400 tracking-[0.4em] font-light">
+        <p className="text-xs md:text-sm text-gray-400 tracking-[0.4em] font-light">
           TO TRANSFORM BEYOND EXCELLENCE.
         </p>
       </div>
 
       {/* --- LEFT VERTICAL LABEL --- */}
       <div className="absolute left-6 md:left-12 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-6 opacity-0 animate-[fadeIn_2s_ease-out_3s_forwards]">
-        <div className="w-px h-16 md:h-32 bg-gradient-to-b from-transparent to-blue-400/50" />
+        <div className="w-px h-16 md:h-32 bg-gradient-to-b from-transparent to-primary/50" />
         <p
-          className="text-blue-300/60 text-xs font-jetbrains tracking-[0.4em] uppercase"
+          className="text-primary/60 text-xs font-mono tracking-[0.4em] uppercase"
           style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
         >
           Since 2008
         </p>
-        <div className="w-px h-16 md:h-32 bg-gradient-to-t from-transparent to-blue-400/50" />
+        <div className="w-px h-16 md:h-32 bg-gradient-to-t from-transparent to-primary/50" />
       </div>
 
       {/* Global Vignette */}
