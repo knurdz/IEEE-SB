@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import EventsHero from './_components/EventsHero';
 import Roadmap from './_components/Roadmap';
 import ClosingCTA from './_components/ClosingCTA';
-import Footer from '../components/Footer';
 
 export const metadata: Metadata = {
   title: 'Events | IEEE Student Branch - University of Moratuwa',
@@ -31,13 +30,6 @@ export default function EventsPage() {
       </div>
 
       <ClosingCTA />
-
-      {/* Footer Separator */}
-      <div className="w-full flex justify-center py-8 bg-ieee-bg relative z-10 overflow-hidden">
-        <div className="w-full max-w-[95%] 2xl:max-w-[1400px] h-[1px] bg-gradient-to-r from-transparent via-ieee-blue/40 to-transparent shadow-[0_0_15px_rgba(0,163,255,0.2)]" />
-      </div>
-      
-      <Footer />
     </main>
   );
 }
