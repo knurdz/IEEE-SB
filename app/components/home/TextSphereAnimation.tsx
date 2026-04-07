@@ -451,9 +451,9 @@ export default function TextSphereAnimation() {
           { name: 'Canada', lat: 56.1, lon: -106.3 },
           { name: 'UK', lat: 51.5, lon: -0.1 },
           { name: 'Africa', lat: 9.0, lon: 8.0 },
-          { name: 'Sri Lanka', lat: 7.9, lon: 80.0 },
+          { name: 'Sri Lanka', lat: 7.87, lon: 80.77 },
           { name: 'Japan', lat: 36.2, lon: 138.2 },
-          { name: 'India', lat: 20.6, lon: 78.9 },
+          { name: 'India', lat: 20.59, lon: 78.96 },
         ];
 
         const extraMaterials: any[] = [];
@@ -557,15 +557,21 @@ export default function TextSphereAnimation() {
           x: ((lon + 180) / 360) * maskCanvas.width,
           y: ((90 - lat) / 180) * maskCanvas.height,
         });
-        const slCentroid = toMapXY(7.85, 80.77);
+        const slCentroid = toMapXY(7.87, 80.77);
         const slOutline: [number, number][] = [
-          [9.83, 80.23], [9.50, 80.45], [9.27, 80.81], [8.85, 81.00], [8.58, 81.23], [8.23, 81.43],
-          [7.91, 81.55], [7.72, 81.70], [7.42, 81.83], [7.02, 81.87], [6.87, 81.83], [6.37, 81.52],
-          [6.12, 81.12], [5.92, 80.59], [6.03, 80.22], [6.42, 79.99], [6.93, 79.84], [7.21, 79.83],
-          [7.58, 79.79], [8.03, 79.70], [8.35, 79.80], [8.78, 79.92], [8.98, 79.90], [9.30, 80.02],
-          [9.60, 80.03], [9.74, 79.88], [9.81, 80.04]
+          [9.57, 79.42], [8.88, 79.55], [8.87, 79.69], [8.79, 79.71], [8.71, 79.74], [8.68, 79.66], [8.60, 79.60], [8.51, 79.58], [8.40, 79.58], [8.33, 79.53],
+          [8.25, 79.50], [8.16, 79.50], [8.06, 79.50], [7.89, 79.55], [7.66, 79.59], [7.51, 79.59], [7.34, 79.62], [7.21, 79.62], [7.08, 79.64], [6.96, 79.64],
+          [6.87, 79.65], [6.75, 79.68], [6.64, 79.71], [6.51, 79.77], [6.42, 79.78], [6.33, 79.81], [6.24, 79.84], [6.15, 79.87], [6.07, 79.91], [6.00, 79.95],
+          [5.93, 80.01], [5.87, 80.09], [5.82, 80.17], [5.79, 80.27], [5.76, 80.36], [5.74, 80.47], [5.72, 80.62], [5.75, 80.71], [5.84, 80.89], [5.87, 80.96],
+          [5.90, 81.04], [5.92, 81.16], [5.96, 81.24], [5.99, 81.31], [6.01, 81.40], [6.05, 81.45], [6.10, 81.54], [6.15, 81.60], [6.20, 81.67], [6.25, 81.74],
+          [6.33, 81.81], [6.42, 81.89], [6.49, 81.93], [6.58, 81.97], [6.67, 82.00], [6.75, 82.03], [6.84, 82.05], [6.93, 82.07], [7.01, 82.08], [7.11, 82.06],
+          [7.24, 82.07], [7.41, 82.05], [7.55, 82.01], [7.75, 81.94], [7.89, 81.85], [7.94, 81.79], [8.04, 81.75], [8.12, 81.71], [8.18, 81.65], [8.27, 81.62],
+          [8.37, 81.60], [8.45, 81.57], [8.55, 81.55], [8.64, 81.49], [8.70, 81.42], [8.79, 81.40], [8.86, 81.35], [8.91, 81.28], [8.99, 81.24], [9.05, 81.18],
+          [9.11, 81.13], [9.21, 81.07], [9.29, 81.04], [9.38, 80.99], [9.45, 80.94], [9.53, 80.84], [9.62, 80.75], [9.76, 80.56], [9.89, 80.45], [9.96, 80.40],
+          [10.02, 80.32], [10.04, 80.21], [10.02, 80.08], [10.00, 79.92], [9.96, 79.84], [9.93, 79.75], [9.87, 79.69], [9.81, 79.62], [9.74, 79.57], [9.67, 79.49],
+          [9.58, 79.45]
         ];
-        const scaleFactor = 1.6;
+        const scaleFactor = 1.0;
         const slPts = slOutline.map(([lat, lon]) => {
           const p = toMapXY(lat, lon);
           return {
@@ -857,28 +863,25 @@ export default function TextSphereAnimation() {
           margin-top: 3rem;
           margin-bottom: 0.5rem;
           text-transform: uppercase;
-          text-shadow: none !important;
+          text-shadow: 0 4px 12px rgba(0, 82, 255, 0.15) !important;
           -webkit-text-stroke: 0 !important;
           background: none !important;
           -webkit-background-clip: unset !important;
-          -webkit-text-fill-color: #0052FF !important;
+          -webkit-text-fill-color: #122f6cff !important;
           background-clip: unset !important;
-          fill: solid !important;
         }
 
         .hero-tagline-2 {
           font-family: 'Inter', system-ui, -apple-system, sans-serif;
-          font-weight: 300;
-          font-size: 18px;
-          letter-spacing: 0.02em;
-          color: #475569;
-          text-shadow: none !important;
+          font-weight: 600;
+          font-size: 20px;
+          letter-spacing: 0.04em;
+          background: linear-gradient(90deg, #163a66ff 0%, #0052FF 100%) !important;
+          -webkit-background-clip: text !important;
+          -webkit-text-fill-color: transparent !important;
+          background-clip: text !important;
+          filter: drop-shadow(0 4px 16px rgba(23, 53, 153, 0.15));
           -webkit-text-stroke: 0 !important;
-          background: none !important;
-          -webkit-background-clip: unset !important;
-          -webkit-text-fill-color: #475569 !important;
-          background-clip: unset !important;
-          fill: solid !important;
         }
       `}</style>
 
