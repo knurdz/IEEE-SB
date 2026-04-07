@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function TextSphereAnimation() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const hitAreaRef = useRef<HTMLDivElement>(null);
   const initialized = useRef(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -764,33 +765,33 @@ export default function TextSphereAnimation() {
           if (sideLabelGlobe) sideLabelGlobe.style.opacity = '1';
         });
 
-        document.body.style.cursor = 'pointer';
-
-        window.addEventListener('click', () => {
-          if (tl.reversed()) {
-            tl.reversed(false);
-            TweenMax.to(idleSpeed, 2.5, { value: 0, ease: Power3.easeOut });
-            if (subText) {
-              TweenMax.to(subText.querySelectorAll('p'), 0.3, { opacity: 1, ease: Power3.easeOut });
+        if (hitAreaRef.current) {
+          hitAreaRef.current.addEventListener('click', () => {
+            if (tl.reversed()) {
+              tl.reversed(false);
+              TweenMax.to(idleSpeed, 2.5, { value: 0, ease: Power3.easeOut });
+              if (subText) {
+                TweenMax.to(subText.querySelectorAll('p'), 0.3, { opacity: 1, ease: Power3.easeOut });
+              }
+              if (sideLabel) {
+                TweenMax.to(sideLabel.children, 0.3, { opacity: 1, ease: Power3.easeOut });
+              }
+            } else {
+              if (subText) {
+                TweenMax.to(subText.querySelectorAll('p'), 0.3, { opacity: 0, ease: Power3.easeOut });
+              }
+              if (sideLabel) {
+                TweenMax.to(sideLabel.children, 0.3, { opacity: 0, ease: Power3.easeOut });
+              }
+              tl.reversed(true);
+              if (tl.time() > 6.5) {
+                tl.time(6.5);
+              }
+              const durationLeft = Math.max(tl.time(), 0.5);
+              TweenMax.to(idleSpeed, durationLeft, { value: 0.003, ease: Power3.easeInOut });
             }
-            if (sideLabel) {
-              TweenMax.to(sideLabel.children, 0.3, { opacity: 1, ease: Power3.easeOut });
-            }
-          } else {
-            if (subText) {
-              TweenMax.to(subText.querySelectorAll('p'), 0.3, { opacity: 0, ease: Power3.easeOut });
-            }
-            if (sideLabel) {
-              TweenMax.to(sideLabel.children, 0.3, { opacity: 0, ease: Power3.easeOut });
-            }
-            tl.reversed(true);
-            if (tl.time() > 6.5) {
-              tl.time(6.5);
-            }
-            const durationLeft = Math.max(tl.time(), 0.5);
-            TweenMax.to(idleSpeed, durationLeft, { value: 0.003, ease: Power3.easeInOut });
-          }
-        });
+          });
+        }
       }
     };
 
@@ -1114,6 +1115,17 @@ export default function TextSphereAnimation() {
           zIndex: 5,
           border: '1px solid rgba(0, 82, 255, 0.12)',
           boxShadow: '0 0 20px rgba(0, 82, 255, 0.08), 0 0 40px rgba(0, 82, 255, 0.04)'
+        }}
+      />
+
+      {/* --- INTERACTIVE HIT AREA --- */}
+      <div
+        id="globe-hit-area"
+        ref={hitAreaRef}
+        className="absolute inset-0 m-auto rounded-full z-30 cursor-pointer"
+        style={{
+          width: '75.6vh',
+          height: '75.6vh',
         }}
       />
 

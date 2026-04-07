@@ -13,7 +13,6 @@ interface EventCardProps {
   offset: number;
   dragOffset: number;
   onClick: () => void;
-  onExplore: (event: HomeEvent) => void;
 }
 
 function getWrappedIndex(index: number, total: number) {
@@ -35,8 +34,8 @@ function getLoopOffset(index: number, centerIndex: number, total: number) {
   return diff;
 }
 
-function EventCard({ event, offset, dragOffset, onClick, onExplore }: EventCardProps) {
-  const continuousOffset = offset + dragOffset / 260;
+function EventCard({ event, offset, dragOffset, onClick }: EventCardProps) {
+  const continuousOffset = offset + dragOffset / 300;
   const absoluteOffset = Math.abs(continuousOffset);
   const direction = Math.sign(continuousOffset);
   const isCenter = absoluteOffset < 0.5;
@@ -45,9 +44,9 @@ function EventCard({ event, offset, dragOffset, onClick, onExplore }: EventCardP
     <motion.div
       initial={false}
       animate={{
-        x: continuousOffset * 180,
-        z: -absoluteOffset * 180,
-        rotateY: direction * -45 * Math.min(absoluteOffset, 1),
+        x: continuousOffset * 300,
+        z: -absoluteOffset * 280,
+        rotateY: direction * -38 * Math.min(absoluteOffset, 1),
         scale: isCenter ? 1.05 : Math.max(0.8, 1 - absoluteOffset * 0.1),
         opacity: absoluteOffset > 2 ? 0 : isCenter ? 1 : Math.max(0.3, 0.7 - absoluteOffset * 0.2),
         zIndex: 50 - Math.round(absoluteOffset * 10),
@@ -56,9 +55,10 @@ function EventCard({ event, offset, dragOffset, onClick, onExplore }: EventCardP
       style={{ transformStyle: 'preserve-3d' }}
       transition={{ type: 'spring', stiffness: 300, damping: 30, mass: 0.8 }}
       onClick={onClick}
-      className="pointer-events-none absolute h-[380px] w-64 shrink-0 group sm:h-[420px] sm:w-72"
+      whileHover="hover"
+      className="pointer-events-none absolute h-[500px] w-[600px] shrink-0 group sm:h-[550px] sm:w-[750px]"
     >
-      <div className="pointer-events-auto relative h-full w-full cursor-pointer overflow-hidden rounded-[30px] border border-white/10 bg-surface-alt shadow-2xl transition-all duration-500">
+      <div className="pointer-events-auto relative h-full w-full cursor-pointer overflow-hidden rounded-[8px] border border-slate-200/60 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.08)] transition-all duration-500">
         <Image
           src={event.image}
           alt={event.title}
@@ -67,56 +67,43 @@ function EventCard({ event, offset, dragOffset, onClick, onExplore }: EventCardP
           className="object-cover transition-transform duration-700 group-hover:scale-110"
         />
 
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/90" />
 
-        <div className="absolute inset-0 flex flex-col items-center justify-between p-6 text-center sm:p-8">
-          <div className="flex w-full justify-center gap-2">
-            <span className="flex items-center rounded-full border border-white/10 bg-white/10 px-3 py-1 text-[10px] font-medium uppercase tracking-widest leading-none text-white/90 backdrop-blur-md sm:px-4 sm:py-1.5">
+
+        <div className="absolute inset-0 flex flex-col items-center justify-between text-center">
+          <div className="flex w-full justify-center gap-3">
+            <span className="flex items-center gap-1.5 rounded-full border border-white/40 bg-black/5 px-3 py-1 text-[9px] font-bold uppercase tracking-[0.2em] text-white shadow-xl backdrop-blur-sm sm:px-4 sm:py-1.5 sm:text-[10px] font-jetbrains">
+              <span className="h-1.2 w-1.2 rounded-full bg-[#0052FF] shadow-[0_0_8px_rgba(0,82,255,0.6)]" />
               {event.date}
             </span>
-            <span className="flex items-center rounded-full border border-white/10 bg-white/10 px-3 py-1 text-[10px] font-medium uppercase tracking-widest leading-none text-white/90 backdrop-blur-md sm:px-4 sm:py-1.5">
+            <span className="flex items-center gap-1.5 rounded-full border border-white/40 bg-black/5 px-3 py-1 text-[9px] font-bold uppercase tracking-[0.2em] text-white shadow-xl backdrop-blur-sm sm:px-4 sm:py-1.5 sm:text-[10px] font-jetbrains">
+              <span className="h-1.2 w-1.2 rounded-full bg-[#122f6cff] shadow-[0_0_8px_rgba(18,47,108,0.4)]" />
               {event.category}
             </span>
           </div>
 
-          <div className="w-full">
+          {/* Glass Text Container */}
+          <div className="w-full bg-black/5 p-6 backdrop-blur-sm border-t border-white/20 shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
             <h3
               className={cn(
-                'mb-3 font-bold text-white transition-all duration-300 sm:mb-4',
-                isCenter ? 'text-3xl sm:text-4xl' : 'text-xl sm:text-2xl',
+                'font-inter mb-1 font-black text-white transition-all duration-300 tracking-tighter uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]',
+                isCenter ? 'text-3xl sm:text-5xl' : 'text-xl sm:text-2xl opacity-60',
               )}
             >
               {event.title}
             </h3>
 
-            <AnimatePresence>
-              {isCenter ? (
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  className="mb-6 px-2 text-[13px] leading-relaxed text-white/70 sm:mb-8 sm:text-sm"
-                >
-                  {event.description}
-                </motion.p>
-              ) : null}
-            </AnimatePresence>
-
-            <motion.button
-              type="button"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={(eventItem) => {
-                eventItem.stopPropagation();
-                onExplore(event);
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              variants={{
+                hover: { height: 'auto', opacity: 1, marginTop: '1rem' },
               }}
-              className={cn(
-                'glow-button w-full rounded-[20px] py-3 text-sm font-semibold transition-all duration-300 sm:py-4 sm:text-base',
-                !isCenter && 'opacity-60 grayscale-[0.5]',
-              )}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              className="overflow-hidden"
             >
-              Explore Event
-            </motion.button>
+              <p className="px-2 text-[13px] font-semibold leading-relaxed text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)] sm:text-sm font-inter">
+                {event.description}
+              </p>
+            </motion.div>
           </div>
         </div>
       </div>
@@ -174,7 +161,7 @@ export default function EventsSection() {
     _event: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo,
   ) => {
-    const maxOffset = 260;
+    const maxOffset = 300;
     const actualOffset = info.offset.x;
 
     setDragOffset(Math.max(-maxOffset, Math.min(maxOffset, actualOffset)));
@@ -199,10 +186,10 @@ export default function EventsSection() {
   const activeIndex = getWrappedIndex(centerIndex, homeEvents.length);
 
   return (
-    <section id="events" className="relative overflow-hidden bg-background py-20 sm:py-32">
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/5 blur-[80px] sm:h-[600px] sm:w-[1000px] sm:blur-[120px]" />
+    <section id="events" className="relative overflow-hidden bg-[#F8F9FA] py-20 sm:py-32">
+      
 
-      <div className="container mx-auto mb-8 px-4 sm:mb-12">
+      <div className="container mx-auto mb-0 px-4 sm:mb-2">
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -211,17 +198,17 @@ export default function EventsSection() {
           transition={fadeUpTransition()}
         >
           <SectionHeading
-            badge="Flagship Calendar"
             title="Flagship Events"
+            highlight="Events"
             description="Signature IEEE UoM experiences, presented in one consistent interactive carousel."
-            titleClassName="font-orbitron uppercase tracking-tight text-white"
-            descriptionClassName="text-white/60"
+            titleClassName="font-inter font-black uppercase tracking-tighter text-[#122f6cff] mb-2 drop-shadow-sm"
+            descriptionClassName="text-[#122f6cff]/70 text-lg font-semibold font-inter"
           />
         </motion.div>
       </div>
 
       <motion.div
-        className="relative flex h-[500px] w-full cursor-grab items-center justify-center overflow-hidden [perspective:800px] active:cursor-grabbing"
+        className="relative flex h-[650px] w-full cursor-grab items-center justify-center [perspective:1000px] active:cursor-grabbing sm:h-[750px]"
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
         dragElastic={0}
@@ -239,11 +226,14 @@ export default function EventsSection() {
               event={event}
               offset={offset}
               dragOffset={dragOffset}
-              onClick={() => setCenterIndex((previous) => previous + offset)}
-              onExplore={(selected) => {
-                setSelectedEvent(selected);
-                setModalImage(selected.image);
-                setIsPaused(true);
+              onClick={() => {
+                if (offset === 0) {
+                  setSelectedEvent(event);
+                  setModalImage(event.image);
+                  setIsPaused(true);
+                } else {
+                  setCenterIndex((previous) => previous + offset);
+                }
               }}
             />
           );
@@ -262,7 +252,7 @@ export default function EventsSection() {
               onClick={() => setCenterIndex((previous) => previous + offset)}
               className={cn(
                 'h-1.5 rounded-full transition-all duration-500',
-                isActive ? 'w-8 bg-white sm:w-12' : 'w-2 bg-white/20',
+                isActive ? 'w-8 bg-[#122f6cff] sm:w-12' : 'w-2 bg-[#122f6cff]/20',
               )}
               aria-label={`View ${event.title}`}
             />
@@ -276,7 +266,7 @@ export default function EventsSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-8"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#F8F9FA]/95 p-4 backdrop-blur-md sm:p-8"
             onClick={() => {
               setSelectedEvent(null);
               setIsPaused(false);
@@ -286,12 +276,12 @@ export default function EventsSection() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative flex max-h-[90vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface shadow-2xl"
+              className="relative flex max-h-[90vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl"
               onClick={(event) => event.stopPropagation()}
             >
               <button
                 type="button"
-                className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white transition-colors hover:bg-white/20"
+                className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-[#122f6cff] transition-colors hover:bg-slate-200"
                 onClick={() => {
                   setSelectedEvent(null);
                   setIsPaused(false);
@@ -302,7 +292,7 @@ export default function EventsSection() {
               </button>
 
               <div className="flex w-full flex-1 flex-col items-center overflow-y-auto p-4 sm:p-6">
-                <div className="group relative mb-8 h-[40vh] min-h-[40vh] w-full shrink-0 overflow-hidden rounded-3xl bg-black sm:h-[50vh] sm:min-h-[50vh] lg:h-[65vh] lg:min-h-[65vh] lg:w-[85%]">
+                <div className="group relative mb-4 h-[40vh] min-h-[40vh] w-full shrink-0 overflow-hidden rounded-3xl bg-black sm:h-[50vh] sm:min-h-[50vh] lg:h-[65vh] lg:min-h-[65vh] lg:w-[85%]">
                   <Image
                     src={modalImage || selectedEvent.image}
                     alt={selectedEvent.title}
@@ -313,7 +303,7 @@ export default function EventsSection() {
 
                   <button
                     type="button"
-                    className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition-all hover:bg-white/20 group-hover:opacity-100 sm:h-12 sm:w-12 sm:opacity-100"
+                    className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-blue-600 opacity-0 shadow-lg transition-all hover:bg-white group-hover:opacity-100 sm:h-12 sm:w-12 sm:opacity-100"
                     onClick={(event) => {
                       event.stopPropagation();
                       if (!selectedEvent.subImages) {
@@ -337,7 +327,7 @@ export default function EventsSection() {
 
                   <button
                     type="button"
-                    className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition-all hover:bg-white/20 group-hover:opacity-100 sm:h-12 sm:w-12 sm:opacity-100"
+                    className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-blue-600 opacity-0 shadow-lg transition-all hover:bg-white group-hover:opacity-100 sm:h-12 sm:w-12 sm:opacity-100"
                     onClick={(event) => {
                       event.stopPropagation();
                       if (!selectedEvent.subImages) {
@@ -359,7 +349,7 @@ export default function EventsSection() {
                 </div>
 
                 {selectedEvent.subImages?.length ? (
-                  <div className="mb-10 grid w-[90%] grid-cols-4 gap-2 sm:w-[85%] sm:gap-4 lg:w-[75%]">
+                  <div className="mb-10 grid w-[90%] grid-cols-4 gap-2 sm:w-[85%] sm:gap-3 lg:w-[75%]">
                     {selectedEvent.subImages.map((image, index) => (
                       <button
                         key={image}
@@ -385,16 +375,21 @@ export default function EventsSection() {
                   </div>
                 ) : null}
 
-                <div className="w-[90%] text-white sm:w-[85%] lg:w-[75%]">
-                  <h2 className="font-orbitron mb-2 text-3xl font-bold sm:text-4xl">
+                <div className="w-[90%] text-white sm:w-[85%] lg:w-[75%] font-inter">
+                  <h2 className="mb-6 text-4xl font-black uppercase tracking-tighter sm:text-6xl bg-gradient-to-r from-[#122f6cff] to-[#0052FF] bg-clip-text text-transparent drop-shadow-sm">
                     {selectedEvent.title}
                   </h2>
-                  <div className="mb-6 flex gap-4 text-sm text-primary">
-                    <span>{selectedEvent.date}</span>
-                    <span>&bull;</span>
-                    <span>{selectedEvent.category}</span>
+                  <div className="mb-8 flex flex-wrap gap-3">
+                    <span className="flex items-center gap-1.5 rounded-full border border-[#0052FF]/30 bg-[#0052FF]/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.25em] text-[#0052FF] backdrop-blur-md font-jetbrains">
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#0052FF] shadow-[0_0_8px_rgba(0,82,255,0.6)]" />
+                      {selectedEvent.date}
+                    </span>
+                    <span className="flex items-center gap-1.5 rounded-full border border-[#122f6cff]/30 bg-[#122f6cff]/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.25em] text-[#122f6cff] backdrop-blur-md font-jetbrains">
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#122f6cff] shadow-[0_0_8px_rgba(18,47,108,0.4)]" />
+                      {selectedEvent.category}
+                    </span>
                   </div>
-                  <p className="max-w-3xl text-lg leading-relaxed text-white/80">
+                  <p className="max-w-3xl text-lg font-semibold leading-relaxed text-[#122f6cff]/80">
                     {selectedEvent.description}
                   </p>
                 </div>
