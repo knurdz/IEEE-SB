@@ -10,7 +10,7 @@ export default function NetworkVisualization() {
           (d, i) => (
             <g key={i}>
               <path d={d} fill="none" stroke="url(#tg)" strokeWidth="1" strokeDasharray="5,5" />
-              <circle r="3" fill="#00d4ff">
+              <circle r="3" fill="var(--primary)">
                 <animateMotion dur={`${3 + i}s`} repeatCount="indefinite" path={d} />
               </circle>
             </g>
@@ -19,7 +19,7 @@ export default function NetworkVisualization() {
         <defs>
           <linearGradient id="tg">
             <stop offset="0%" stopColor="transparent" />
-            <stop offset="50%" stopColor="#00d4ff" />
+            <stop offset="50%" stopColor="var(--primary)" />
             <stop offset="100%" stopColor="transparent" />
           </linearGradient>
         </defs>

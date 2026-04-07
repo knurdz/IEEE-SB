@@ -169,7 +169,7 @@ function EventCard({
     >
       {/* Card Container */}
       <div 
-        className="relative w-full h-full rounded-[30px] overflow-hidden shadow-2xl transition-all duration-500 border border-white/10 bg-[#121212] pointer-events-auto cursor-pointer"
+        className="relative w-full h-full rounded-[30px] overflow-hidden shadow-2xl transition-all duration-500 border border-white/10 bg-surface-alt pointer-events-auto cursor-pointer"
       >
         {/* Background Image */}
         <Image
@@ -221,10 +221,8 @@ function EventCard({
                 e.stopPropagation();
                 onExplore(event);
               }}
-              className={`w-full py-3 sm:py-4 rounded-[20px] text-sm sm:text-base font-semibold transition-all duration-300 ${
-                isCenter 
-                ? 'bg-white text-black' 
-                : 'bg-white/20 text-white backdrop-blur-md border border-white/20'
+              className={`glow-button w-full py-3 sm:py-4 rounded-[20px] text-sm sm:text-base font-semibold transition-all duration-300 ${
+                !isCenter && 'opacity-60 grayscale-[0.5]'
               }`}
             >
               Explore Event
@@ -310,11 +308,11 @@ export default function EventsSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 sm:mb-6 uppercase tracking-tighter"
+            className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 sm:mb-6 uppercase tracking-tighter font-orbitron"
           >
             Flagship Events
           </motion.h2>
-          <div className="w-16 sm:w-24 h-1 bg-cyan-500 mx-auto rounded-full" />
+          <div className="w-16 sm:w-24 h-1 bg-primary mx-auto rounded-full" />
         </div>
       </div>
 
@@ -462,7 +460,7 @@ export default function EventsSection() {
                     {selectedEvent.subImages.map((img, idx) => (
                       <button
                         key={idx}
-                        className={`relative aspect-video rounded-lg overflow-hidden border-2 transition-all ${modalImage === img ? 'border-cyan-500' : 'border-transparent hover:border-white/50'}`}
+                        className={`relative aspect-video rounded-lg overflow-hidden border-2 transition-all ${modalImage === img ? 'border-primary' : 'border-transparent hover:border-white/50'}`}
                         onClick={() => setModalImage(img)}
                       >
                         <Image src={img} alt={`${selectedEvent.title} - ${idx}`} fill className="object-cover" />
@@ -473,8 +471,8 @@ export default function EventsSection() {
                 
                 {/* Content */}
                 <div className="text-white w-[90%] sm:w-[85%] lg:w-[75%]">
-                  <h2 className="text-3xl sm:text-4xl font-bold mb-2">{selectedEvent.title}</h2>
-                  <div className="flex gap-4 text-cyan-400 text-sm mb-6">
+                  <h2 className="text-3xl sm:text-4xl font-bold mb-2 font-orbitron">{selectedEvent.title}</h2>
+                  <div className="flex gap-4 text-primary text-sm mb-6">
                     <span>{selectedEvent.date}</span>
                     <span>&bull;</span>
                     <span>{selectedEvent.category}</span>

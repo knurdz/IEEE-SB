@@ -42,107 +42,107 @@ export default function MemberCard({
       onMouseLeave={() => setHovered(false)}
     >
       {/* Card shell */}
-      <div
-        className={`relative w-full h-full rounded-2xl overflow-hidden border transition-colors duration-500 shadow-[−10px_0_30px_rgba(0,0,0,0.6)] ${
-          hovered
-            ? 'border-cyan-500/40 bg-[#111827]'
-            : 'border-white/15 bg-gradient-to-b from-[#1e1e28]/90 to-[#0a0a0f]/95'
-        }`}
-      >
-        {/* Member photo */}
-        <Image
-          src={member.image}
-          alt={member.name}
-          fill
-          className="object-cover object-top"
-          sizes="(max-width: 768px) 50vw, 220px"
-        />
-
-        {/* Vertical or Horizontal Name based on position */}
-        {position !== 'middle' ? (
-          <div className={`absolute top-0 bottom-0 w-12 flex flex-col items-center justify-center z-20 gap-3 ${position === 'left' ? 'left-0' : 'right-0'}`}>
-            <p
-              className="text-cyan-400/80 text-[10px] tracking-widest uppercase whitespace-nowrap"
-              style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-            >
-              {member.role}
-            </p>
-            <h3
-              className={`font-semibold tracking-[0.2em] uppercase transition-colors duration-300 whitespace-nowrap ${hovered ? 'text-cyan-100' : 'text-white/90 shadow-black drop-shadow-md'}`}
-              style={{
-                writingMode: 'vertical-rl',
-                transform: 'rotate(180deg)',
-                ...(member.nameSize ? { fontSize: member.nameSize } : { fontSize: '1.1rem' })
-              }}
-            >
-              {member.name}
-            </h3>
-          </div>
-        ) : null}
-
-        {/* Bottom gradient overlay + info */}
         <div
-          className={`absolute inset-x-0 bottom-0 z-20 text-center transition-all duration-500 ${position === 'left' ? 'pl-12' : position === 'right' ? 'pr-12' : ''}`}
-          style={{
-            padding: hovered ? '120px 10px 45px' : '100px 10px 20px',
-            background: hovered
-              ? 'linear-gradient(to top, rgba(0,0,0,1) 10%, rgba(0,0,0,0.7) 60%, transparent 100%)'
-              : 'linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, transparent 100%)',
-          }}
+          className={`relative w-full h-full rounded-2xl overflow-hidden border transition-colors duration-500 shadow-[-10px_0_30px_rgba(0,0,0,0.6)] ${
+            hovered
+              ? 'border-primary/40 bg-surface-alt'
+              : 'border-white/15 bg-gradient-to-b from-surface/90 to-background/95'
+          }`}
         >
-          {position === 'middle' ? (
-            <>
+          {/* Member photo */}
+          <Image
+            src={member.image}
+            alt={member.name}
+            fill
+            className="object-cover object-top"
+            sizes="(max-width: 768px) 50vw, 220px"
+          />
+
+          {/* Vertical or Horizontal Name based on position */}
+          {position !== 'middle' ? (
+            <div className={`absolute top-0 bottom-0 w-12 flex flex-col items-center justify-center z-20 gap-3 ${position === 'left' ? 'left-0' : 'right-0'}`}>
+              <p
+                className="text-primary/80 text-[10px] tracking-widest uppercase whitespace-nowrap"
+                style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+              >
+                {member.role}
+              </p>
               <h3
-                className={`font-semibold mb-1 transition-colors duration-300 ${hovered ? 'text-cyan-100' : 'text-white'}`}
-                style={member.nameSize ? { fontSize: member.nameSize } : { fontSize: '1.05rem' }}
+                className={`font-semibold tracking-[0.2em] uppercase transition-colors duration-300 whitespace-nowrap ${hovered ? 'text-white/90' : 'text-white/90 shadow-black drop-shadow-md'} font-orbitron`}
+                style={{
+                  writingMode: 'vertical-rl',
+                  transform: 'rotate(180deg)',
+                  ...(member.nameSize ? { fontSize: member.nameSize } : { fontSize: '1.1rem' })
+                }}
               >
                 {member.name}
               </h3>
-              <p className="text-cyan-400/80 text-xs mb-2">{member.role}</p>
-            </>
+            </div>
           ) : null}
 
-          {member.linkedin && (
-            <p>
-              <a
-                href={member.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-cyan-400 hover:text-cyan-300 transition-colors"
-              >
-                LinkedIn ↗
-              </a>
-            </p>
-          )}
-          {member.phone && (
-            <p className="text-xs text-white/60 mt-1">{member.phone}</p>
-          )}
+          {/* Bottom gradient overlay + info */}
+          <div
+            className={`absolute inset-x-0 bottom-0 z-20 text-center transition-all duration-500 ${position === 'left' ? 'pl-12' : position === 'right' ? 'pr-12' : ''}`}
+            style={{
+              padding: hovered ? '120px 10px 45px' : '100px 10px 20px',
+              background: hovered
+                ? 'linear-gradient(to top, rgba(0,0,0,1) 10%, rgba(0,0,0,0.7) 60%, transparent 100%)'
+                : 'linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, transparent 100%)',
+            }}
+          >
+            {position === 'middle' ? (
+              <>
+                <h3
+                  className={`font-semibold mb-1 transition-colors duration-300 ${hovered ? 'text-white/90' : 'text-white'} font-orbitron`}
+                  style={member.nameSize ? { fontSize: member.nameSize } : { fontSize: '1.05rem' }}
+                >
+                  {member.name}
+                </h3>
+                <p className="text-primary/80 text-xs mb-2">{member.role}</p>
+              </>
+            ) : null}
+
+            {member.linkedin && (
+              <p>
+                <a
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-primary hover:text-white transition-colors"
+                >
+                  LinkedIn ↗
+                </a>
+              </p>
+            )}
+            {member.phone && (
+              <p className="text-xs text-white/60 mt-1">{member.phone}</p>
+            )}
+          </div>
+
+          {/* Primary scan-line on hover */}
+          <div
+            className={`absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent transition-opacity duration-300 ${
+              hovered ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+
+          {/* Corner accent */}
+          <div
+            className={`absolute top-3 right-3 w-6 h-6 border-t border-r border-primary/40 rounded-tr-md transition-opacity duration-300 ${
+              hovered ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+
+          {/* Primary glow border on hover */}
+          <div
+            className={`absolute inset-0 rounded-2xl transition-opacity duration-500 pointer-events-none ${
+              hovered ? 'opacity-100' : 'opacity-0'
+            }`}
+            style={{
+              boxShadow: '0 0 30px var(--primary-glow), inset 0 0 30px rgba(96,165,250,0.05)',
+            }}
+          />
         </div>
-
-        {/* Cyan scan-line on hover */}
-        <div
-          className={`absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent transition-opacity duration-300 ${
-            hovered ? 'opacity-100' : 'opacity-0'
-          }`}
-        />
-
-        {/* Corner accent */}
-        <div
-          className={`absolute top-3 right-3 w-6 h-6 border-t border-r border-cyan-500/40 rounded-tr-md transition-opacity duration-300 ${
-            hovered ? 'opacity-100' : 'opacity-0'
-          }`}
-        />
-
-        {/* Cyan glow border on hover */}
-        <div
-          className={`absolute inset-0 rounded-2xl transition-opacity duration-500 pointer-events-none ${
-            hovered ? 'opacity-100' : 'opacity-0'
-          }`}
-          style={{
-            boxShadow: '0 0 30px rgba(0,212,255,0.15), inset 0 0 30px rgba(0,212,255,0.05)',
-          }}
-        />
-      </div>
     </div>
   );
 }
