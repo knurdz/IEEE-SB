@@ -1,7 +1,7 @@
-import StrategicPartnerSection from './components/StrategicPartnerSection';
-import TextSphereAnimation from './components/TextSphereAnimation';
-import AboutSection from './components/AboutSection';
-import EventsSection from './components/EventsSection';
+import StrategicPartnerSection from './components/home/StrategicPartnerSection';
+import TextSphereAnimation from './components/home/TextSphereAnimation';
+import AboutSection from './components/home/AboutSection';
+import EventsSection from './components/home/EventsSection';
 
 export default function Home() {
   return (
