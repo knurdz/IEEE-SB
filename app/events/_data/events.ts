@@ -7,6 +7,7 @@ export interface EventItem {
   categoryColor: string;
   description: string;
   images: string[];
+  gallery: string[];
 }
 
 export const EVENTS: EventItem[] = [
@@ -20,6 +21,7 @@ export const EVENTS: EventItem[] = [
     description:
       'OpenWeek is an introductory two‑day event welcoming new students into the IEEE community at the University of Moratuwa. It includes talks, short workshops, and hands‑on demos in robotics, embedded systems, and data science. The event also highlights volunteering, leadership roles, and opportunities to join major IEEE competitions and projects.',
     images: ['/images/OpenWeek/OpenWeek.jpg', '/images/OpenWeek/OpenWeek2.jpg'],
+    gallery: ['/images/OpenWeek/OpenWeek.jpg', '/images/OpenWeek/OpenWeek2.jpg'],
   },
   {
     id: 2,
@@ -31,6 +33,7 @@ export const EVENTS: EventItem[] = [
     description:
       'MoraUxplore is an online or hybrid career and technology‑exploration platform for engineering students. It uses virtual booths, webinars, and panels with industry professionals and alumni. The event focuses on internships, research, and personal‑branding skills, helping students explore diverse engineering career paths.',
     images: ['/images/MoraUxplore/MoraUxplore.jpg'],
+    gallery: ['/images/MoraUxplore/MoraUxplore.jpg'],
   },
   {
     id: 3,
@@ -42,6 +45,7 @@ export const EVENTS: EventItem[] = [
     description:
       'MoraXtreme is a national competitive‑programming championship organized by the IEEE Student Branch, University of Moratuwa. Teams from universities across Sri Lanka solve algorithmic problems under time pressure. The event includes training sessions and a grand‑final awards ceremony to recognize top coders.',
     images: ['/images/MoraXtreme/MoraXtreme.jpg', '/images/MoraXtreme/MoraXtreme2.jpg'],
+    gallery: ['/images/MoraXtreme/MoraXtreme.jpg', '/images/MoraXtreme/MoraXtreme2.jpg'],
   },
   {
     id: 4,
@@ -53,6 +57,7 @@ export const EVENTS: EventItem[] = [
     description:
       'Roboroarz Sri Lanka is a national robotics battle and competition hosted by the IEEE Student Branch, University of Moratuwa. Teams design and operate robots for sumo‑style pushing, line‑tracking, and combat‑style arenas. The event also features research robotics exhibitions and mini‑challenges for students and hobbyists.',
     images: ['/images/Roboroarz/Roboroarz.jpeg'],
+    gallery: ['/images/Roboroarz/Roboroarz.jpeg'],
   },
   {
     id: 5,
@@ -64,6 +69,7 @@ export const EVENTS: EventItem[] = [
     description:
       'Foresight is an insight‑driven career and innovation event by the IEEE Student Branch, University of Moratuwa. It features talks on AI, robotics, and future job markets, along with networking and mentorship opportunities. The event helps students connect classroom learning with practical engineering foresight.',
     images: ['/images/foresight/foresight.jpg'],
+    gallery: ['/images/foresight/foresight.jpg'],
   },
   {
     id: 6,
@@ -75,6 +81,7 @@ export const EVENTS: EventItem[] = [
     description:
       '\u201cBallerina\u201d is a themed technical and social event combining art with engineering and robotics. It features interactive installations, light‑based robots, and music‑synchronized machines. The event promotes creativity and design thinking, making engineering more visually engaging for students.',
     images: ['/images/Ballerina/Ballerina.png'],
+    gallery: ['/images/Ballerina/Ballerina.png'],
   },
   {
     id: 7,
@@ -86,6 +93,7 @@ export const EVENTS: EventItem[] = [
     description:
       'The AGM & Award Ceremony is the formal closing event of the IEEE Student Branch, University of Moratuwa, where officers present annual reports and hand over leadership. It includes recognition of top volunteers and contributors, guest speeches, and a roadmap for the next year.',
     images: ['/images/AGM & Award Ceremony/AGM & Award Ceremony.jpg'],
+    gallery: ['/images/AGM & Award Ceremony/AGM & Award Ceremony.jpg'],
   },
   {
     id: 8,
@@ -97,6 +105,7 @@ export const EVENTS: EventItem[] = [
     description:
       'Mercon is an annual conference organized by the IEEE Student Branch celebrating academic and professional excellence in engineering. The event includes research paper presentations, talks, and workshops on engineering topics. It brings together academics, researchers, and students in a collaborative setting.',
     images: ['/images/Mercon/Mercon.jpg'],
+    gallery: ['/images/Mercon/Mercon.jpg'],
   },
   {
     id: 9,
@@ -108,6 +117,7 @@ export const EVENTS: EventItem[] = [
     description:
       'Robotics Day is a festival showcasing robotics projects, competitions, and live demos from student teams and research groups. It covers autonomous navigation, drones, robot arms, and humanoid robots. The event also includes short talks and interactive sessions to promote robotics among undergraduates.',
     images: ['/images/Robotics Day/Robotics Day.jpeg'],
+    gallery: ['/images/Robotics Day/Robotics Day.jpeg'],
   },
   {
     id: 10,
@@ -119,6 +129,7 @@ export const EVENTS: EventItem[] = [
     description:
       'FInnC (Future Innovators Challenge) is an innovation competition where undergraduate teams develop prototype solutions to real‑world problems. Participants work on projects in IoT, robotics, energy, and smart systems. The event ends with an on‑site evaluation and awards for creativity, technical depth, and impact.',
     images: ['/images/Finnc/Finnc.jpeg'],
+    gallery: ['/images/Finnc/Finnc.jpeg'],
   },
   {
     id: 11,
@@ -130,6 +141,7 @@ export const EVENTS: EventItem[] = [
     description:
       'JamborIEEE is a national IEEE awareness and leadership conference originally organized by IEEE Student Branches of Sri Lanka Technological Campus and Kotelawala Defence University. It includes talks, panels, and workshops on branch development and volunteering.',
     images: [],
+    gallery: [],
   },
   {
     id: 12,
@@ -141,6 +153,7 @@ export const EVENTS: EventItem[] = [
     description:
       'The NFB Championship is an esports‑style gaming tournament organized by the IEEE Student Branch, University of Moratuwa. The event is structured as a competitive bracket tournament where university teams register, undergo qualifying rounds, and progress to live‑streamed finals.',
     images: ['/images/NFB championship/NFB championship.jpeg'],
+    gallery: ['/images/NFB championship/NFB championship.jpeg'],
   },
   {
     id: 13,
@@ -150,8 +163,9 @@ export const EVENTS: EventItem[] = [
     category: 'COMPETITION',
     categoryColor: '#FF6B35',
     description:
-      'IEEEXtreme is IEEE\'s flagship 24‑hour global programming competition for student teams. Participants solve challenging algorithmic problems in a single day under time pressure. The contest is hosted through local IEEE branches and serves as practice for international coding contests and technical interviews.',
+      "IEEEXtreme is IEEE's flagship 24‑hour global programming competition for student teams. Participants solve challenging algorithmic problems in a single day under time pressure. The contest is hosted through local IEEE branches and serves as practice for international coding contests and technical interviews.",
     images: ['/images/IEEEXtreme/IEEEXtreme.jpg'],
+    gallery: ['/images/IEEEXtreme/IEEEXtreme.jpg'],
   },
   {
     id: 14,
@@ -163,5 +177,6 @@ export const EVENTS: EventItem[] = [
     description:
       'RUM is an internal IEEE leadership retreat where branch officers review past activities, update strategies, and plan upcoming events. It includes workshops on leadership, project management, and membership growth across branches. The retreat helps align calendars and strengthen collaboration within the IEEE student community.',
     images: [],
+    gallery: [],
   },
 ];

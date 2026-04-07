@@ -9,6 +9,7 @@ interface EventCardProps {
   event: EventItem;
   index: number;
   isRight: boolean;
+  onExplore: (event: EventItem) => void;
 }
 
 // Inline ArrowRight — replaces lucide-react dependency
@@ -32,7 +33,7 @@ function ArrowRight({ className }: { className?: string }) {
   );
 }
 
-const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, isRight }) {
+const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, isRight, onExplore }) {
   const [imgFailed, setImgFailed] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
@@ -88,17 +89,17 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
       transition={{ duration: 0.8, ease: [0.34, 1.56, 0.64, 1] }}
       whileHover={{ y: -6, borderColor: '#01A2FF', boxShadow: '0 0 0 1px #01A2FF80, 0 0 50px rgba(1,162,255,0.25)' }}
     >
-      {/* Image Carousel */}
+      {/* Image Carousel — right side */}
       {!imgFailed && images.length > 0 && (
         <div
-          className="w-full h-[250px] md:h-full md:col-span-5 md:col-start-1 md:row-start-1 overflow-hidden relative"
+          className="w-full h-[250px] md:h-full md:col-span-5 md:col-start-8 md:row-start-1 overflow-hidden relative order-first md:order-none"
           style={{
             WebkitMaskImage: isMobile
               ? 'linear-gradient(to bottom, black 30%, transparent 95%)'
-              : 'linear-gradient(to right, black 25%, transparent 90%)',
+              : 'linear-gradient(to left, black 25%, transparent 90%)',
             maskImage: isMobile
               ? 'linear-gradient(to bottom, black 30%, transparent 95%)'
-              : 'linear-gradient(to right, black 25%, transparent 90%)',
+              : 'linear-gradient(to left, black 25%, transparent 90%)',
           }}
         >
           <AnimatePresence mode="wait">
@@ -115,7 +116,7 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
                 alt={`${event.name} view ${currentImageIndex + 1}`}
                 loading="lazy"
                 className="w-full h-full object-cover object-center"
-                animate={{ scale: [1, 1.08], x: [0, 5], y: [0, -5] }}
+                animate={{ scale: [1, 1.08], x: [0, -5], y: [0, -5] }}
                 transition={{
                   duration: 6,
                   repeat: Infinity,
@@ -127,9 +128,9 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
             </motion.div>
           </AnimatePresence>
 
-          {/* Dot indicators */}
+          {/* Dot indicators — bottom-right to match image position */}
           {images.length > 1 && (
-            <div className="absolute bottom-4 left-6 md:left-8 flex gap-2.5 z-20">
+            <div className="absolute bottom-4 right-6 md:right-8 flex gap-2.5 z-20">
               {images.map((_, i) => (
                 <button
                   key={i}
@@ -157,8 +158,8 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
         </div>
       )}
 
-      {/* Text content */}
-      <div className="relative p-8 lg:p-10 flex flex-col justify-center flex-grow md:col-span-8 md:col-start-5 md:row-start-1 z-10 -mt-4 md:mt-0">
+      {/* Text content — left side */}
+      <div className="relative p-8 lg:p-10 flex flex-col justify-center flex-grow md:col-span-7 md:col-start-1 md:row-start-1 z-10 -mt-4 md:mt-0">
         <div className="flex items-center justify-between mb-5">
           <span
             className="px-3.5 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase font-display"
@@ -187,8 +188,18 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
         </p>
 
         <button
-          className="group self-start flex items-center gap-2 text-ieee-blue hover:text-ieee-cyan transition-colors text-[15px] font-semibold mt-auto focus:outline-none focus:ring-2 focus:ring-ieee-blue rounded px-2 py-1 -ml-2"
+          className="group self-start flex items-center gap-2 text-[15px] font-bold mt-auto focus:outline-none focus:ring-2 focus:ring-ieee-blue rounded-lg px-4 py-2 explore-event-btn"
+          style={{ background: '#00A3FF', color: '#020B18', border: 'none', transition: 'all 0.2s ease' }}
           aria-label={`Explore ${event.name}`}
+          onClick={() => onExplore(event)}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.background = '#00D4FF';
+            (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1.03)';
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.background = '#00A3FF';
+            (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1)';
+          }}
         >
           Explore Event
           <ArrowRight className="w-[18px] h-[18px] group-hover:translate-x-1.5 transition-transform duration-300" />
