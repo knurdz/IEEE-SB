@@ -1,5 +1,11 @@
 import TextSphereAnimation from './components/TextSphereAnimation';
+import WhyJoinSection from './components/WhyJoinSection';
 
 export default function Home() {
-  return <TextSphereAnimation />;
+  return (
+    <main>
+      <TextSphereAnimation />
+      <WhyJoinSection />
+    </main>
+  );
 }

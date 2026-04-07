@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --navy-blue: #0d2b5e;
+  --navy-blue-bg: rgba(13, 43, 94, 0.2); 
+  --neon-blue: #00aaff;
+  --neon-hover: #ffffff;
+  --text-main: #ffffff;
+  --text-sub: #b0c4de;
+}
+
+.mindmap-section {
+  width: 100%;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(135deg, #091b30 0%, #040810 50%, #000000 100%);
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+}
+
+.mindmap-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  min-width: 900px;
+  aspect-ratio: 1.5;
+}
+
+.connections {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.line {
+  fill: none;
+  stroke: var(--navy-blue);
+  stroke-width: 4px;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: var(--navy-blue-bg);
+  border: 2px solid var(--navy-blue);
+  border-radius: 8px;
+  padding: 24px;
+  width: 250px;
+  text-align: center;
+  z-index: 2;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+}
+
+.card h3 {
+  margin: 0 0 12px 0;
+  color: var(--text-main);
+  font-size: 1.25rem;
+  letter-spacing: 1.5px;
+  transition: color 0.4s ease;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.card p {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--text-sub);
+  line-height: 1.5;
+}
+
+.center-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #091b30 0%, #040810 50%, #000000 100%);
+  border: 2px solid var(--navy-blue);
+  border-radius: 6px;
+  padding: 30px 40px;
+  text-align: center;
+  z-index: 3;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(13, 43, 94, 0.8);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.center-card h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  color: var(--text-main);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  line-height: 1.2;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* HOVER & FOCUS LOGIC */
+.mindmap-wrapper:has(.card-1:hover) .card:not(.card-1),
+.mindmap-wrapper:has(.card-2:hover) .card:not(.card-2),
+.mindmap-wrapper:has(.card-3:hover) .card:not(.card-3),
+.mindmap-wrapper:has(.card-4:hover) .card:not(.card-4),
+.mindmap-wrapper:has(.card-5:hover) .card:not(.card-5) {
+  filter: blur(2px) opacity(0.35);
+  transform: translate(-50%, -50%) scale(0.95);
+}
+
+.mindmap-wrapper:has(.card:hover) .center-card {
+  filter: blur(2px) brightness(0.6);
+}
+
+.mindmap-wrapper:has(.card-1:hover) .line:not(.line-1),
+.mindmap-wrapper:has(.card-2:hover) .line:not(.line-2),
+.mindmap-wrapper:has(.card-3:hover) .line:not(.line-3),
+.mindmap-wrapper:has(.card-4:hover) .line:not(.line-4),
+.mindmap-wrapper:has(.card-5:hover) .line:not(.line-5),
+.mindmap-wrapper:has(.card-1:hover) .pulse:not(.pulse-1),
+.mindmap-wrapper:has(.card-2:hover) .pulse:not(.pulse-2),
+.mindmap-wrapper:has(.card-3:hover) .pulse:not(.pulse-3),
+.mindmap-wrapper:has(.card-4:hover) .pulse:not(.pulse-4),
+.mindmap-wrapper:has(.card-5:hover) .pulse:not(.pulse-5) {
+  opacity: 0;
+}
+
+.card:hover {
+  border-color: var(--neon-hover);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2), inset 0 0 8px rgba(255, 255, 255, 0.1);
+  transform: translate(-50%, -50%) scale(1.05);
+  z-index: 10;
+}
+
+.card:hover h3 {
+  color: var(--neon-hover);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.card:hover p {
+  color: #fff;
+}
+
+@keyframes flowPulse {
+  from { stroke-dashoffset: 80; }
+  to { stroke-dashoffset: -720; }
+}
+
+.pulse {
+  fill: none;
+  stroke: var(--neon-hover);
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+  stroke-dasharray: 80 720;
+  animation: flowPulse 2.5s linear infinite;
+  stroke-width: 5px;
+  pointer-events: none;
+  stroke-linecap: round;
+  z-index: 6;
+  transition: all 0.4s ease;
+}
+
+.mindmap-wrapper:has(.card-1:hover) .line-1,
+.mindmap-wrapper:has(.card-2:hover) .line-2,
+.mindmap-wrapper:has(.card-3:hover) .line-3,
+.mindmap-wrapper:has(.card-4:hover) .line-4,
+.mindmap-wrapper:has(.card-5:hover) .line-5 {
+  stroke: rgba(255, 255, 255, 0.3);
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
+  stroke-width: 4px;
+  z-index: 5;
+}
+
+.mindmap-wrapper:has(.card-1:hover) .pulse-1,
+.mindmap-wrapper:has(.card-2:hover) .pulse-2,
+.mindmap-wrapper:has(.card-3:hover) .pulse-3,
+.mindmap-wrapper:has(.card-4:hover) .pulse-4,
+.mindmap-wrapper:has(.card-5:hover) .pulse-5 {
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 1));
+  stroke-width: 6px;
+}
+
+.center-card:hover h1 {
+  color: var(--neon-hover);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
