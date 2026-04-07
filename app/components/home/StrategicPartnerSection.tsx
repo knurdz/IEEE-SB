@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function StrategicPartnerSection() {
   return (
-    <section id="strategic-partner-section" className="strategic-partner" aria-label="Strategic partner">
+    <section id="strategic-partner-section" className="strategic-partner relative" aria-label="Strategic partner">
       <div className="partner-card">
         <h2>Strategic Partner</h2>
         <div className="partner-main-row">
