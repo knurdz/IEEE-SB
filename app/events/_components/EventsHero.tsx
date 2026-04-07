@@ -33,13 +33,6 @@ export default function EventsHero() {
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseout', handleMouseLeave);
 
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight * 0.7;
-    };
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
     class Particle {
       x: number;
       y: number;
@@ -106,6 +99,7 @@ export default function EventsHero() {
       }
 
       draw() {
+        if (!ctx) return;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fillStyle = this.color;
@@ -120,6 +114,22 @@ export default function EventsHero() {
     for (let i = 0; i < MAX_PARTICLES; i++) {
       particles.push(new Particle());
     }
+
+    const resizeCanvas = () => {
+      const parent = canvas.parentElement;
+      if (parent) {
+        canvas.width = parent.clientWidth;
+        canvas.height = parent.clientHeight;
+        
+        // Redistribute particles to fit the new dimensions
+        particles.forEach(p => {
+          p.x = Math.random() * canvas.width;
+          p.y = Math.random() * canvas.height;
+        });
+      }
+    };
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
