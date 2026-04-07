@@ -42,8 +42,8 @@ export default function EventsHero() {
       radius: number;
 
       constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
+        this.x = Math.random() * canvas!.width;
+        this.y = Math.random() * canvas!.height;
         this.vx = (Math.random() - 0.5) * 1.5;
         this.vy = (Math.random() - 0.5) * 1.5;
         this.color =
@@ -93,9 +93,9 @@ export default function EventsHero() {
         if (Math.abs(this.vy) < 0.2) this.vy += (Math.random() - 0.5) * 0.05;
 
         if (this.x < 0) { this.x = 0; this.vx *= -1; }
-        if (this.x > canvas.width) { this.x = canvas.width; this.vx *= -1; }
+        if (this.x > canvas!.width) { this.x = canvas!.width; this.vx *= -1; }
         if (this.y < 0) { this.y = 0; this.vy *= -1; }
-        if (this.y > canvas.height) { this.y = canvas.height; this.vy *= -1; }
+        if (this.y > canvas!.height) { this.y = canvas!.height; this.vy *= -1; }
       }
 
       draw() {
@@ -132,7 +132,7 @@ export default function EventsHero() {
     resizeCanvas();
 
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas!.width, canvas!.height);
       for (let i = 0; i < particles.length; i++) {
         particles[i].update(particles);
         particles[i].draw();

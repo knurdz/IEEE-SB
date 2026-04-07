@@ -92,37 +92,22 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
       {/* Image Carousel — right side */}
       {!imgFailed && images.length > 0 && (
         <div
-          className="w-full h-[250px] md:h-full md:col-span-6 md:col-start-7 md:row-start-1 overflow-hidden relative order-first md:order-none"
-          style={{
-            WebkitMaskImage: isMobile
-              ? 'linear-gradient(to bottom, black 30%, transparent 95%)'
-              : 'linear-gradient(to left, black 40%, transparent 80%)',
-            maskImage: isMobile
-              ? 'linear-gradient(to bottom, black 30%, transparent 95%)'
-              : 'linear-gradient(to left, black 40%, transparent 80%)',
-          }}
+          className="w-full h-[300px] md:h-full md:col-span-6 md:col-start-7 md:row-start-1 overflow-hidden relative order-first md:order-none bg-black/20"
         >
           <AnimatePresence mode="wait">
             <motion.div
               key={currentImageIndex}
-              className="absolute inset-0 w-full h-full"
-              initial={{ opacity: 0, scale: 1.1 }}
+              className="absolute inset-0 w-full h-full flex items-center justify-center p-4"
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.8, ease: 'easeInOut' }}
+              exit={{ opacity: 0, scale: 1.05 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
             >
               <motion.img
                 src={images[currentImageIndex]}
                 alt={`${event.name} view ${currentImageIndex + 1}`}
                 loading="lazy"
-                className="w-full h-full object-cover object-center"
-                animate={{ scale: [1, 1.08], x: [0, -5], y: [0, -5] }}
-                transition={{
-                  duration: 6,
-                  repeat: Infinity,
-                  repeatType: 'reverse',
-                  ease: 'linear',
-                }}
+                className="max-w-full max-h-full object-contain shadow-2xl rounded-sm"
                 onError={() => setImgFailed(true)}
               />
             </motion.div>
