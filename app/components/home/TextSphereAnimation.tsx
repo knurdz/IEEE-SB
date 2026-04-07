@@ -11,17 +11,11 @@ export default function TextSphereAnimation() {
     if (initialized.current) return;
     initialized.current = true;
 
-    // [SCENARIO A FIX: SOLID CONTINENTS]
-    // To remove the "holes" caused by inland lakes, you must replace the image below.
-    // The current 'earth_specular_2048.jpg' contains detailed rivers/lakes that are read as empty space.
-    // Replace it with a solid landmass equirectangular map (e.g., download a basic 2048x1024 
-    // black/white vector world map without lakes, save it to /public, and update the URL below).
     const earthImage = new Image();
     earthImage.src = '/earth_specular_2048.jpg';
 
     const loadScript = (src: string): Promise<void> => {
       return new Promise((resolve, reject) => {
-        // Check if script is already loaded
         if (document.querySelector(`script[src="${src}"]`)) {
           resolve();
           return;
@@ -36,10 +30,8 @@ export default function TextSphereAnimation() {
 
     const loadAllScripts = async () => {
       try {
-        // Load THREE.js first (required by other scripts)
         await loadScript('/lib/three.min.js');
 
-        // Then load scripts that depend on THREE in parallel
         await Promise.all([
           loadScript('/lib/TextGeometry.js'),
           loadScript('/lib/FontUtils.js'),
@@ -48,10 +40,8 @@ export default function TextSphereAnimation() {
           loadScript('/lib/TweenMax.min.js'),
         ]);
 
-        // Finally load bas.js which depends on THREE and other libraries
         await loadScript('/lib/bas.js');
 
-        // Wait for earth image to load
         await new Promise((resolve) => {
           if (earthImage.complete) {
             resolve(null);
@@ -150,11 +140,14 @@ export default function TextSphereAnimation() {
 
       const SPHERE_RADIUS = 240;
 
-      function TextAnimation(this: any, textGeometry: any, color: number) {
+      function TextAnimation(this: any, textGeometry: any, color1: number, color2: number) {
         const bufferGeometry = new THREE.BAS.ModelBufferGeometry(textGeometry);
         const aAnimation = bufferGeometry.createAttribute('aAnimation', 2);
         const aEndPosition = bufferGeometry.createAttribute('aEndPosition', 3);
         const aAxisAngle = bufferGeometry.createAttribute('aAxisAngle', 4);
+
+        // Add color attribute to support two types of particles
+        const aColor = bufferGeometry.createAttribute('color', 3);
 
         const faceCount = bufferGeometry.faceCount;
         const maxDelay = 0.0;
@@ -168,6 +161,9 @@ export default function TextSphereAnimation() {
         this._animationProgress = 0;
 
         const axis = new THREE.Vector3();
+
+        const c1 = new THREE.Color(color1);
+        const c2 = new THREE.Color(color2);
 
         for (let i = 0, i2 = 0, i3 = 0, i4 = 0; i < faceCount; i++, i2 += 6, i3 += 9, i4 += 12) {
           const face = textGeometry.faces[i];
@@ -201,15 +197,25 @@ export default function TextSphereAnimation() {
             aAxisAngle.array[i4 + v + 2] = axis.z;
             aAxisAngle.array[i4 + v + 3] = angle;
           }
+
+          // Randomly pick between the two particle colors
+          const pColor = Math.random() > 0.5 ? c1 : c2;
+          for (let v = 0; v < 9; v += 3) {
+            aColor.array[i3 + v] = pColor.r;
+            aColor.array[i3 + v + 1] = pColor.g;
+            aColor.array[i3 + v + 2] = pColor.b;
+          }
         }
 
         const material = new THREE.BAS.BasicAnimationMaterial(
           {
             side: THREE.DoubleSide,
             transparent: true,
-            depthWrite: false, // Prevent scattered invisible text triangles from occluding the background
+            depthWrite: false,
+            vertexColors: THREE.VertexColors !== undefined ? THREE.VertexColors : true,
             uniforms: {
               uTime: { type: 'f', value: 0 },
+              uBaseColor: { type: 'c', value: new THREE.Color(0x0A2540) },
             },
             shaderFunctions: [
               THREE.BAS.ShaderChunk['cubic_bezier'],
@@ -218,6 +224,7 @@ export default function TextSphereAnimation() {
             ],
             shaderParameters: [
               'uniform float uTime;',
+              'uniform vec3 uBaseColor;',
               'attribute vec2 aAnimation;',
               'attribute vec3 aEndPosition;',
               'attribute vec4 aAxisAngle;',
@@ -233,9 +240,12 @@ export default function TextSphereAnimation() {
               'float angle = aAxisAngle.w * tProgress;',
               'vec4 tQuat = quatFromAxisAngle(aAxisAngle.xyz, angle);',
               'transformed = rotateVector(tQuat, transformed);',
+              '#ifdef USE_COLOR',
+              '  vColor = mix(uBaseColor, color, clamp(tProgress * 15.0, 0.0, 1.0));',
+              '#endif'
             ],
           },
-          { diffuse: color || 0x0A2540 }
+          { diffuse: 0xffffff }
         );
 
         THREE.Mesh.call(this, bufferGeometry, material);
@@ -276,7 +286,7 @@ export default function TextSphereAnimation() {
         return geometry;
       }
 
-      function createTextAnimation(color: number) {
+      function createTextAnimation(color1: number, color2: number) {
         const THREE = (window as any).THREE;
 
         const ieeeGeometry = generateTextGeometry('IEEE', {
@@ -309,10 +319,9 @@ export default function TextSphereAnimation() {
         THREE.BAS.Utils.tessellateRepeat(ieeeGeometry, 1.0, 2);
         THREE.BAS.Utils.separateFaces(ieeeGeometry);
 
-        return new (TextAnimation as any)(ieeeGeometry, color);
+        return new (TextAnimation as any)(ieeeGeometry, color1, color2);
       }
 
-      // --- Helper: Create a text label sprite ---
       function createLabelSprite(text: string) {
         const labelCanvas = document.createElement('canvas');
         const labelCtx = labelCanvas.getContext('2d')!;
@@ -364,7 +373,7 @@ export default function TextSphereAnimation() {
         const spriteMaterial = new THREE.SpriteMaterial({
           map: texture,
           transparent: true,
-          depthWrite: false, // Prevent transparent label bounding box from punching depth holes
+          depthWrite: false,
         });
 
         const sprite = new THREE.Sprite(spriteMaterial);
@@ -380,10 +389,7 @@ export default function TextSphereAnimation() {
         const geometry = new THREE.SphereGeometry(SPHERE_RADIUS * 0.99, 64, 64);
         const material = new THREE.MeshBasicMaterial({
           map: earthTexture,
-          // alphaTest: 0.05 keeps smooth antialiased edges of hexagons intact
-          // while still discarding fully empty ocean pixels to fix sorting artifacts.
           alphaTest: 0.05,
-          // transparent: true is kept so GSAP can still animate the opacity for fade-out.
           transparent: true,
           side: THREE.FrontSide,
           opacity: 1,
@@ -395,25 +401,13 @@ export default function TextSphereAnimation() {
         earth.visible = true;
         earth.renderOrder = -1;
 
-        // ── Depth-mask sphere ──────────────────────────────────────────────────
-        // The dot-texture globe uses alphaTest:0.5, which means ocean fragments
-        // are DISCARDED and never write to the depth buffer. That leaves a gap
-        // through which back-hemisphere pins can bleed through the globe body.
-        // This invisible opaque sphere is the same shape as the globe but renders
-        // in the OPAQUE pass (transparent:false), so it always writes a solid
-        // depth shield across the entire globe silhouette before any transparent
-        // objects (pins, dot texture) are drawn. Back-side pins are then occluded
-        // by the depth test regardless of whether they're behind ocean or land.
         const depthMaskGeo = new THREE.SphereGeometry(SPHERE_RADIUS * 0.98, 64, 64);
         const depthMaskMat = new THREE.MeshBasicMaterial({
-          colorWrite: false, // completely invisible
-          depthWrite: true,  // but writes to depth buffer
+          colorWrite: false,
+          depthWrite: true,
           side: THREE.FrontSide,
         });
         const depthMaskSphere = new THREE.Mesh(depthMaskGeo, depthMaskMat);
-        // Being opaque (transparent:false by default) it will be sorted into the
-        // opaque render pass which runs before any transparent draw-calls, so the
-        // depth values are guaranteed to be in place when pins are tested.
         earth.add(depthMaskSphere);
 
         const calcPos = (lat: number, lon: number, radius: number) => {
@@ -427,14 +421,14 @@ export default function TextSphereAnimation() {
           return { x, y, z };
         };
 
-        const pinColor = 0x0A2540; // updated to match requested dark blue
+        const pinColor = 0x0A2540;
         const pinMaterial = new THREE.MeshBasicMaterial({ color: pinColor, transparent: true, depthWrite: false });
 
         function create3DPinMesh(colorMat: any) {
           const pinGroup = new THREE.Group();
 
-          const spikeHeight = 8;        // reduced from 15 — keeps pins anchored near surface
-          const spikeBaseRadius = 1.8;  // slimmer base to match shorter height
+          const spikeHeight = 8;
+          const spikeBaseRadius = 1.8;
 
           const spikeGeometry = new THREE.CylinderGeometry(0, spikeBaseRadius, spikeHeight, 16);
           const spikeMesh = new THREE.Mesh(spikeGeometry, colorMat);
@@ -442,7 +436,7 @@ export default function TextSphereAnimation() {
           spikeMesh.position.y = spikeHeight / 2;
           pinGroup.add(spikeMesh);
 
-          const topSphereRadius = 2.2;  // reduced from 3.5 — proportional to shorter spike
+          const topSphereRadius = 2.2;
           const topSphereGeometry = new THREE.SphereGeometry(topSphereRadius, 16, 16);
           const topSphereMesh = new THREE.Mesh(topSphereGeometry, colorMat);
 
@@ -463,12 +457,11 @@ export default function TextSphereAnimation() {
         ];
 
         const extraMaterials: any[] = [];
-        // pinObjects: used for per-frame back-hemisphere culling (see root.onUpdate)
         const pinObjects: any[] = [];
 
         pinsData.forEach((pin) => {
           const pinModelGroup = create3DPinMesh(pinMaterial);
-          const pos = calcPos(pin.lat, pin.lon, SPHERE_RADIUS * 1.003); // sit close to globe surface
+          const pos = calcPos(pin.lat, pin.lon, SPHERE_RADIUS * 1.003);
           pinModelGroup.position.set(pos.x, pos.y, pos.z);
           earth.add(pinModelGroup);
 
@@ -477,16 +470,12 @@ export default function TextSphereAnimation() {
             new THREE.Vector3().copy(pos).normalize()
           );
 
-          // Collect connected label elements so they hide/show in sync with this pin
           const pinExtras: any[] = [];
 
-          // --- Label above Sri Lanka pin (in earth's coordinate space) ---
           if (pin.name === 'Sri Lanka') {
-            // Keep these in sync with create3DPinMesh above
             const spikeHeight = 8;
             const topSphereRadius = 2.2;
 
-            // Pin top position in earth's local space
             const normal = new THREE.Vector3(pos.x, pos.y, pos.z).normalize();
             const pinTopPos = new THREE.Vector3(
               pos.x + normal.x * (spikeHeight + topSphereRadius),
@@ -494,7 +483,6 @@ export default function TextSphereAnimation() {
               pos.z + normal.z * (spikeHeight + topSphereRadius)
             );
 
-            // Label position: offset outward (radial) + upward (world Y)
             const radialOffset = 25;
             const worldYOffset = 40;
 
@@ -504,7 +492,6 @@ export default function TextSphereAnimation() {
               pinTopPos.z + normal.z * radialOffset
             );
 
-            // Connector line from pin top to label
             const lineGeom = new THREE.Geometry();
             lineGeom.vertices.push(pinTopPos.clone());
             lineGeom.vertices.push(labelPos.clone());
@@ -520,7 +507,6 @@ export default function TextSphereAnimation() {
             extraMaterials.push(lineMat);
             pinExtras.push(connectorLine);
 
-            // Small dot at the bend / connection point on pin top
             const dotGeom = new THREE.SphereGeometry(1.5, 8, 8);
             const dotMat = new THREE.MeshBasicMaterial({
               color: 0x0A2540,
@@ -533,7 +519,6 @@ export default function TextSphereAnimation() {
             extraMaterials.push(dotMat);
             pinExtras.push(dot);
 
-            // Label sprite
             const { sprite: labelSprite, material: labelMat } =
               createLabelSprite('UoM Student Branch');
             labelSprite.position.copy(labelPos);
@@ -546,7 +531,6 @@ export default function TextSphereAnimation() {
         });
 
         (earth as any).pinMaterials = [pinMaterial, ...extraMaterials];
-        // Expose pin objects for per-frame back-hemisphere culling
         (earth as any).pinObjects = pinObjects;
 
         return earth;
@@ -560,14 +544,7 @@ export default function TextSphereAnimation() {
       ctx.fillStyle = '#F8F9FA';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Use the preloaded earth image
       const processEarthTexture = () => {
-        // ── Offscreen mask: very gentle blur to suppress inland lake holes ──
-        // CRITICAL: blur must be small enough not to wash out small islands.
-        // At 2048×1024px, Sri Lanka is only ~20px wide — a 3px blur averages
-        // its pixels with surrounding bright ocean and erases it entirely.
-        // 1.5px blur is sufficient to close river/lake pixels (1–3px bright spots)
-        // without smearing small-island interiors into the ocean brightness range.
         const maskCanvas = document.createElement('canvas');
         maskCanvas.width = canvas.width;
         maskCanvas.height = canvas.height;
@@ -576,46 +553,19 @@ export default function TextSphereAnimation() {
         mCtx.drawImage(earthImage, 0, 0, canvas.width, canvas.height);
         mCtx.filter = 'none';
 
-        // ── Explicitly stamp Sri Lanka onto the mask ──
-        // At 2048×1024 Sri Lanka is only ~12×23px, easily washed out by blur.
-        // We paint a black polygon at its equirectangular position, enlarged ~35%
-        // around its centroid so the dot sampler always covers the island fully.
         const toMapXY = (lat: number, lon: number) => ({
           x: ((lon + 180) / 360) * maskCanvas.width,
           y: ((90 - lat) / 180) * maskCanvas.height,
         });
         const slCentroid = toMapXY(7.85, 80.77);
-        // Accurately plotted high-resolution Sri Lanka coastline control points (lat, lon)
         const slOutline: [number, number][] = [
-          [9.83, 80.23], // Point Pedro (North tip)
-          [9.50, 80.45], // Chundikkulam
-          [9.27, 80.81], // Mullaitivu
-          [8.85, 81.00], // Kuchchaveli
-          [8.58, 81.23], // Trincomalee
-          [8.23, 81.43], // Kathiraveli
-          [7.91, 81.55], // Valaichchenai
-          [7.72, 81.70], // Batticaloa
-          [7.42, 81.83], // Kalmunai
-          [7.02, 81.87], // Sangamankanda Point (East tip)
-          [6.87, 81.83], // Pottuvil
-          [6.37, 81.52], // Yala
-          [6.12, 81.12], // Hambantota
-          [5.92, 80.59], // Dondra Head (South tip)
-          [6.03, 80.22], // Galle
-          [6.42, 79.99], // Bentota
-          [6.93, 79.84], // Colombo
-          [7.21, 79.83], // Negombo
-          [7.58, 79.79], // Chilaw
-          [8.03, 79.70], // Kalpitiya
-          [8.35, 79.80], // Wilpattu
-          [8.78, 79.92], // Silavathurai
-          [8.98, 79.90], // Mannar coast
-          [9.30, 80.02], // Illuppaikkadavai
-          [9.60, 80.03], // Pooneryn
-          [9.74, 79.88], // Karainagar
-          [9.81, 80.04], // Kankesanthurai
+          [9.83, 80.23], [9.50, 80.45], [9.27, 80.81], [8.85, 81.00], [8.58, 81.23], [8.23, 81.43],
+          [7.91, 81.55], [7.72, 81.70], [7.42, 81.83], [7.02, 81.87], [6.87, 81.83], [6.37, 81.52],
+          [6.12, 81.12], [5.92, 80.59], [6.03, 80.22], [6.42, 79.99], [6.93, 79.84], [7.21, 79.83],
+          [7.58, 79.79], [8.03, 79.70], [8.35, 79.80], [8.78, 79.92], [8.98, 79.90], [9.30, 80.02],
+          [9.60, 80.03], [9.74, 79.88], [9.81, 80.04]
         ];
-        const scaleFactor = 1.6; // 60% enlargement — gives enough internal area to render multiple dot layers
+        const scaleFactor = 1.6;
         const slPts = slOutline.map(([lat, lon]) => {
           const p = toMapXY(lat, lon);
           return {
@@ -632,20 +582,17 @@ export default function TextSphereAnimation() {
 
         const maskData = mCtx.getImageData(0, 0, canvas.width, canvas.height);
 
-        // ── Main canvas ──
         const imageData = ctx.createImageData(canvas.width, canvas.height);
         for (let p = 0; p < imageData.data.length; p += 4) {
-          imageData.data[p] = 143; // R (#8ff4f7)
-          imageData.data[p + 1] = 244; // G
-          imageData.data[p + 2] = 247; // B
-          imageData.data[p + 3] = 0;   // A = fully transparent
+          imageData.data[p] = 143;
+          imageData.data[p + 1] = 244;
+          imageData.data[p + 2] = 247;
+          imageData.data[p + 3] = 0;
         }
         ctx.putImageData(imageData, 0, 0);
 
-        // Step 2: Draw fully-opaque hexagons over the land pixels.
         ctx.fillStyle = '#227aa6ff';
 
-        // MODIFIED: Reduced size and spacing
         const hexRadius = 2.8;
         const hexWidth = hexRadius * Math.sqrt(3);
         const rowHeight = hexRadius * 1.5;
@@ -663,12 +610,10 @@ export default function TextSphereAnimation() {
             const i = (py * canvas.width + px) * 4;
             const brightness = (maskData.data[i] + maskData.data[i + 1] + maskData.data[i + 2]) / 3;
 
-            // Slightly stricter threshold (150) so coastlines don't feather into mud
             if (brightness < 150) {
               ctx.beginPath();
               for (let j = 0; j < 6; j++) {
                 const angle = (Math.PI / 3) * j + (Math.PI / 6);
-                // MODIFIED: Increased multiplier to 0.90 to decrease the spacing (gap) between cells
                 const hx = x + (hexRadius * 0.90) * Math.cos(angle);
                 const hy = y + (hexRadius * 0.90) * Math.sin(angle);
                 if (j === 0) ctx.moveTo(hx, hy);
@@ -681,7 +626,6 @@ export default function TextSphereAnimation() {
         }
 
         const earthTexture = new THREE.Texture(canvas);
-        // Enable Mipmaps and Anisotropy to guarantee sharpness at all viewing angles!
         earthTexture.generateMipmaps = true;
         earthTexture.minFilter = THREE.LinearMipmapLinearFilter;
         earthTexture.magFilter = THREE.LinearFilter;
@@ -709,21 +653,10 @@ export default function TextSphereAnimation() {
         const earthSphere = createEarthSphere(earthTexture);
         sphereGroup.add(earthSphere);
 
-        const textAnimation = createTextAnimation(0x0A2540);
+        // Two rich particle colors for the transition
+        const textAnimation = createTextAnimation(0x0a2540, 0x257ca7);
         textAnimation.material.opacity = 0;
         sphereGroup.add(textAnimation);
-
-        // ── Particle halo ──────────────────────────────────────────────────
-        // A second copy of the text geometry, fully scattered (progress = 1.0),
-        // provides the richer two-colour particle cloud during the globe phase.
-        // It uses a lighter blue-300 accent that contrasts the dark globe dots,
-        // recreating the original denser / two-tone first-animation appearance.
-        // It never forms into text — it fades to zero before the primary text
-        // becomes readable, so the final globe state is completely unaffected.
-        const particleHalo = createTextAnimation(0x93C5FD); // blue-300 accent
-        particleHalo.material.opacity = 0.4;
-        particleHalo.animationProgress = 1.0;          // fully scattered — stays scattered
-        sphereGroup.add(particleHalo);
 
         const light = new THREE.DirectionalLight(0xffffff, 1);
         light.position.set(0, 0, 1);
@@ -739,28 +672,16 @@ export default function TextSphereAnimation() {
         let idleSpeed = { value: 0 };
         const clock = new THREE.Clock();
 
-        // Reusable vector to avoid per-frame allocation inside onUpdate
         const _pinWorldPos = new THREE.Vector3();
 
         root.onUpdate = () => {
           const delta = clock.getDelta();
-          // Frame-independent idle rotation based on ~60fps standard for consistent feel
           const timeScale = Math.min(delta * 60, 3.0);
 
-          // Rotate positively to continue the motion from the timeline's arrival
           earthSphere.rotation.y += idleSpeed.value * timeScale;
 
-          // Hide text completely from WebGL pipeline when invisible to prevent artifact strays
           textAnimation.visible = textAnimation.material.opacity > 0.01;
-          // Same guard for the halo layer
-          particleHalo.visible = particleHalo.material.opacity > 0.01;
 
-          // ── Per-frame back-hemisphere culling ──────────────────────────────
-          // Belt-and-suspenders on top of the depth-mask sphere: explicitly hide
-          // any pin whose world-space Z is ≤ 0 (back side, away from camera at
-          // z=600). getWorldPosition() accounts for all parent rotations so this
-          // stays correct as the globe spins. The threshold of -2 softens the
-          // hard pop exactly at the equator.
           const pinData: any[] = (earthSphere as any).pinObjects || [];
           pinData.forEach((p: any) => {
             p.group.getWorldPosition(_pinWorldPos);
@@ -796,7 +717,6 @@ export default function TextSphereAnimation() {
 
         const fadeTargets = [earthSphere.material, ...(earthSphere as any).pinMaterials];
 
-        // Simple to() — material already starts at opacity:1, so no explicit from needed.
         tl.to(fadeTargets, 5, { opacity: 0, ease: Power3.easeInOut }, 1.5);
 
         tl.fromTo(
@@ -815,19 +735,7 @@ export default function TextSphereAnimation() {
           1.5
         );
 
-        // Halo fades out as the globe transitions, in the same window as the
-        // globe shrink/fade (t=1.5 → t=6.5). Its progress stays at 1.0 throughout
-        // so scattered particles dissolve away without ever forming into text.
-        tl.fromTo(
-          particleHalo.material,
-          5,
-          { opacity: 0.4 },
-          { opacity: 0, ease: Power3.easeInOut },
-          1.5
-        );
-
         if (bgGlobe) {
-          // Shrink the CSS edge glow perfectly in sync with the 3D sphere
           tl.fromTo(bgGlobe, 5, { scale: 1, opacity: 1 }, { scale: 0.001, opacity: 0, ease: Power3.easeInOut }, 1.5);
         }
         if (bgText) {
@@ -848,9 +756,6 @@ export default function TextSphereAnimation() {
           earthSphere.material.opacity = 1;
           (earthSphere as any).pinMaterials.forEach((mat: any) => (mat.opacity = 1));
           textAnimation.material.opacity = 0;
-          // Restore halo so it’s visible again when the globe reappears
-          particleHalo.material.opacity = 0.4;
-          particleHalo.visible = true;
           earthSphere.scale.set(1, 1, 1);
           if (bgGlobe) {
             bgGlobe.style.opacity = '1';
@@ -882,7 +787,10 @@ export default function TextSphereAnimation() {
               TweenMax.to(sideLabel.children, 0.3, { opacity: 0, ease: Power3.easeOut });
             }
             tl.reversed(true);
-            const durationLeft = Math.max(tl.time(), 0.1);
+            if (tl.time() > 6.5) {
+              tl.time(6.5);
+            }
+            const durationLeft = Math.max(tl.time(), 0.5);
             TweenMax.to(idleSpeed, durationLeft, { value: 0.003, ease: Power3.easeInOut });
           }
         });
@@ -891,7 +799,6 @@ export default function TextSphereAnimation() {
 
     loadAllScripts();
   }, []);
-
 
   return (
     <div className="relative w-full h-screen bg-[#F8F9FA] overflow-hidden">
@@ -977,11 +884,9 @@ export default function TextSphereAnimation() {
 
       {/* --- BACKGROUND HEXAGON GRID --- */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        {/* Full screen hexagon composition */}
         <svg viewBox="0 0 1920 1080" className="absolute inset-0 w-full h-full opacity-80 md:opacity-100" preserveAspectRatio="xMidYMid slice" fill="none">
           <defs>
             <polygon id="hex" points="0,-80 69.28,-40 69.28,40 0,80 -69.28,40 -69.28,-40" />
-            {/* Left cluster beam gradient */}
             <linearGradient id="beamGradientLeft" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="rgba(120,190,255,0)" />
               <stop offset="35%" stopColor="rgba(120,190,255,0)" />
@@ -989,7 +894,6 @@ export default function TextSphereAnimation() {
               <stop offset="65%" stopColor="rgba(120,190,255,0)" />
               <stop offset="100%" stopColor="rgba(120,190,255,0)" />
             </linearGradient>
-            {/* Right cluster beam gradient — slightly warmer tint for visual distinction */}
             <linearGradient id="beamGradientRight" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="rgba(140,200,255,0)" />
               <stop offset="35%" stopColor="rgba(140,200,255,0)" />
@@ -1100,18 +1004,6 @@ export default function TextSphereAnimation() {
               <use href="#hex" x="1801.3" y="1200.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
               <use href="#hex" x="1939.8" y="1200.0" fill="none" stroke="rgba(59,130,246,0.12)" strokeWidth="1" />
             </g>
-            {/*
-              hexStrokesOnly: a stroke-only copy of each hexagon used exclusively in the beam mask.
-              SVG mask rules: white = show beam, black = block beam.
-              fill="black" = completely opaque in mask (blocks beam in hex interiors).
-              stroke="white" = fully transparent in mask (lets beam through only at the border lines).
-              Only hexagons that have visible strokes in hexBlock are included here.
-            */}
-            {/*
-              hexStrokesLeft: stroke-only hexagons for the LEFT cluster (x ≤ ~1050).
-              hexStrokesRight: stroke-only hexagons for the RIGHT cluster (x ≥ ~1150).
-              SVG mask: white = let beam through, black = block beam (interior blocked).
-            */}
             <g id="hexStrokesLeft">
               <use href="#hex" x="0.0" y="0.0" fill="black" stroke="white" strokeWidth="3" />
               <use href="#hex" x="138.6" y="0.0" fill="black" stroke="white" strokeWidth="3" />
@@ -1197,25 +1089,20 @@ export default function TextSphereAnimation() {
               <use href="#hex" x="1801.3" y="1200.0" fill="black" stroke="white" strokeWidth="3" />
               <use href="#hex" x="1939.8" y="1200.0" fill="black" stroke="white" strokeWidth="3" />
             </g>
-            {/* Left mask: beam only visible at left hexagon outlines */}
             <mask id="hexMaskLeft">
               <rect width="1920" height="1080" fill="black" />
               <use href="#hexStrokesLeft" />
             </mask>
-            {/* Right mask: beam only visible at right hexagon outlines */}
             <mask id="hexMaskRight">
               <rect width="1920" height="1080" fill="black" />
               <use href="#hexStrokesRight" />
             </mask>
           </defs>
           <g>
-            {/* The base hexagons */}
             <use href="#hexBlock" />
-            {/* Left cluster beam — sweeps locally through the left hexagon group only */}
             <rect y="0" width="750" height="1080" fill="url(#beamGradientLeft)" mask="url(#hexMaskLeft)">
               <animate attributeName="x" values="-750; 750" dur="10s" repeatCount="indefinite" />
             </rect>
-            {/* Right cluster beam — sweeps locally through the right hexagon group independently, staggered timing */}
             <rect y="0" width="850" height="1080" fill="url(#beamGradientRight)" mask="url(#hexMaskRight)">
               <animate attributeName="x" values="750; 2700" dur="13s" begin="-5s" repeatCount="indefinite" />
             </rect>
@@ -1228,7 +1115,7 @@ export default function TextSphereAnimation() {
         id="bg-globe"
         className="absolute inset-0 m-auto rounded-full pointer-events-none"
         style={{
-          width: '75.6vh', // Mathematical screen projection of r=240 from exactly 600 z-units in fov 60
+          width: '75.6vh',
           height: '75.6vh',
           zIndex: 5,
           border: '1px solid rgba(0, 82, 255, 0.12)',
@@ -1283,8 +1170,6 @@ export default function TextSphereAnimation() {
         </p>
         <div className="w-[1px] h-24 md:h-36 bg-gradient-to-t from-transparent to-[#0A2540]/60 mt-6" />
       </div>
-
-      {/* Global Vignette Removed - It was artificially casting a white semi-transparent fade over the outer continents causing shade inconsistency */}
     </div>
   );
 }
