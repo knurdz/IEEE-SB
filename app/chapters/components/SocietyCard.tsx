@@ -2,6 +2,8 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
+import { cn } from '@/lib/cn';
+import { easing } from '@/lib/motion';
 import OctagonFrame from './OctagonFrame';
 import SocialLinks from './SocialLinks';
 import type { Society } from '../data';
@@ -37,10 +39,9 @@ export default function SocietyCard({ society, reverse = false, index }: Society
       transition={{
         duration: 0.7,
         delay: index * 0.1,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: easing,
       }}
     >
-      {/* Divider line */}
       {index > 0 && (
         <div
           className="absolute top-0 left-[5%] right-[5%] h-px"
@@ -51,22 +52,21 @@ export default function SocietyCard({ society, reverse = false, index }: Society
         />
       )}
 
-      {/* Card content */}
       <motion.div
-        className={`flex gap-20 px-4 items-center ${flexDirection} max-lg:flex-col max-lg:gap-8 max-lg:text-center`}
+        className={cn(
+          'flex items-center gap-20 px-4 max-lg:flex-col max-lg:gap-8 max-lg:text-center',
+          flexDirection,
+        )}
         onMouseMove={handleMouseMove}
         style={{
           background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 212, 255, 0.04), transparent 40%)`,
         }}
       >
-        {/* Image */}
         <div className="flex-shrink-0">
           <OctagonFrame src={society.logo} alt={`${society.title} Logo`} />
         </div>
 
-        {/* Content */}
         <div className={`flex-1 flex flex-col gap-5 ${contentAlign} max-lg:items-center max-lg:text-center`}>
-          {/* Label */}
           <div
             className={`inline-flex items-center gap-4 ${reverse ? 'flex-row-reverse' : 'flex-row'} max-lg:flex-row`}
           >
@@ -81,19 +81,16 @@ export default function SocietyCard({ society, reverse = false, index }: Society
             </span>
           </div>
 
-          {/* Title */}
           <motion.h2
             className="text-4xl md:text-5xl font-bold text-white/95 leading-tight transition-all duration-200 hover:bg-gradient-to-r hover:from-white hover:to-cyan-400 hover:bg-clip-text hover:text-transparent"
           >
             {society.title}
           </motion.h2>
 
-          {/* Description */}
           <p className="text-base text-white/60 leading-relaxed max-w-xl">
             {society.description}
           </p>
 
-          {/* Social Links */}
           <SocialLinks
             links={society.links}
             align={reverse ? 'right' : 'left'}

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { cn } from '@/lib/cn';
 import { Member, Variant } from '../types';
 import { RESTING, HOVER } from '../constants';
 
@@ -18,8 +19,13 @@ export default function MemberCard({
 }) {
   const [hovered, setHovered] = useState(false);
 
-  const rest  = RESTING[variant][index] ?? { z: 1, scale: 1, y: 0, brightness: 1 };
-  const hover = HOVER[variant][index]   ?? { scale: 1.05, y: -10 };
+  const restingTransform = RESTING[variant][index] ?? {
+    z: 1,
+    scale: 1,
+    y: 0,
+    brightness: 1,
+  };
+  const hoverTransform = HOVER[variant][index] ?? { scale: 1.05, y: -10 };
 
   const cardStyle: React.CSSProperties = {
     position: 'relative',
@@ -27,11 +33,11 @@ export default function MemberCard({
     minWidth: 0,
     height: '85%',
     margin: '0 -20px',
-    zIndex: hovered ? 10 : rest.z,
+    zIndex: hovered ? 10 : restingTransform.z,
     transform: hovered
-      ? `scale(${hover.scale}) translateY(${hover.y}px)`
-      : `scale(${rest.scale}) translateY(${rest.y}px)`,
-    filter: hovered ? 'brightness(1.1)' : `brightness(${rest.brightness})`,
+      ? `scale(${hoverTransform.scale}) translateY(${hoverTransform.y}px)`
+      : `scale(${restingTransform.scale}) translateY(${restingTransform.y}px)`,
+    filter: hovered ? 'brightness(1.1)' : `brightness(${restingTransform.brightness})`,
     transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
   };
 
@@ -41,15 +47,14 @@ export default function MemberCard({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Card shell */}
-        <div
-          className={`relative w-full h-full rounded-2xl overflow-hidden border transition-colors duration-500 shadow-[-10px_0_30px_rgba(0,0,0,0.6)] ${
-            hovered
-              ? 'border-primary/40 bg-surface-alt'
-              : 'border-white/15 bg-gradient-to-b from-surface/90 to-background/95'
-          }`}
-        >
-          {/* Member photo */}
+      <div
+        className={cn(
+          'relative h-full w-full overflow-hidden rounded-2xl border shadow-[-10px_0_30px_rgba(0,0,0,0.6)] transition-colors duration-500',
+          hovered
+            ? 'border-primary/40 bg-surface-alt'
+            : 'border-white/15 bg-gradient-to-b from-surface/90 to-background/95',
+        )}
+      >
           <Image
             src={member.image}
             alt={member.name}
@@ -58,7 +63,6 @@ export default function MemberCard({
             sizes="(max-width: 768px) 50vw, 220px"
           />
 
-          {/* Vertical or Horizontal Name based on position */}
           {position !== 'middle' ? (
             <div className={`absolute top-0 bottom-0 w-12 flex flex-col items-center justify-center z-20 gap-3 ${position === 'left' ? 'left-0' : 'right-0'}`}>
               <p
@@ -80,7 +84,6 @@ export default function MemberCard({
             </div>
           ) : null}
 
-          {/* Bottom gradient overlay + info */}
           <div
             className={`absolute inset-x-0 bottom-0 z-20 text-center transition-all duration-500 ${position === 'left' ? 'pl-12' : position === 'right' ? 'pr-12' : ''}`}
             style={{
@@ -119,21 +122,18 @@ export default function MemberCard({
             )}
           </div>
 
-          {/* Primary scan-line on hover */}
           <div
             className={`absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent transition-opacity duration-300 ${
               hovered ? 'opacity-100' : 'opacity-0'
             }`}
           />
 
-          {/* Corner accent */}
           <div
             className={`absolute top-3 right-3 w-6 h-6 border-t border-r border-primary/40 rounded-tr-md transition-opacity duration-300 ${
               hovered ? 'opacity-100' : 'opacity-0'
             }`}
           />
 
-          {/* Primary glow border on hover */}
           <div
             className={`absolute inset-0 rounded-2xl transition-opacity duration-500 pointer-events-none ${
               hovered ? 'opacity-100' : 'opacity-0'
@@ -142,7 +142,7 @@ export default function MemberCard({
               boxShadow: '0 0 30px var(--primary-glow), inset 0 0 30px rgba(96,165,250,0.05)',
             }}
           />
-        </div>
+      </div>
     </div>
   );
 }
