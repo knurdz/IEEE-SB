@@ -8,158 +8,154 @@ export default function EventsHero() {
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
-    if (shouldReduceMotion) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationFrameId: number;
-    const MAX_PARTICLES = 190;
-    const CONN_DIS = 160;
+    // Responsive setup
+    const isMobile = window.innerWidth < 768;
+    const SPACING = isMobile ? 24 : 20;
+    const INFLUENCE_RADIUS = isMobile ? 120 : 180;
 
-    const mouse = { x: -1000, y: -1000 };
+    if (shouldReduceMotion) {
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = canvas.offsetWidth * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
+      ctx.scale(dpr, dpr);
+
+      const cols = Math.ceil(canvas.offsetWidth / SPACING) + 1;
+      const rows = Math.ceil(canvas.offsetHeight / SPACING) + 1;
+
+      ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+      const gradient = ctx.createLinearGradient(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+      gradient.addColorStop(0, 'rgba(0, 224, 255, 0.35)');
+      gradient.addColorStop(1, 'rgba(0, 163, 255, 0.1)');
+      ctx.fillStyle = gradient;
+
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          ctx.beginPath();
+          ctx.arc(c * SPACING, r * SPACING, 1.1, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      return;
+    }
+
+    let rafId: number;
+    let resizeTimeout: NodeJS.Timeout;
+    
+    const mouse = { x: -9999, y: -9999 };
+    
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       mouse.x = e.clientX - rect.left;
       mouse.y = e.clientY - rect.top;
     };
+    
     const handleMouseLeave = () => {
-      mouse.x = -1000;
-      mouse.y = -1000;
+      mouse.x = -9999;
+      mouse.y = -9999;
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseout', handleMouseLeave);
+    window.addEventListener('mouseleave', handleMouseLeave);
 
-    class Particle {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      color: string;
-      radius: number;
+    let dots: { x: number, y: number, baseX: number, baseY: number }[] = [];
 
-      constructor() {
-        this.x = Math.random() * canvas!.width;
-        this.y = Math.random() * canvas!.height;
-        this.vx = (Math.random() - 0.5) * 1.5;
-        this.vy = (Math.random() - 0.5) * 1.5;
-        this.color =
-          Math.random() > 0.5
-            ? 'rgba(0, 163, 255, 0.8)'
-            : 'rgba(0, 224, 255, 0.8)';
-        this.radius = 2.2;
-      }
+    const setupDots = () => {
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = canvas.offsetWidth * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
+      ctx.scale(dpr, dpr);
 
-      update(allParticles: Particle[]) {
-        const dx = mouse.x - this.x;
-        const dy = mouse.y - this.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
+      dots = [];
+      const cols = Math.ceil(canvas.offsetWidth / SPACING) + 1;
+      const rows = Math.ceil(canvas.offsetHeight / SPACING) + 1;
 
-        if (dist < 180 && dist > 0) {
-          const force = (180 - dist) / 180;
-          this.vx -= (dx / dist) * force * 0.05;
-          this.vy -= (dy / dist) * force * 0.05;
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+          dots.push({
+            x: col * SPACING,
+            y: row * SPACING,
+            baseX: col * SPACING,
+            baseY: row * SPACING
+          });
         }
-
-        for (let i = 0; i < allParticles.length; i++) {
-          const other = allParticles[i];
-          if (other === this) continue;
-          const dxP = other.x - this.x;
-          const dyP = other.y - this.y;
-          const distP = Math.sqrt(dxP * dxP + dyP * dyP);
-          const minDist = 22;
-          if (distP < minDist && distP > 0) {
-            const forceP = (minDist - distP) / minDist;
-            this.vx -= (dxP / distP) * forceP * 0.08;
-            this.vy -= (dyP / distP) * forceP * 0.08;
-          }
-        }
-
-        const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
-        if (speed > 1.8) {
-          this.vx = (this.vx / speed) * 1.8;
-          this.vy = (this.vy / speed) * 1.8;
-        }
-
-        this.x += this.vx;
-        this.y += this.vy;
-        this.vx *= 0.99;
-        this.vy *= 0.99;
-
-        if (Math.abs(this.vx) < 0.2) this.vx += (Math.random() - 0.5) * 0.05;
-        if (Math.abs(this.vy) < 0.2) this.vy += (Math.random() - 0.5) * 0.05;
-
-        if (this.x < 0) { this.x = 0; this.vx *= -1; }
-        if (this.x > canvas!.width) { this.x = canvas!.width; this.vx *= -1; }
-        if (this.y < 0) { this.y = 0; this.vy *= -1; }
-        if (this.y > canvas!.height) { this.y = canvas!.height; this.vy *= -1; }
-      }
-
-      draw() {
-        if (!ctx) return;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = this.color;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      }
-    }
-
-    const particles: Particle[] = [];
-    for (let i = 0; i < MAX_PARTICLES; i++) {
-      particles.push(new Particle());
-    }
-
-    const resizeCanvas = () => {
-      const parent = canvas.parentElement;
-      if (parent) {
-        canvas.width = parent.clientWidth;
-        canvas.height = parent.clientHeight;
-        
-        // Redistribute particles to fit the new dimensions
-        particles.forEach(p => {
-          p.x = Math.random() * canvas.width;
-          p.y = Math.random() * canvas.height;
-        });
       }
     };
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        setupDots();
+      }, 100);
+    };
+
+    window.addEventListener('resize', handleResize);
+    setupDots();
 
     const animate = () => {
-      ctx.clearRect(0, 0, canvas!.width, canvas!.height);
-      for (let i = 0; i < particles.length; i++) {
-        particles[i].update(particles);
-        particles[i].draw();
+      ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
 
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < CONN_DIS) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(0, 163, 255, ${0.45 * (1 - dist / CONN_DIS)})`;
-            ctx.lineWidth = 1;
-            ctx.stroke();
-          }
+      const time = Date.now() * 0.005;
+      const VIBE_RADIUS = 350;
+
+      const gradient = ctx.createLinearGradient(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+      gradient.addColorStop(0, 'rgba(0, 224, 255, 0.45)');
+      gradient.addColorStop(1, 'rgba(0, 163, 255, 0.15)');
+      ctx.fillStyle = gradient;
+
+      for (let i = 0; i < dots.length; i++) {
+        const dot = dots[i];
+        
+        const dx = dot.baseX - mouse.x;
+        const dy = dot.baseY - mouse.y;
+        const dist = Math.hypot(dx, dy);
+
+        // Local phase based on position
+        const phase = (dot.baseX * 0.05) + (dot.baseY * 0.05);
+        
+        let vibeScale = 1.0;
+        let freqScale = 1.0;
+        
+        if (dist < VIBE_RADIUS) {
+          const vibeProximity = 1 - (dist / VIBE_RADIUS);
+          vibeScale = 1.0 + vibeProximity * 1.2; 
+          freqScale = 1.0 + vibeProximity * 2.0; // Increase speed on hover
         }
+
+        const swayX = Math.sin(time * freqScale + phase) * 0.3 * vibeScale;
+        const swayY = Math.cos(time * 1.1 * freqScale + phase) * 0.3 * vibeScale;
+
+        let targetX = dot.baseX + swayX;
+        let targetY = dot.baseY + swayY;
+        
+        if (dist < INFLUENCE_RADIUS) {
+          const proximity = 1 - (dist / INFLUENCE_RADIUS);
+          const force = Math.pow(proximity, 1.5) * 20; 
+          targetX += (dx / Math.max(dist, 1)) * force;
+          targetY += (dy / Math.max(dist, 1)) * force;
+        }
+
+        ctx.beginPath();
+        ctx.arc(targetX, targetY, 1.1, 0, Math.PI * 2);
+        ctx.fill();
       }
-      animationFrameId = requestAnimationFrame(animate);
+      
+      rafId = requestAnimationFrame(animate);
     };
+
     animate();
 
     return () => {
+      cancelAnimationFrame(rafId);
+      clearTimeout(resizeTimeout);
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseout', handleMouseLeave);
-      window.removeEventListener('resize', resizeCanvas);
-      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('resize', handleResize);
     };
   }, [shouldReduceMotion]);
 
