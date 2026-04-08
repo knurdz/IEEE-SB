@@ -236,7 +236,8 @@ const ThreeImageTransition: React.FC = () => {
           }
 
           for (v = 0; v < 6; v += 2) {
-            aAnimation.array[i2 + v] = delayX + delayY + Math.random() * stretch * duration;
+            // ONLY pack delayY + randomness here! delayX is handled dynamically by the shader based on uDirection
+            aAnimation.array[i2 + v] = delayY + Math.random() * stretch * duration;
             aAnimation.array[i2 + v + 1] = duration;
           }
 
@@ -273,7 +274,12 @@ const ThreeImageTransition: React.FC = () => {
         let material = new THREE.BAS.BasicAnimationMaterial({
           shading: THREE.FlatShading,
           side: THREE.DoubleSide,
-          uniforms: { uTime: { type: 'f', value: 0 } },
+          uniforms: { 
+            uTime: { type: 'f', value: 0 },
+            uDirection: { type: 'f', value: 1.0 },
+            uHalfWidth: { type: 'f', value: width * 0.5 },
+            uMaxDelayX: { type: 'f', value: maxDelayX }
+          },
           shaderFunctions: [
             THREE.BAS.ShaderChunk['cubic_bezier'],
             THREE.BAS.ShaderChunk['ease_in_out_cubic'],
@@ -281,6 +287,9 @@ const ThreeImageTransition: React.FC = () => {
           ],
           shaderParameters: [
             'uniform float uTime;',
+            'uniform float uDirection;',
+            'uniform float uHalfWidth;',
+            'uniform float uMaxDelayX;',
             'attribute vec2 aAnimation;',
             'attribute vec3 aStartPosition;',
             'attribute vec3 aControl0;',
@@ -288,7 +297,9 @@ const ThreeImageTransition: React.FC = () => {
             'attribute vec3 aEndPosition;'
           ],
           shaderVertexInit: [
-            'float tDelay = aAnimation.x;',
+            'float mappedX = clamp((aStartPosition.x + uHalfWidth) / (2.0 * uHalfWidth), 0.0, 1.0);',
+            'float dX = uDirection > 0.0 ? (1.0 - mappedX) * uMaxDelayX : mappedX * uMaxDelayX;',
+            'float tDelay = aAnimation.x + dX;',
             'float tDuration = aAnimation.y;',
             'float tTime = clamp(uTime - tDelay, 0.0, tDuration);',
             'float tProgress = ease(tTime, 0.0, 1.0, tDuration);'
@@ -309,6 +320,10 @@ const ThreeImageTransition: React.FC = () => {
       Object.defineProperty(Slide.prototype, 'time', {
         get: function () { return this.material.uniforms['uTime'].value; },
         set: function (v: any) { this.material.uniforms['uTime'].value = v; }
+      });
+      Object.defineProperty(Slide.prototype, 'direction', {
+        get: function () { return this.material.uniforms['uDirection'].value; },
+        set: function (v: any) { this.material.uniforms['uDirection'].value = v; }
       });
 
       Slide.prototype.setImage = function(image: any) {
@@ -404,6 +419,9 @@ const ThreeImageTransition: React.FC = () => {
 
         if (isAnimating) return;
         isAnimating = true;
+
+        slideOut.direction = direction;
+        slideIn.direction = direction;
 
         slideOut.setImage(loadedImages[currentImageIndex]);
         slideIn.setImage(loadedImages[nextIndex]);
