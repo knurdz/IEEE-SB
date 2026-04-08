@@ -41,7 +41,7 @@ const Dots = ({ className }: { className?: string }) => (
 
 export default function SocietySections() {
   return (
-    <section className="py-24 bg-white relative overflow-hidden z-10" id="societies-list">
+    <section className="pt-8 pb-24 bg-transparent relative overflow-hidden z-10" id="societies-list">
       {/* Background large decorative line matching the reference */}
       <WavyLine className="absolute top-1/4 left-0 w-full h-[300px] text-purple-100/50 -translate-x-1/4 z-0 pointer-events-none" />
       <WavyLine className="absolute bottom-1/4 right-0 w-[150%] h-[300px] text-orange-100/50 translate-x-1/4 z-0 pointer-events-none transform rotate-180" />
@@ -71,7 +71,7 @@ export default function SocietySections() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, ease: "easeOut" }}
               key={society.id}
-              className={`flex flex-col md:flex-row items-center gap-12 lg:gap-28 py-16 lg:py-24 ${
+              className={`flex flex-col md:flex-row items-center gap-12 lg:gap-28 py-12 lg:py-16 ${
                 isReversed ? 'md:flex-row-reverse' : ''
               }`}
             >
@@ -114,13 +114,12 @@ export default function SocietySections() {
                   className="relative z-10 w-64 h-64 lg:w-[380px] lg:h-[380px] overflow-hidden border-[10px] border-white shadow-2xl bg-gray-100 object-cover"
                 >
                   <Image 
-                    src={society.logo !== '/chapters/society_logo.png' && society.logo ? society.logo : "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"}
+                    src={society.logo || '/chapters/society_logo.png'}
                     alt={society.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-700 hover:scale-110 grayscale hover:grayscale-0"
+                    className="object-contain p-12 transition-transform duration-700 hover:scale-110"
                   />
-                  {/* The reference has a black & white/grayscale look to people. Adding grayscale with hover effect makes it very premium. */}
                 </motion.div>
                 
                 {/* Additional floating abstract shape */}
