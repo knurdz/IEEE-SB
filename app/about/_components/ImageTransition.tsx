@@ -486,18 +486,16 @@ const ThreeImageTransition: React.FC<ImageTransitionProps> = ({ slides }) => {
       />
 
       {/* HTML TSX UI LAYER */}
-      <div className="absolute inset-0 pointer-events-none flex items-center justify-center p-20 z-10 w-full h-full max-w-[1400px] mx-auto">
+      <div className="absolute inset-0 pointer-events-none z-10 w-full h-full">
         {slides.map((slide, idx) => (
             <div 
                 key={idx} 
-                className="absolute w-full h-full flex items-center transition-all ease-[cubic-bezier(0.25,1,0.5,1)] pointer-events-auto"
+                className="absolute w-full h-full transition-all ease-[cubic-bezier(0.25,1,0.5,1)] pointer-events-auto"
                 style={{
                     opacity: activeIndex === idx ? 1 : 0,
                     transform: activeIndex === idx ? 'translateY(0) scale(1)' : (activeIndex > idx ? 'translateY(-60px) scale(0.95)' : 'translateY(60px) scale(0.95)'),
                     transitionDuration: '1500ms',
-                    pointerEvents: activeIndex === idx ? 'auto' : 'none',
-                    // Optional styling: fallback to standard centering, but in a real app, layout constraints belong inside the slide component itself
-                    justifyContent: idx === 1 || idx === 4 ? 'center' : (idx === 2 ? 'flex-end' : 'flex-start')
+                    pointerEvents: activeIndex === idx ? 'auto' : 'none'
                 }}
             >
                 {slide.component}
