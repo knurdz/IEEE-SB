@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function ChaptersPage() {
-  return <div>Chapters Page</div>;
+  return <div></div>;
 }

@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function EventsPage() {
-  return <div>Events Page</div>;
+  return <div></div>;
 }
