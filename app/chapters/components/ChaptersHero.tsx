@@ -34,8 +34,8 @@ export default function ChaptersHero() {
         }
 
         .hero-tagline-1 {
-          font-family: 'Inter', system-ui, -apple-system, sans-serif;
-          font-weight: 700;
+          font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+          font-weight: 600;
           font-size: 13px;
           letter-spacing: 0.25em;
           color: #008be6;
@@ -46,8 +46,8 @@ export default function ChaptersHero() {
         }
 
         .hero-tagline-2 {
-          font-family: 'Inter', system-ui, -apple-system, sans-serif;
-          font-weight: 800;
+          font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+          font-weight: 700; /* standard bold to avoid synthetic bolding */
           font-size: 40px;
           line-height: 1.1;
           letter-spacing: -0.02em;
@@ -55,7 +55,7 @@ export default function ChaptersHero() {
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-          filter: drop-shadow(0 4px 16px rgba(23, 53, 153, 0.15));
+          text-shadow: 0 4px 12px rgba(23, 53, 153, 0.1);
         }
           
         @media (min-width: 768px) {
