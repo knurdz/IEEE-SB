@@ -9,7 +9,7 @@ export default function Footer() {
     <footer id="footer-section" className="site-footer relative" aria-label="IEEE UoM footer">
       <div className="footer-top-row">
         <Image
-          src="/logo/ieeesblogo-light2.png"
+          src="/logo/ieeesblogo.png"
           alt="IEEE University of Moratuwa Student Branch"
           className="ieee-logo"
           width={395}
