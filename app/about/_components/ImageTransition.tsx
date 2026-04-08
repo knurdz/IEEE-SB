@@ -49,9 +49,12 @@ const ThreeImageTransition: React.FC<ImageTransitionProps> = ({ slides }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [prevIndex, setPrevIndex] = useState<number | null>(null);
 
   // Preserve stable ref of slides for the WebGL closure initialized strictly on mount
   const slidesRef = useRef(slides);
+  const activeIndexRef = useRef(activeIndex);
+  activeIndexRef.current = activeIndex;
   
   useEffect(() => {
     let animationFrameId: number;
@@ -423,7 +426,17 @@ const ThreeImageTransition: React.FC<ImageTransitionProps> = ({ slides }) => {
         slideOut.time = 0;
         slideIn.time = 0;
         
-        setActiveIndex(nextIndex); // Trigger TSX Overlay animation instantly!
+        setPrevIndex(currentImageIndex); // marks current slide to play its EXIT animation
+
+        // Clear exited slide after exit animation completes
+        setTimeout(() => {
+          setPrevIndex(null);
+        }, 600);
+
+        // Reveal new slide near the end of 2.5s WebGL shatter tween
+        setTimeout(() => {
+          setActiveIndex(nextIndex);
+        }, 1800);
 
         TweenMax.to([slideOut, slideIn], 2.5, { // slightly accelerated for scroll responsiveness
           time: slideOut.totalDuration,
@@ -487,20 +500,28 @@ const ThreeImageTransition: React.FC<ImageTransitionProps> = ({ slides }) => {
 
       {/* HTML TSX UI LAYER */}
       <div className="absolute inset-0 pointer-events-none z-10 w-full h-full">
-        {slides.map((slide, idx) => (
-            <div 
-                key={idx} 
-                className="absolute w-full h-full transition-all ease-[cubic-bezier(0.25,1,0.5,1)] pointer-events-auto"
-                style={{
-                    opacity: activeIndex === idx ? 1 : 0,
-                    transform: activeIndex === idx ? 'translateY(0) scale(1)' : (activeIndex > idx ? 'translateY(-60px) scale(0.95)' : 'translateY(60px) scale(0.95)'),
-                    transitionDuration: '1500ms',
-                    pointerEvents: activeIndex === idx ? 'auto' : 'none'
-                }}
+        {slides.map((slide, idx) => {
+          const isActive = activeIndex === idx;
+          const isExiting = prevIndex === idx;
+
+          return (
+            <div
+              key={idx}
+              className="absolute w-full h-full"
+              style={{
+                transition: 'opacity 800ms ease, transform 600ms ease',
+                // isExiting MUST override isActive (they overlap during exit phase)
+                opacity: isExiting ? 0 : (isActive ? 1 : 0),
+                transform: isExiting
+                  ? `translateY(${activeIndex > idx ? '-50px' : '50px'}) scale(0.97)`
+                  : 'translateY(0px) scale(1)',
+                pointerEvents: isActive && !isExiting ? 'auto' : 'none',
+              }}
             >
-                {slide.component}
+              {slide.component}
             </div>
-        ))}
+          );
+        })}
       </div>
 
     </div>

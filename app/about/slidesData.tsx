@@ -80,8 +80,8 @@ const OceanicComponent = () => (
 
 export const SLIDES: SlideData[] = [
   { image: '/images/bg-2.svg', component: <HeroComponent /> },
-  { image: '/images/bg-2.svg', component: <NetworkComponent /> },
+  { image: '/images/bg-1.svg', component: <NetworkComponent /> },
   { image: '/images/bg-2.svg', component: <OperationsComponent /> },
-  { image: '/images/bg-2.svg', component: <CosmosComponent /> },
+  { image: '/images/bg-1.svg', component: <CosmosComponent /> },
   { image: '/images/bg-2.svg', component: <OceanicComponent /> }
 ];
