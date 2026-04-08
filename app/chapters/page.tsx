@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import ChaptersHero from './components/ChaptersHero';
+import ChaptersNetwork from './components/ChaptersNetwork';
 
 export const metadata: Metadata = {
   title: 'IEEE Societies | IEEE Student Branch - University of Moratuwa',
@@ -7,5 +9,11 @@ export const metadata: Metadata = {
 };
 
 export default function ChaptersPage() {
-  return <div></div>;
+  return (
+    <main className="min-h-screen relative bg-[#F8F9FA]" id="chapters">
+      <ChaptersHero />
+      <ChaptersNetwork />
+      <div className="h-32"></div> {/* Spacer for scroll effects */}
+    </main>
+  );
 }
