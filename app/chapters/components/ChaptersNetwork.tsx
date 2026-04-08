@@ -40,7 +40,7 @@ export default function ChaptersNetwork() {
   const rightNodes = ALL_NODES.slice(8);
 
   return (
-    <section className="relative w-full pt-0 pb-16 bg-[#F8F9FA] overflow-hidden flex flex-col items-center justify-center -mt-24 z-10">
+    <section className="relative w-full pt-0 pb-16 bg-transparent overflow-hidden flex flex-col items-center justify-center -mt-24 z-10">
       
       <div className="relative w-full max-w-[1200px] h-[600px] flex items-center justify-center z-20">
 

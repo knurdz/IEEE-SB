@@ -17,7 +17,7 @@ export default function ChaptersHero() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[50vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden bg-[#F8F9FA]"
+      className="relative min-h-[50vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden bg-transparent"
     >
       <style>{`
         @keyframes circuit-pulse {
