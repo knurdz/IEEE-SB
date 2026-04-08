@@ -38,11 +38,11 @@ export default function ChaptersHero() {
           font-weight: 700;
           font-size: 13px;
           letter-spacing: 0.25em;
-          color: #0052FF;
+          color: #008be6;
           margin-top: 1rem;
           margin-bottom: 0.5rem;
           text-transform: uppercase;
-          text-shadow: 0 4px 12px rgba(0, 82, 255, 0.15);
+          text-shadow: 0 4px 12px rgba(0, 139, 230, 0.15);
         }
 
         .hero-tagline-2 {
@@ -51,7 +51,7 @@ export default function ChaptersHero() {
           font-size: 40px;
           line-height: 1.1;
           letter-spacing: -0.02em;
-          background: linear-gradient(90deg, #163a66ff 0%, #0052FF 100%);
+          background: linear-gradient(90deg, #00579d 0%, #008be6 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;

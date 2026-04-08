@@ -60,7 +60,7 @@ export default function ChaptersNetwork() {
               style={{ maskImage: BIG_ROUNDED_HEX, WebkitMaskImage: BIG_ROUNDED_HEX }}
             >
               <Image
-                src="/favicon.png"
+                src="/logo-2.gif"
                 alt="IEEE Logo"
                 width={240} height={240}
                 className="relative z-10 w-56 h-auto object-contain"
