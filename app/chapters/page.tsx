@@ -3,6 +3,7 @@ import ChaptersHero from './components/ChaptersHero';
 import ChaptersNetwork from './components/ChaptersNetwork';
 import ChaptersBackground from './components/ChaptersBackground';
 import SocietySections from './components/SocietySections';
+import BackToTop from './components/BackToTop';
 
 export const metadata: Metadata = {
   title: 'IEEE Societies | IEEE Student Branch - University of Moratuwa',
@@ -18,6 +19,7 @@ export default function ChaptersPage() {
       <ChaptersNetwork />
       <SocietySections />
       <div className="h-32"></div> {/* Spacer for scroll effects */}
+      <BackToTop />
     </main>
   );
 }
