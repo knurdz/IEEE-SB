@@ -12,9 +12,14 @@ const CHECKMARKS = [
   "Social media collaboration",
 ];
 
-const CheckIcon = () => (
-  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center">
-    <svg className="w-3.5 h-3.5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+const CheckIcon = ({ color }: { color?: string }) => (
+  <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center relative">
+    {/* Hexagon Background */ }
+    <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" fill={color || "#6366f1"} style={{ opacity: 0.15 }}>
+       <polygon points="50,5 89,27.5 89,72.5 50,95 11,72.5 11,27.5" />
+    </svg>
+    {/* Check Icon */}
+    <svg className="w-3.5 h-3.5 relative z-10" fill="none" viewBox="0 0 24 24" stroke={color || "#6366f1"} strokeWidth={3}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
     </svg>
   </div>
@@ -26,18 +31,28 @@ const WavyLine = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const Dots = ({ className }: { className?: string }) => (
-  <svg className={className} width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="10" cy="10" r="4.5" fill="currentColor" />
-    <circle cx="45" cy="20" r="5" fill="currentColor" />
-    <circle cx="20" cy="45" r="4" fill="currentColor" />
-    <circle cx="55" cy="55" r="5.5" fill="currentColor" />
-    <circle cx="85" cy="30" r="4" fill="currentColor" />
-    <circle cx="70" cy="75" r="6" fill="currentColor" />
-    <circle cx="30" cy="85" r="4.5" fill="currentColor" />
-    <circle cx="80" cy="90" r="3.5" fill="currentColor" />
-  </svg>
-);
+const Dots = ({ className, style }: { className?: string; style?: React.CSSProperties }) => {
+  const createHex = (cx: number, cy: number, r: number) => {
+    // Generate regular upright hexagon points correctly scaled and translated
+    const pts = [
+      [0, -1], [0.866, -0.5], [0.866, 0.5], [0, 1], [-0.866, 0.5], [-0.866, -0.5]
+    ].map(([x, y]) => `${cx + x * r},${cy + y * r}`).join(" ");
+    return <polygon points={pts} fill="currentColor" key={`${cx}-${cy}`} />;
+  };
+
+  return (
+    <svg className={className} style={style} width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {createHex(10, 10, 4.5)}
+      {createHex(45, 20, 5)}
+      {createHex(20, 45, 4)}
+      {createHex(55, 55, 5.5)}
+      {createHex(85, 30, 4)}
+      {createHex(70, 75, 6)}
+      {createHex(30, 85, 4.5)}
+      {createHex(80, 90, 3.5)}
+    </svg>
+  );
+};
 
 export default function SocietySections() {
   return (
@@ -49,16 +64,14 @@ export default function SocietySections() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {societies.map((society, index) => {
           const isReversed = index % 2 !== 0;
-          const blobShape1 = "40% 60% 70% 30% / 40% 50% 60% 50%";
-          const blobShape2 = "60% 40% 30% 70% / 50% 60% 40% 50%";
-          const blobShape3 = "50% 50% 60% 40% / 40% 60% 50% 50%";
           
-          const imageShape = index % 3 === 0 ? blobShape1 : index % 3 === 1 ? blobShape2 : blobShape3;
-          const bgShape = index % 3 === 0 ? blobShape2 : index % 3 === 1 ? blobShape3 : blobShape1;
+          // Rounded Hexagon shapes that wobble slightly more organically - simulating a fluid rounded hexagon
+          const roundedHex1 = "M0.5,0 C0.55,0 0.6,0.02 0.64,0.04 L0.93,0.19 C0.98,0.22 1,0.27 1,0.32 L1,0.68 C1,0.73 0.98,0.78 0.93,0.81 L0.64,0.96 C0.6,0.98 0.55,1 0.5,1 C0.45,1 0.4,0.98 0.36,0.96 L0.07,0.81 C0.02,0.78 0,0.73 0,0.68 L0,0.32 C0,0.27 0.02,0.22 0.07,0.19 L0.36,0.04 C0.4,0.02 0.45,0 0.5,0 Z";
+          const roundedHex2 = "M0.5,0.02 C0.56,0.02 0.61,0.04 0.65,0.06 L0.91,0.21 C0.95,0.23 0.97,0.28 0.97,0.33 L0.97,0.67 C0.97,0.72 0.95,0.77 0.91,0.79 L0.65,0.94 C0.61,0.96 0.56,0.98 0.5,0.98 C0.44,0.98 0.39,0.96 0.35,0.94 L0.09,0.79 C0.05,0.77 0.03,0.72 0.03,0.67 L0.03,0.33 C0.03,0.28 0.05,0.23 0.09,0.21 L0.35,0.06 C0.39,0.04 0.44,0.02 0.5,0.02 Z";
+          const roundedHex3 = "M0.5,0.01 C0.54,0.01 0.58,0.02 0.62,0.04 L0.94,0.2 C0.99,0.23 1,0.26 1,0.31 L1,0.69 C1,0.74 0.99,0.77 0.94,0.8 L0.62,0.96 C0.58,0.98 0.54,0.99 0.5,0.99 C0.46,0.99 0.42,0.98 0.38,0.96 L0.06,0.8 C0.01,0.77 0,0.74 0,0.69 L0,0.31 C0,0.26 0.01,0.23 0.06,0.2 L0.38,0.04 C0.42,0.02 0.46,0.01 0.5,0.01 Z";
           
-          // Alternating colors based on reference: purple vs light orange/peach
-          const colorMain = index % 2 === 0 ? 'bg-[#7C3AED]' : 'bg-[#FDA4AF]'; 
-          const dotColor = index % 2 === 0 ? 'text-[#7C3AED]' : 'text-[#FDA4AF]';
+          const imageShapeAnim = index % 2 === 0 ? [roundedHex1, roundedHex2, roundedHex3, roundedHex1] : [roundedHex2, roundedHex3, roundedHex1, roundedHex2];
+          const bgShapeAnim = index % 2 === 0 ? [roundedHex3, roundedHex1, roundedHex2, roundedHex3] : [roundedHex1, roundedHex2, roundedHex3, roundedHex1];
           
           const isSocietyName = society.title.endsWith('Society');
           const firstPart = isSocietyName ? society.title.replace(' Society', '') : society.title.split(' ')[0];
@@ -66,6 +79,7 @@ export default function SocietySections() {
 
           return (
             <motion.div
+              id={`society-${society.id}`}
               initial={{ opacity: 0, y: 80 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
@@ -75,58 +89,88 @@ export default function SocietySections() {
                 isReversed ? 'md:flex-row-reverse' : ''
               }`}
             >
+              {/* SVG Definitions for dynamic curved clip-paths since CSS clip-path: polygon doesn't support border-radius */}
+              <svg width="0" height="0" className="absolute w-0 h-0 pointer-events-none">
+                <defs>
+                  <clipPath id={`hexClipBg-${society.id}`} clipPathUnits="objectBoundingBox">
+                    <motion.path 
+                      animate={{ d: bgShapeAnim }}
+                      transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                  </clipPath>
+                  <clipPath id={`hexClipImg-${society.id}`} clipPathUnits="objectBoundingBox">
+                    <motion.path 
+                      animate={{ d: imageShapeAnim }}
+                      transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+
               {/* Image Side */}
               <div className="w-full md:w-1/2 relative flex justify-center items-center py-10 min-h-[400px]">
                 {/* Wavy line decors (abstract corner squiggles) */}
                 <motion.div 
                    animate={{ rotate: 360 }}
                    transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-                   className={`absolute ${isReversed ? '-bottom-10 -right-10' : '-top-10 -left-10'} w-32 h-32 opacity-30 z-0`}
+                   className={`absolute ${isReversed ? '-bottom-10 -right-10' : '-top-10 -left-10'} w-32 h-32 opacity-40 z-0`}
                 >
                    <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none">
-                      <path d="M10 50 Q 25 10 50 50 T 90 50" stroke="#f59e0b" strokeWidth="4" fill="none" strokeLinecap="round" />
-                      <path d="M10 70 Q 25 30 50 70 T 90 70" stroke="#f59e0b" strokeWidth="4" fill="none" strokeLinecap="round" />
+                      <path d="M10 50 Q 25 10 50 50 T 90 50" stroke={society.color || "#f59e0b"} strokeWidth="4" fill="none" strokeLinecap="round" />
+                      <path d="M10 70 Q 25 30 50 70 T 90 70" stroke={society.color || "#f59e0b"} strokeWidth="4" fill="none" strokeLinecap="round" />
                    </svg>
                 </motion.div>
                 
-                <Dots className={`absolute ${isReversed ? '-top-5 -left-10' : '-bottom-10 -right-10'} z-0 opacity-80 ${dotColor} scale-75 md:scale-100`} />
+                <Dots className={`absolute ${isReversed ? '-top-5 -left-10' : '-bottom-10 -right-10'} z-0 opacity-80 scale-75 md:scale-100`} style={{ color: society.color }} />
 
-                {/* Abstract Blob Background */}
+                {/* Abstract Hexagon Background */}
                 <motion.div
                   animate={{ 
-                    borderRadius: [bgShape, blobShape1, bgShape],
-                    rotate: [0, 5, -5, 0]
+                    y: [-15, 15, -15]
                   }}
                   transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-                  className={`absolute w-72 h-72 lg:w-[450px] lg:h-[450px] ${colorMain} z-0 origin-center ${isReversed ? 'translate-x-6 -translate-y-6' : '-translate-x-6 translate-y-6'}`}
+                  style={{ clipPath: `url(#hexClipBg-${society.id})`, backgroundColor: society.color }}
+                  className={`absolute w-[300px] h-[320px] lg:w-[420px] lg:h-[450px] z-0 origin-center ${isReversed ? 'translate-x-6 -translate-y-6' : '-translate-x-6 translate-y-6'}`}
                 >
-                  {/* Decorative dashed lines radiating inside the blob to match reference */}
-                  <div className="absolute inset-4 border-2 border-dashed border-white/30 rounded-[inherit] transform -rotate-6"></div>
-                  <div className="absolute inset-8 border-2 border-dashed border-white/20 rounded-[inherit] transform rotate-12"></div>
+                  {/* Inner nested hexagons for depth, using inset square parents so clipPath scales down seamlessly */}
+                  <div className="absolute inset-4 lg:inset-6" style={{ clipPath: `url(#hexClipBg-${society.id})` }}>
+                    <div className="w-full h-full bg-white/10" />
+                  </div>
+                  <div className="absolute inset-8 lg:inset-12" style={{ clipPath: `url(#hexClipBg-${society.id})` }}>
+                    <div className="w-full h-full bg-white/20" />
+                  </div>
                 </motion.div>
 
-                {/* Main Image with thick white border and organic shape */}
-                <motion.div
-                  animate={{ 
-                    borderRadius: [imageShape, blobShape2, imageShape]
-                  }}
-                  transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                  className="relative z-10 w-64 h-64 lg:w-[380px] lg:h-[380px] overflow-hidden border-[10px] border-white shadow-2xl bg-gray-100 object-cover"
-                >
-                  <Image 
-                    src={society.logo || '/chapters/society_logo.png'}
-                    alt={society.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-contain p-12 transition-transform duration-700 hover:scale-110"
-                  />
-                </motion.div>
+                {/* Main Image with Hexagon Shape */}
+                <div className="relative z-10 w-[260px] h-[280px] lg:w-[380px] lg:h-[410px] drop-shadow-[0_15px_35px_rgba(0,0,0,0.15)]">
+                  {/* Outer clipped white border */}
+                  <motion.div
+                    animate={{ 
+                      y: [10, -10, 10]
+                    }}
+                    transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+                    style={{ clipPath: `url(#hexClipImg-${society.id})` }}
+                    className="absolute inset-0 bg-white p-2 lg:p-3"
+                  >
+                    {/* Inner image container */}
+                    <div className="relative w-full h-full bg-gray-50 flex items-center justify-center overflow-hidden" style={{ clipPath: `url(#hexClipImg-${society.id})` }}>
+                      <Image 
+                        src={society.logo || '/chapters/society_logo.png'}
+                        alt={society.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-contain p-6 lg:p-10 transition-transform duration-700 hover:scale-110"
+                      />
+                    </div>
+                  </motion.div>
+                </div>
                 
                 {/* Additional floating abstract shape */}
                 <motion.div 
                    animate={{ y: [-10, 10, -10] }}
                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                   className={`absolute top-1/2 ${isReversed ? 'left-0' : 'right-0'} w-16 h-16 ${dotColor} opacity-20 filter blur-xl rounded-full mix-blend-multiply`}
+                   style={{ backgroundColor: society.color }}
+                   className={`absolute top-1/2 ${isReversed ? 'left-0' : 'right-0'} w-16 h-16 opacity-20 filter blur-xl rounded-full mix-blend-multiply`}
                 ></motion.div>
               </div>
 
@@ -152,7 +196,7 @@ export default function SocietySections() {
                       whileHover={{ x: 10 }}
                       className="flex items-center gap-4 cursor-pointer group"
                     >
-                      <CheckIcon />
+                      <CheckIcon color={society.color} />
                       <span className="text-gray-600 font-medium group-hover:text-gray-900 transition-colors">{check}</span>
                     </motion.div>
                   ))}
@@ -160,7 +204,8 @@ export default function SocietySections() {
 
                 <a 
                   href={society.links?.website || '#'}
-                  className="px-8 py-3.5 bg-[#FBBF24] hover:bg-[#F59E0B] text-black rounded-full font-bold shadow-xl shadow-amber-500/20 transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-500/30"
+                  style={{ backgroundColor: society.color }}
+                  className="px-8 py-3.5 text-white rounded-full font-bold shadow-lg transition-all hover:-translate-y-1 hover:shadow-2xl hover:brightness-110"
                 >
                   Get Started
                 </a>

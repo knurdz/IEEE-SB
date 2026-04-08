@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useMemo } from 'react';
+import { societies } from '../data';
 
 const SMALL_ROUNDED_HEX = `url("data:image/svg+xml,%3Csvg width='150' height='130' viewBox='0 0 150 130' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='46,16 104,16 134,65 104,114 46,114 16,65' fill='black' stroke='black' stroke-width='32' stroke-linejoin='round'/%3E%3C/svg%3E")`;
 const BIG_ROUNDED_HEX = `url("data:image/svg+xml,%3Csvg width='300' height='260' viewBox='0 0 300 260' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='87,24 213,24 276,130 213,236 87,236 24,130' fill='black' stroke='black' stroke-width='48' stroke-linejoin='round'/%3E%3C/svg%3E")`;
@@ -82,7 +83,17 @@ export default function ChaptersNetwork() {
             >
               <div>
                 <div
-                  className="w-[150px] h-[130px] bg-white flex items-center justify-center p-4 hover:scale-105 transition-transform duration-300 overflow-hidden"
+                  onClick={() => {
+                    const society = societies.find(s => s.logo === `/chapters/${node.id}.png`);
+                    if (society) {
+                      const el = document.getElementById(`society-${society.id}`);
+                      if (el) {
+                        const y = el.getBoundingClientRect().top + window.scrollY - 100;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                      }
+                    }
+                  }}
+                  className="cursor-pointer w-[150px] h-[130px] bg-white flex items-center justify-center p-4 hover:scale-105 transition-transform duration-300 overflow-hidden shadow-[0_0_15px_rgba(0,0,0,0.1)]"
                   style={{ maskImage: SMALL_ROUNDED_HEX, WebkitMaskImage: SMALL_ROUNDED_HEX }}
                 >
                   <Image src={`/chapters/${node.id}.png`} alt={`Partner ${node.id}`} width={80} height={80} className="object-contain w-full h-full" />
@@ -105,7 +116,17 @@ export default function ChaptersNetwork() {
             >
               <div>
                 <div
-                  className="w-[150px] h-[130px] bg-white flex items-center justify-center p-4 hover:scale-105 transition-transform duration-300 overflow-hidden"
+                  onClick={() => {
+                    const society = societies.find(s => s.logo === `/chapters/${node.id}.png`);
+                    if (society) {
+                      const el = document.getElementById(`society-${society.id}`);
+                      if (el) {
+                        const y = el.getBoundingClientRect().top + window.scrollY - 100;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                      }
+                    }
+                  }}
+                  className="cursor-pointer w-[150px] h-[130px] bg-white flex items-center justify-center p-4 hover:scale-105 transition-transform duration-300 overflow-hidden shadow-[0_0_15px_rgba(0,0,0,0.1)]"
                   style={{ maskImage: SMALL_ROUNDED_HEX, WebkitMaskImage: SMALL_ROUNDED_HEX }}
                 >
                   <Image src={`/chapters/${node.id}.png`} alt={`Partner ${node.id}`} width={80} height={80} className="object-contain w-full h-full" />

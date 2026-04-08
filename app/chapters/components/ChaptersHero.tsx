@@ -17,7 +17,7 @@ export default function ChaptersHero() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[50vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden bg-transparent"
+      className="relative min-h-[25vh] md:min-h-[30vh] flex items-center justify-center overflow-hidden bg-transparent pb-0"
     >
       <style>{`
         @keyframes circuit-pulse {
@@ -300,7 +300,7 @@ export default function ChaptersHero() {
       </div>
 
       <motion.div
-        className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-24 pb-12 flex flex-col items-center"
+        className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-32 pb-0 flex flex-col items-center"
         style={{ y, opacity }}
       >
         <motion.p 
@@ -320,15 +320,6 @@ export default function ChaptersHero() {
         >
           Our Societies
         </motion.h1>
-
-        <motion.p
-          className="text-[#173599]/70 max-w-2xl mt-4 mx-auto font-medium"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={fadeUpTransition(0.6, 0.8)}
-        >
-          Discover the 17 IEEE societies shaping the future of technology, connecting professionals worldwide through conferences, publications, and educational resources.
-        </motion.p>
       </motion.div>
     </section>
   );
