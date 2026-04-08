@@ -1,6 +1,6 @@
-import EventsHero from '../_components/EventsHero';
-import Roadmap from '../_components/Roadmap';
-import ClosingCTA from '../_components/ClosingCTA';
+import EventsHero from '../events/_components/EventsHero';
+import Roadmap from '../events/_components/Roadmap';
+import ClosingCTA from '../events/_components/ClosingCTA';
 
 export default function EventsPage() {
   return (

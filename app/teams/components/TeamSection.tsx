@@ -28,15 +28,15 @@ export default function TeamSection({
       viewport={inViewOnce}
       transition={fadeUpTransition(sectionIndex * 0.12, 0.5)}
     >
-      <div className="relative rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] p-10 overflow-visible">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+      <div className="relative rounded-3xl border border-black/5 bg-white/60 backdrop-blur-xl shadow-lg p-10 overflow-visible">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
         <div className="mb-10">
           <SectionHeading
             badge="IEEE Student Branch"
             title={title}
             highlight={highlight}
-            titleClassName="text-3xl font-bold uppercase tracking-widest text-white md:text-4xl"
+            titleClassName="text-3xl font-bold uppercase tracking-widest text-slate-800 md:text-4xl"
           />
         </div>
 

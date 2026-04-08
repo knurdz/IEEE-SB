@@ -12,7 +12,7 @@ export interface SocialItem {
 export const primaryNavItems: NavItem[] = [
   { href: "/", label: "Home" },
   { href: "/events", label: "Events" },
-  { href: "/team", label: "Team" },
+  { href: "/teams", label: "Teams" },
   { href: "/chapters", label: "Chapters" },
   { href: "/contact", label: "Contact" },
 ];
