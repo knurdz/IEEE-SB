@@ -6,10 +6,12 @@ export const metadata: Metadata = {
 };
 
 import WhyJoinBento from './components/WhyJoinBento';
+import SiteBackground from '../components/layout/SiteBackground';
 
 export default function WhyJoinPage() {
   return (
     <main className="min-h-screen relative bg-[#F8F9FA]" id="page-sections">
+      <SiteBackground showTopFade={true} showBottomFade={true} />
       <section className="mt-[20rem] mb-[20rem]">
         <WhyJoinBento />
       </section>

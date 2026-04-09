@@ -2,7 +2,12 @@
 
 import React from 'react';
 
-export default function ChaptersBackground() {
+interface SiteBackgroundProps {
+  showTopFade?: boolean;
+  showBottomFade?: boolean;
+}
+
+export default function SiteBackground({ showTopFade = false, showBottomFade = true }: SiteBackgroundProps) {
   return (
     <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
       <svg width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -122,10 +127,19 @@ export default function ChaptersBackground() {
         <rect width="100%" height="100%" fill="url(#chaptersHexPattern)" />
       </svg>
 
-      {/* Subtle overlay to fade as it goes down if needed, but the user asked for "all over" */}
-      <div 
-        className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#F8F9FA] to-transparent" 
-      />
+      {/* Top Fade Overlay */}
+      {showTopFade && (
+        <div 
+          className="absolute inset-x-0 top-0 h-[40vh] bg-gradient-to-b from-[#F8F9FA] via-[#F8F9FA] via-[#F8F9FA]/60 to-transparent z-10" 
+        />
+      )}
+
+      {/* Bottom Fade Overlay */}
+      {showBottomFade && (
+        <div 
+          className="absolute inset-x-0 bottom-0 h-[50vh] bg-gradient-to-t from-[#F8F9FA] via-[#F8F9FA] via-[#F8F9FA]/60 to-transparent z-10" 
+        />
+      )}
     </div>
   );
 }

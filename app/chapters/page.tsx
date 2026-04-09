@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import ChaptersHero from './components/ChaptersHero';
 import ChaptersNetwork from './components/ChaptersNetwork';
-import ChaptersBackground from './components/ChaptersBackground';
+import SiteBackground from '../components/layout/SiteBackground';
 import SocietySections from './components/SocietySections';
 import BackToTop from './components/BackToTop';
 import SectionDivider from './components/SectionDivider';
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function ChaptersPage() {
   return (
     <main className="min-h-screen relative bg-[#F8F9FA]" id="chapters">
-      <ChaptersBackground />
+      <SiteBackground />
       <ChaptersHero />
       <ChaptersNetwork />
       <SectionDivider />
