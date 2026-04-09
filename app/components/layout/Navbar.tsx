@@ -42,19 +42,19 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-20">
             <Link
               href="/"
-              className="relative flex items-center gap-3 hover:opacity-80 transition-opacity"
+              className="relative flex items-center gap-3 px-4 py-2 rounded-full bg-white border border-[#E2E8F0] backdrop-blur-md hover:opacity-90 hover:scale-[1.02] transition-all"
             >
               <Image
                 src="/logo/ieeesblogo.png"
                 alt="IEEE SB Logo"
-                className="h-10 w-auto object-contain"
+                className="h-9 w-auto object-contain"
                 width={172}
                 height={40}
                 priority
               />
             </Link>
 
-            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05),_0_2px_4px_-1px_rgba(0,0,0,0.03)] backdrop-blur-md">
+            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FFFFFF] border border-[#E2E8F0] backdrop-blur-md">
               {primaryNavItems.map((link) => {
                 const isActive = isLinkActive(link.href);
 

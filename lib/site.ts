@@ -14,6 +14,7 @@ export const primaryNavItems: NavItem[] = [
   { href: "/events", label: "Events" },
   { href: "/team", label: "Team" },
   { href: "/chapters", label: "Chapters" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export const footerSocialItems: SocialItem[] = [
