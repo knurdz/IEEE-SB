@@ -1,8 +1,11 @@
-import TextSphereAnimation from './components/home/TextSphereAnimation';
-import AboutSection from './components/home/AboutSection';
-import WhyJoinBento from './components/home/WhyJoinBento';
-import SiteBackground from './components/layout/SiteBackground';
-import SectionDivider from '@/app/chapters/components/SectionDivider';
+import TextSphereAnimation from "./components/home/TextSphereAnimation";
+import AboutSection from "./components/home/AboutSection";
+import AwardsSection from "./components/home/AwardsSection";
+import StrategicPartnerSection from "./components/home/StrategicPartnerSection";
+import EventsSection from "./components/home/EventsSection";
+import WhyJoinBento from "./components/home/WhyJoinBento";
+import SiteBackground from "./components/layout/SiteBackground";
+import SectionDivider from "@/app/chapters/components/SectionDivider";
 
 export default function Home() {
   return (
@@ -18,7 +21,10 @@ export default function Home() {
       </div>
 
       <AboutSection />
-      
+      <AwardsSection />
+      <StrategicPartnerSection />
+      <EventsSection />
+
       <WhyJoinBento />
     </main>
   );

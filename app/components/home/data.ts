@@ -28,25 +28,25 @@ export const featuredAward: AwardItem = {
 
 export const secondaryAwards: AwardItem[] = [
   {
-    id: "best-innovation-award",
+    id: "sls-best-branch-award",
     year: "2023",
-    title: "Best Innovation Award",
+    title: "Best Student Branch Award",
     image: "/award.jpg",
-    imageAlt: "Best innovation award banner",
+    imageAlt: "Sri Lankan section best student branch award banner",
   },
   {
-    id: "industry-leadership-award",
+    id: "sls-outstanding-tech-initiative-award",
     year: "2022",
-    title: "Industry Leadership Award",
+    title: "Outstanding Technical Initiative Award",
     image: "/award.jpg",
-    imageAlt: "Industry leadership award banner",
+    imageAlt: "Sri Lankan section outstanding technical initiative award banner",
   },
   {
-    id: "quality-excellence-award",
+    id: "sls-community-impact-award",
     year: "2021",
-    title: "Quality Excellence Award",
+    title: "Community Impact Award",
     image: "/award.jpg",
-    imageAlt: "Quality excellence award banner",
+    imageAlt: "Sri Lankan section community impact award banner",
   },
 ];
 
