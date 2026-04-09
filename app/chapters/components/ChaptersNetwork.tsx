@@ -81,7 +81,10 @@ export default function ChaptersNetwork() {
               viewport={{ once: true }}
               transition={{ delay: 0.1 * i, type: 'spring', stiffness: 80 }}
             >
-              <div>
+              <div className="relative group hover:scale-105 transition-transform duration-300">
+                <svg width='150' height='130' viewBox='0 0 150 130' className="absolute inset-0 pointer-events-none text-[#008be6]/15 overflow-visible">
+                  <polygon points='46,16 104,16 134,65 104,114 46,114 16,65' fill='none' stroke='currentColor' strokeWidth='34' strokeLinejoin='round'/>
+                </svg>
                 <div
                   onClick={() => {
                     const society = societies.find(s => s.logo === `/chapters/${node.id}.png`);
@@ -93,7 +96,7 @@ export default function ChaptersNetwork() {
                       }
                     }
                   }}
-                  className="cursor-pointer w-[150px] h-[130px] bg-white flex items-center justify-center p-4 hover:scale-105 transition-transform duration-300 overflow-hidden shadow-[0_0_15px_rgba(0,0,0,0.1)]"
+                  className="relative cursor-pointer w-[150px] h-[130px] bg-white flex items-center justify-center p-4 overflow-hidden"
                   style={{ maskImage: SMALL_ROUNDED_HEX, WebkitMaskImage: SMALL_ROUNDED_HEX }}
                 >
                   <Image src={`/chapters/${node.id}.png`} alt={`Partner ${node.id}`} width={80} height={80} className="object-contain w-full h-full" />
@@ -114,7 +117,10 @@ export default function ChaptersNetwork() {
               viewport={{ once: true }}
               transition={{ delay: 0.1 * i, type: 'spring', stiffness: 80 }}
             >
-              <div>
+              <div className="relative group hover:scale-105 transition-transform duration-300">
+                <svg width='150' height='130' viewBox='0 0 150 130' className="absolute inset-0 pointer-events-none text-[#008be6]/15 overflow-visible">
+                  <polygon points='46,16 104,16 134,65 104,114 46,114 16,65' fill='none' stroke='currentColor' strokeWidth='34' strokeLinejoin='round'/>
+                </svg>
                 <div
                   onClick={() => {
                     const society = societies.find(s => s.logo === `/chapters/${node.id}.png`);
@@ -126,7 +132,7 @@ export default function ChaptersNetwork() {
                       }
                     }
                   }}
-                  className="cursor-pointer w-[150px] h-[130px] bg-white flex items-center justify-center p-4 hover:scale-105 transition-transform duration-300 overflow-hidden shadow-[0_0_15px_rgba(0,0,0,0.1)]"
+                  className="relative cursor-pointer w-[150px] h-[130px] bg-white flex items-center justify-center p-4 overflow-hidden"
                   style={{ maskImage: SMALL_ROUNDED_HEX, WebkitMaskImage: SMALL_ROUNDED_HEX }}
                 >
                   <Image src={`/chapters/${node.id}.png`} alt={`Partner ${node.id}`} width={80} height={80} className="object-contain w-full h-full" />
