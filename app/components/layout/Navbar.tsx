@@ -42,7 +42,7 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-20">
             <Link
               href="/"
-              className="relative flex items-center gap-3 px-4 py-2 rounded-full bg-white border border-[#E2E8F0] backdrop-blur-md hover:opacity-90 hover:scale-[1.02] transition-all"
+              className="relative flex items-center gap-3 px-4 py-2 rounded-full bg-white backdrop-blur-md hover:opacity-90 hover:scale-[1.02] transition-all"
             >
               <Image
                 src="/logo/ieeesblogo.png"
@@ -54,7 +54,7 @@ export default function Navbar() {
               />
             </Link>
 
-            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FFFFFF] border border-[#E2E8F0] backdrop-blur-md">
+            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FFFFFF] backdrop-blur-md">
               {primaryNavItems.map((link) => {
                 const isActive = isLinkActive(link.href);
 
