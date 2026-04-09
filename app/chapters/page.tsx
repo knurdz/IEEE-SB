@@ -3,7 +3,6 @@ import ChaptersHero from './components/ChaptersHero';
 import ChaptersNetwork from './components/ChaptersNetwork';
 import SiteBackground from '../components/layout/SiteBackground';
 import SocietySections from './components/SocietySections';
-import BackToTop from './components/BackToTop';
 import SectionDivider from './components/SectionDivider';
 
 export const metadata: Metadata = {
@@ -21,7 +20,6 @@ export default function ChaptersPage() {
       <SectionDivider />
       <SocietySections />
       <div className="h-32"></div> {/* Spacer for scroll effects */}
-      <BackToTop />
     </main>
   );
 }

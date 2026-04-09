@@ -3,7 +3,6 @@ import ContactHero from './components/ContactHero';
 import ContactForm from './components/ContactForm';
 import ContactInfo from './components/ContactInfo';
 import SiteBackground from '../components/layout/SiteBackground';
-import BackToTop from '../chapters/components/BackToTop';
 import SectionDivider from '../chapters/components/SectionDivider';
 
 export const metadata: Metadata = {
@@ -29,7 +28,6 @@ export default function ContactPage() {
       </section>
       
       <div className="h-32"></div>
-      <BackToTop />
     </main>
   );
 }

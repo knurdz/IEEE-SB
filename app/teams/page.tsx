@@ -6,7 +6,6 @@ import { fadeUp, fadeUpTransition } from '@/lib/motion';
 import TeamSection from './components/TeamSection';
 import NetworkVisualization from './components/NetworkVisualization';
 import SiteBackground from '@/app/components/layout/SiteBackground';
-import BackToTop from '../chapters/components/BackToTop';
 import { meetOurTeam, executiveCommittee, leadershipBody } from './data';
 
 export default function TeamsPage() {
@@ -38,7 +37,6 @@ export default function TeamsPage() {
         <TeamSection title="Leadership Body"       members={leadershipBody}     sectionIndex={2} />
       </div>
 
-      <BackToTop />
     </div>
   );
 }
