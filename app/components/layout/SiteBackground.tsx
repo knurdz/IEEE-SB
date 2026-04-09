@@ -5,12 +5,26 @@ import React from 'react';
 interface SiteBackgroundProps {
   showTopFade?: boolean;
   showBottomFade?: boolean;
+  fadePatternTop?: boolean;
 }
 
-export default function SiteBackground({ showTopFade = false, showBottomFade = true }: SiteBackgroundProps) {
+export default function SiteBackground({ 
+  showTopFade = false, 
+  showBottomFade = true,
+  fadePatternTop = false
+}: SiteBackgroundProps) {
   return (
     <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
-      <svg width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg 
+        width="100%" 
+        height="100%" 
+        fill="none" 
+        xmlns="http://www.w3.org/2000/svg"
+        style={{
+          maskImage: fadePatternTop ? 'linear-gradient(to bottom, transparent, black 15%)' : 'none',
+          WebkitMaskImage: fadePatternTop ? 'linear-gradient(to bottom, transparent, black 15%)' : 'none'
+        }}
+      >
         <defs>
           <polygon id="hex-bg" points="0,-80 69.28,-40 69.28,40 0,80 -69.28,40 -69.28,-40" />
           
