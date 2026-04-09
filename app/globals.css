@@ -36,6 +36,7 @@
 
 html {
   scroll-behavior: smooth;
+  position: relative;
 }
 
 body {
@@ -43,6 +44,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-body), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
+  position: relative;
 }
 
 /* Custom scrollbar - fiber optics themed */

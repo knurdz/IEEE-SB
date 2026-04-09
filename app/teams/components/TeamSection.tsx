@@ -47,12 +47,12 @@ function splitRows(members: Member[]): { topRow: Member[]; bottomRow: Member[] }
     return { topRow: [others[0], others[1], lead, others[2], others[3]], bottomRow: [] };
   }
 
-  // For 6+ members: compute top row size
+  // For 6+ members: compute top row size based on user request
   let topSize: number;
   if (n === 6) topSize = 3;
-  else if (n === 7) topSize = 4;
-  else if (n === 8) topSize = 4;
-  else topSize = 5; // 9+
+  else if (n === 7) topSize = 3;
+  else if (n === 8) topSize = 3;
+  else topSize = 5; // 9+ members
 
   // topSize includes the lead, so flanking count = topSize - 1
   const flankCount = topSize - 1;
