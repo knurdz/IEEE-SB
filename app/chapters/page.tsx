@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function ChaptersPage() {
   return (
-    <main className="min-h-screen relative bg-[#F8F9FA]" id="chapters">
+    <main className="min-h-screen relative bg-white overflow-hidden pb-12 md:pb-20" id="chapters">
       <SiteBackground />
       <ChaptersHero />
       <ChaptersNetwork />

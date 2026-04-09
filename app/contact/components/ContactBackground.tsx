@@ -122,7 +122,7 @@ export default function ContactBackground() {
       </svg>
 
       <div 
-        className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#F8F9FA] to-transparent" 
+        className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white to-transparent" 
       />
     </div>
   );

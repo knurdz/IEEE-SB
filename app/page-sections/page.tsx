@@ -10,7 +10,7 @@ import SiteBackground from '../components/layout/SiteBackground';
 
 export default function WhyJoinPage() {
   return (
-    <main className="min-h-screen relative bg-[#F8F9FA]" id="page-sections">
+    <main className="min-h-screen relative bg-white pb-20" id="page-sections">
       <SiteBackground showTopFade={true} showBottomFade={true} />
       <section className="mt-[20rem] mb-[20rem]">
         <WhyJoinBento />

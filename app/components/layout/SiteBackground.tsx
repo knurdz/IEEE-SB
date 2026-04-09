@@ -127,18 +127,14 @@ export default function SiteBackground({ showTopFade = false, showBottomFade = t
         <rect width="100%" height="100%" fill="url(#chaptersHexPattern)" />
       </svg>
 
-      {/* Top Fade Overlay */}
+      {/* Top Transition Overlay */}
       {showTopFade && (
-        <div 
-          className="absolute inset-x-0 top-0 h-[40vh] bg-gradient-to-b from-[#F8F9FA] via-[#F8F9FA] via-[#F8F9FA]/60 to-transparent z-10" 
-        />
+        <div className="absolute inset-x-0 top-0 h-[20vh] bg-gradient-to-b from-white via-white/60 to-transparent pointer-events-none z-10" />
       )}
 
-      {/* Bottom Fade Overlay */}
+      {/* Bottom Transition Overlay */}
       {showBottomFade && (
-        <div 
-          className="absolute inset-x-0 bottom-0 h-[50vh] bg-gradient-to-t from-[#F8F9FA] via-[#F8F9FA] via-[#F8F9FA]/60 to-transparent z-10" 
-        />
+        <div className="absolute inset-x-0 bottom-0 h-[30vh] bg-gradient-to-t from-white via-white/60 to-transparent pointer-events-none z-10" />
       )}
     </div>
   );

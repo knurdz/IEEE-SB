@@ -12,11 +12,11 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
-  const [activeAnchor, setActiveAnchor] = useState('/#home');
+  const [activeAnchor, setActiveAnchor] = useState('');
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -42,7 +42,12 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-20">
             <Link
               href="/"
-              className="relative flex items-center gap-3 px-4 py-2 rounded-full bg-white backdrop-blur-md hover:opacity-90 hover:scale-[1.02] transition-all"
+              className={cn(
+                "relative flex items-center gap-3 px-4 py-2 rounded-full transition-all duration-300",
+                isScrolled 
+                  ? "bg-white/80 backdrop-blur-md border border-slate-200 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]" 
+                  : "bg-transparent border-transparent shadow-none"
+              )}
             >
               <Image
                 src="/logo/ieeesblogo.png"
@@ -54,7 +59,12 @@ export default function Navbar() {
               />
             </Link>
 
-            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FFFFFF] backdrop-blur-md">
+            <div className={cn(
+              "hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-300",
+              isScrolled 
+                ? "bg-white/80 backdrop-blur-md border border-slate-200 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]" 
+                : "bg-transparent border-transparent shadow-none"
+            )}>
               {primaryNavItems.map((link) => {
                 const isActive = isLinkActive(link.href);
 
