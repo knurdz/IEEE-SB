@@ -5,14 +5,14 @@ import SectionHeading from '@/app/components/ui/SectionHeading';
 import { fadeUp, fadeUpTransition } from '@/lib/motion';
 import TeamSection from './components/TeamSection';
 import NetworkVisualization from './components/NetworkVisualization';
-import ChaptersBackground from '../chapters/components/ChaptersBackground';
+import SiteBackground from '@/app/components/layout/SiteBackground';
 import BackToTop from '../chapters/components/BackToTop';
 import { meetOurTeam, executiveCommittee, leadershipBody } from './data';
 
 export default function TeamsPage() {
   return (
     <div className="min-h-screen bg-[#F8F9FA] text-gray-900 overflow-x-hidden pt-20 relative">
-      <ChaptersBackground />
+      <SiteBackground />
       <NetworkVisualization />
 
       <div className="relative pt-28 pb-24 flex flex-col items-center gap-14 z-10">
@@ -33,9 +33,9 @@ export default function TeamsPage() {
           />
         </motion.div>
 
-        <TeamSection title="Meet Our Teams"       variant="arch5"       members={meetOurTeam}        sectionIndex={0} />
-        <TeamSection title="Executive Committee" variant="arch8"       members={executiveCommittee} sectionIndex={1} />
-        <TeamSection title="Leadership Body"     variant="leadership"  members={leadershipBody}     sectionIndex={2} />
+        <TeamSection title="Meet Our Teams"       members={meetOurTeam}        sectionIndex={0} />
+        <TeamSection title="Executive Committee"   members={executiveCommittee} sectionIndex={1} />
+        <TeamSection title="Leadership Body"       members={leadershipBody}     sectionIndex={2} />
       </div>
 
       <BackToTop />

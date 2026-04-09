@@ -1,57 +1,60 @@
-import { Variant } from './types';
+/**
+ * Dynamic arch-transform generator.
+ * Produces resting & hover transforms for any member count in a row,
+ * creating a smooth arch curve where the center card is most elevated.
+ */
 
-// Default (resting) transforms per card index per variant
-export const RESTING: Record<Variant, { z: number; scale: number; y: number; brightness: number }[]> = {
-  arch5: [
-    { z: 1, scale: 0.85, y: 20,  brightness: 0.80 },
-    { z: 2, scale: 0.95, y: 0,   brightness: 0.90 },
-    { z: 3, scale: 1.05, y: -20, brightness: 1.05 },
-    { z: 2, scale: 0.95, y: 0,   brightness: 0.90 },
-    { z: 1, scale: 0.85, y: 20,  brightness: 0.80 },
-  ],
-  arch8: [
-    { z: 1, scale: 0.84, y: 25,  brightness: 0.75 },
-    { z: 2, scale: 0.91, y: 10,  brightness: 0.85 },
-    { z: 3, scale: 0.98, y: -5,  brightness: 0.95 },
-    { z: 4, scale: 1.05, y: -20, brightness: 1.05 },
-    { z: 4, scale: 1.05, y: -20, brightness: 1.05 },
-    { z: 3, scale: 0.98, y: -5,  brightness: 0.95 },
-    { z: 2, scale: 0.91, y: 10,  brightness: 0.85 },
-    { z: 1, scale: 0.84, y: 25,  brightness: 0.75 },
-  ],
-  leadership: [
-    { z: 1, scale: 0.95, y: 0,   brightness: 0.90 },
-    { z: 2, scale: 0.95, y: 0,   brightness: 0.90 },
-    { z: 3, scale: 1.05, y: -20, brightness: 1.05 },
-    { z: 2, scale: 0.95, y: 0,   brightness: 0.90 },
-    { z: 1, scale: 0.95, y: 0,   brightness: 0.90 },
-  ],
-};
+export interface RestingTransform {
+  z: number;
+  scale: number;
+  y: number;
+  brightness: number;
+}
 
-// Hover transforms per card index per variant
-export const HOVER: Record<Variant, { scale: number; y: number }[]> = {
-  arch5: [
-    { scale: 0.90, y: 15  },
-    { scale: 1.00, y: -5  },
-    { scale: 1.10, y: -25 },
-    { scale: 1.00, y: -5  },
-    { scale: 0.90, y: 15  },
-  ],
-  arch8: [
-    { scale: 0.89, y: 20  },
-    { scale: 0.96, y: 5   },
-    { scale: 1.03, y: -10 },
-    { scale: 1.10, y: -25 },
-    { scale: 1.10, y: -25 },
-    { scale: 1.03, y: -10 },
-    { scale: 0.96, y: 5   },
-    { scale: 0.89, y: 20  },
-  ],
-  leadership: [
-    { scale: 1.00, y: -5  },
-    { scale: 1.00, y: -5  },
-    { scale: 1.10, y: -25 },
-    { scale: 1.00, y: -5  },
-    { scale: 1.00, y: -5  },
-  ],
-};
+export interface HoverTransform {
+  scale: number;
+  y: number;
+}
+
+/**
+ * Generate arch transforms for a row of `count` cards.
+ * The center card(s) will be largest/highest, tapering to the edges.
+ */
+export function generateArchTransforms(count: number, isTopRow: boolean = true) {
+  const resting: RestingTransform[] = [];
+  const hover: HoverTransform[] = [];
+
+  const mid = (count - 1) / 2;
+
+  for (let i = 0; i < count; i++) {
+    // normalizedDist: 0 at center, 1 at the edges
+    const dist = Math.abs(i - mid) / (mid || 1);
+
+    if (isTopRow) {
+      resting.push({
+        z: Math.round((1 - dist) * 3) + 1,
+        scale: 1.05 - dist * 0.18,
+        y: -20 + dist * 40,
+        brightness: 1.05 - dist * 0.2,
+      });
+      hover.push({
+        scale: 1.10 - dist * 0.18,
+        y: -25 + dist * 40,
+      });
+    } else {
+      // Bottom row: flatter arch, slightly smaller
+      resting.push({
+        z: Math.round((1 - dist) * 2) + 1,
+        scale: 0.95 - dist * 0.08,
+        y: dist * 15,
+        brightness: 1.0 - dist * 0.12,
+      });
+      hover.push({
+        scale: 1.0 - dist * 0.08,
+        y: -5 + dist * 15,
+      });
+    }
+  }
+
+  return { resting, hover };
+}

@@ -1,24 +1,91 @@
 'use client';
 
+import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import SectionHeading from '@/app/components/ui/SectionHeading';
 import { fadeUp, fadeUpTransition, inViewOnce } from '@/lib/motion';
-import { Member, Variant } from '../types';
+import { Member } from '../types';
 import MemberCard from './MemberCard';
 import MobileMemberCard from './MobileMemberCard';
 
+/**
+ * Split members into top-row & bottom-row, placing the lead at the center of
+ * the top row. Adapts based on total member count.
+ *
+ * | Size | Top Row | Bottom Row |
+ * |------|---------|------------|
+ * | 3    | 3       | —          |
+ * | 4    | 3       | 1          |
+ * | 5    | 5       | —          |
+ * | 6    | 3       | 3          |
+ * | 7    | 4       | 3          |
+ * | 8    | 4       | 4          |
+ * | 9    | 5       | 4          |
+ */
+function splitRows(members: Member[]): { topRow: Member[]; bottomRow: Member[] } {
+  const n = members.length;
+
+  // Find the lead
+  const leadIdx = members.findIndex((m) => m.isLead);
+  // Separate lead from the rest
+  const lead = leadIdx >= 0 ? members[leadIdx] : members[0];
+  const others = members.filter((_, i) => i !== (leadIdx >= 0 ? leadIdx : 0));
+
+  if (n <= 3) {
+    // Single row — place lead in center
+    const half = Math.floor(others.length / 2);
+    const left = others.slice(0, half);
+    const right = others.slice(half);
+    return { topRow: [...left, lead, ...right], bottomRow: [] };
+  }
+
+  if (n === 4) {
+    return { topRow: [others[0], lead, others[1]], bottomRow: [others[2]] };
+  }
+
+  if (n === 5) {
+    return { topRow: [others[0], others[1], lead, others[2], others[3]], bottomRow: [] };
+  }
+
+  // For 6+ members: compute top row size
+  let topSize: number;
+  if (n === 6) topSize = 3;
+  else if (n === 7) topSize = 4;
+  else if (n === 8) topSize = 4;
+  else topSize = 5; // 9+
+
+  // topSize includes the lead, so flanking count = topSize - 1
+  const flankCount = topSize - 1;
+  const leftFlank = others.slice(0, Math.floor(flankCount / 2));
+  const rightFlank = others.slice(Math.floor(flankCount / 2), flankCount);
+  const bottomMembers = others.slice(flankCount);
+
+  return {
+    topRow: [...leftFlank, lead, ...rightFlank],
+    bottomRow: bottomMembers,
+  };
+}
+
 export default function TeamSection({
   title,
-  variant,
   members,
   sectionIndex,
 }: {
   title: string;
-  variant: Variant;
   members: Member[];
   sectionIndex: number;
 }) {
   const highlight = title.split(' ').slice(-1)[0];
+  const { topRow, bottomRow } = useMemo(() => splitRows(members), [members]);
+
+  // Order mobile: lead first, then others
+  const mobileMembers = useMemo(() => {
+    const lead = members.find((m) => m.isLead);
+    const others = members.filter((m) => !m.isLead);
+    return lead ? [lead, ...others] : members;
+  }, [members]);
+
+  const hasTwoRows = bottomRow.length > 0;
 
   return (
     <motion.div
@@ -41,29 +108,64 @@ export default function TeamSection({
           />
         </div>
 
-        <div
-          className="relative hidden md:flex items-center justify-center"
-          style={{ height: '520px', overflow: 'visible' }}
-        >
-          {members.map((member, i) => {
-            const midIndex = Math.floor(members.length / 2);
-            let position: 'left' | 'middle' | 'right' = 'left';
-            
-            if (i === midIndex) position = 'middle';
-            else if (i < midIndex) position = 'left';
-            else position = 'right';
+        {/* Desktop layout */}
+        <div className="hidden md:block" style={{ overflow: 'visible' }}>
+          {/* Top row */}
+          <div
+            className="relative flex items-center justify-center"
+            style={{ height: hasTwoRows ? '380px' : '520px', overflow: 'visible' }}
+          >
+            {topRow.map((member, i) => (
+              <MemberCard
+                key={`top-${i}`}
+                member={member}
+                index={i}
+                totalInRow={topRow.length}
+                isTopRow
+              />
+            ))}
+          </div>
 
+          {/* Bottom row */}
+          {hasTwoRows && (
+            <div
+              className="relative flex items-center justify-center mt-6"
+              style={{ height: '340px', overflow: 'visible' }}
+            >
+              {bottomRow.map((member, i) => (
+                <MemberCard
+                  key={`bottom-${i}`}
+                  member={member}
+                  index={i}
+                  totalInRow={bottomRow.length}
+                  isTopRow={false}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Mobile grid view — lead first, conditionally centered for odd counts */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:hidden mt-4">
+          {mobileMembers.map((member, i) => {
+            const isOdd = members.length % 2 !== 0;
+            const shouldCenterLead = member.isLead && isOdd;
+            
             return (
-              <MemberCard key={i} member={member} index={i} variant={variant} position={position} />
+              <div
+                key={i}
+                className={
+                  shouldCenterLead
+                    ? 'sm:col-span-2 flex justify-center'
+                    : ''
+                }
+              >
+                <div className={shouldCenterLead ? 'w-full sm:max-w-[calc(50%-1rem)]' : 'w-full'}>
+                  <MobileMemberCard member={member} />
+                </div>
+              </div>
             );
           })}
-        </div>
-        
-        {/* Mobile grid view */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:hidden mt-4">
-          {members.map((member, i) => (
-            <MobileMemberCard key={i} member={member} />
-          ))}
         </div>
       </div>
     </motion.div>

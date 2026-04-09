@@ -1,5 +1,3 @@
-export type Variant = 'arch5' | 'arch8' | 'leadership';
-
 export interface Member {
   name: string;
   role: string;
@@ -7,4 +5,5 @@ export interface Member {
   linkedin?: string;
   phone?: string;
   nameSize?: string;
+  isLead?: boolean;
 }
