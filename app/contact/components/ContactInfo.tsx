@@ -51,7 +51,7 @@ const contactDetails = [
 
 const ContactIllustration = () => {
   return (
-    <div className="relative w-full aspect-square max-h-[350px] mx-auto mb-4 flex items-center justify-center">
+    <div className="relative w-full aspect-square max-h-[280px] mx-auto mb-2 flex items-center justify-center pt-0">
       {/* Abstract Tech Node Background */}
       <motion.div 
         animate={{ rotate: 360 }} 
@@ -115,7 +115,7 @@ export default function ContactInfo() {
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
       transition={fadeUpTransition(0.3, 0.8)}
-      className="flex flex-col w-full h-full lg:pl-10 relative z-10"
+      className="flex flex-col w-full h-full lg:pl-10 relative z-10 lg:-mt-6"
     >
       <ContactIllustration />
 
@@ -142,14 +142,14 @@ export default function ContactInfo() {
         ))}
 
         {/* Social Icons Connect Line */}
-        <div className="flex items-center gap-4 mt-8 pl-[10px]">
-          <div className="w-12 h-[1px] bg-gray-300" />
-          <span className="text-xs font-semibold text-gray-400 tracking-widest uppercase">Connect</span>
-          <div className="w-12 h-[1px] bg-gray-300" />
+        <div className="flex items-center justify-center gap-4 mt-8 w-full">
+          <div className="w-16 h-[1px] bg-gray-200/80" />
+          <span className="text-[0.7rem] font-bold text-[var(--muted)] tracking-widest uppercase">Connect</span>
+          <div className="w-16 h-[1px] bg-gray-200/80" />
         </div>
 
         <motion.div 
-          className="flex flex-row gap-5 mt-4 justify-center pr-12"
+          className="flex flex-row gap-5 mt-4 justify-center w-full"
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
