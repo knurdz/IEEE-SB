@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, type PanInfo } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import SiteBackground from "@/app/components/layout/SiteBackground";
 import { homeEvents, type HomeEvent } from "./data";
@@ -41,61 +42,92 @@ function EventCard({ event, offset, dragOffset, onClick }: EventCardProps) {
     new Set([event.image, ...(event.subImages ?? [])]),
   ).length;
 
+  const customObjectPosition =
+    event.title === "Foresight" || event.title === "MoraXtreme" || event.title === "Ballerina"
+      ? "object-[center_30%]"
+      : "object-top";
   return (
     <motion.button
       type="button"
       initial={false}
       animate={{
-        x: continuousOffset * 270,
-        z: -absoluteOffset * 220,
-        rotateY: continuousOffset * -18,
-        scale: isActive ? 1 : Math.max(0.84, 1 - absoluteOffset * 0.1),
+        x: continuousOffset * 0, // Zero offset to keep active image centered
+        z: 0,
+        rotateY: 0,
+        scale: isActive ? 1 : 0.95,
         opacity:
-          absoluteOffset > 2
+          absoluteOffset > 1.2
             ? 0
             : isActive
               ? 1
-              : Math.max(0.28, 0.7 - absoluteOffset * 0.25),
+              : 0,
         zIndex: 30 - Math.round(absoluteOffset * 10),
-        pointerEvents: absoluteOffset > 2 ? "none" : "auto",
+        pointerEvents: absoluteOffset > 0.5 ? "none" : "auto",
       }}
       transition={{ type: "spring", stiffness: 270, damping: 28, mass: 0.85 }}
-      className="absolute h-[320px] w-[300px] sm:h-[380px] sm:w-[420px] lg:h-[420px] lg:w-[560px] rounded-2xl focus:outline-none"
+      className="absolute h-[380px] w-[750px] sm:h-[440px] sm:w-[1050px] lg:h-[500px] lg:w-[1400px] rounded-[4px] focus:outline-none"
       onClick={onClick}
       aria-label={
         isActive ? `Open ${event.title} gallery` : `Focus ${event.title}`
       }
     >
-      <div className="relative h-full w-full overflow-hidden rounded-2xl border border-black/10 bg-white shadow-[0_18px_45px_-22px_rgba(0,0,0,0.35)]">
+      <div className="relative h-full w-full overflow-hidden rounded-[4px] border border-black/10 bg-white shadow-[0_18px_45px_-22px_rgba(0,0,0,0.35)]">
         <Image
           src={event.image}
           alt={event.title}
           fill
-          sizes="(max-width: 640px) 90vw, (max-width: 1024px) 70vw, 560px"
-          className="object-cover"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1400px"
+          className={`object-cover ${customObjectPosition}`}
         />
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
 
-        <div className="absolute left-3 top-3 sm:left-4 sm:top-4 flex flex-wrap gap-2">
-          <span className="rounded-full border border-white/35 bg-black/25 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white backdrop-blur">
+        <div className="absolute left-4 top-4">
+          <span className="rounded-sm border border-white/20 bg-black/40 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md">
             {event.date}
-          </span>
-          <span className="rounded-full border border-white/35 bg-black/25 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white backdrop-blur">
-            {totalPhotos} Photos
           </span>
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 text-left">
-          <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.16em] text-white/80 mb-1">
+        <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 text-left">
+          <p className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.25em] text-[#008be6] mb-2 drop-shadow-md">
             {event.category}
           </p>
-          <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold tracking-tight text-white drop-shadow-sm">
-            {event.title}
-          </h3>
-          <p className="mt-1 text-[11px] sm:text-xs text-white/80">
-            {isActive ? "Tap image to open gallery" : "Tap to focus"}
-          </p>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <h4 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tighter text-white drop-shadow-xl uppercase italic">
+              {event.title}
+            </h4>
+            
+            {isActive && (
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                <Link
+                  href={event.link || "/events"}
+                  className="inline-flex items-center gap-2 rounded-sm bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-black transition-all hover:bg-[#008be6] hover:text-white group/btn shadow-xl ring-1 ring-black/5"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  Explore Event
+                  <svg
+                    className="h-4 w-4 transition-transform group-hover/btn:translate-x-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14 5l7 7-7 7"
+                    />
+                  </svg>
+                </Link>
+              </motion.div>
+            )}
+          </div>
         </div>
       </div>
     </motion.button>
@@ -136,7 +168,7 @@ export default function EventsSection() {
 
     const timer = window.setInterval(() => {
       setCenterIndex((current) => current + 1);
-    }, 4500);
+    }, 4000);
 
     return () => window.clearInterval(timer);
   }, [isPaused, selectedEvent]);
@@ -153,8 +185,8 @@ export default function EventsSection() {
     _event: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo,
   ) => {
-    const swipeThreshold = 40;
-    const velocityThreshold = 420;
+    const swipeThreshold = 5;
+    const velocityThreshold = 100;
 
     if (
       info.offset.x < -swipeThreshold ||
@@ -223,22 +255,22 @@ export default function EventsSection() {
       <div className="absolute bottom-0 left-0 w-72 h-72 bg-cyan-50/60 rounded-full blur-3xl opacity-70 translate-y-1/3 -translate-x-1/4 z-0" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="mb-8 lg:mb-10 text-center">
-          <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-[#00589e] mb-3">
-            Flagship Events
-          </p>
-          <h2 className="text-4xl md:text-5xl font-medium tracking-tight text-[#1a1a1a] mb-4">
-            Previous events, still shaping what comes next.
+        <div className="mb-12 lg:mb-16 text-center">
+          <h2 className="text-4xl lg:text-7xl text-gray-800 flex items-center justify-center gap-4 font-sans tracking-tight mb-6">
+            <span className="font-light text-gray-700">Flagship</span>
+            <span className="font-black font-serif text-gray-900 uppercase">
+              Events
+            </span>
           </h2>
-          <p className="text-base sm:text-lg text-slate-600 max-w-3xl leading-relaxed mx-auto">
-            Rotate through our flagship experiences and open the highlighted
-            event to explore its full photo gallery.
+          <p className="text-base sm:text-lg text-slate-700 max-w-3xl leading-relaxed mx-auto italic font-bold">
+            Explore our flagship experiences that shaped our journey across the
+            years.
           </p>
         </div>
 
-        <div className="relative mb-6">
+        <div className="relative mb-8">
           <div className="pointer-events-none absolute inset-x-0 top-[46%] -translate-y-1/2 text-center hidden lg:block">
-            <span className="text-[8rem] leading-none font-semibold tracking-tight text-[#00589e]/[0.05] uppercase">
+            <span className="text-[10rem] leading-none font-bold tracking-tighter text-[#00589e]/[0.03] uppercase">
               {activeEvent.title}
             </span>
           </div>
@@ -267,9 +299,7 @@ export default function EventsSection() {
                   offset={offset}
                   dragOffset={dragOffset}
                   onClick={() => {
-                    if (offset === 0) {
-                      openEventGallery(event);
-                    } else {
+                    if (offset !== 0) {
                       setCenterIndex((current) => current + offset);
                     }
                   }}
@@ -279,16 +309,13 @@ export default function EventsSection() {
           </motion.div>
         </div>
 
-        <div className="max-w-2xl mx-auto text-center mb-6">
-          <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[#1a1a1a] mb-2">
-            {activeEvent.title}
-          </h3>
-          <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-            {activeEvent.description}
+        <div className="max-w-4xl mx-auto text-center mt-12 mb-8 px-4">
+          <p className="text-xl sm:text-2xl text-slate-700 leading-relaxed font-normal tracking-tight italic">
+            &quot;{activeEvent.description}&quot;
           </p>
         </div>
 
-        <div className="relative z-20 mt-2 flex justify-center gap-2.5 sm:gap-3">
+        <div className="relative z-20 mt-8 flex justify-center gap-3">
           {homeEvents.map((event, index) => {
             const isActive =
               index === getWrappedIndex(centerIndex, homeEvents.length);
@@ -300,8 +327,8 @@ export default function EventsSection() {
                 onClick={() => setCenterIndex(index)}
                 className={
                   isActive
-                    ? "h-1.5 w-9 sm:w-12 rounded-full bg-[#00589e]"
-                    : "h-1.5 w-2.5 rounded-full bg-slate-300 hover:bg-slate-400"
+                    ? "h-2 w-10 sm:w-16 rounded-full bg-[#00589e] transition-all duration-300"
+                    : "h-2 w-2 rounded-full bg-slate-300 hover:bg-slate-400 transition-all duration-300"
                 }
                 aria-label={`View ${event.title}`}
               />
