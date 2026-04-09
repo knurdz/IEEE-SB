@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
-import ContactBackground from './components/ContactBackground';
+import ContactHero from './components/ContactHero';
 import ContactForm from './components/ContactForm';
 import ContactInfo from './components/ContactInfo';
+import SiteBackground from '../components/layout/SiteBackground';
 import BackToTop from '../chapters/components/BackToTop';
+import SectionDivider from '../chapters/components/SectionDivider';
 
 export const metadata: Metadata = {
   title: 'Contact Us | IEEE Student Branch - University of Moratuwa',
@@ -12,20 +14,21 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center overflow-hidden bg-[var(--surface-alt)]" id="contact">
-      <ContactBackground />
+    <main className="min-h-screen relative bg-white overflow-hidden pb-12 md:pb-20" id="contact">
+      <SiteBackground />
+      <ContactHero />
+      <SectionDivider />
       
-      <div className="w-full max-w-[1100px] glass-fiber rounded-[32px] md:rounded-[40px] shadow-2xl relative z-10 overflow-hidden p-8 md:p-12 lg:p-[4.5rem] flex flex-col lg:flex-row gap-12 lg:gap-16 items-stretch">
-         {/* Left Side: Form */}
-         <div className="w-full lg:w-[55%] flex flex-col justify-center">
+      <section className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 flex flex-col lg:flex-row gap-16 lg:gap-24 items-center lg:items-start" id="contact-content">
+         <div className="w-full lg:w-[50%] flex flex-col justify-center">
             <ContactForm />
          </div>
-         {/* Right Side: Illustration and Info */}
-         <div className="w-full lg:w-[45%] flex flex-col justify-between h-full">
+         <div className="w-full lg:w-[50%] flex flex-col justify-between h-full">
             <ContactInfo />
          </div>
-      </div>
+      </section>
       
+      <div className="h-32"></div>
       <BackToTop />
     </main>
   );

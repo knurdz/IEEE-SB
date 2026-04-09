@@ -51,63 +51,59 @@ const contactDetails = [
 
 const ContactIllustration = () => {
   return (
-    <div className="relative w-full aspect-square max-h-[300px] mx-auto mb-12 flex items-center justify-center">
-      {/* Background circles */}
-      <div className="absolute w-[280px] h-[280px] bg-[var(--surface-alt)] rounded-full opacity-60" />
-      <div className="absolute w-[200px] h-[200px] bg-[var(--primary-glow)] rounded-full opacity-80" />
-
-      {/* Envelope center */}
+    <div className="relative w-full aspect-square max-h-[350px] mx-auto mb-4 flex items-center justify-center">
+      {/* Abstract Tech Node Background */}
       <motion.div 
-        animate={{ y: [0, -10, 0] }} 
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} 
-        className="z-10 relative bg-gradient-to-br from-[var(--accent)] to-[var(--primary)] w-[110px] h-[85px] rounded-2xl shadow-xl flex items-center justify-center border-t border-white/30"
+        animate={{ rotate: 360 }} 
+        transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
+        className="absolute w-[300px] h-[300px] opacity-20 pointer-events-none"
       >
-        <div className="absolute -top-6 bg-white w-20 h-16 rounded-t-lg shadow-sm flex flex-col items-center justify-start pt-2 gap-1.5 opacity-90 z-[-1]">
-          <div className="w-12 h-1 bg-[#E2E8F0] rounded-full" />
-          <div className="w-14 h-1 bg-[#E2E8F0] rounded-full" />
-          <div className="w-10 h-1 bg-[#E2E8F0] rounded-full" />
-        </div>
-        <Mail className="w-12 h-12 text-white fill-white/20" strokeWidth={1} />
+        <svg viewBox="0 0 100 100" className="w-full h-full stroke-[var(--primary)]" fill="none">
+           <polygon points="50,5 89,27.5 89,72.5 50,95 11,72.5 11,27.5" strokeWidth="0.5" />
+           <circle cx="50" cy="50" r="40" strokeWidth="0.2" strokeDasharray="2 4" />
+           <polygon points="50,15 80,32.5 80,67.5 50,85 20,67.5 20,32.5" strokeWidth="0.2" className="stroke-[var(--accent)]" />
+        </svg>
       </motion.div>
 
-      {/* Send Plane */}
-      <motion.div 
-        animate={{ x: [0, 10, 0], y: [0, -5, 0] }} 
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }} 
-        className="absolute right-4 top-16 z-20 text-[var(--accent)] rotate-[-20deg]"
+      {/* Main Core Node */}
+      <motion.div
+        animate={{ y: [-15, 15, -15] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        className="relative z-10 w-[140px] h-[160px] flex items-center justify-center"
       >
-        <Send className="w-12 h-12 fill-[var(--accent)] text-[var(--accent)] opacity-90 drop-shadow-md" strokeWidth={1} />
-      </motion.div>
-
-      {/* Notification Bell */}
-      <motion.div 
-        animate={{ y: [0, -8, 0], rotate: [0, 5, -5, 0] }} 
-        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 1 }} 
-        className="absolute left-8 top-12 z-20 bg-[var(--accent)] p-3 rounded-full shadow-[0_8px_16px_rgba(0,139,230,0.4)]"
-      >
-        <Bell className="w-6 h-6 fill-white text-white" strokeWidth={1.5} />
-      </motion.div>
-
-      {/* Message Bubble */}
-      <motion.div 
-        animate={{ y: [0, 8, 0] }} 
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} 
-        className="absolute left-4 bottom-16 z-20 bg-[var(--primary)] p-3.5 rounded-2xl rounded-bl-md shadow-[0_8px_16px_rgba(0,87,157,0.3)]"
-      >
-        <div className="flex gap-1">
-          <div className="w-1.5 h-1.5 bg-white rounded-full" />
-          <div className="w-1.5 h-1.5 bg-white rounded-full" />
-          <div className="w-1.5 h-1.5 bg-white rounded-full" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)] to-[var(--accent)] opacity-80 mix-blend-multiply blur-[30px] rounded-full shadow-[0_0_60px_rgba(0,139,230,0.4)]" />
+        
+        <svg viewBox="0 0 100 100" className="w-full h-full relative z-10 drop-shadow-[0_0_15px_rgba(0,139,230,0.6)]">
+           <polygon points="50,5 89,27.5 89,72.5 50,95 11,72.5 11,27.5" fill="rgba(255,255,255,0.1)" stroke="currentColor" strokeWidth="2.5" className="text-[var(--accent)] backdrop-blur-sm" />
+           <path d="M50 5 L50 95 M11 27.5 L89 72.5 M11 72.5 L89 27.5" stroke="currentColor" strokeWidth="0.5" strokeOpacity="0.4" className="text-white" />
+        </svg>
+        
+        <div className="absolute inset-0 flex items-center justify-center z-20">
+          <MessageSquare className="w-12 h-12 text-white fill-white/10 drop-shadow-md" strokeWidth={1.5} />
         </div>
       </motion.div>
       
-      {/* Background decorative elements */}
-      <div className="absolute top-8 right-24 w-2.5 h-2.5 rounded-full bg-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.6)]" />
-      <div className="absolute bottom-10 left-20 w-3 h-3 rounded-full bg-blue-400" />
-      <div className="absolute top-1/2 -right-2 w-2 h-2 rounded-full bg-pink-400" />
-      <div className="absolute bottom-12 right-12 w-2.5 h-2.5 border-[2px] border-green-400 rounded-full" />
-      <div className="absolute top-1/3 left-0 w-1.5 h-1.5 rounded-full bg-purple-400" />
-      <div className="absolute bottom-4 right-1/3 w-1.5 h-1.5 rounded-full bg-orange-400" />
+      {/* Floating Orbital Nodes */}
+      <motion.div 
+        animate={{ y: [-8, 8, -8] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        className="absolute top-10 right-6 md:right-10 w-14 h-14 bg-white/50 backdrop-blur-lg rounded-xl border border-white/60 flex items-center justify-center shadow-[0_8px_32px_rgba(0,0,0,0.08)] rotate-12"
+      >
+        <Mail className="w-6 h-6 text-[var(--accent)]" strokeWidth={2} />
+      </motion.div>
+      
+      <motion.div 
+        animate={{ y: [8, -8, 8] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        className="absolute bottom-16 left-4 md:left-8 w-16 h-16 bg-white/50 backdrop-blur-lg rounded-2xl border border-white/60 flex items-center justify-center shadow-[0_8px_32px_rgba(0,0,0,0.08)] -rotate-6"
+      >
+        <Phone className="w-7 h-7 text-[var(--primary)]" strokeWidth={2} />
+      </motion.div>
+
+      <motion.div 
+        animate={{ y: [-5, 5, -5] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+        className="absolute top-1/4 left-6 md:left-12 w-10 h-10 bg-white/40 backdrop-blur-md rounded-lg border border-white/50 flex items-center justify-center shadow-lg rotate-45"
+      >
+        <MapPin className="w-5 h-5 text-gray-500" strokeWidth={2} />
+      </motion.div>
     </div>
   );
 };
@@ -119,48 +115,55 @@ export default function ContactInfo() {
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
       transition={fadeUpTransition(0.3, 0.8)}
-      className="flex flex-col w-full h-full justify-between items-center lg:items-start pl-0 lg:pl-10"
+      className="flex flex-col w-full h-full lg:pl-10 relative z-10"
     >
       <ContactIllustration />
 
-      <div className="flex flex-col gap-5 w-full max-w-[320px] mx-auto lg:ml-8 lg:mr-auto pl-4">
+      <div className="flex flex-col gap-4 w-full max-w-[400px] mx-auto lg:ml-8 lg:mr-auto pl-4 mt-8">
         {contactDetails.map((item, index) => (
           <motion.a
             key={index}
             href={item.link}
             target={item.link.startsWith('http') ? '_blank' : undefined}
             rel={item.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-            className="flex flex-row items-center gap-4 group"
-            initial={{ opacity: 0, y: 10 }}
+            className="flex flex-row items-center gap-5 group glass-fiber bg-white/40 border-white/40 hover:bg-white/70 p-4 rounded-2xl transition-all shadow-sm hover:shadow-md"
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={fadeUpTransition(0.4 + index * 0.1, 0.5)}
           >
-            <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center opacity-80 group-hover:scale-110 group-hover:text-[var(--accent)] transition-all">
+            <div className="flex-shrink-0 w-10 h-10 bg-white shadow-sm border border-gray-100 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:border-[var(--accent)]/30 group-hover:text-[var(--accent)] transition-all text-gray-400">
               {item.icon}
             </div>
-            <p className="text-[0.95rem] text-[var(--muted)] font-medium leading-snug hover:text-[var(--primary)] transition-colors line-clamp-2">
+            <p className="text-[0.95rem] text-gray-600 font-medium leading-relaxed hover:text-[var(--primary)] transition-colors">
               {item.content}
             </p>
           </motion.a>
         ))}
 
-        {/* Social Icons mapped to the original image colors roughly, or blue gradient */}
+        {/* Social Icons Connect Line */}
+        <div className="flex items-center gap-4 mt-8 pl-[10px]">
+          <div className="w-12 h-[1px] bg-gray-300" />
+          <span className="text-xs font-semibold text-gray-400 tracking-widest uppercase">Connect</span>
+          <div className="w-12 h-[1px] bg-gray-300" />
+        </div>
+
         <motion.div 
-          className="flex flex-row gap-4 mt-6 pl-[40px]"
+          className="flex flex-row gap-5 mt-4 justify-center pr-12"
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={fadeUpTransition(0.7, 0.5)}
         >
-          <a href="https://facebook.com/ieeeuom" target="_blank" rel="noopener noreferrer" className="w-[42px] h-[42px] rounded-full bg-[#1877F2] flex items-center justify-center text-white hover:-translate-y-1 shadow-lg shadow-[#1877F2]/30 transition-all">
-            <Facebook className="w-5 h-5 fill-white border-white" strokeWidth={0.5} />
+          <a href="https://facebook.com/ieeeuom" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center text-[#1877F2] hover:-translate-y-1 shadow-sm hover:shadow-lg hover:shadow-[#1877F2]/20 transition-all">
+            <Facebook className="w-5 h-5 fill-current border-[#1877F2]" strokeWidth={0.5} />
           </a>
-          <a href="https://twitter.com/ieeeuom" target="_blank" rel="noopener noreferrer" className="w-[42px] h-[42px] rounded-full bg-[#40B4E5] flex items-center justify-center text-white hover:-translate-y-1 shadow-lg shadow-[#40B4E5]/30 transition-all">
-            <Twitter className="w-5 h-5 fill-white text-white border-white" strokeWidth={0.5} />
+          <a href="https://twitter.com/ieeeuom" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center text-[#40B4E5] hover:-translate-y-1 shadow-sm hover:shadow-lg hover:shadow-[#40B4E5]/20 transition-all">
+            <Twitter className="w-5 h-5 fill-current border-[#40B4E5]" strokeWidth={0.5} />
           </a>
-          <a href="https://instagram.com/ieeeuom" target="_blank" rel="noopener noreferrer" className="w-[42px] h-[42px] rounded-full bg-gradient-to-tr from-[#FFC107] via-[#F44336] to-[#9C27B0] flex items-center justify-center text-white hover:-translate-y-1 shadow-lg shadow-[#F44336]/30 transition-all">
-            <Instagram className="w-[22px] h-[22px]" strokeWidth={2} />
+          <a href="https://instagram.com/ieeeuom" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center text-[#E1306C] hover:-translate-y-1 shadow-sm hover:shadow-lg hover:shadow-[#E1306C]/20 transition-all relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#FFC107] via-[#F44336] to-[#9C27B0] opacity-0 group-hover:opacity-100 transition-opacity" />
+            <Instagram className="w-5 h-5 group-hover:text-white transition-colors relative z-10" strokeWidth={2} />
           </a>
         </motion.div>
       </div>

@@ -15,32 +15,34 @@ export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    setSubmitted(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSubmitted(true);
+    }, 1500);
   };
 
   if (submitted) {
     return (
       <motion.div
-        className="flex flex-col items-center justify-center h-full text-center py-10"
-        initial={{ opacity: 0, scale: 0.9 }}
+        className="flex flex-col items-center justify-center h-full min-h-[400px] text-center glass-fiber rounded-3xl p-8 md:p-12 relative overflow-hidden"
+        initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
       >
-        <div className="w-20 h-20 bg-[var(--accent)]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-          <SendIcon className="w-10 h-10 text-[var(--accent)]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--accent)]/5 pointer-events-none" />
+        <div className="w-24 h-24 bg-[var(--primary-glow)] rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-[0_0_40px_rgba(0,139,230,0.2)] rotate-3">
+          <SendIcon className="w-12 h-12 text-[var(--accent)] -rotate-3" />
         </div>
-        <h3 className="text-3xl font-bold text-[var(--primary)] mb-3">Message Sent!</h3>
+        <h3 className="text-3xl font-bold text-[var(--foreground)] mb-4 tracking-tight">Message Sent</h3>
         <p className="text-[var(--muted)] text-lg max-w-sm mx-auto">
-          Thank you for reaching out. We&apos;ll get back to you as soon as possible.
+          Thanks for reaching out! We&apos;ll review your message and get back to you shortly.
         </p>
         <button
           onClick={() => setSubmitted(false)}
-          className="mt-8 text-[var(--accent)] font-semibold hover:underline"
+          className="mt-8 text-[var(--accent)] hover:text-[var(--primary)] font-semibold underline underline-offset-4 transition-colors"
         >
           Send another message
         </button>
@@ -50,69 +52,73 @@ export default function ContactForm() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      whileInView={{ opacity: 1, x: 0 }}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={fadeUpTransition(0.2, 0.8)}
-      className="flex flex-col h-full md:pr-6"
+      transition={fadeUpTransition(0.2, 0.6)}
+      className="glass-fiber rounded-3xl p-8 md:p-12 shadow-xl border border-white/40 bg-white/60 relative overflow-hidden"
     >
-      <h2 className="text-[2.2rem] md:text-[2.8rem] font-bold text-[var(--primary)] mb-4 tracking-tight leading-tight">
-        Let&apos;s talk
-      </h2>
-      <p className="text-[var(--muted)] font-medium text-[0.95rem] md:text-[0.95rem] mb-10 max-w-md leading-relaxed">
-        To request a quote or want to meet up for coffee, contact us directly or fill out the form and we will get back to you promptly.
-      </p>
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--primary)] to-[var(--accent)]" />
+      
+      <div className="mb-10">
+        <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3 tracking-tight">Let&apos;s talk</h2>
+        <p className="text-gray-500 text-[1.05rem]">
+          Have a question or want to collaborate? Send us a message and we&apos;ll get back to you within 24 hours.
+        </p>
+      </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="name" className="text-[0.8rem] font-semibold text-[var(--muted)] ml-3">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6 relative z-10">
+        <div className="flex flex-col gap-2">
+          <label htmlFor="name" className="text-sm font-semibold text-[var(--muted)] ml-1 uppercase tracking-wider">
             Your Name
           </label>
           <input
             type="text"
             id="name"
             required
-            className="w-full px-6 py-4 rounded-[24px] bg-[var(--surface-alt)] border border-[var(--border-soft)] focus:bg-[var(--surface)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/30 transition-all text-sm font-medium text-[var(--foreground)]"
+            className="w-full px-5 py-4 rounded-xl bg-white/80 backdrop-blur-sm border border-[var(--border-soft)] hover:border-[var(--accent)]/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/30 transition-all text-[0.95rem] font-medium text-[var(--foreground)] shadow-sm"
           />
         </div>
 
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="email" className="text-[0.8rem] font-semibold text-[var(--muted)] ml-3">
+        <div className="flex flex-col gap-2">
+          <label htmlFor="email" className="text-sm font-semibold text-[var(--muted)] ml-1 uppercase tracking-wider">
             Your Email
           </label>
           <input
             type="email"
             id="email"
             required
-            className="w-full px-6 py-4 rounded-[24px] bg-[var(--surface-alt)] border border-[var(--border-soft)] focus:bg-[var(--surface)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/30 transition-all text-sm font-medium text-[var(--foreground)]"
+            className="w-full px-5 py-4 rounded-xl bg-white/80 backdrop-blur-sm border border-[var(--border-soft)] hover:border-[var(--accent)]/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/30 transition-all text-[0.95rem] font-medium text-[var(--foreground)] shadow-sm"
           />
         </div>
 
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="message" className="text-[0.8rem] font-semibold text-[var(--muted)] ml-3">
+        <div className="flex flex-col gap-2">
+          <label htmlFor="message" className="text-sm font-semibold text-[var(--muted)] ml-1 uppercase tracking-wider">
             Your Message
           </label>
           <textarea
             id="message"
             required
-            rows={4}
-            placeholder="Type something if you want..."
-            className="w-full px-6 py-4 rounded-[24px] bg-[var(--surface-alt)] border border-[var(--border-soft)] focus:bg-[var(--surface)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/30 transition-all text-[0.9rem] font-medium text-[var(--foreground)] resize-none placeholder:text-[var(--muted)] placeholder:opacity-70"
+            rows={5}
+            placeholder="How can we help you?"
+            className="w-full px-5 py-4 rounded-xl bg-white/80 backdrop-blur-sm border border-[var(--border-soft)] hover:border-[var(--accent)]/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/30 transition-all text-[0.95rem] font-medium text-[var(--foreground)] resize-none shadow-sm placeholder-[var(--muted)]/50"
           />
         </div>
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="mt-4 self-start glow-button rounded-[24px] !px-10 !py-3 font-semibold flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed uppercase tracking-wider"
+          className="mt-4 self-start glow-button rounded-xl !px-10 !py-4 font-semibold flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed uppercase tracking-widest text-[0.9rem] shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all w-full md:w-auto"
         >
           {isSubmitting ? (
             <>
-              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               Sending...
             </>
           ) : (
-            'Send Message'
+            <>
+              Submit <SendIcon className="w-4 h-4 ml-1" strokeWidth={2.5} />
+            </>
           )}
         </button>
       </form>
