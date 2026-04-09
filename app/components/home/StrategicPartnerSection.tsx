@@ -17,32 +17,23 @@ export default function StrategicPartnerSection() {
         <div className="rounded-3xl border border-black/10 bg-white/90 shadow-[0_20px_50px_-28px_rgba(0,0,0,0.35)] overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
             <div className="lg:col-span-7 p-8 sm:p-10 lg:p-12">
-              <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-[#00589e] mb-4">
-                Strategic Partner
-              </p>
+              <h2 className="text-3xl lg:text-5xl text-gray-800 flex items-center justify-start gap-4 font-sans tracking-tight mb-6">
+                <span className="font-light text-gray-700">Strategic</span>
+                <span className="font-black font-serif text-gray-900 uppercase">
+                  Partner
+                </span>
+              </h2>
 
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight text-[#1a1a1a] leading-tight mb-5">
+              <h2 className="text-xl sm:text-2xl lg:text-2xl font-medium tracking-tight text-[#1a1a1a] leading-tight mb-5">
                 Industry partnership that amplifies student impact.
               </h2>
 
-              <p className="text-base sm:text-lg leading-relaxed text-slate-600 max-w-2xl">
+              <p className="text-base sm:text-lg leading-relaxed text-slate-600 max-w-2xl text-justify">
                 Our collaboration with IFS strengthens how we build, lead, and
                 innovate as a student branch. Through this alliance, members
                 gain deeper industry exposure, meaningful mentorship, and
                 opportunities to contribute to high-value technical initiatives.
               </p>
-
-              <div className="mt-7 flex flex-wrap gap-3 text-sm">
-                <span className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-slate-600">
-                  Workshops & Knowledge Sessions
-                </span>
-                <span className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-slate-600">
-                  Professional Mentorship
-                </span>
-                <span className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-slate-600">
-                  Industry-Ready Innovation
-                </span>
-              </div>
 
               <div className="mt-8">
                 <a
@@ -56,8 +47,8 @@ export default function StrategicPartnerSection() {
               </div>
             </div>
 
-            <div className="lg:col-span-5 p-8 sm:p-10 lg:p-12 bg-gradient-to-br from-[#f3f9ff] via-white to-[#eef6ff] border-t lg:border-t-0 lg:border-l border-black/5">
-              <div className="h-full rounded-2xl border border-[#00589e]/15 bg-white/95 p-6 sm:p-8 flex items-center justify-center shadow-[0_12px_35px_-24px_rgba(0,87,157,0.45)]">
+            <div className="lg:col-span-5 flex items-center justify-center p-8 sm:p-10 lg:p-12 bg-transparent">
+              <div className="w-full flex items-center justify-center">
                 <Image
                   src="/partners/IFS.png"
                   alt="IFS strategic partner logo"

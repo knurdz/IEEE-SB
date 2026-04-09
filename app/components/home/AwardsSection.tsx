@@ -15,14 +15,17 @@ export default function AwardsSection() {
       <div className="absolute bottom-10 right-0 w-72 h-72 bg-indigo-50/60 rounded-full blur-3xl opacity-70 translate-x-1/3 z-0" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="mb-12 lg:mb-14">
-          <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-[#00589e] mb-3">
-            Awards & Recognition
-          </p>
-          <h2 className="text-4xl md:text-5xl font-medium tracking-tight text-[#1a1a1a] mb-4">
-            Global excellence, locally celebrated.
+        <div className="mb-12 lg:mb-14 text-center">
+          <h2 className="text-3xl lg:text-5xl text-gray-800 flex items-center justify-center gap-4 font-sans tracking-tight mb-6">
+            <span className="font-light text-gray-700">Awards &</span>
+            <span className="font-black font-serif text-gray-900 uppercase">
+              Recognition
+            </span>
           </h2>
-          <p className="text-base sm:text-lg text-slate-600 max-w-3xl leading-relaxed">
+          <p className="text-base sm:text-lg text-slate-700 max-w-3xl leading-relaxed italic font-bold mx-auto">
+            Global excellence, locally celebrated.
+          </p>
+          <p className="mt-4 text-base sm:text-lg text-slate-600 max-w-3xl leading-relaxed mx-auto">
             Our branch is recognized at both international and Sri Lankan
             section levels for sustained technical impact, leadership, and
             innovation.
