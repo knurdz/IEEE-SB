@@ -543,7 +543,7 @@ export default function TextSphereAnimation() {
       canvas.height = 1024;
       const ctx = canvas.getContext('2d')!;
 
-      ctx.fillStyle = '#F8F9FA';
+      ctx.fillStyle = '#FFFFFF';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const processEarthTexture = () => {
@@ -799,10 +799,10 @@ export default function TextSphereAnimation() {
   }, []);
 
   return (
-    <div className="relative w-full h-screen bg-[#F8F9FA] overflow-hidden">
+    <div className="relative w-full h-screen bg-white overflow-hidden">
       {/* Loading Indicator */}
       {isLoading && (
-        <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#F8F9FA]">
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-white">
           <div className="text-center">
             <div className="relative w-20 h-20 mx-auto mb-6">
               <div className="absolute inset-0 border-4 border-blue-700/20 rounded-full"></div>
@@ -847,33 +847,37 @@ export default function TextSphereAnimation() {
 
         /* ── Static typography overrides (animations untouched) ── */
         .hero-tagline-1 {
-          font-family: 'Inter', system-ui, -apple-system, sans-serif;
-          font-weight: 700;
-          font-size: 13px;
+          font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+          font-weight: 600;
+          font-size: 11px;
           letter-spacing: 0.25em;
-          color: #0052FF;
+          color: #008be6;
           margin-top: 3rem;
           margin-bottom: 0.5rem;
           text-transform: uppercase;
-          text-shadow: 0 4px 12px rgba(0, 82, 255, 0.15) !important;
-          -webkit-text-stroke: 0 !important;
-          background: none !important;
-          -webkit-background-clip: unset !important;
-          -webkit-text-fill-color: #122f6cff !important;
-          background-clip: unset !important;
+          text-shadow: 0 4px 12px rgba(0, 139, 230, 0.15);
         }
 
         .hero-tagline-2 {
-          font-family: 'Inter', system-ui, -apple-system, sans-serif;
-          font-weight: 600;
+          font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+          font-weight: 700;
           font-size: 20px;
-          letter-spacing: 0.04em;
-          background: linear-gradient(90deg, #163a66ff 0%, #0052FF 100%) !important;
-          -webkit-background-clip: text !important;
-          -webkit-text-fill-color: transparent !important;
-          background-clip: text !important;
-          filter: drop-shadow(0 4px 16px rgba(23, 53, 153, 0.15));
-          -webkit-text-stroke: 0 !important;
+          line-height: 1.2;
+          letter-spacing: -0.02em;
+          background: linear-gradient(90deg, #00579d 0%, #008be6 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          text-shadow: 0 4px 12px rgba(23, 53, 153, 0.1);
+        }
+
+        @media (min-width: 768px) {
+           .hero-tagline-1 {
+              font-size: 13px;
+           }
+           .hero-tagline-2 {
+              font-size: 24px;
+           }
         }
       `}</style>
 

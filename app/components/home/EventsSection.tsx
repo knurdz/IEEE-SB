@@ -186,7 +186,7 @@ export default function EventsSection() {
   const activeIndex = getWrappedIndex(centerIndex, homeEvents.length);
 
   return (
-    <section id="events" className="relative overflow-hidden bg-[#F8F9FA] py-20 sm:py-32">
+    <section id="events" className="relative overflow-hidden bg-white py-20 sm:py-32">
       
 
       <div className="container mx-auto mb-0 px-4 sm:mb-2">
@@ -266,7 +266,7 @@ export default function EventsSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#F8F9FA]/95 p-4 backdrop-blur-md sm:p-8"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-white/95 p-4 backdrop-blur-md sm:p-8"
             onClick={() => {
               setSelectedEvent(null);
               setIsPaused(false);
