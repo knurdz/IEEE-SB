@@ -7,6 +7,7 @@ import SectionDivider from '@/app/chapters/components/SectionDivider';
 export default function Home() {
   return (
     <main className="min-h-screen relative bg-white">
+      <SiteBackground />
       <div className="relative">
         <TextSphereAnimation />
         {/* Bottom Fade Mask to blend with next section */}

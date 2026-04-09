@@ -160,8 +160,7 @@ export default function EventsHero() {
   }, [shouldReduceMotion]);
 
   return (
-    <section className="relative min-h-[50vh] py-32 flex flex-col justify-center items-center overflow-hidden bg-surface text-center px-4 grid-pattern">
-      <div className="noise" />
+    <section className="relative min-h-[50vh] py-32 flex flex-col justify-center items-center overflow-hidden bg-transparent text-center px-4">
       <canvas
         ref={canvasRef}
         className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-80"

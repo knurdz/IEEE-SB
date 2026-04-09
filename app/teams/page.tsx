@@ -10,7 +10,7 @@ import { meetOurTeam, executiveCommittee, leadershipBody } from './data';
 
 export default function TeamsPage() {
   return (
-    <div className="min-h-screen bg-[#F8F9FA] text-gray-900 overflow-x-hidden pt-20 relative">
+    <div className="min-h-screen bg-white text-gray-900 overflow-x-hidden pt-20 relative">
       <SiteBackground />
       <NetworkVisualization />
 

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import EventsHero from './components/EventsHero';
 import Roadmap from './components/Roadmap';
 import ClosingCTA from './components/ClosingCTA';
+import SiteBackground from '../components/layout/SiteBackground';
 
 export const metadata: Metadata = {
   title: 'Events | IEEE Student Branch - University of Moratuwa',
@@ -11,7 +12,8 @@ export const metadata: Metadata = {
 
 export default function EventsPage() {
   return (
-    <main className="min-h-screen bg-background text-foreground fiber-lines relative">
+    <main className="min-h-screen relative bg-white text-foreground overflow-hidden">
+      <SiteBackground />
       <EventsHero />
 
       {/* Hero Separator */}

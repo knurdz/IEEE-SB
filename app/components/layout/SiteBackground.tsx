@@ -143,12 +143,12 @@ export default function SiteBackground({
 
       {/* Top Transition Overlay */}
       {showTopFade && (
-        <div className="absolute inset-x-0 top-0 h-[20vh] bg-gradient-to-b from-white via-white/60 to-transparent pointer-events-none z-10" />
+        <div className="absolute inset-x-0 top-0 h-[20vh] bg-gradient-to-b from-background via-background/60 to-transparent pointer-events-none z-10" />
       )}
 
       {/* Bottom Transition Overlay */}
       {showBottomFade && (
-        <div className="absolute inset-x-0 bottom-0 h-[30vh] bg-gradient-to-t from-white via-white/60 to-transparent pointer-events-none z-10" />
+        <div className="absolute inset-x-0 bottom-0 h-[30vh] bg-gradient-to-t from-background via-background/60 to-transparent pointer-events-none z-10" />
       )}
     </div>
   );
