@@ -19,7 +19,7 @@ export const societies: Society[] = [
     description: "The world's leading organization for computer professionals, driving technological innovation. We connect over 300,000 computing professionals worldwide to advance technology and benefit society. Our members stay at the forefront of computing through conferences, publications, and educational resources.",
     logo: '/chapters/1.png',
     color: '#97022d', // IEEE Computer Society Blue
-    links: { website: '#', instagram: '#', linkedin: '#', twitter: '#' },
+    links: { website: 'https://www.computer.org/', instagram: '#', linkedin: '#', twitter: '#' },
   },
   {
     id: 'communications-society',
@@ -27,7 +27,7 @@ export const societies: Society[] = [
     description: 'A leading global community of engineers and researchers advancing communications and networking technology. ComSoc fosters the development and timely distribution of information and knowledge to the worldwide technical community through publications, conferences, and outreach programs.',
     logo: '/chapters/2.png',
     color: '#396831', // ComSoc Cyan
-    links: { website: '#', instagram: '#', linkedin: '#', twitter: '#' },
+    links: { website: 'https://www.comsoc.org/', instagram: '#', linkedin: '#', twitter: '#' },
   },
   {
     id: 'signal-processing',
@@ -35,7 +35,7 @@ export const societies: Society[] = [
     description: 'Advancing and disseminating state-of-the-art scientific information and resources related to signal processing. The society connects a global community of researchers and practitioners who develop innovative algorithms and systems for audio, image, video, and multimedia signal processing.',
     logo: '/chapters/3.png',
     color: '#7a2c83', // SPS Red
-    links: { website: '#', instagram: '#', linkedin: '#', twitter: '#' },
+    links: { website: 'https://signalprocessingsociety.org/', instagram: '#', linkedin: '#', twitter: '#' },
   },
   {
     id: 'power-energy',
@@ -51,7 +51,7 @@ export const societies: Society[] = [
     description: 'Promoting innovation, education, and fundamental research in robotics and automation. RAS members pioneer advancements in intelligent machines that work alongside humans, from industrial automation to surgical robots, autonomous vehicles, and beyond.',
     logo: '/chapters/5.png',
     color: '#eb8e00', // RAS Red
-    links: { website: '#', instagram: '#', linkedin: '#', twitter: '#' },
+    links: { website: 'https://www.ieee-ras.org/', instagram: '#', linkedin: '#', twitter: '#' },
   },
   {
     id: 'circuits-systems',
@@ -107,7 +107,7 @@ export const societies: Society[] = [
     description: 'Advancing the application of engineering sciences and technology to medicine and biology. EMBS members develop medical devices, diagnostic systems, and therapeutic technologies that improve healthcare delivery and patient outcomes worldwide.',
     logo: '/chapters/12.png',
     color: '#652d92', // EMBS Teal
-    links: { website: '#', instagram: '#', linkedin: '#', twitter: '#' },
+    links: { website: 'https://www.embs.org/', instagram: '#', linkedin: '#', twitter: '#' },
   },
   {
     id: 'microwave-theory',
