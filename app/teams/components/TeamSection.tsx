@@ -5,6 +5,7 @@ import SectionHeading from '@/app/components/ui/SectionHeading';
 import { fadeUp, fadeUpTransition, inViewOnce } from '@/lib/motion';
 import { Member, Variant } from '../types';
 import MemberCard from './MemberCard';
+import MobileMemberCard from './MobileMemberCard';
 
 export default function TeamSection({
   title,
@@ -41,7 +42,7 @@ export default function TeamSection({
         </div>
 
         <div
-          className="relative flex items-center justify-center"
+          className="relative hidden md:flex items-center justify-center"
           style={{ height: '520px', overflow: 'visible' }}
         >
           {members.map((member, i) => {
@@ -56,6 +57,13 @@ export default function TeamSection({
               <MemberCard key={i} member={member} index={i} variant={variant} position={position} />
             );
           })}
+        </div>
+        
+        {/* Mobile grid view */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:hidden mt-4">
+          {members.map((member, i) => (
+            <MobileMemberCard key={i} member={member} />
+          ))}
         </div>
       </div>
     </motion.div>
