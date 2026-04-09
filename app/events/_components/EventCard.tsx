@@ -82,12 +82,12 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
   return (
     <motion.div
       ref={ref}
-      className="relative w-full bg-ieee-surface/80 backdrop-blur-sm border border-[#103A5E] rounded-xl shadow-[0_0_20px_rgba(0,163,255,0.08)] flex flex-col md:grid md:grid-cols-12 overflow-hidden"
+      className="relative w-full glass-fiber border-primary/20 rounded-xl flex flex-col md:grid md:grid-cols-12 overflow-hidden"
       initial="hidden"
       animate={inView ? 'visible' : 'hidden'}
       variants={finalAnim}
       transition={{ duration: 0.8, ease: [0.34, 1.56, 0.64, 1] }}
-      whileHover={{ y: -6, borderColor: '#01A2FF', boxShadow: '0 0 0 1px #01A2FF80, 0 0 50px rgba(1,162,255,0.25)' }}
+      whileHover={{ y: -6, borderColor: 'var(--color-primary)', boxShadow: '0 0 0 1px var(--color-primary), 0 0 50px rgba(0, 87, 157, 0.25)' }}
     >
       {/* Image Carousel — right side */}
       {!imgFailed && images.length > 0 && (
@@ -137,7 +137,7 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
                   onClick={(e) => handleDotClick(e, i)}
                   className={`group relative h-1.5 transition-all duration-500 rounded-full overflow-hidden ${
                     i === currentImageIndex
-                      ? 'w-8 bg-ieee-blue'
+                      ? 'w-8 bg-accent'
                       : 'w-3 bg-white/20 hover:bg-white/40'
                   }`}
                   aria-label={`Show image ${i + 1}`}
@@ -172,34 +172,25 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
           >
             {event.category}
           </span>
-          <span className="text-ieee-muted text-sm font-display font-medium tracking-wide">
+          <span className="text-muted text-sm font-sans font-medium tracking-wide">
             {event.year}
           </span>
         </div>
 
-        <h3 className="font-display font-bold text-2xl sm:text-[28px] text-white mb-2 tracking-tight">
+        <h3 className="font-orbitron font-bold text-2xl sm:text-[28px] text-foreground mb-2 tracking-tight">
           {event.name}
         </h3>
 
-        <p className="text-ieee-blue/80 font-medium italic text-[14px] mb-6">{event.date}</p>
+        <p className="text-primary font-medium italic text-[14px] mb-6">{event.date}</p>
 
-        <p className="font-body text-[15px] sm:text-[16px] leading-[1.7] text-[#9ca3af] mb-8 flex-grow">
+        <p className="font-sans text-[15px] sm:text-[16px] leading-[1.7] text-muted mb-8 flex-grow">
           {event.description}
         </p>
 
         <button
-          className="group self-start flex items-center gap-2 text-[15px] font-bold mt-auto focus:outline-none focus:ring-2 focus:ring-ieee-blue rounded-lg px-4 py-2 explore-event-btn"
-          style={{ background: '#00A3FF', color: '#020B18', border: 'none', transition: 'all 0.2s ease' }}
+          className="glow-button mt-auto"
           aria-label={`Explore ${event.name}`}
           onClick={() => onExplore(event)}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.background = '#00D4FF';
-            (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1.03)';
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.background = '#00A3FF';
-            (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1)';
-          }}
         >
           Explore Event
           <ArrowRight className="w-[18px] h-[18px] group-hover:translate-x-1.5 transition-transform duration-300" />

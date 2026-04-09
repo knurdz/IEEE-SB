@@ -30,8 +30,8 @@ export default function EventsHero() {
 
       ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
       const gradient = ctx.createLinearGradient(0, 0, canvas.offsetWidth, canvas.offsetHeight);
-      gradient.addColorStop(0, 'rgba(0, 224, 255, 0.35)');
-      gradient.addColorStop(1, 'rgba(0, 163, 255, 0.1)');
+      gradient.addColorStop(0, 'rgba(0, 139, 230, 0.35)'); // Accent
+      gradient.addColorStop(1, 'rgba(0, 87, 157, 0.1)'); // Primary
       ctx.fillStyle = gradient;
 
       for (let r = 0; r < rows; r++) {
@@ -104,8 +104,8 @@ export default function EventsHero() {
       const VIBE_RADIUS = 350;
 
       const gradient = ctx.createLinearGradient(0, 0, canvas.offsetWidth, canvas.offsetHeight);
-      gradient.addColorStop(0, 'rgba(0, 224, 255, 0.45)');
-      gradient.addColorStop(1, 'rgba(0, 163, 255, 0.15)');
+      gradient.addColorStop(0, 'rgba(0, 139, 230, 0.45)'); // Accent
+      gradient.addColorStop(1, 'rgba(0, 87, 157, 0.15)'); // Primary
       ctx.fillStyle = gradient;
 
       for (let i = 0; i < dots.length; i++) {
@@ -160,7 +160,8 @@ export default function EventsHero() {
   }, [shouldReduceMotion]);
 
   return (
-    <section className="relative min-h-[50vh] py-32 flex flex-col justify-center items-center overflow-hidden bg-ieee-bg text-center px-4 bg-[radial-gradient(#00a3ff12_1.5px,transparent_1.5px)] [background-size:48px_48px]">
+    <section className="relative min-h-[50vh] py-32 flex flex-col justify-center items-center overflow-hidden bg-surface text-center px-4 grid-pattern">
+      <div className="noise" />
       <canvas
         ref={canvasRef}
         className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-80"
@@ -169,7 +170,7 @@ export default function EventsHero() {
 
       <div className="relative z-10 flex flex-col items-center">
         <motion.p
-          className="text-ieee-blue tracking-[0.2em] uppercase font-semibold text-sm mb-6 font-body"
+          className="text-accent tracking-[0.2em] uppercase font-semibold text-sm mb-6 font-mono"
           initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
           animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
@@ -178,16 +179,16 @@ export default function EventsHero() {
         </motion.p>
 
         <motion.h1
-          className="font-display font-bold text-4xl sm:text-5xl md:text-6xl text-white mb-4 tracking-tight"
+          className="font-orbitron font-bold text-4xl sm:text-5xl md:text-6xl text-foreground mb-4 tracking-tight"
           initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 30 }}
           animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.6 }}
         >
-          A Legacy of Innovation
+          A Legacy of <span className="text-gradient">Innovation</span>
         </motion.h1>
 
         <motion.p
-          className="text-ieee-muted font-body text-lg sm:text-xl max-w-2xl mb-8"
+          className="text-muted font-sans text-lg sm:text-xl max-w-2xl mb-8"
           initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
           animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
@@ -196,7 +197,7 @@ export default function EventsHero() {
         </motion.p>
 
         <motion.div
-          className="h-[2px] w-[60px] bg-ieee-blue origin-left"
+          className="h-[2px] w-[60px] bg-accent origin-left rounded-full fiber-glow"
           initial={shouldReduceMotion ? { opacity: 0 } : { scaleX: 0 }}
           animate={shouldReduceMotion ? { opacity: 1 } : { scaleX: 1 }}
           transition={{ delay: 0.8, duration: 0.8, ease: 'circOut' }}

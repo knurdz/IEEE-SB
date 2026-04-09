@@ -67,7 +67,7 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
           <motion.div
             key="gallery-overlay"
             className="fixed inset-0 z-[1000] flex items-center justify-center p-4 sm:p-6"
-            style={{ backgroundColor: 'rgba(2, 11, 24, 0.85)', backdropFilter: 'blur(12px)' }}
+            style={{ backgroundColor: 'rgba(0, 0, 0, 0.65)', backdropFilter: 'blur(12px)' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -80,12 +80,12 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
               style={{
                 maxWidth: '1400px',
                 height: '90vh',
-                background: '#0A1628',
-                border: '1px solid rgba(0, 163, 255, 0.3)',
+                background: 'var(--color-surface)',
+                border: '1px solid rgba(0, 87, 157, 0.3)',
                 borderRadius: '24px',
-                boxShadow: '0 0 80px rgba(0, 163, 255, 0.2), 0 32px 100px rgba(0,0,0,0.7)',
+                boxShadow: '0 0 80px rgba(0, 87, 157, 0.2), 0 32px 100px rgba(0,0,0,0.7)',
                 scrollbarWidth: 'thin',
-                scrollbarColor: '#00A3FF #0A1628',
+                scrollbarColor: 'var(--color-primary) var(--color-surface)',
               }}
               initial={{ opacity: 0, y: 40, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -95,14 +95,14 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
             >
               {/* Sticky Header Container */}
               <div 
-                style={{ 
+                  style={{ 
                   position: 'sticky', 
                   top: 0, 
                   zIndex: 100, 
-                  background: 'rgba(10, 22, 40, 0.9)',
+                  background: 'rgba(255, 255, 255, 0.05)',
                   backdropFilter: 'blur(10px)',
                   padding: '24px 32px 16px',
-                  borderBottom: '1px solid rgba(0, 163, 255, 0.15)',
+                  borderBottom: '1px solid rgba(0, 87, 157, 0.15)',
                   marginBottom: '24px'
                 }}
               >
@@ -113,9 +113,9 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                         fontSize: '11px',
                         letterSpacing: '0.2em',
                         textTransform: 'uppercase',
-                        color: '#7A8FA6',
+                        color: 'var(--color-muted)',
                         marginBottom: '4px',
-                        fontFamily: 'Space Grotesk, sans-serif',
+                        fontFamily: 'var(--font-orbitron)',
                         fontWeight: 600
                       }}
                     >
@@ -123,10 +123,10 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                     </p>
                     <h2
                       style={{
-                        fontFamily: 'Space Grotesk, sans-serif',
+                        fontFamily: 'var(--font-orbitron)',
                         fontWeight: 700,
                         fontSize: '28px',
-                        color: '#ffffff',
+                        color: 'var(--color-foreground)',
                         marginBottom: '8px',
                         lineHeight: 1.1,
                       }}
@@ -142,7 +142,7 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                         fontWeight: 700,
                         letterSpacing: '0.1em',
                         textTransform: 'uppercase',
-                        fontFamily: 'Space Grotesk, sans-serif',
+                        fontFamily: 'var(--font-orbitron)',
                         backgroundColor: `${event.categoryColor}1A`,
                         border: `1px solid ${event.categoryColor}`,
                         color: event.categoryColor,
@@ -162,7 +162,7 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                       borderRadius: '12px',
                       background: 'rgba(255,255,255,0.05)',
                       border: '1px solid rgba(255,255,255,0.1)',
-                      color: '#ffffff',
+                      color: 'var(--color-foreground)',
                       fontSize: '24px',
                       display: 'flex',
                       alignItems: 'center',
@@ -171,8 +171,8 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                       transition: 'all 0.2s ease',
                     }}
                     onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLButtonElement).style.background = 'rgba(0,163,255,0.2)';
-                      (e.currentTarget as HTMLButtonElement).style.borderColor = '#00A3FF';
+                      (e.currentTarget as HTMLButtonElement).style.background = 'rgba(0,87,157,0.2)';
+                      (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-primary)';
                       (e.currentTarget as HTMLButtonElement).style.transform = 'rotate(90deg)';
                     }}
                     onMouseLeave={(e) => {
@@ -196,8 +196,8 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                       alignItems: 'center',
                       justifyContent: 'center',
                       padding: '100px 0',
-                      color: '#7A8FA6',
-                      fontFamily: 'Space Grotesk, sans-serif',
+                      color: 'var(--color-muted)',
+                      fontFamily: 'var(--font-sans)',
                       fontSize: '16px',
                       gap: '16px',
                     }}
@@ -227,8 +227,8 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                           onClick={() => setSelectedImage(src)}
                           whileHover={{ 
                             y: -8,
-                            borderColor: 'rgba(0,163,255,0.5)',
-                            boxShadow: '0 15px 35px rgba(0,163,255,0.25)' 
+                            borderColor: 'var(--color-primary)',
+                            boxShadow: '0 15px 35px rgba(0,87,157,0.25)' 
                           }}
                           transition={{ 
                             duration: 0.3, 
@@ -239,10 +239,10 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                             marginBottom: '16px',
                             borderRadius: '16px',
                             overflow: 'hidden',
-                            background: '#0D1F35',
+                            background: 'var(--color-surface-alt)',
                             position: 'relative',
                             cursor: 'pointer',
-                            border: '1px solid rgba(0,163,255,0.1)',
+                            border: '1px solid rgba(0,87,157,0.1)',
                             willChange: 'transform',
                             backfaceVisibility: 'hidden',
                           }}
@@ -251,7 +251,7 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                             <div
                               style={{
                                 height: '200px',
-                                background: 'linear-gradient(90deg, #0A1628 25%, #0D1F35 50%, #0A1628 75%)',
+                                background: 'linear-gradient(90deg, var(--color-surface) 25%, var(--color-surface-alt) 50%, var(--color-surface) 75%)',
                                 backgroundSize: '200% 100%',
                                 animation: 'gallery-shimmer 1.5s infinite',
                               }}
@@ -280,13 +280,13 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                 )}
 
                 {/* Footer Section */}
-                <div style={{ marginTop: '40px', borderTop: '1px solid rgba(0,163,255,0.1)', paddingTop: '24px' }}>
+                <div style={{ marginTop: '40px', borderTop: '1px solid rgba(0,87,157,0.1)', paddingTop: '24px' }}>
                   <p
                     style={{
                       textAlign: 'center',
-                      color: '#4B5563',
+                      color: 'var(--color-muted)',
                       fontSize: '12px',
-                      fontFamily: 'Space Grotesk, sans-serif',
+                      fontFamily: 'var(--font-sans)',
                       letterSpacing: '0.05em'
                     }}
                   >
