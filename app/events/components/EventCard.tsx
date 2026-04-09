@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
-import { useInView } from '../_hooks/useInView';
-import type { EventItem } from '../_data/events';
+import { useInView } from '../hooks/useInView';
+import type { EventItem } from '../data';
 
 interface EventCardProps {
   event: EventItem;

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import EventsHero from './_components/EventsHero';
-import Roadmap from './_components/Roadmap';
-import ClosingCTA from './_components/ClosingCTA';
+import EventsHero from './components/EventsHero';
+import Roadmap from './components/Roadmap';
+import ClosingCTA from './components/ClosingCTA';
 
 export const metadata: Metadata = {
   title: 'Events | IEEE Student Branch - University of Moratuwa',

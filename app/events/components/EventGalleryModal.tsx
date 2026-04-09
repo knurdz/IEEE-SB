@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import type { EventItem } from '../_data/events';
+import type { EventItem } from '../data';
 
 interface EventGalleryModalProps {
   isOpen: boolean;

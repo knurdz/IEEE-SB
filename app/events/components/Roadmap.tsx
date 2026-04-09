@@ -4,8 +4,8 @@ import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import EventCard from './EventCard';
 import EventGalleryModal from './EventGalleryModal';
-import { EVENTS } from '../_data/events';
-import type { EventItem } from '../_data/events';
+import { EVENTS } from '../data';
+import type { EventItem } from '../data';
 
 export default function Roadmap() {
   const [modalOpen, setModalOpen] = useState(false);

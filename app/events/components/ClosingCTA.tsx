@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
-import { useInView } from '../_hooks/useInView';
+import { useInView } from '../hooks/useInView';
 
 export default function ClosingCTA() {
   const shouldReduceMotion = useReducedMotion();
