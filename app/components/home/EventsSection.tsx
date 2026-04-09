@@ -65,7 +65,7 @@ function EventCard({ event, offset, dragOffset, onClick }: EventCardProps) {
         pointerEvents: absoluteOffset > 0.5 ? "none" : "auto",
       }}
       transition={{ type: "spring", stiffness: 270, damping: 28, mass: 0.85 }}
-      className="absolute h-[380px] w-[750px] sm:h-[440px] sm:w-[1050px] lg:h-[500px] lg:w-[1400px] rounded-[4px] focus:outline-none"
+      className="absolute h-[380px] w-full max-w-7xl sm:h-[440px] lg:h-[500px] rounded-[4px] focus:outline-none"
       onClick={onClick}
       aria-label={
         isActive ? `Open ${event.title} gallery` : `Focus ${event.title}`
