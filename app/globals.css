@@ -655,8 +655,7 @@ button {
   width: clamp(160px, 22vw, 280px);
   height: auto;
   display: block;
-  opacity: 0.9;
-  transition: opacity 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .footer-logo:hover {

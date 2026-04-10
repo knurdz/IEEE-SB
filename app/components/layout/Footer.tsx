@@ -27,12 +27,11 @@ export default function Footer() {
         {/* Top section: Logo + Description */}
         <div className="footer-brand">
           <Image
-            src="/logo/ieeesblogo-light2.png"
+            src="/logo/ieeesblogo.png"
             alt="IEEE University of Moratuwa Student Branch"
             className="footer-logo"
             width={280}
             height={80}
-            priority
           />
           <p className="footer-brand-desc">
             Empowering future engineers through innovation and collaboration.
