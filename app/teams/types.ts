@@ -4,6 +4,7 @@ export interface Member {
   image: string;
   linkedin?: string;
   phone?: string;
+  email?: string;
   nameSize?: string;
   isLead?: boolean;
 }

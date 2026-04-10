@@ -8,6 +8,7 @@ export const meetOurTeam: Member[] = [
     role: 'Leader',
     image: '/member6.png',
     linkedin: 'https://www.linkedin.com/in/vishva-s-08977126b/',
+    email: 'vishva@example.com',
     phone: '0768936124',
     nameSize: '25px',
     isLead: true,
