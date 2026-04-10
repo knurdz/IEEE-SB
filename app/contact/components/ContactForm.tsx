@@ -53,7 +53,7 @@ export default function ContactForm() {
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
       transition={fadeUpTransition(0.2, 0.6)}
-      className="bg-white/95 backdrop-blur-xl p-8 md:p-14 relative overflow-hidden shadow-2xl rounded-3xl border border-blue-100/50 min-h-[750px] flex flex-col justify-center"
+      className="bg-white/95 backdrop-blur-xl p-6 md:p-10 relative overflow-hidden shadow-2xl rounded-3xl border border-blue-100/50 min-h-[750px] flex flex-col justify-center"
     >
       {/* Animated Pulsing Hexagon Pattern - Moved to far corner and further reduced size */}
       <div className="absolute -top-10 -right-10 w-40 h-40 md:w-56 md:h-56 pointer-events-none opacity-[0.2] overflow-hidden rounded-tr-2xl z-0">
