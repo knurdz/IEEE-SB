@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 
 const GLOBE_CENTER = {
   lat: -8.5,
-  lon: 80.3,
+  lon: 95.3,
 };
 
 const UNIVERSITY_LOCATION = {
