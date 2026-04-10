@@ -541,14 +541,14 @@ button {
   height: clamp(560px, 54vw, 860px);
   opacity: 0.9;
   z-index: 0;
-  transform: translate(23%, 17%);
+  transform: translate(8%, 17%);
 }
 
 .footer-globe-link {
   display: block;
   text-decoration: none;
   cursor: pointer;
-  clip-path: ellipse(43% 44% at 73% 54%);
+  clip-path: ellipse(45% 46% at 70% 57%);
 }
 
 .footer-globe-link:focus-visible {
@@ -640,7 +640,7 @@ button {
   display: grid;
   grid-template-columns: 1.6fr 0.8fr 1fr;
   gap: clamp(2rem, 4vw, 4rem);
-  padding-right: clamp(6rem, 12vw, 12rem);
+  padding-right: clamp(8rem, 14vw, 14rem);
   padding-bottom: clamp(2rem, 3vw, 3rem);
 }
 

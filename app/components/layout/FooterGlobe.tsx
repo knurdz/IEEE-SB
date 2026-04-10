@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 
 const GLOBE_CENTER = {
-  lat: 7.2,
+  lat: -8.5,
   lon: 80.3,
 };
 
@@ -13,46 +13,14 @@ const UNIVERSITY_LOCATION = {
 };
 
 const VIEWBOX_SIZE = 900;
-const GLOBE_CENTER_X = VIEWBOX_SIZE * 0.72;
-const GLOBE_CENTER_Y = VIEWBOX_SIZE * 0.54;
+const GLOBE_CENTER_X = VIEWBOX_SIZE * 0.67;
+const GLOBE_CENTER_Y = VIEWBOX_SIZE * 0.57;
 const GLOBE_RADIUS = VIEWBOX_SIZE * 0.41;
-type GeoPoint = readonly [number, number];
-
-const LAND_POLYGONS: readonly GeoPoint[][] = [
-  [
-    [32.1, 30.5], [34.5, 29.6], [36.2, 28.7], [38.8, 26.4], [41.4, 22.3], [43.2, 18.4],
-    [45.1, 13.1], [47.8, 11.6], [49.5, 11.8], [50.6, 13.4], [51.6, 16.1], [52.2, 18.7],
-    [51.6, 22.1], [50.2, 24.4], [47.6, 26.2], [44.5, 27.4], [40.1, 29.2], [36.3, 30.2],
-  ],
-  [
-    [60.8, 25.2], [62.4, 27.6], [65.1, 29.3], [67.9, 31.1], [70.1, 33.7], [72.7, 35.4],
-    [75.5, 36.5], [77.8, 35.1], [76.4, 32.1], [73.8, 29.5], [71.1, 26.6], [68.1, 24.2],
-    [64.7, 24.0], [61.8, 24.4],
-  ],
-  [
-    [67.9, 23.8], [68.6, 22.7], [69.3, 21.6], [70.0, 20.3], [70.6, 19.1], [71.4, 18.0],
-    [72.0, 17.2], [72.7, 16.5], [73.4, 15.6], [73.9, 14.5], [74.3, 13.4], [74.8, 12.2],
-    [75.5, 11.1], [76.3, 10.1], [77.1, 9.0], [78.3, 8.3], [79.6, 8.7], [80.4, 9.7],
-    [81.0, 11.0], [81.3, 12.5], [81.5, 14.2], [81.8, 16.0], [82.4, 17.8], [83.0, 19.4],
-    [83.7, 20.8], [84.8, 22.1], [86.2, 22.8], [87.6, 21.9], [88.8, 21.1], [89.9, 21.8],
-    [91.0, 23.4], [92.1, 24.8], [92.6, 26.5], [91.6, 27.9], [89.8, 27.9], [87.3, 27.5],
-    [84.6, 27.8], [82.1, 28.8], [79.7, 30.2], [77.5, 31.8], [75.2, 33.0], [72.6, 34.9],
-    [70.2, 34.8], [68.8, 32.8], [68.2, 30.4], [67.8, 27.8],
-  ],
-  [
-    [88.0, 20.7], [89.0, 21.5], [90.2, 21.4], [91.2, 22.0], [92.0, 23.5], [92.4, 25.2],
-    [91.2, 26.1], [89.8, 26.1], [88.7, 25.2], [88.0, 23.8], [87.9, 22.1],
-  ],
-  [
-    [92.0, 10.0], [93.6, 11.9], [95.1, 14.1], [96.7, 16.8], [97.9, 19.5], [98.8, 22.3],
-    [99.0, 24.7], [98.1, 26.6], [96.3, 27.8], [94.4, 27.6], [93.0, 25.3], [92.3, 22.2],
-    [92.0, 18.2], [91.8, 14.1],
-  ],
-  [
-    [79.6, 9.9], [80.2, 9.5], [80.7, 8.8], [81.0, 7.8], [80.9, 6.8], [80.7, 5.9],
-    [80.2, 5.7], [79.8, 6.1], [79.6, 6.9], [79.5, 8.0], [79.5, 9.0],
-  ],
-];
+type EarthMask = {
+  data: Uint8ClampedArray;
+  width: number;
+  height: number;
+};
 
 function toRadians(value: number) {
   return (value * Math.PI) / 180;
@@ -62,27 +30,24 @@ function normalizeLongitude(value: number) {
   return ((((value + 180) % 360) + 360) % 360) - 180;
 }
 
-function isLand(lat: number, lon: number) {
-  const x = normalizeLongitude(lon);
-  const y = lat;
+function sampleEarthBrightness(mask: EarthMask, lat: number, lon: number) {
+  const x = Math.max(
+    0,
+    Math.min(
+      mask.width - 1,
+      Math.round(((normalizeLongitude(lon) + 180) / 360) * (mask.width - 1)),
+    ),
+  );
+  const y = Math.max(
+    0,
+    Math.min(
+      mask.height - 1,
+      Math.round(((90 - lat) / 180) * (mask.height - 1)),
+    ),
+  );
 
-  return LAND_POLYGONS.some((polygon) => {
-    let inside = false;
-
-    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i, i += 1) {
-      const [xi, yi] = polygon[i];
-      const [xj, yj] = polygon[j];
-      const intersects =
-        yi > y !== yj > y &&
-        x < ((xj - xi) * (y - yi)) / ((yj - yi) || Number.EPSILON) + xi;
-
-      if (intersects) {
-        inside = !inside;
-      }
-    }
-
-    return inside;
-  });
+  const index = (y * mask.width + x) * 4;
+  return (mask.data[index] + mask.data[index + 1] + mask.data[index + 2]) / 3;
 }
 
 function projectPoint(
@@ -130,6 +95,9 @@ export default function FooterGlobe() {
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+    const earthImage = new Image();
+    let earthMask: EarthMask | null = null;
+    let disposed = false;
 
     const draw = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -177,29 +145,32 @@ export default function FooterGlobe() {
       ctx.fillStyle = sphereFill;
       ctx.fillRect(cx - radius, cy - radius, radius * 2, radius * 2);
 
-      for (let lat = -10; lat <= 42; lat += 1.65) {
-        for (let lon = 28; lon <= 102; lon += 1.7) {
-          if (!isLand(lat, lon)) {
-            continue;
+      if (earthMask) {
+        for (let lat = -75; lat <= 82; lat += 1.4) {
+          for (let lon = -180; lon <= 180; lon += 1.4) {
+            const brightness = sampleEarthBrightness(earthMask, lat, lon);
+            if (brightness > 148) {
+              continue;
+            }
+
+            const point = projectPoint(lat, lon, radius, GLOBE_CENTER.lat, GLOBE_CENTER.lon);
+            if (point.z <= radius * 0.035) {
+              continue;
+            }
+
+            const depth = point.z / radius;
+            const x2d = cx + point.x;
+            const y2d = cy - point.y;
+            const shimmer = Math.sin(toRadians(lat * 7 + lon * 3)) * 0.14 + 0.86;
+            const dotSize = 0.82 + depth * 1.18;
+            const alpha = 0.22 + depth * 0.58;
+            const tone = 214 + Math.round(depth * 26);
+
+            ctx.beginPath();
+            ctx.arc(x2d, y2d, dotSize * shimmer, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${tone}, ${tone}, ${tone}, ${alpha})`;
+            ctx.fill();
           }
-
-          const point = projectPoint(lat, lon, radius, GLOBE_CENTER.lat, GLOBE_CENTER.lon);
-          if (point.z <= radius * 0.04) {
-            continue;
-          }
-
-          const depth = point.z / radius;
-          const x2d = cx + point.x;
-          const y2d = cy - point.y;
-          const shimmer = Math.sin(toRadians(lat * 9 + lon * 4)) * 0.16 + 0.84;
-          const dotSize = 0.95 + depth * 1.35;
-          const alpha = 0.24 + depth * 0.55;
-          const tone = 214 + Math.round(depth * 28);
-
-          ctx.beginPath();
-          ctx.arc(x2d, y2d, dotSize * shimmer, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${tone}, ${tone}, ${tone}, ${alpha})`;
-          ctx.fill();
         }
       }
 
@@ -257,9 +228,9 @@ export default function FooterGlobe() {
         ctx.stroke();
       }
 
-      for (let index = 0; index < 64; index += 1) {
-        const lat = -6 + ((index * 11) % 38);
-        const lon = 40 + ((index * 17) % 52);
+      for (let index = 0; index < 72; index += 1) {
+        const lat = -55 + ((index * 17) % 110);
+        const lon = -170 + ((index * 29) % 340);
         const point = projectPoint(lat, lon, radius, GLOBE_CENTER.lat, GLOBE_CENTER.lon);
         if (point.z <= radius * 0.08) {
           continue;
@@ -339,11 +310,49 @@ export default function FooterGlobe() {
       ctx.shadowBlur = 0;
     };
 
-    draw();
+    const buildEarthMask = () => {
+      if (disposed) return;
+
+      const maskCanvas = document.createElement('canvas');
+      maskCanvas.width = earthImage.naturalWidth || 2048;
+      maskCanvas.height = earthImage.naturalHeight || 1024;
+
+      const maskContext = maskCanvas.getContext('2d');
+      if (!maskContext) {
+        draw();
+        return;
+      }
+
+      maskContext.filter = 'blur(1.5px)';
+      maskContext.drawImage(earthImage, 0, 0, maskCanvas.width, maskCanvas.height);
+      maskContext.filter = 'none';
+
+      const imageData = maskContext.getImageData(0, 0, maskCanvas.width, maskCanvas.height);
+      earthMask = {
+        data: imageData.data,
+        width: maskCanvas.width,
+        height: maskCanvas.height,
+      };
+
+      draw();
+    };
+
+    earthImage.src = '/earth_specular_2048.jpg';
+    if (earthImage.complete) {
+      buildEarthMask();
+    } else {
+      earthImage.onload = buildEarthMask;
+      earthImage.onerror = () => draw();
+      draw();
+    }
 
     const handleResize = () => draw();
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+
+    return () => {
+      disposed = true;
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   return (
