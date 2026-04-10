@@ -108,13 +108,13 @@ export default function MemberCard({
           <div
             className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center justify-end text-center transition-all duration-500"
             style={{
-              height: hovered ? "36%" : "32%",
+              height: hovered ? "34%" : "30%",
               paddingLeft: "10px",
               paddingRight: "10px",
               paddingBottom: "16px",
               background: hovered
-                ? "linear-gradient(to top, rgba(255,255,255,1) 40%, rgba(255,255,255,0.95) 80%, transparent 100%)"
-                : "linear-gradient(to top, rgba(255,255,255,0.98) 35%, rgba(255,255,255,0.85) 70%, transparent 100%)",
+                ? "linear-gradient(to top, rgba(255,255,255,1) 35%, rgba(255,255,255,0.85) 75%, transparent 100%)"
+                : "linear-gradient(to top, rgba(255,255,255,0.95) 25%, rgba(255,255,255,0.7) 65%, transparent 100%)",
             }}
           >
             <div className="flex flex-col items-center justify-end w-full">
