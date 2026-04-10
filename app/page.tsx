@@ -32,7 +32,7 @@ export default function Home() {
       <section className="relative z-10 overflow-hidden bg-transparent" id="contact">
         <SiteBackground showTopFade={true} showBottomFade={true} />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16 flex flex-col lg:flex-row gap-16 items-center lg:items-start relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 flex flex-col lg:flex-row gap-16 items-center lg:items-start relative z-10">
           {/* Left Side: Text and Info */}
           <div className="w-full lg:w-1/3 text-gray-900">
             <h2 className="text-4xl lg:text-7xl text-gray-800 flex items-baseline justify-start gap-4 font-sans tracking-tight mb-8">

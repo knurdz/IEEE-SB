@@ -22,7 +22,7 @@ export default function Roadmap() {
 
   return (
     <>
-      <section className="relative py-24 px-4 bg-transparent overflow-hidden" id="roadmap">
+      <section className="relative py-16 lg:py-20 px-4 bg-transparent overflow-hidden" id="roadmap">
         {/* Circuit board decorative visuals */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0">
           {/* Ambient glows */}

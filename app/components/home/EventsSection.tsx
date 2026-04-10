@@ -246,7 +246,7 @@ export default function EventsSection() {
   return (
     <section
       id="events"
-      className="relative w-full py-20 lg:py-28 overflow-hidden bg-transparent"
+      className="relative w-full py-16 lg:py-20 overflow-hidden bg-transparent"
       aria-label="Flagship events"
     >
       <SiteBackground showTopFade={true} showBottomFade={true} />
