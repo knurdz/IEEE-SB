@@ -55,15 +55,15 @@ export default function MobileMemberCard({ member }: { member: Member }) {
             />
             <div
               className={cn(
-                "absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t via-white/95 to-transparent",
-                isLead ? "from-white" : "from-slate-50/90"
+                "absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t via-white/80 to-transparent",
+                isLead ? "from-white" : "from-slate-50/80"
               )}
             />
           </div>
 
           <div
             className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-center justify-end px-5 pb-5 text-center transition-transform duration-500 group-hover:translate-y-[-1px]"
-            style={{ height: "35%" }}
+            style={{ height: "30%" }}
           >
             <div className="flex flex-col items-center justify-end w-full">
               <div
