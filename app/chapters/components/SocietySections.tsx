@@ -120,7 +120,7 @@ export default function SocietySections() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, ease: "easeOut" }}
               key={society.id}
-              className={`flex flex-col md:flex-row items-center gap-12 lg:gap-28 py-12 lg:py-16 ${
+              className={`flex flex-col md:flex-row items-center gap-10 md:gap-12 lg:gap-28 py-10 md:py-16 ${
                 isReversed ? "md:flex-row-reverse" : ""
               }`}
             >
@@ -161,7 +161,7 @@ export default function SocietySections() {
               </svg>
 
               {/* Image Side */}
-              <div className="w-full md:w-1/2 relative flex justify-center items-center py-10 min-h-[400px]">
+              <div className="w-full md:w-1/2 relative flex justify-center items-center py-6 md:py-10 min-h-[300px] md:min-h-[400px]">
                 {/* Wavy line decors (abstract corner squiggles) */}
                 <motion.div
                   animate={{ rotate: 360 }}
@@ -170,7 +170,7 @@ export default function SocietySections() {
                     repeat: Infinity,
                     ease: "linear",
                   }}
-                  className={`absolute ${isReversed ? "-bottom-10 -right-10" : "-top-10 -left-10"} w-32 h-32 opacity-40 z-0`}
+                  className={`absolute ${isReversed ? "-bottom-6 md:-bottom-10 -right-6 md:-right-10" : "-top-6 md:-top-10 -left-6 md:-left-10"} w-24 md:w-32 h-24 md:h-32 opacity-40 z-0`}
                 >
                   <svg
                     width="100%"
@@ -196,7 +196,7 @@ export default function SocietySections() {
                 </motion.div>
 
                 <Dots
-                  className={`absolute ${isReversed ? "-top-5 -left-10" : "-bottom-10 -right-10"} z-0 opacity-80 scale-75 md:scale-100`}
+                  className={`absolute ${isReversed ? "-top-5 -left-5 md:-left-10" : "-bottom-5 md:-bottom-10 -right-5 md:-right-10"} z-0 opacity-80 scale-50 sm:scale-75 md:scale-100`}
                   style={{ color: society.color }}
                 />
 
@@ -214,7 +214,7 @@ export default function SocietySections() {
                     clipPath: `url(#hexClipBg-${society.id})`,
                     backgroundColor: society.color,
                   }}
-                  className={`absolute w-[300px] h-[320px] lg:w-[420px] lg:h-[450px] z-0 origin-center ${isReversed ? "translate-x-6 -translate-y-6" : "-translate-x-6 translate-y-6"}`}
+                  className={`absolute w-[240px] h-[260px] sm:w-[300px] sm:h-[320px] lg:w-[420px] lg:h-[450px] z-0 origin-center ${isReversed ? "translate-x-4 md:translate-x-6 -translate-y-4 md:-translate-y-6" : "-translate-x-4 md:-translate-x-6 translate-y-4 md:translate-y-6"}`}
                 >
                   {/* Inner nested hexagons for depth, using inset square parents so clipPath scales down seamlessly */}
                   <div
@@ -232,7 +232,7 @@ export default function SocietySections() {
                 </motion.div>
 
                 {/* Main Image with Hexagon Shape */}
-                <div className="relative z-10 w-[260px] h-[280px] lg:w-[380px] lg:h-[410px] drop-shadow-[0_15px_35px_rgba(0,0,0,0.15)]">
+                <div className="relative z-10 w-[210px] h-[230px] sm:w-[260px] sm:h-[280px] lg:w-[380px] lg:h-[410px] drop-shadow-[0_15px_35px_rgba(0,0,0,0.15)]">
                   {/* Outer clipped white border */}
                   <motion.div
                     animate={{
@@ -271,16 +271,16 @@ export default function SocietySections() {
                     ease: "easeInOut",
                   }}
                   style={{ backgroundColor: society.color }}
-                  className={`absolute top-1/2 ${isReversed ? "left-0" : "right-0"} w-16 h-16 opacity-20 filter blur-xl rounded-full mix-blend-multiply`}
+                  className={`absolute top-1/2 ${isReversed ? "left-0" : "right-0"} w-12 md:w-16 h-12 md:h-16 opacity-20 filter blur-xl rounded-full mix-blend-multiply`}
                 ></motion.div>
               </div>
 
               {/* Text Side */}
-              <div className="w-full md:w-1/2 flex flex-col items-start z-10 pl-4 md:pl-10">
+              <div className="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left z-10 px-4 md:pl-10">
                 <div className="mb-6 relative">
                   {/* Subtitle brush stroke effect background (Optional, can just use light text) */}
                   <span className="absolute -left-6 -top-6 w-32 h-32 bg-amber-50 rounded-full mix-blend-multiply filter blur-2xl z-[-1]" />
-                  <h2 className="text-4xl lg:text-[3.5rem] text-gray-800 flex flex-col gap-2 font-sans tracking-tight">
+                  <h2 className="text-3xl sm:text-4xl lg:text-[3.5rem] text-gray-800 flex flex-col gap-1 md:gap-2 font-sans tracking-tight">
                     <span className="font-light text-gray-700">
                       {firstPart}
                     </span>
@@ -292,19 +292,21 @@ export default function SocietySections() {
                   </h2>
                 </div>
 
-                <p className="text-gray-500 mt-4 mb-10 text-lg leading-relaxed max-w-lg">
+                <p className="text-gray-500 mt-2 md:mt-4 mb-8 md:mb-10 text-base md:text-lg leading-relaxed max-w-lg">
                   {society.description}
                 </p>
 
-                <div className="w-full max-w-md mb-10">
-                  <p className="text-xs font-semibold tracking-[0.18em] uppercase text-gray-500 mb-4">
+                <div className="w-full max-w-md mb-8 md:mb-10 flex flex-col items-center md:items-start">
+                  <p className="text-xs font-semibold tracking-[0.18em] uppercase text-gray-500 mb-4 text-center md:text-left">
                     Connect with {society.title}
                   </p>
-                  <SocialLinks
-                    links={society.links}
-                    align="left"
-                    theme="light"
-                  />
+                  <div className="flex justify-center md:justify-start w-full">
+                    <SocialLinks
+                      links={society.links}
+                      align="center"
+                      theme="light"
+                    />
+                  </div>
                 </div>
 
                 {websiteUrl ? (
