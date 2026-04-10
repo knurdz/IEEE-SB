@@ -44,62 +44,10 @@ const contactDetails = [
   },
   {
     icon: <Mail className="w-5 h-5 text-[var(--muted)]" strokeWidth={2} />,
-    content: 'ieee@uom.lk',
-    link: 'mailto:ieee@uom.lk',
+    content: 'Ieeesbuom.2526@gmail.com',
+    link: 'mailto:Ieeesbuom.2526@gmail.com',
   },
 ];
-
-const HexagonIllustration = () => {
-  return (
-    <div className="relative w-full aspect-square max-h-[300px] mx-auto mb-8 flex items-center justify-center pt-8">
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-        className="absolute w-[240px] h-[240px] opacity-[0.03] pointer-events-none"
-      >
-        <svg viewBox="0 0 100 100" className="w-full h-full stroke-black" fill="none">
-          <polygon points="50,5 89,27.5 89,72.5 50,95 11,72.5 11,27.5" strokeWidth="1" />
-          <polygon points="50,15 80,32.5 80,67.5 50,85 20,67.5 20,32.5" strokeWidth="1" />
-        </svg>
-      </motion.div>
-
-      <motion.div
-        animate={{ y: [-10, 10, -10] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="relative z-10 w-[140px] h-[160px] flex items-center justify-center"
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-[#008be6]/30 to-cyan-400/30 blur-2xl" />
-        <div className="relative w-[120px] h-[135px] bg-gradient-to-br from-[#008be6] to-cyan-500 shadow-xl flex items-center justify-center"
-             style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}>
-          <div className="absolute inset-[2px] bg-white" style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }} />
-          <div className="absolute inset-[6px] bg-gradient-to-br from-blue-50 to-cyan-50 flex items-center justify-center" style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}>
-            <MessageSquare className="w-12 h-12 text-[#008be6]" strokeWidth={1.5} />
-          </div>
-        </div>
-      </motion.div>
-
-      <motion.div 
-        animate={{ y: [-5, 5, -5] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute top-12 right-6 md:right-16 w-16 h-16 bg-white shadow-lg flex items-center justify-center"
-        style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}
-      >
-        <div className="inset-[2px] absolute bg-blue-50 flex items-center justify-center" style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}>
-          <Mail className="w-5 h-5 text-cyan-500" strokeWidth={2} />
-        </div>
-      </motion.div>
-
-      <motion.div 
-        animate={{ y: [5, -5, 5] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        className="absolute bottom-16 left-6 md:left-14 w-20 h-20 bg-white shadow-lg flex items-center justify-center"
-        style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}
-      >
-        <div className="inset-[2px] absolute bg-blue-50 flex items-center justify-center" style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}>
-          <Phone className="w-7 h-7 text-[#008be6]" strokeWidth={2} />
-        </div>
-      </motion.div>
-    </div>
-  );
-};
 
 export default function ContactInfo() {
   return (
@@ -108,30 +56,26 @@ export default function ContactInfo() {
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
       transition={fadeUpTransition(0.3, 0.8)}
-      className="flex flex-col w-full h-full relative z-10"
+      className="flex flex-col w-full h-full relative z-10 lg:pt-12"
     >
-      <HexagonIllustration />
-
-      <div className="flex flex-col gap-6 w-full max-w-[400px] mx-auto lg:mr-auto lg:ml-12 pl-4 mt-8 text-center sm:text-left">
+      <div className="flex flex-col gap-6 w-full max-w-[400px] mx-auto lg:mr-auto lg:ml-12 pl-4 text-center sm:text-left">
         {contactDetails.map((item, index) => (
           <motion.a
             key={index}
             href={item.link}
             target={item.link.startsWith('http') ? '_blank' : undefined}
             rel={item.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-            className="flex flex-col sm:flex-row items-center sm:items-start gap-5 group transition-all"
+            className="flex flex-col sm:flex-row items-center sm:items-start gap-4 group transition-all p-5 rounded-[2rem] bg-white/30 backdrop-blur-md border border-white/40 shadow-sm hover:bg-white/50 hover:border-white/60 hover:shadow-xl hover:-translate-y-1"
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={fadeUpTransition(0.4 + index * 0.1, 0.5)}
           >
-            <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-[#008be6] to-cyan-400 p-[2px] flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300 rounded-[4px]">
-              <div className="w-full h-full bg-white flex items-center justify-center text-gray-400 group-hover:text-[#008be6] transition-colors rounded-[4px]">
-                {item.icon}
-              </div>
+            <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center text-gray-500 group-hover:text-[#008be6] transition-colors duration-300">
+              {item.icon}
             </div>
-            <div className="flex flex-col justify-center sm:pt-2">
-              <p className="text-[1.05rem] text-gray-700 font-medium leading-relaxed group-hover:text-[#008be6] transition-colors max-w-[260px]">
+            <div className="flex flex-col justify-center">
+              <p className="text-[1.05rem] text-gray-800 font-medium leading-relaxed group-hover:text-[#008be6] transition-colors duration-300 max-w-[260px]">
                 {item.content}
               </p>
             </div>
@@ -168,6 +112,57 @@ export default function ContactInfo() {
             </div>
           </a>
         </motion.div>
+      </div>
+
+      {/* Social Connect */}
+      <div className="mt-12 w-full max-w-[400px] mx-auto lg:mr-auto lg:ml-12 pl-4">
+        <div className="flex items-center gap-4 mb-8">
+          <div className="h-[1px] flex-1 bg-gray-200"></div>
+          <span className="text-[0.65rem] font-bold text-gray-400 uppercase tracking-[0.3em]">Connect</span>
+          <div className="h-[1px] flex-1 bg-gray-200"></div>
+        </div>
+        <div className="flex justify-center gap-4">
+          <a
+            href="https://facebook.com/ieeeuom"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-14 h-14 rounded-[18px] bg-white border border-gray-100 shadow-[0_8px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] flex items-center justify-center group transition-all duration-300 hover:-translate-y-1 hover:bg-[#1877F2] hover:border-[#1877F2]"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-[#1877F2] group-hover:text-white transition-colors duration-300">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+            </svg>
+          </a>
+          <a
+            href="https://twitter.com/ieeeuom"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-14 h-14 rounded-[18px] bg-white border border-gray-100 shadow-[0_8px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] flex items-center justify-center group transition-all duration-300 hover:-translate-y-1 hover:bg-[#1DA1F2] hover:border-[#1DA1F2]"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-[#1DA1F2] group-hover:text-white transition-colors duration-300">
+              <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+            </svg>
+          </a>
+          <a
+            href="https://instagram.com/ieeeuom"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-14 h-14 rounded-[18px] bg-white border border-gray-100 shadow-[0_8px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] flex items-center justify-center group transition-all duration-300 hover:-translate-y-1 hover:bg-gradient-to-tr hover:from-[#f9ce34] hover:via-[#ee2a7b] hover:to-[#6228d7] hover:border-transparent"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-6 h-6 text-[#E4405F] group-hover:text-white transition-colors duration-300"
+            >
+              <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+            </svg>
+          </a>
+        </div>
       </div>
     </motion.div>
   );
