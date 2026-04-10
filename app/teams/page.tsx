@@ -6,7 +6,7 @@ import { fadeUp, fadeUpTransition } from '@/lib/motion';
 import TeamSection from './components/TeamSection';
 import NetworkVisualization from './components/NetworkVisualization';
 import SiteBackground from '@/app/components/layout/SiteBackground';
-import { meetOurTeam, executiveCommittee, leadershipBody } from './data';
+import { teamSections } from './data';
 
 export default function TeamsPage() {
   return (
@@ -23,20 +23,24 @@ export default function TeamsPage() {
           transition={fadeUpTransition()}
         >
           <SectionHeading
-            badge="Network Nodes"
+            badge="IEEE Student Branch"
             title="Meet Our Teams"
             highlight="Teams"
-            description="The core nodes of our network, orchestrating data flow and ensuring seamless transmission of knowledge across our community."
+            description="A connected structure of executive leaders and committee teams, organized to keep the branch moving with clarity, collaboration, and shared ownership."
             titleClassName="text-5xl font-bold text-slate-800 md:text-6xl"
             descriptionClassName="text-slate-600 max-w-2xl mx-auto mt-4"
           />
         </motion.div>
 
-        <TeamSection title="Meet Our Teams"       members={meetOurTeam}        sectionIndex={0} />
-        <TeamSection title="Executive Committee"   members={executiveCommittee} sectionIndex={1} />
-        <TeamSection title="Leadership Body"       members={leadershipBody}     sectionIndex={2} />
+        {teamSections.map((section, index) => (
+          <TeamSection
+            key={section.title}
+            title={section.title}
+            members={section.members}
+            sectionIndex={index}
+          />
+        ))}
       </div>
-
     </div>
   );
 }
