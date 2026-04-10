@@ -20,34 +20,37 @@ export interface AwardItem {
 
 export const featuredAward: AwardItem = {
   id: "international-award",
-  year: "2024",
-  title: "International Award",
-  image: "/s2.jpg",
-  imageAlt: "International IEEE award banner",
+  year: "",
+  title: "Most Outstanding Student Branch in the Asia-Pacific Region at the IEEE Region 10 SAC Awards",
+  image: "/International awrd.jpg.jpeg",
+  imageAlt: "Most Outstanding Student Branch in the Asia-Pacific Region Award",
   badge: "International Recognition",
 };
 
 export const secondaryAwards: AwardItem[] = [
   {
     id: "sls-best-branch-award",
-    year: "2023",
-    title: "Best Student Branch Award",
+    year: "",
+    title: "Best Student Branch Project Award (MoraForesight)",
     image: "/award.jpg",
     imageAlt: "Sri Lankan section best student branch award banner",
+    description: "The Best Student Branch Project award for MoraForesight was presented at IEEE Sri Lanka Section awards"
   },
   {
     id: "sls-outstanding-tech-initiative-award",
-    year: "2022",
-    title: "Outstanding Technical Initiative Award",
+    year: "",
+    title: "Best Industry Collaborative Project Award (Rise Up Mora)",
     image: "/award.jpg",
     imageAlt: "Sri Lankan section outstanding technical initiative award banner",
+    description: "The Best Industry Collaborative Project award for Rise Up Mora was presented at IEEE Sri Lanka Section awards"
   },
   {
     id: "sls-community-impact-award",
-    year: "2021",
-    title: "Community Impact Award",
+    year: "",
+    title: "Outstanding Technical Chapter Award (IEEE EMBS)",
     image: "/award.jpg",
     imageAlt: "Sri Lankan section community impact award banner",
+    description: "The Outstanding Technical Chapter award for IEEE EMBS was presented at IEEE Sri Lanka Section awards"
   },
 ];
 
@@ -55,7 +58,7 @@ export const homeEvents: HomeEvent[] = [
   {
     id: 1,
     title: "Ballerina",
-    date: "July 12, 2025",
+    date: "July 12",
     category: "Workshop",
     description:
       "A deep dive into the Ballerina programming language, exploring cloud-native development and integration patterns for modern engineers.",
@@ -65,7 +68,7 @@ export const homeEvents: HomeEvent[] = [
   {
     id: 2,
     title: "Foresight",
-    date: "June 05, 2025",
+    date: "June 05",
     category: "Symposium",
     description:
       "Bridging the gap between academia and industry through expert talks on AI, robotics, and the future of engineering job markets.",
@@ -75,7 +78,7 @@ export const homeEvents: HomeEvent[] = [
   {
     id: 3,
     title: "Mercon",
-    date: "Sept 10, 2025",
+    date: "Sept 10",
     category: "Conference",
     description:
       "Our premier annual conference celebrating research excellence and technical innovation across all engineering disciplines.",
@@ -85,7 +88,7 @@ export const homeEvents: HomeEvent[] = [
   {
     id: 4,
     title: "MoraXtreme",
-    date: "Dec 15, 2025",
+    date: "Dec 15",
     category: "Hackathon",
     description:
       "A national-level competitive programming championship where the best coders solve complex algorithmic problems under pressure.",
@@ -95,7 +98,7 @@ export const homeEvents: HomeEvent[] = [
   {
     id: 5,
     title: "Rise Up Mora",
-    date: "Aug 20, 2025",
+    date: "Aug 20",
     category: "Career",
     description:
       "An internship-focused career development initiative connecting students with top industry partners and mentorship opportunities.",

@@ -13,7 +13,7 @@ export default function ClosingCTA() {
   return (
     <motion.section
       ref={ref}
-      className="py-24 px-4 bg-transparent flex flex-col items-center justify-center text-center relative overflow-hidden"
+      className="py-16 lg:py-20 px-4 bg-transparent flex flex-col items-center justify-center text-center relative overflow-hidden"
       initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8 }}
