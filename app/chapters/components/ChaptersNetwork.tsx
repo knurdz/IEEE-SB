@@ -87,7 +87,7 @@ export default function ChaptersNetwork() {
                 </svg>
                 <div
                   onClick={() => {
-                    const society = societies.find(s => s.logo === `/chapters/${node.id}.png`);
+                    const society = societies.find(s => s.logo === `/chapter-logos/${node.id}.png`);
                     if (society) {
                       const el = document.getElementById(`society-${society.id}`);
                       if (el) {
@@ -99,7 +99,7 @@ export default function ChaptersNetwork() {
                   className="relative cursor-pointer w-[150px] h-[130px] bg-white flex items-center justify-center p-4 overflow-hidden"
                   style={{ maskImage: SMALL_ROUNDED_HEX, WebkitMaskImage: SMALL_ROUNDED_HEX }}
                 >
-                  <Image src={`/chapters/${node.id}.png`} alt={`Partner ${node.id}`} width={80} height={80} className="object-contain w-full h-full" />
+                  <Image src={`/chapter-logos/${node.id}.png`} alt={`Partner ${node.id}`} width={80} height={80} className="object-contain w-full h-full" />
                 </div>
               </div>
             </motion.div>
@@ -123,7 +123,7 @@ export default function ChaptersNetwork() {
                 </svg>
                 <div
                   onClick={() => {
-                    const society = societies.find(s => s.logo === `/chapters/${node.id}.png`);
+                    const society = societies.find(s => s.logo === `/chapter-logos/${node.id}.png`);
                     if (society) {
                       const el = document.getElementById(`society-${society.id}`);
                       if (el) {
@@ -135,7 +135,7 @@ export default function ChaptersNetwork() {
                   className="relative cursor-pointer w-[150px] h-[130px] bg-white flex items-center justify-center p-4 overflow-hidden"
                   style={{ maskImage: SMALL_ROUNDED_HEX, WebkitMaskImage: SMALL_ROUNDED_HEX }}
                 >
-                  <Image src={`/chapters/${node.id}.png`} alt={`Partner ${node.id}`} width={80} height={80} className="object-contain w-full h-full" />
+                  <Image src={`/chapter-logos/${node.id}.png`} alt={`Partner ${node.id}`} width={80} height={80} className="object-contain w-full h-full" />
                 </div>
               </div>
             </motion.div>
