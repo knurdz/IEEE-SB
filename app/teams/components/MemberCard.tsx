@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/cn";
-import { Member } from "../types";
 import { generateArchTransforms } from "../constants";
+import { Member } from "../types";
 
 export default function MemberCard({
   member,
@@ -18,7 +18,7 @@ export default function MemberCard({
   isTopRow?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
-  const isLead = !!member.isLead;
+  const hasActions = Boolean(member.linkedin || member.email);
 
   const { resting, hover } = useMemo(
     () => generateArchTransforms(totalInRow, isTopRow),
@@ -31,32 +31,44 @@ export default function MemberCard({
     y: 0,
     brightness: 1,
   };
-  const hoverTransform = hover[index] ?? { scale: 1.05, y: -10 };
+  const hoverTransform = hover[index] ?? {
+    scale: 1.02,
+    y: -10,
+  };
 
-  // Dynamic name font sizing based on name length
-  const nameFontSize = member.nameSize
-    ? member.nameSize
-    : member.name.length > 14
-      ? "0.82rem"
-      : member.name.length > 10
-        ? "0.92rem"
-        : "1.05rem";
+  const nameFontSize =
+    member.name.length > 22
+      ? "0.8rem"
+      : member.name.length > 18
+        ? "0.88rem"
+        : member.name.length > 14
+          ? "0.96rem"
+          : "1.05rem";
+
+  const positionFontSize =
+    member.position.length > 28
+      ? "0.5rem"
+      : member.position.length > 20
+        ? "0.56rem"
+        : "0.62rem";
+
+  const isLead = member.priority < 9;
 
   const cardStyle: React.CSSProperties = {
     position: "relative",
     flex: "0 0 190px",
     height: "340px",
     margin: "0 4px",
-    zIndex: hovered ? 20 : isLead ? 15 : (restingTransform.z || 1),
+    zIndex: hovered ? 30 : isLead ? 10 : restingTransform.z || 1,
     transform: hovered
-      ? `scale(${isLead ? 1.1 : 1.05}) translateY(-15px)`
-      : isLead
-        ? `scale(1.05) translateY(${restingTransform.y - 12}px)`
-        : `translateY(${restingTransform.y}px)`,
+      ? `translateY(${hoverTransform.y}px) scale(${hoverTransform.scale})`
+      : `translateY(${restingTransform.y}px) scale(${restingTransform.scale})`,
     filter: hovered
-      ? "brightness(1.1)"
-      : isLead ? "brightness(1.08)" : `brightness(${restingTransform.brightness})`,
-    transition: "all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)",
+      ? "brightness(1.08) grayscale(0)"
+      : !isLead 
+        ? "brightness(0.92) grayscale(0.1)"
+        : `brightness(${restingTransform.brightness})`,
+    transition: "all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)",
   };
 
   return (
@@ -68,109 +80,111 @@ export default function MemberCard({
       <div
         className={cn(
           "relative h-full w-full overflow-hidden rounded-2xl border transition-all duration-500",
-          isLead
-            ? hovered
-              ? "border-primary/60 bg-white shadow-[0_15px_50px_rgba(0,87,157,0.3)] ring-2 ring-primary/40"
-              : "border-primary/40 bg-white shadow-[0_10px_35px_rgba(0,87,157,0.22)] ring-1 ring-primary/30"
-            : hovered
-              ? "border-primary/40 bg-white shadow-[0_10px_40px_rgba(0,87,157,0.15)] ring-1 ring-primary/20"
-              : "border-black/5 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)]",
+          hovered
+            ? "border-primary/30 bg-white shadow-[0_20px_40px_rgba(0,87,157,0.18)]"
+            : isLead
+              ? "border-primary/10 bg-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]"
+              : "border-black/5 bg-slate-50/30 shadow-[0_4px_20px_rgba(0,0,0,0.04)]",
         )}
       >
-        {/* Lead glow effect */}
-        {isLead && (
-          <div
-            className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-primary/40 to-transparent z-30"
-          />
-        )}
-
-        {/* Lead glow ring */}
-        {isLead && (
-          <div
-            className="absolute inset-0 rounded-2xl pointer-events-none z-0"
-            style={{
-              background:
-                "radial-gradient(circle at 50% 0%, rgba(0,87,157,0.15), transparent 70%)",
-            }}
-          />
-        )}
-
         <Image
           src={member.image}
           alt={member.name}
           fill
-          className="object-cover object-top"
+          className={cn(
+            "object-cover object-top transition-transform duration-700",
+            hovered ? "scale-105" : "scale-100"
+          )}
           sizes="(max-width: 768px) 50vw, 220px"
         />
 
-        {/* Bottom overlay — always visible */}
         <div
           className="absolute inset-x-0 bottom-0 z-20 text-center transition-all duration-500"
           style={{
-            padding: hovered ? "100px 10px 25px" : "80px 10px 20px",
+            padding: hovered ? "120px 12px 16px" : "104px 12px 14px",
             background: hovered
-              ? "linear-gradient(to top, rgba(255,255,255,1) 15%, rgba(255,255,255,0.9) 55%, transparent 100%)"
-              : "linear-gradient(to top, rgba(255,255,255,0.98) 10%, rgba(255,255,255,0.7) 50%, transparent 100%)",
+              ? "linear-gradient(to top, rgba(255,255,255,1) 25%, rgba(255,255,255,0.95) 55%, transparent 100%)"
+              : isLead
+                ? "linear-gradient(to top, rgba(255,255,255,0.98) 20%, rgba(255,255,255,0.85) 60%, transparent 100%)"
+                : "linear-gradient(to top, rgba(255,255,255,0.95) 15%, rgba(255,255,255,0.7) 50%, transparent 100%)",
           }}
         >
           <h3
             className={cn(
-              "font-semibold mb-0.5 transition-colors duration-300 font-orbitron truncate px-1",
-              (hovered || isLead) ? "text-primary" : "text-slate-900",
+              "font-semibold mb-1.5 transition-colors duration-300 font-orbitron line-clamp-2 px-1 leading-tight min-h-[2.2rem]",
+              hovered || isLead ? "text-slate-900" : "text-slate-700",
             )}
-            style={{ fontSize: nameFontSize }}
+            style={{ 
+              fontSize: nameFontSize,
+              color: hovered ? "var(--primary)" : undefined
+            }}
             title={member.name}
           >
             {member.name}
           </h3>
-          <p className="text-primary/70 text-[10px] tracking-widest uppercase truncate px-1 mb-3">
-            {member.role}
+
+          <p
+            className={cn(
+              "mx-auto mb-2.5 max-w-[150px] rounded-2xl border px-3 py-1.5 text-center font-semibold uppercase line-clamp-2 leading-[1.35] transition-all duration-300",
+              hovered
+                ? "border-primary/20 bg-primary/5 text-primary shadow-sm"
+                : isLead
+                  ? "border-primary/15 bg-primary/[0.03] text-primary/90"
+                  : "border-slate-200 bg-white/70 text-slate-500 opacity-80",
+            )}
+            style={{
+              fontSize: positionFontSize,
+              letterSpacing: "0.16em",
+              minHeight: "2.5rem",
+            }}
+          >
+            {member.position}
           </p>
 
-          {/* Social links — icons, visible before hover but prominent on hover */}
-          <div
-            className={cn(
-              "flex justify-center gap-4 transition-all duration-300",
-              (hovered || isLead) ? "opacity-100 translate-y-0" : "opacity-70 translate-y-0",
-            )}
-          >
-            {member.linkedin && (
-              <a
-                href={member.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:text-blue-700 transition-colors p-1"
-                title="LinkedIn"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
-              </a>
-            )}
-            {member.email && (
-              <a
-                href={`mailto:${member.email}`}
-                className="text-primary hover:text-blue-700 transition-colors p-1"
-                title="Email"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-              </a>
-            )}
-            {member.phone && !member.email && (
-              <span className="text-[10px] text-slate-500 flex items-center" title="Phone">
-                {member.phone}
-              </span>
-            )}
-          </div>
+          {hasActions ? (
+            <div
+              className={cn(
+                "flex justify-center gap-4 transition-all duration-300",
+                hovered || isLead ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2",
+              )}
+            >
+              {member.linkedin ? (
+                <a
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:scale-110 transition-transform p-1"
+                  title="LinkedIn"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                </a>
+              ) : null}
+              {member.email ? (
+                <a
+                  href={`mailto:${member.email}`}
+                  className="text-primary hover:scale-110 transition-transform p-1"
+                  title="Email"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                </a>
+              ) : null}
+            </div>
+          ) : null}
         </div>
 
-        {/* Hover bottom accent line */}
         <div
           className={cn(
-            "absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent transition-opacity duration-300",
+            "absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent transition-all duration-500",
             hovered ? "opacity-100" : "opacity-0",
           )}
         />
 
-        {/* Hover corner accent */}
+        {isLead && (
+          <div
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent"
+          />
+        )}
+
         <div
           className={cn(
             "absolute top-3 right-3 w-6 h-6 border-t border-r border-primary/40 rounded-tr-md transition-opacity duration-300",
@@ -178,7 +192,6 @@ export default function MemberCard({
           )}
         />
 
-        {/* Hover glow overlay */}
         <div
           className={cn(
             "absolute inset-0 rounded-2xl transition-opacity duration-500 pointer-events-none",
