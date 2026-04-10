@@ -17,7 +17,7 @@ export default function StrategicPartnerSection() {
         <div className="rounded-3xl border border-black/10 bg-white/90 shadow-[0_20px_50px_-28px_rgba(0,0,0,0.35)] overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
             <div className="lg:col-span-7 p-8 sm:p-10 lg:p-12">
-              <h2 className="text-3xl lg:text-5xl text-gray-800 flex items-center justify-start gap-4 font-sans tracking-tight mb-6">
+              <h2 className="text-3xl lg:text-5xl text-gray-800 flex items-baseline justify-start gap-4 font-sans tracking-tight mb-6">
                 <span className="font-light text-gray-700">Strategic</span>
                 <span className="font-black font-serif text-gray-900 uppercase">
                   Partner

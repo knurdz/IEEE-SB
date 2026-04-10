@@ -14,7 +14,7 @@ export const primaryNavItems: NavItem[] = [
   { href: "/events", label: "Events" },
   { href: "/teams", label: "Teams" },
   { href: "/chapters", label: "Chapters" },
-  { href: "/contact", label: "Contact" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export const footerQuickLinks: NavItem[] = [
@@ -22,7 +22,7 @@ export const footerQuickLinks: NavItem[] = [
   { href: "/events", label: "Events" },
   { href: "/teams", label: "Teams" },
   { href: "/chapters", label: "Chapters" },
-  { href: "/contact", label: "Contact" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export const footerSocialItems: SocialItem[] = [

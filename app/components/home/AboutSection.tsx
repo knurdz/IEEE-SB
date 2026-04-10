@@ -81,7 +81,7 @@ export default function AboutSection() {
       {/* <Dots className="absolute bottom-40 left-10 text-indigo-200/40 z-0 scale-125" /> */}
 
       <div ref={ref} className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 flex flex-col items-center">
-        <div className="text-justify [text-align-last:center] font-medium leading-normal md:leading-relaxed text-xl md:text-2xl lg:text-[1.75rem] max-w-7xl tracking-tight text-slate-800">
+        <div className="text-justify [text-align-last:center] font-medium leading-normal md:leading-relaxed text-lg md:text-xl lg:text-2xl max-w-7xl tracking-tight text-slate-800">
           As one of the most dynamic and leading influential student branches in Sri Lanka, the IEEE Student Branch of the University of Moratuwa serves to nurture innovation and technical excellence among undergraduates. With a strong community of over 300 active members and a passionate network of volunteers, the branch engages in a wide range of initiatives that foster both personal and professional growth. <span className="text-slate-400">In addition, the IEEE Student Branch of the University of Moratuwa prioritizes fostering a culture of unity and harmony among its members. The IEEE Student Branch of the University of Moratuwa represents more than an organization, it is a supportive community driven by shared values, collective ambition, and a spirit of fellowship.</span>
         </div>
 

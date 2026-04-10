@@ -173,10 +173,6 @@ export default function WhyJoinBento() {
       {/* Local Background Matrix with localized fades */}
       <SiteBackground showTopFade={true} showBottomFade={true} />
 
-      {/* Background Decorative Elements */}
-      <WavyLine className="absolute top-0 left-0 w-full h-[300px] text-purple-100/40 -translate-x-1/4 z-0 pointer-events-none" />
-      <WavyLine className="absolute bottom-0 right-0 w-[150%] h-[300px] text-orange-100/40 translate-x-1/4 z-0 pointer-events-none transform rotate-180" />
-
       {/* Blurred decorative blobs */}
       <div className="absolute top-1/4 right-0 w-96 h-96 bg-blue-50/50 rounded-full filter blur-3xl opacity-60 -translate-y-1/2 translate-x-1/2 z-0" />
       <div className="absolute bottom-1/4 left-0 w-64 h-64 bg-indigo-50/50 rounded-full filter blur-3xl opacity-60 translate-y-1/2 -translate-x-1/2 z-0" />
@@ -187,7 +183,7 @@ export default function WhyJoinBento() {
 
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="mb-16 text-center">
-          <h2 className="text-4xl lg:text-7xl text-gray-800 flex items-center justify-center gap-4 font-sans tracking-tight mb-6">
+          <h2 className="text-4xl lg:text-7xl text-gray-800 flex items-baseline justify-center gap-4 font-sans tracking-tight mb-6">
             <span className="font-light text-gray-700">Why Join</span>
             <span className="font-black font-serif text-gray-900 uppercase">
               IEEE?
