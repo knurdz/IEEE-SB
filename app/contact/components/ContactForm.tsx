@@ -55,10 +55,10 @@ export default function ContactForm() {
       transition={fadeUpTransition(0.2, 0.6)}
       className="bg-white/95 backdrop-blur-xl p-8 md:p-14 relative overflow-hidden shadow-2xl rounded-3xl border border-blue-100/50 min-h-[750px] flex flex-col justify-center"
     >
-      {/* Animated Pulsing Hexagon Pattern */}
-      <div className="absolute top-0 right-0 w-80 h-80 pointer-events-none opacity-[0.25] overflow-hidden rounded-tr-2xl">
+      {/* Animated Pulsing Hexagon Pattern - Moved to far corner and further reduced size */}
+      <div className="absolute -top-10 -right-10 w-40 h-40 md:w-56 md:h-56 pointer-events-none opacity-[0.2] overflow-hidden rounded-tr-2xl z-0">
         <motion.div 
-          className="absolute -top-24 -right-24 w-[120%] h-[120%]"
+          className="absolute inset-0 w-full h-full"
           animate={{ rotate: [0, 360] }}
           transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
         >
