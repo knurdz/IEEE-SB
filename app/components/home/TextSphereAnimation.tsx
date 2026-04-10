@@ -33,10 +33,10 @@ export default function TextSphereAnimation() {
     const loadAllScripts = async () => {
       try {
         await loadScript('/lib/three.min.js');
+        await loadScript('/lib/FontUtils.js');
+        await loadScript('/lib/TextGeometry.js');
 
         await Promise.all([
-          loadScript('/lib/TextGeometry.js'),
-          loadScript('/lib/FontUtils.js'),
           loadScript('/lib/pnltri.min.js'),
           loadScript('/lib/droid_sans_bold.typeface.js'),
           loadScript('/lib/TweenMax.min.js'),
