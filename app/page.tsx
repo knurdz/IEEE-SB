@@ -7,8 +7,27 @@ import WhyJoinBento from "./components/home/WhyJoinBento";
 import SiteBackground from "./components/layout/SiteBackground";
 import SectionDivider from "@/app/chapters/components/SectionDivider";
 import ContactForm from "./contact/components/ContactForm";
-import { Mail, Phone, MapPin } from "lucide-react";
 import SectionHeading from "./components/ui/SectionHeading";
+
+const MapPinIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+    <circle cx="12" cy="10" r="3" />
+  </svg>
+);
+
+const PhoneIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+  </svg>
+);
+
+const MailIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <rect width="20" height="16" x="2" y="4" rx="2" />
+    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+  </svg>
+);
 
 export default function Home() {
   return (
@@ -45,7 +64,7 @@ export default function Home() {
               {/* Address Card */}
               <div className="flex items-center gap-5 group py-2 md:py-3 px-4 rounded-2xl transition-all duration-300 hover:bg-white/40 hover:backdrop-blur-md border border-transparent hover:border-white/20">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center text-gray-400 group-hover:text-blue-500 transition-colors shrink-0">
-                  <MapPin className="w-6 h-6" />
+                  <MapPinIcon className="w-6 h-6" />
                 </div>
                 <p className="text-[0.95rem] text-slate-600 font-medium leading-relaxed group-hover:text-blue-500 transition-colors">
                   IEEE Student Branch, University of Moratuwa, Katubedda, 10400
@@ -55,7 +74,7 @@ export default function Home() {
               {/* Phone Card */}
               <a href="tel:+94111234567" className="flex items-center gap-5 group py-2 md:py-3 px-4 rounded-2xl transition-all duration-300 hover:bg-white/40 hover:backdrop-blur-md border border-transparent hover:border-white/20">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center text-gray-400 group-hover:text-blue-500 transition-colors shrink-0">
-                  <Phone className="w-6 h-6" />
+                  <PhoneIcon className="w-6 h-6" />
                 </div>
                 <p className="text-[0.95rem] text-slate-600 font-medium leading-relaxed group-hover:text-blue-500 transition-colors">
                   +94 11 123 4567
@@ -65,7 +84,7 @@ export default function Home() {
               {/* Email Card */}
               <a href="mailto:Ieeesbuom.2526@gmail.com" className="flex items-center gap-5 group py-2 md:py-3 px-4 rounded-2xl transition-all duration-300 hover:bg-white/40 hover:backdrop-blur-md border border-transparent hover:border-white/20">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center text-gray-400 group-hover:text-blue-500 transition-colors shrink-0">
-                  <Mail className="w-6 h-6" />
+                  <MailIcon className="w-6 h-6" />
                 </div>
                 <p className="text-[0.95rem] text-slate-600 font-medium leading-relaxed group-hover:text-blue-500 transition-colors">
                   Ieeesbuom.2526@gmail.com

@@ -16,6 +16,7 @@ export interface AwardItem {
   image: string;
   imageAlt: string;
   badge?: string;
+  description?: string;
 }
 
 export const featuredAward: AwardItem = {
