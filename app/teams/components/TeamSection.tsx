@@ -130,7 +130,7 @@ export default function TeamSection({
           {hasTwoRows && (
             <div
               className="relative flex items-center justify-center mt-6"
-              style={{ height: '340px', overflow: 'visible' }}
+              style={{ height: '380px', overflow: 'visible' }}
             >
               {bottomRow.map((member, i) => (
                 <MemberCard
