@@ -8,7 +8,7 @@ interface SectionDividerProps {
 
 export default function SectionDivider({ className = "", flipX = false, flipY = false }: SectionDividerProps) {
   return (
-    <div className={`w-full flex justify-center items-center mt-[-16rem] mb-4 relative z-20 opacity-40 transition-opacity duration-700 hover:opacity-60 ${className}`}>
+    <div className={`w-full flex justify-center items-center mt-[-8rem] md:mt-[-16rem] mb-4 relative z-20 opacity-40 transition-opacity duration-700 hover:opacity-60 ${className}`}>
       {/* Container for the SVG to allow responsive scaling without squishing too much */}
       <div className={`w-full h-40 md:h-64 max-w-[1440px] transform ${flipX ? '-scale-x-100' : ''} ${flipY ? '-scale-y-100' : ''}`}>
         <svg

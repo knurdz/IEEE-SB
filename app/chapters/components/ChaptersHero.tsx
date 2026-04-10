@@ -48,7 +48,7 @@ export default function ChaptersHero() {
         .hero-tagline-2 {
           font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
           font-weight: 700; /* standard bold to avoid synthetic bolding */
-          font-size: 40px;
+          font-size: 32px;
           line-height: 1.1;
           letter-spacing: -0.02em;
           background: linear-gradient(90deg, #00579d 0%, #008be6 100%);
@@ -58,6 +58,12 @@ export default function ChaptersHero() {
           text-shadow: 0 4px 12px rgba(23, 53, 153, 0.1);
         }
           
+        @media (min-width: 480px) {
+           .hero-tagline-2 {
+              font-size: 40px;
+           }
+        }
+
         @media (min-width: 768px) {
            .hero-tagline-2 {
               font-size: 64px;

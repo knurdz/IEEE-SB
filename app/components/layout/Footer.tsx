@@ -5,13 +5,22 @@ import FooterGlobe from './FooterGlobe';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const universityMapUrl =
+    'https://www.google.com/maps/search/?api=1&query=University+of+Moratuwa%2C+Sri+Lanka';
 
   return (
     <footer id="footer-section" className="site-footer" aria-label="IEEE UoM footer">
-      {/* Globe decoration — positioned behind content */}
-      <div className="footer-globe-wrapper" aria-hidden="true">
+      {/* Clickable globe accent focused on University of Moratuwa */}
+      <a
+        className="footer-globe-wrapper footer-globe-link"
+        href={universityMapUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Open University of Moratuwa on Google Maps"
+        title="View University of Moratuwa on the map"
+      >
         <FooterGlobe />
-      </div>
+      </a>
 
       {/* Main Footer Content */}
       <div className="footer-content">

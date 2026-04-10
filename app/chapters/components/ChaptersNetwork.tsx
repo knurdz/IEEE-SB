@@ -41,107 +41,137 @@ export default function ChaptersNetwork() {
   const rightNodes = ALL_NODES.slice(8);
 
   return (
-    <section className="relative w-full pt-0 pb-4 bg-transparent overflow-hidden flex flex-col items-center justify-center -mt-24 z-10">
+    <section className="relative w-full pt-0 pb-4 md:pb-12 bg-transparent overflow-hidden flex flex-col items-center justify-center -mt-16 md:-mt-24 z-10 px-4">
+      <style jsx>{`
+        .network-container {
+          transform: scale(0.4);
+        }
+        @media (min-width: 480px) {
+          .network-container {
+            transform: scale(0.5);
+          }
+        }
+        @media (min-width: 640px) {
+          .network-container {
+            transform: scale(0.65);
+          }
+        }
+        @media (min-width: 768px) {
+          .network-container {
+            transform: scale(0.75);
+          }
+        }
+        @media (min-width: 1024px) {
+          .network-container {
+            transform: scale(0.9);
+          }
+        }
+        @media (min-width: 1200px) {
+          .network-container {
+            transform: scale(1);
+          }
+        }
+      `}</style>
       
-      <div className="relative w-full max-w-[1200px] h-[600px] flex items-center justify-center z-20">
-
-        {/* ── CENTER IEEE HEXAGON (z-30) ── */}
-        <motion.div
-          className="absolute z-30"
-          style={{ x: 0, y: 0 }}
-          initial={{ scale: 0.8, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-        >
-          <div>
-            <div
-              className="relative w-[300px] h-[260px] bg-transparent flex items-center justify-center overflow-hidden"
-              style={{ maskImage: BIG_ROUNDED_HEX, WebkitMaskImage: BIG_ROUNDED_HEX }}
-            >
-              <Image
-                src="/logo-2.gif"
-                alt="IEEE Logo"
-                width={240} height={240}
-                className="relative z-10 w-56 h-auto object-contain"
-              />
+      <div className="relative w-full max-w-[1200px] h-[350px] sm:h-[450px] md:h-[600px] flex items-center justify-center z-20 overflow-visible">
+        <div className="network-container relative w-full h-full flex items-center justify-center transition-transform duration-500 ease-out">
+          {/* ── CENTER IEEE HEXAGON (z-30) ── */}
+          <motion.div
+            className="absolute z-30"
+            style={{ x: 0, y: 0 }}
+            initial={{ scale: 0.8, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+          >
+            <div>
+              <div
+                className="relative w-[300px] h-[260px] bg-transparent flex items-center justify-center overflow-hidden"
+                style={{ maskImage: BIG_ROUNDED_HEX, WebkitMaskImage: BIG_ROUNDED_HEX }}
+              >
+                <Image
+                  src="/logo-2.gif"
+                  alt="IEEE Logo"
+                  width={240} height={240}
+                  className="relative z-10 w-56 h-auto object-contain"
+                />
+              </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
 
 
-        {/* ── LEFT CLUSTER (z-20) ── */}
-        {leftNodes.map((node, i) => {
-          return (
-            <motion.div
-              key={`left-${node.id}`}
-              className="absolute z-20"
-              initial={{ opacity: 0, x: node.x - 50, y: node.y }}
-              whileInView={{ opacity: 1, x: node.x, y: node.y }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 * i, type: 'spring', stiffness: 80 }}
-            >
-              <div className="relative group hover:scale-105 transition-transform duration-300">
-                <svg width='150' height='130' viewBox='0 0 150 130' className="absolute inset-0 pointer-events-none text-[#008be6]/15 overflow-visible">
-                  <polygon points='46,16 104,16 134,65 104,114 46,114 16,65' fill='none' stroke='currentColor' strokeWidth='34' strokeLinejoin='round'/>
-                </svg>
-                <div
-                  onClick={() => {
-                    const society = societies.find(s => s.logo === `/chapter-logos/${node.id}.png`);
-                    if (society) {
-                      const el = document.getElementById(`society-${society.id}`);
-                      if (el) {
-                        const y = el.getBoundingClientRect().top + window.scrollY - 100;
-                        window.scrollTo({ top: y, behavior: 'smooth' });
+          {/* ── LEFT CLUSTER (z-20) ── */}
+          {leftNodes.map((node, i) => {
+            return (
+              <motion.div
+                key={`left-${node.id}`}
+                className="absolute z-20"
+                initial={{ opacity: 0, x: node.x - 50, y: node.y }}
+                whileInView={{ opacity: 1, x: node.x, y: node.y }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 * i, type: 'spring', stiffness: 80 }}
+              >
+                <div className="relative group hover:scale-110 transition-transform duration-300">
+                  <svg width='150' height='130' viewBox='0 0 150 130' className="absolute inset-0 pointer-events-none text-[#008be6]/15 overflow-visible">
+                    <polygon points='46,16 104,16 134,65 104,114 46,114 16,65' fill='none' stroke='currentColor' strokeWidth='34' strokeLinejoin='round'/>
+                  </svg>
+                  <div
+                    onClick={() => {
+                      const society = societies.find(s => s.logo === `/chapter-logos/${node.id}.png`);
+                      if (society) {
+                        const el = document.getElementById(`society-${society.id}`);
+                        if (el) {
+                          const y = el.getBoundingClientRect().top + window.scrollY - 100;
+                          window.scrollTo({ top: y, behavior: 'smooth' });
+                        }
                       }
-                    }
-                  }}
-                  className="relative cursor-pointer w-[150px] h-[130px] bg-white flex items-center justify-center p-4 overflow-hidden"
-                  style={{ maskImage: SMALL_ROUNDED_HEX, WebkitMaskImage: SMALL_ROUNDED_HEX }}
-                >
-                  <Image src={`/chapter-logos/${node.id}.png`} alt={`Partner ${node.id}`} width={80} height={80} className="object-contain w-full h-full" />
+                    }}
+                    className="relative cursor-pointer w-[150px] h-[130px] bg-white flex items-center justify-center p-4 overflow-hidden"
+                    style={{ maskImage: SMALL_ROUNDED_HEX, WebkitMaskImage: SMALL_ROUNDED_HEX }}
+                  >
+                    <Image src={`/chapter-logos/${node.id}.png`} alt={`Partner ${node.id}`} width={80} height={80} className="object-contain w-full h-full" />
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          );
-        })}
+              </motion.div>
+            );
+          })}
 
-        {/* ── RIGHT CLUSTER (z-20) ── */}
-        {rightNodes.map((node, i) => {
-          return (
-            <motion.div
-              key={`right-${node.id}`}
-              className="absolute z-20"
-              initial={{ opacity: 0, x: node.x + 50, y: node.y }}
-              whileInView={{ opacity: 1, x: node.x, y: node.y }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 * i, type: 'spring', stiffness: 80 }}
-            >
-              <div className="relative group hover:scale-105 transition-transform duration-300">
-                <svg width='150' height='130' viewBox='0 0 150 130' className="absolute inset-0 pointer-events-none text-[#008be6]/15 overflow-visible">
-                  <polygon points='46,16 104,16 134,65 104,114 46,114 16,65' fill='none' stroke='currentColor' strokeWidth='34' strokeLinejoin='round'/>
-                </svg>
-                <div
-                  onClick={() => {
-                    const society = societies.find(s => s.logo === `/chapter-logos/${node.id}.png`);
-                    if (society) {
-                      const el = document.getElementById(`society-${society.id}`);
-                      if (el) {
-                        const y = el.getBoundingClientRect().top + window.scrollY - 100;
-                        window.scrollTo({ top: y, behavior: 'smooth' });
+          {/* ── RIGHT CLUSTER (z-20) ── */}
+          {rightNodes.map((node, i) => {
+            return (
+              <motion.div
+                key={`right-${node.id}`}
+                className="absolute z-20"
+                initial={{ opacity: 0, x: node.x + 50, y: node.y }}
+                whileInView={{ opacity: 1, x: node.x, y: node.y }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 * i, type: 'spring', stiffness: 80 }}
+              >
+                <div className="relative group hover:scale-110 transition-transform duration-300">
+                  <svg width='150' height='130' viewBox='0 0 150 130' className="absolute inset-0 pointer-events-none text-[#008be6]/15 overflow-visible">
+                    <polygon points='46,16 104,16 134,65 104,114 46,114 16,65' fill='none' stroke='currentColor' strokeWidth='34' strokeLinejoin='round'/>
+                  </svg>
+                  <div
+                    onClick={() => {
+                      const society = societies.find(s => s.logo === `/chapter-logos/${node.id}.png`);
+                      if (society) {
+                        const el = document.getElementById(`society-${society.id}`);
+                        if (el) {
+                          const y = el.getBoundingClientRect().top + window.scrollY - 100;
+                          window.scrollTo({ top: y, behavior: 'smooth' });
+                        }
                       }
-                    }
-                  }}
-                  className="relative cursor-pointer w-[150px] h-[130px] bg-white flex items-center justify-center p-4 overflow-hidden"
-                  style={{ maskImage: SMALL_ROUNDED_HEX, WebkitMaskImage: SMALL_ROUNDED_HEX }}
-                >
-                  <Image src={`/chapter-logos/${node.id}.png`} alt={`Partner ${node.id}`} width={80} height={80} className="object-contain w-full h-full" />
+                    }}
+                    className="relative cursor-pointer w-[150px] h-[130px] bg-white flex items-center justify-center p-4 overflow-hidden"
+                    style={{ maskImage: SMALL_ROUNDED_HEX, WebkitMaskImage: SMALL_ROUNDED_HEX }}
+                  >
+                    <Image src={`/chapter-logos/${node.id}.png`} alt={`Partner ${node.id}`} width={80} height={80} className="object-contain w-full h-full" />
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          );
-        })}
-
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
