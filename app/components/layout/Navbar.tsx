@@ -23,10 +23,11 @@ export default function Navbar() {
   }, []);
 
   const isLinkActive = (href: string) => {
+    // Never highlight the Contact button as active
+    if (href === '/#contact') return false;
     if (href.startsWith('/#')) {
       return pathname === '/' && activeAnchor === href;
     }
-
     return pathname === href;
   };
 

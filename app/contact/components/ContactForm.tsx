@@ -28,21 +28,22 @@ export default function ContactForm() {
   if (submitted) {
     return (
       <motion.div
-        className="flex flex-col items-center justify-center h-full min-h-[400px] text-center glass-fiber rounded-3xl p-8 md:p-12 relative overflow-hidden"
-        initial={{ opacity: 0, scale: 0.95 }}
+        className="flex flex-col items-center justify-center h-full min-h-[400px] text-center bg-white shadow-2xl p-8 md:p-12 relative overflow-hidden rounded-[4px] border border-gray-100"
+        initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--accent)]/5 pointer-events-none" />
-        <div className="w-24 h-24 bg-[var(--primary-glow)] rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-[0_0_40px_rgba(0,139,230,0.2)] rotate-3">
-          <SendIcon className="w-12 h-12 text-[var(--accent)] -rotate-3" />
+        <div className="absolute inset-0 bg-gradient-br from-[#008be6]/10 to-cyan-500/10 pointer-events-none" />
+        <div className="w-28 h-28 bg-[#008be6]/10 flex items-center justify-center mx-auto mb-8 shadow-inner animate-bounce"
+             style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}>
+          <SendIcon className="w-12 h-12 text-[#008be6]" />
         </div>
-        <h3 className="text-3xl font-bold text-[var(--foreground)] mb-4 tracking-tight">Message Sent</h3>
-        <p className="text-[var(--muted)] text-lg max-w-sm mx-auto">
+        <h3 className="text-3xl font-bold text-slate-800 mb-4 tracking-tight uppercase font-serif">Message Sent</h3>
+        <p className="text-slate-600 text-lg max-w-sm mx-auto italic">
           Thanks for reaching out! We&apos;ll review your message and get back to you shortly.
         </p>
         <button
           onClick={() => setSubmitted(false)}
-          className="mt-8 text-[var(--accent)] hover:text-[var(--primary)] font-semibold underline underline-offset-4 transition-colors"
+          className="mt-8 text-[#008be6] hover:text-cyan-600 font-semibold underline underline-offset-4 transition-colors"
         >
           Send another message
         </button>
@@ -56,68 +57,73 @@ export default function ContactForm() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={fadeUpTransition(0.2, 0.6)}
-      className="glass-fiber rounded-3xl p-8 md:p-12 shadow-xl border border-white/40 bg-white/60 relative overflow-hidden"
+      className="bg-white/80 backdrop-blur-xl p-8 md:p-12 relative overflow-hidden shadow-2xl rounded-[4px] border border-gray-100"
     >
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--primary)] to-[var(--accent)]" />
+      <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#008be6] to-cyan-400" />
+      <div className="absolute -top-20 -left-20 w-40 h-40 bg-blue-50/50 -rotate-12 pointer-events-none"
+           style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }} />
+      <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-cyan-50/50 rotate-45 pointer-events-none z-0"
+           style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }} />
       
-      <div className="mb-10">
-        <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3 tracking-tight">Let&apos;s talk</h2>
-        <p className="text-gray-500 text-[1.05rem]">
-          Have a question or want to collaborate? Send us a message and we&apos;ll get back to you within 24 hours.
+      <div className="mb-10 text-center relative z-10">
+        <h2 className="text-3xl lg:text-4xl font-black font-serif uppercase text-gray-900 mb-3 tracking-widest">Let&apos;s talk</h2>
+        <div className="w-12 h-1 bg-[#008be6] mx-auto mb-4" />
+        <p className="text-gray-500 text-[1.05rem] italic">
+          Send us a message and we&apos;ll get back to you within 24 hours.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-6 relative z-10">
-        <div className="flex flex-col gap-2">
-          <label htmlFor="name" className="text-sm font-semibold text-[var(--muted)] ml-1 uppercase tracking-wider">
-            Your Name
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6 relative z-10 mx-auto max-w-lg w-full">
+        <div className="flex flex-col gap-2 relative">
+          <label htmlFor="name" className="text-xs font-bold text-gray-500 ml-4 uppercase tracking-widest bg-white/80 px-2 absolute -top-2 left-2 z-10 rounded">
+            Name
           </label>
           <input
             type="text"
             id="name"
             required
-            className="w-full px-5 py-4 rounded-xl bg-white/80 backdrop-blur-sm border border-[var(--border-soft)] hover:border-[var(--accent)]/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/30 transition-all text-[0.95rem] font-medium text-[var(--foreground)] shadow-sm"
+            className="w-full px-6 py-4 bg-white border border-gray-200 rounded-[4px] hover:border-blue-200 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-100/50 focus:border-blue-400 transition-all text-base font-medium text-gray-800 shadow-sm"
           />
         </div>
 
-        <div className="flex flex-col gap-2">
-          <label htmlFor="email" className="text-sm font-semibold text-[var(--muted)] ml-1 uppercase tracking-wider">
-            Your Email
+        <div className="flex flex-col gap-2 relative mt-4">
+          <label htmlFor="email" className="text-xs font-bold text-gray-500 ml-4 uppercase tracking-widest bg-white/80 px-2 absolute -top-2 left-2 z-10 rounded">
+            Email
           </label>
           <input
             type="email"
             id="email"
             required
-            className="w-full px-5 py-4 rounded-xl bg-white/80 backdrop-blur-sm border border-[var(--border-soft)] hover:border-[var(--accent)]/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/30 transition-all text-[0.95rem] font-medium text-[var(--foreground)] shadow-sm"
+            className="w-full px-6 py-4 bg-white border border-gray-200 rounded-[4px] hover:border-blue-200 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-100/50 focus:border-blue-400 transition-all text-base font-medium text-gray-800 shadow-sm"
           />
         </div>
 
-        <div className="flex flex-col gap-2">
-          <label htmlFor="message" className="text-sm font-semibold text-[var(--muted)] ml-1 uppercase tracking-wider">
-            Your Message
+        <div className="flex flex-col gap-2 relative mt-4">
+          <label htmlFor="message" className="text-xs font-bold text-gray-500 ml-4 uppercase tracking-widest bg-white/80 px-2 absolute -top-2 left-2 z-10 rounded">
+            Message
           </label>
           <textarea
             id="message"
             required
             rows={5}
             placeholder="How can we help you?"
-            className="w-full px-5 py-4 rounded-xl bg-white/80 backdrop-blur-sm border border-[var(--border-soft)] hover:border-[var(--accent)]/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/30 transition-all text-[0.95rem] font-medium text-[var(--foreground)] resize-none shadow-sm placeholder-[var(--muted)]/50"
+            className="w-full px-6 py-6 bg-white border border-gray-200 rounded-[4px] hover:border-blue-200 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-100/50 focus:border-blue-400 transition-all text-base font-medium text-gray-800 resize-none shadow-sm placeholder-gray-300"
           />
         </div>
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="mt-4 self-start glow-button rounded-xl !px-10 !py-4 font-semibold flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed uppercase tracking-widest text-[0.9rem] shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all w-full md:w-auto"
+          className="mt-6 self-center bg-gradient-to-r from-[#008be6] to-cyan-500 text-white font-bold flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed uppercase tracking-widest text-[0.95rem] shadow-lg hover:shadow-cyan-500/30 hover:scale-[1.02] transition-all w-full rounded-[4px] px-12 py-4 group"
         >
           {isSubmitting ? (
             <>
-              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              Sending...
+              <div className="w-5 h-5 border-2 border-white/60 border-t-white rounded-full animate-spin" />
+              Sending
             </>
           ) : (
             <>
-              Submit <SendIcon className="w-4 h-4 ml-1" strokeWidth={2.5} />
+              Send <SendIcon className="w-4 h-4 ml-1 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" strokeWidth={2.5} />
             </>
           )}
         </button>
