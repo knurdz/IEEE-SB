@@ -22,7 +22,7 @@ export const EVENTS: EventItem[] = [
     categoryColor: '#10B981',
     description:
       'OpenWeek is an introductory two‑day event welcoming new students into the IEEE community at the University of Moratuwa. It includes talks, short workshops, and hands‑on demos in robotics, embedded systems, and data science. The event also highlights volunteering, leadership roles, and opportunities to join major IEEE competitions and projects.',
-    images: ['/images/OpenWeek/OpenWeek.jpg', '/images/OpenWeek/OpenWeek2.jpg'],
+    images: ['/images/OpenWeek/OpenWeek.jpg'],
     gallery: [
       '/images/OpenWeek/490775784_1070628858430090_8669397192788408804_n.jpg',
       '/images/OpenWeek/490548038_1070622688430707_7495209506968855661_n.jpg',
@@ -56,7 +56,7 @@ export const EVENTS: EventItem[] = [
     categoryColor: '#F59E0B',
     description:
       'MoraXtreme is a national competitive‑programming championship organized by the IEEE Student Branch, University of Moratuwa. Teams from universities across Sri Lanka solve algorithmic problems under time pressure. The event includes training sessions and a grand‑final awards ceremony to recognize top coders.',
-    images: ['/images/MoraXtreme/MoraXtreme.jpg', '/images/MoraXtreme/MoraXtreme2.jpg'],
+    images: ['/images/MoraXtreme/MoraXtreme.jpg'],
     gallery: [
       '/images/MoraXtreme/615854920_1293603689465938_254720086095671295_n.jpg',
       '/images/MoraXtreme/615854840_1293602799466027_4213933293901733169_n.jpg',
