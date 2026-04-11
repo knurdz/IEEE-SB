@@ -56,6 +56,7 @@ export default function AwardsSection() {
                       src={award.image}
                       alt={award.imageAlt}
                       fill
+                      sizes="(max-width: 768px) 100px, 100px"
                       className="object-cover"
                     />
                   </div>
@@ -95,7 +96,9 @@ export default function AwardsSection() {
                   src={featuredAward.image || "/images/placeholder-cert.jpg"}
                   alt={featuredAward.imageAlt}
                   fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-contain"
+                  priority
                 />
               </div>
             </div>
