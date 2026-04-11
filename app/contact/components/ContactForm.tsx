@@ -48,7 +48,7 @@ export default function ContactForm() {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      className="w-full h-full flex flex-col p-8 md:p-10 relative z-10 text-white"
+      className="w-full h-full flex flex-col p-8 md:py-10 md:pr-10 md:pl-[calc(2.5rem+36%)] relative z-10 text-white"
     >
       {/* Decorative Blur Orbs */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
@@ -64,29 +64,29 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full mb-0 relative z-20">
         
         <div className="flex flex-col gap-2 w-full">
-          <label htmlFor="name" className="text-[12px] font-bold text-white/80 uppercase tracking-widest pl-1">Name</label>
+          <label htmlFor="name" className="text-[12px] font-bold text-white uppercase tracking-widest pl-1">Name</label>
           <input
             type="text"
             id="name"
             required
             className="bg-white/10 border border-white/20 outline-none focus:border-white focus:bg-white/20 focus:ring-4 focus:ring-white/10 rounded-[6px] text-white font-medium text-base w-full px-5 py-2.5 transition-all placeholder:text-white/40"
-            placeholder="John Doe"
+            placeholder="Your name"
           />
         </div>
 
         <div className="flex flex-col gap-2 w-full">
-          <label htmlFor="email" className="text-[12px] font-bold text-white/80 uppercase tracking-widest pl-1">Email Address</label>
+          <label htmlFor="email" className="text-[12px] font-bold text-white uppercase tracking-widest pl-1">Email Address</label>
           <input
             type="email"
             id="email"
             required
             className="bg-white/10 border border-white/20 outline-none focus:border-white focus:bg-white/20 focus:ring-4 focus:ring-white/10 rounded-[6px] text-white font-medium text-base w-full px-5 py-2.5 transition-all placeholder:text-white/40"
-            placeholder="john@example.com"
+            placeholder="Your email"
           />
         </div>
 
         <div className="flex flex-col gap-2 w-full">
-          <label htmlFor="message" className="text-[12px] font-bold text-white/80 uppercase tracking-widest pl-1">Message</label>
+          <label htmlFor="message" className="text-[12px] font-bold text-white uppercase tracking-widest pl-1">Message</label>
           <textarea
             id="message"
             required

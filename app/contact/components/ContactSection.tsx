@@ -42,8 +42,8 @@ export default function ContactSection() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-4xl lg:text-7xl flex flex-wrap items-baseline justify-start gap-4 font-sans tracking-tight mb-12">
-              <span className="font-light text-gray-700 uppercase">IEEE Student</span>
-              <span className="font-black font-serif text-gray-900 uppercase">BRANCH</span>
+              <span className="font-light text-black uppercase">IEEE Student</span>
+              <span className="font-black font-serif text-black uppercase">BRANCH</span>
             </h2>
 
             <div className="flex flex-col gap-8 max-w-[320px]">
@@ -70,11 +70,11 @@ export default function ContactSection() {
               </div>
 
               <div className="flex items-center gap-6 group text-left">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center text-[#00589e] shrink-0 border-2 border-[#00589e]/20 group-hover:bg-[#00589e] group-hover:text-white transition-all cursor-pointer">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-[#00589e] shrink-0 border-2 border-[#00589e]/30 bg-[#00589e]/5 group-hover:bg-[#00589e] group-hover:text-white transition-all cursor-pointer">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col items-start flex-1">
-                   <p className="text-[15px] font-bold text-black/60 text-left leading-tight break-all">
+                   <p className="text-[15px] font-bold text-black/70 text-left leading-tight break-all font-sans">
                      Ieeesbuom.2526@gmail.com
                    </p>
                 </div>
@@ -99,20 +99,20 @@ export default function ContactSection() {
           </motion.div>
         </div>
 
-        {/* Middle Overlapping Map Container - Shifted 10px Left and Up */}
-        <div className="w-full md:w-[35%] min-h-[350px] relative z-20 md:-ml-20 md:-mr-4 my-12 md:my-0 flex flex-col justify-center -translate-x-[10px] -translate-y-[10px]">
+        {/* Middle Overlapping Map Container - Increased Width and Size */}
+        <div className="w-full md:w-[42%] min-h-[400px] relative z-20 md:-ml-24 md:-mr-8 my-12 md:my-0 flex flex-col justify-center -translate-x-[10px] -translate-y-[10px]">
           <ContactMap />
         </div>
 
-        {/* Right Column: Premium Contact Form Area Wrapper to reduce height */}
-        <div className="w-full md:w-[45%] flex flex-col justify-center py-10 md:py-8 lg:py-6 relative z-10 hidden md:flex">
-          <div className="w-full bg-gradient-to-br from-[#00589e] via-[#00457c] to-[#00335e] overflow-hidden shadow-2xl rounded-[6px] h-fit">
+        {/* Right Column: Premium Contact Form Area Wrapper - Expanded for no overlap */}
+        <div className="w-full md:w-[70%] flex flex-col justify-center py-10 md:py-8 lg:py-6 relative z-10 hidden md:flex md:-ml-[20%]">
+          <div className="w-full bg-[#00589e] overflow-hidden shadow-2xl rounded-[6px] h-fit">
              <ContactForm />
           </div>
         </div>
 
         {/* Mobile View rendering of form */}
-        <div className="w-full bg-gradient-to-br from-[#00589e] via-[#00457c] to-[#00335e] overflow-hidden shadow-2xl rounded-[6px] relative z-10 md:hidden mt-4">
+        <div className="w-full bg-[#00589e] overflow-hidden shadow-2xl rounded-[6px] relative z-10 md:hidden mt-4">
            <ContactForm />
         </div>
 
