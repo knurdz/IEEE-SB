@@ -25,19 +25,35 @@ export default function ContactMap() {
             href="https://maps.google.com/maps?ll=6.795128,79.898292&z=15&t=m&hl=en&gl=LK&mapclient=embed&cid=8922518312307545614"
             target="_blank"
             rel="noopener noreferrer"
-            className="pointer-events-auto cursor-pointer transition-transform hover:scale-110 active:scale-95 flex flex-col items-center"
+            className="pointer-events-auto cursor-pointer transition-transform hover:scale-110 active:scale-95 flex flex-col items-center group"
           >
-            <div className="w-16 h-16 bg-white border-4 border-[#00589e] rounded-full flex items-center justify-center shadow-[0_10px_25px_-5px_rgba(0,88,158,0.4)] relative">
-              <div className="relative w-10 h-10">
+            <div className="relative">
+              {/* Pin SVG - Google Maps Style */}
+              <svg 
+                width="64" 
+                height="80" 
+                viewBox="0 0 384 512" 
+                className="filter drop-shadow-lg transition-transform duration-300 group-hover:drop-shadow-2xl"
+              >
+                <path 
+                  fill="#00589e" 
+                  d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0z"
+                />
+                {/* White Inner Circle */}
+                <circle cx="192" cy="192" r="145" fill="white" />
+              </svg>
+              
+              {/* Logo Container inside the pin's white circle - Precisely centered */}
+              <div className="absolute top-[37.5%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center">
                 <img 
                   src="/logo/ieee-sb-logo-traced.svg" 
                   alt="IEEE Logo" 
-                  className="w-full h-full object-contain"
+                  className="w-10 h-10 object-contain"
                 />
               </div>
-              
-              {/* Pointer Bottom */}
-              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[14px] border-t-[#00589e]" />
+
+              {/* Subtle Glow beneath the pin */}
+              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-10 h-2 bg-black/20 blur-md rounded-[100%] group-hover:w-12 group-hover:h-3 transition-all duration-300" />
             </div>
           </a>
         </motion.div>
