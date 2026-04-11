@@ -2,21 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { fadeUpTransition } from '@/lib/motion';
-
-const MailIcon = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <rect width="20" height="16" x="2" y="4" rx="2" />
-    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-  </svg>
-);
-
-const SendIcon = ({ className, strokeWidth = 2, ...props }: any) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
-    <path d="m22 2-7 20-4-9-9-4Z" />
-    <path d="M22 2 11 13" />
-  </svg>
-);
+import { Mail } from "lucide-react";
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -25,7 +11,6 @@ export default function ContactForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmitted(true);
@@ -35,19 +20,24 @@ export default function ContactForm() {
   if (submitted) {
     return (
       <motion.div
-        className="flex flex-col items-center justify-center h-full min-h-[400px] text-center bg-white shadow-2xl p-8 md:p-12 relative overflow-hidden rounded-2xl border border-gray-100"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
+        className="flex flex-col items-center justify-center h-full min-h-[400px] text-center p-8 md:p-12 text-white relative z-20"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
       >
-        <h3 className="text-3xl font-bold text-slate-800 mb-4 tracking-tight uppercase font-serif">Message Sent</h3>
-        <p className="text-slate-600 text-lg max-w-sm mx-auto italic">
-          Thanks for reaching out! We&apos;ll review your message and get back to you shortly.
+        <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mb-6">
+          <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h3 className="text-3xl font-black mb-4 uppercase tracking-tighter">Message Sent</h3>
+        <p className="text-white/80 text-lg max-w-sm mx-auto font-medium">
+          Thanks for reaching out! Our team will review your message and get back to you shortly.
         </p>
         <button
           onClick={() => setSubmitted(false)}
-          className="mt-8 text-[#40335e] hover:text-[#302547] font-semibold underline underline-offset-4 transition-colors"
+          className="mt-8 bg-white/10 hover:bg-white/20 border border-white/30 text-white px-8 py-3 rounded-xl font-bold uppercase tracking-wider transition-all hover:scale-105"
         >
-          Send another message
+          Send another
         </button>
       </motion.div>
     );
@@ -55,117 +45,77 @@ export default function ContactForm() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      whileInView={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      transition={fadeUpTransition(0.2, 0.6)}
-      className="bg-white/95 backdrop-blur-xl p-8 md:p-14 relative overflow-hidden shadow-2xl rounded-3xl border border-blue-100/50 min-h-[750px] flex flex-col justify-center"
+      className="w-full h-full flex flex-col p-8 md:p-10 relative z-10 text-white"
     >
-      {/* Animated Pulsing Hexagon Pattern - Moved to far corner and further reduced size */}
-      <div className="absolute -top-10 -right-10 w-40 h-40 md:w-56 md:h-56 pointer-events-none opacity-[0.2] overflow-hidden rounded-tr-2xl z-0">
-        <motion.div 
-          className="absolute inset-0 w-full h-full"
-          animate={{ rotate: [0, 360] }}
-          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-        >
-          <svg width="100%" height="100%" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Core Hexagon */}
-            <polygon points="100,50 143.3,75 143.3,125 100,150 56.7,125 56.7,75" stroke="#40335e" strokeOpacity="1" strokeWidth="1.5" fill="#40335e" fillOpacity="0.05" />
-            
-            {/* Pulsing Outer Hexagonal Rings */}
-            {[...Array(5)].map((_, i) => (
-              <motion.polygon
-                key={i}
-                points="100,10 177.94,55 177.94,145 100,190 22.06,145 22.06,55"
-                stroke="#40335e"
-                strokeWidth={0.75}
-                strokeDasharray={i % 2 === 0 ? "6 8" : "none"}
-                fill="none"
-                initial={{ scale: 0.35 + (i * 0.18) }}
-                animate={{ 
-                  scale: [0.35 + (i * 0.18), 0.4 + (i * 0.18), 0.35 + (i * 0.18)],
-                  opacity: [0.1, 0.7, 0.1],
-                  rotate: i % 2 !== 0 ? [0, -5, 0] : [0, 5, 0]
-                }}
-                style={{ transformOrigin: "100px 100px" }}
-                transition={{
-                  duration: 5 + i,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: i * 0.4,
-                }}
-              />
-            ))}
-          </svg>
-        </motion.div>
+      {/* Decorative Blur Orbs */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#00457c]/50 rounded-full blur-[60px] translate-y-1/4 -translate-x-1/4 pointer-events-none" />
+
+      <div className="mb-6 relative z-20">
+        <h3 className="text-3xl md:text-5xl font-bold uppercase tracking-tighter mb-3">Let&apos;s Talk</h3>
+        <p className="text-white/80 font-medium max-w-[320px] text-[15px] leading-relaxed">
+          Have a question or want to collaborate? Send us a message and we&apos;ll get back to you within 24 hours
+        </p>
       </div>
 
-      <div className="mb-6 text-left relative z-10 max-w-[85%] md:max-w-[75%] lg:max-w-[80%] xl:max-w-[75%]">
-        <h2 className="text-3xl lg:text-[2.6rem] leading-tight font-sans font-medium text-gray-900 mb-2 tracking-tight">Let&apos;s talk</h2>
-        <p className="text-gray-600 text-lg font-sans leading-relaxed">Have a question or want to collaborate? Send us a message and we&apos;ll get back to you within 24 hours.</p>
-      </div>
-
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-y-10 relative z-10 w-full mt-4">
-        <div className="flex flex-col relative group">
-          <label 
-            htmlFor="name" 
-            className="absolute -top-[10px] left-5 px-2 bg-white text-[0.75rem] font-bold text-[#4c6b8c] uppercase tracking-wider z-20 transition-colors group-focus-within:text-[#00589e]"
-          >
-            Your Name
-          </label>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full mb-0 relative z-20">
+        
+        <div className="flex flex-col gap-2 w-full">
+          <label htmlFor="name" className="text-[12px] font-bold text-white/80 uppercase tracking-widest pl-1">Name</label>
           <input
             type="text"
             id="name"
             required
-            placeholder="Name"
-            className="w-full px-6 py-4 bg-white/50 border border-blue-200/60 rounded-2xl hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-[#00589e]/10 focus:border-[#00589e] transition-all text-base text-gray-800 font-bold placeholder:font-normal relative z-10 shadow-sm"
+            className="bg-white/10 border border-white/20 outline-none focus:border-white focus:bg-white/20 focus:ring-4 focus:ring-white/10 rounded-[6px] text-white font-medium text-base w-full px-5 py-2.5 transition-all placeholder:text-white/40"
+            placeholder="John Doe"
           />
         </div>
 
-        <div className="flex flex-col relative group">
-          <label 
-            htmlFor="email" 
-            className="absolute -top-[10px] left-5 px-2 bg-white text-[0.75rem] font-bold text-[#4c6b8c] uppercase tracking-wider z-20 transition-colors group-focus-within:text-[#00589e]"
-          >
-            Your Email
-          </label>
-          <div className="relative">
-            <input
-              type="email"
-              id="email"
-              required
-              placeholder="you@example.com"
-              className="w-full px-6 py-4 bg-white/50 border border-blue-200/60 rounded-2xl hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-[#00589e]/10 focus:border-[#00589e] transition-all text-base text-gray-800 font-bold placeholder:font-normal relative z-10 shadow-sm"
-            />
-            <span className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-blue-400 z-20">
-              <MailIcon className="w-5 h-5" />
-            </span>
-          </div>
+        <div className="flex flex-col gap-2 w-full">
+          <label htmlFor="email" className="text-[12px] font-bold text-white/80 uppercase tracking-widest pl-1">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            required
+            className="bg-white/10 border border-white/20 outline-none focus:border-white focus:bg-white/20 focus:ring-4 focus:ring-white/10 rounded-[6px] text-white font-medium text-base w-full px-5 py-2.5 transition-all placeholder:text-white/40"
+            placeholder="john@example.com"
+          />
         </div>
 
-        <div className="flex flex-col relative group">
-          <label 
-            htmlFor="message" 
-            className="absolute -top-[10px] left-5 px-2 bg-white text-[0.75rem] font-bold text-[#4c6b8c] uppercase tracking-wider z-20 transition-colors group-focus-within:text-[#00589e]"
-          >
-            Your Message
-          </label>
+        <div className="flex flex-col gap-2 w-full">
+          <label htmlFor="message" className="text-[12px] font-bold text-white/80 uppercase tracking-widest pl-1">Message</label>
           <textarea
             id="message"
             required
-            rows={5}
-            placeholder="Type your message here"
-            className="w-full px-6 py-4 bg-white/50 border border-blue-200/60 rounded-2xl hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-[#00589e]/10 focus:border-[#00589e] transition-all text-base text-gray-800 font-bold placeholder:font-normal resize-none h-40 relative z-10 shadow-sm"
+            rows={3}
+            className="bg-white/10 border border-white/20 outline-none focus:border-white focus:bg-white/20 focus:ring-4 focus:ring-white/10 rounded-[6px] text-white font-medium text-base w-full px-5 py-2.5 resize-none transition-all placeholder:text-white/40"
+            placeholder="Write your message here..."
           />
         </div>
 
-        <div className="pt-4">
+        <div className="pt-6">
           <button
             type="submit"
             disabled={isSubmitting}
-            className="inline-flex items-center justify-center rounded-xl bg-[#00589e] px-6 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-[#00457c] disabled:opacity-70 disabled:cursor-not-allowed active:scale-95"
+            className="group relative flex items-center justify-center gap-3 w-full md:w-auto bg-white px-10 py-3 rounded-[6px] text-[15px] font-black text-[#00589e] uppercase tracking-wider overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] disabled:opacity-70 disabled:hover:scale-100"
           >
-            {isSubmitting ? 'Sending...' : 'Send Message'}
+            {/* Hover Expansion Background */}
+            <div className="absolute inset-0 w-0 bg-gray-100 transition-all duration-300 ease-out group-hover:w-full z-0" />
+            
+            <span className="relative z-10">{isSubmitting ? 'Sending...' : 'Send Message'}</span>
+            
+            <motion.div 
+               className="relative z-10"
+               animate={isSubmitting ? { x: 20, opacity: 0 } : { x: 0, opacity: 1 }}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </motion.div>
           </button>
         </div>
       </form>
