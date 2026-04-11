@@ -252,7 +252,7 @@ export default function SocietySections() {
                       style={{ clipPath: `url(#hexClipImg-${society.id})` }}
                     >
                       <Image
-                        src={society.logo || "/chapters/society_logo.png"}
+                        src={society.logo || "/chapter-logos/society_logo.png"}
                         alt={society.title}
                         fill
                         sizes="(max-width: 768px) 100vw, 50vw"

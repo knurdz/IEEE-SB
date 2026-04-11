@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/cn";
-import { Member } from "../types";
 import { generateArchTransforms } from "../constants";
+import { Member } from "../types";
 
 export default function MemberCard({
   member,
@@ -18,7 +18,7 @@ export default function MemberCard({
   isTopRow?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
-  const isLead = !!member.isLead;
+  const hasActions = Boolean(member.linkedin || member.email);
 
   const { resting, hover } = useMemo(
     () => generateArchTransforms(totalInRow, isTopRow),
@@ -31,31 +31,31 @@ export default function MemberCard({
     y: 0,
     brightness: 1,
   };
-  const hoverTransform = hover[index] ?? { scale: 1.05, y: -10 };
+  const hoverTransform = hover[index] ?? {
+    scale: 1.02,
+    y: -10,
+  };
 
-  // Dynamic name font sizing based on name length
-  const nameFontSize = member.nameSize
-    ? member.nameSize
-    : member.name.length > 14
-      ? "0.82rem"
-      : member.name.length > 10
-        ? "0.92rem"
-        : "1.05rem";
+  const nameFontSize = "0.9rem";
+  const positionFontSize = "0.6rem";
+
+  const isLead = member.priority < 9;
 
   const cardStyle: React.CSSProperties = {
     position: "relative",
-    flex: isLead ? "1.25 1 0" : "1 1 0",
-    minWidth: 0,
-    height: isLead && isTopRow ? "92%" : "85%",
-    margin: "0 -16px",
-    zIndex: hovered ? 10 : restingTransform.z + (isLead ? 2 : 0),
+    flex: "0 0 190px",
+    height: "360px",
+    margin: "0 4px",
+    zIndex: hovered ? 30 : isLead ? 10 : restingTransform.z || 1,
     transform: hovered
-      ? `scale(${hoverTransform.scale + (isLead ? 0.03 : 0)}) translateY(${hoverTransform.y - (isLead ? 5 : 0)}px)`
-      : `scale(${restingTransform.scale + (isLead ? 0.03 : 0)}) translateY(${restingTransform.y - (isLead ? 8 : 0)}px)`,
+      ? `translateY(${hoverTransform.y}px) scale(${hoverTransform.scale})`
+      : `translateY(${restingTransform.y}px) scale(${restingTransform.scale})`,
     filter: hovered
-      ? "brightness(1.1)"
-      : `brightness(${restingTransform.brightness})`,
-    transition: "all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)",
+      ? "brightness(1.08) grayscale(0)"
+      : !isLead 
+        ? "brightness(0.92) grayscale(0.1)"
+        : `brightness(${restingTransform.brightness})`,
+    transition: "all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)",
   };
 
   return (
@@ -64,95 +64,127 @@ export default function MemberCard({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div
-        className={cn(
-          "relative h-full w-full overflow-hidden rounded-2xl border transition-all duration-500",
-          isLead
-            ? hovered
-              ? "border-primary/50 bg-white shadow-[0_12px_48px_rgba(0,87,157,0.22)] ring-2 ring-primary/30"
-              : "border-primary/25 bg-white shadow-[0_6px_28px_rgba(0,87,157,0.12)] ring-1 ring-primary/15"
-            : hovered
-              ? "border-primary/40 bg-white shadow-[0_10px_40px_rgba(0,87,157,0.15)] ring-1 ring-primary/20"
-              : "border-black/5 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)]",
-        )}
-      >
-        {/* Lead glow ring */}
-        {isLead && (
-          <div
-            className="absolute inset-0 rounded-2xl pointer-events-none z-0"
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(0,87,157,0.08), rgba(0,139,230,0.05))",
-            }}
-          />
-        )}
+      <div className="flex flex-col h-full w-full">
+        <div
+          className={cn(
+            "z-40 w-full rounded-t-2xl border-x border-t px-1 py-3 text-center font-bold uppercase leading-none shadow-[0_-8px_20px_rgba(0,87,157,0.06)] backdrop-blur-xl transition-all duration-500",
+            hovered
+              ? "border-primary/40 bg-white shadow-lg translate-y-[-1px] text-primary"
+              : isLead
+                ? "border-primary/15 bg-white/90 text-primary/80"
+                : "border-black/5 bg-slate-50/90 text-slate-500/90",
+          )}
+          style={{
+            fontSize: positionFontSize,
+            letterSpacing: "0.22em",
+            marginBottom: "-1px"
+          }}
+        >
+          {!isLead && member.position === "Committee Member" ? "MEMBER" : member.position}
+        </div>
 
+        <div
+          className={cn(
+            "relative flex-1 w-full overflow-hidden border transition-all duration-500 rounded-b-2xl",
+            isLead ? "border-primary/20" : "border-black/5",
+            hovered
+              ? "border-primary/30 bg-white shadow-[0_20px_40px_rgba(0,87,157,0.18)]"
+              : isLead
+                ? "bg-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]"
+                : "bg-slate-50/30 shadow-[0_4px_20px_rgba(0,0,0,0.04)]",
+          )}
+        >
         <Image
           src={member.image}
           alt={member.name}
           fill
-          className="object-cover object-top"
+          className={cn(
+            "object-cover object-top transition-transform duration-700",
+            hovered ? "scale-105" : "scale-100"
+          )}
           sizes="(max-width: 768px) 50vw, 220px"
         />
 
-        {/* Bottom overlay with horizontal text — always visible */}
-        <div
-          className="absolute inset-x-0 bottom-0 z-20 text-center transition-all duration-500"
-          style={{
-            padding: hovered ? "110px 10px 30px" : "90px 10px 16px",
-            background: hovered
-              ? "linear-gradient(to top, rgba(255,255,255,1) 10%, rgba(255,255,255,0.75) 55%, transparent 100%)"
-              : "linear-gradient(to top, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.55) 50%, transparent 100%)",
-          }}
-        >
-          <h3
-            className={cn(
-              "font-semibold mb-0.5 transition-colors duration-300 font-orbitron truncate px-1",
-              hovered ? "text-primary" : "text-slate-900",
-            )}
-            style={{ fontSize: nameFontSize }}
-            title={member.name}
-          >
-            {member.name}
-          </h3>
-          <p className="text-primary/70 text-[10px] tracking-widest uppercase truncate px-1">
-            {member.role}
-          </p>
-
-          {/* Social links — show on hover */}
           <div
-            className={cn(
-              "flex flex-wrap justify-center gap-2 mt-2 transition-all duration-300",
-              hovered
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-2 pointer-events-none",
-            )}
+            className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center justify-end text-center transition-all duration-500"
+            style={{
+              height: hovered ? "34%" : "30%",
+              paddingLeft: "10px",
+              paddingRight: "10px",
+              paddingBottom: "16px",
+              background: hovered
+                ? "linear-gradient(to top, rgba(255,255,255,1) 35%, rgba(255,255,255,0.85) 75%, transparent 100%)"
+                : "linear-gradient(to top, rgba(255,255,255,0.95) 25%, rgba(255,255,255,0.7) 65%, transparent 100%)",
+            }}
           >
-            {member.linkedin && (
-              <a
-                href={member.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[10px] text-primary hover:text-blue-700 transition-colors"
+            <div className="flex flex-col items-center justify-end w-full">
+              <div
+                className={cn(
+                  "font-semibold transition-colors duration-300 font-orbitron px-1 text-center w-full",
+                  hovered || isLead ? "text-slate-900" : "text-slate-700",
+                )}
+                style={{
+                  marginBottom: hasActions ? "0.6rem" : "0",
+                  fontSize: nameFontSize,
+                  color: hovered ? "var(--primary)" : undefined,
+                }}
+                title={member.name}
               >
-                LinkedIn ↗
-              </a>
-            )}
-            {member.phone && (
-              <span className="text-[10px] text-slate-500">{member.phone}</span>
-            )}
+                {isLead || member.name.split(" ").length === 1 ? (
+                  <span className="line-clamp-1 leading-none block">{member.name}</span>
+                ) : (
+                  <div className="flex flex-col items-center leading-[1.15] min-h-[2.3rem] justify-end">
+                    <span className="line-clamp-1">{member.name.split(" ").slice(0, -1).join(" ")}</span>
+                    <span className="line-clamp-1">{member.name.split(" ").slice(-1)[0]}</span>
+                  </div>
+                )}
+              </div>
+
+              {hasActions ? (
+              <div
+                className={cn(
+                  "flex justify-center gap-4 transition-all duration-300",
+                  hovered || isLead ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2",
+                )}
+              >
+                {member.linkedin ? (
+                  <a
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:scale-110 transition-transform p-1"
+                    title="LinkedIn"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                  </a>
+                ) : null}
+                {member.email ? (
+                  <a
+                    href={`mailto:${member.email}`}
+                    className="text-primary hover:scale-110 transition-transform p-1"
+                    title="Email"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                  </a>
+                ) : null}
+              </div>
+            ) : null}
           </div>
         </div>
 
-        {/* Hover bottom accent line */}
         <div
           className={cn(
-            "absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent transition-opacity duration-300",
+            "absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent transition-all duration-500",
             hovered ? "opacity-100" : "opacity-0",
           )}
         />
 
-        {/* Hover corner accent */}
+        {isLead && (
+          <div
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent"
+          />
+        )}
+
         <div
           className={cn(
             "absolute top-3 right-3 w-6 h-6 border-t border-r border-primary/40 rounded-tr-md transition-opacity duration-300",
@@ -160,7 +192,6 @@ export default function MemberCard({
           )}
         />
 
-        {/* Hover glow overlay */}
         <div
           className={cn(
             "absolute inset-0 rounded-2xl transition-opacity duration-500 pointer-events-none",
@@ -171,6 +202,7 @@ export default function MemberCard({
               "0 0 30px rgba(0, 87, 157, 0.1), inset 0 0 20px rgba(0, 87, 157, 0.05)",
           }}
         />
+        </div>
       </div>
     </div>
   );
