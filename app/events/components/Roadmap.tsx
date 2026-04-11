@@ -1,28 +1,14 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import EventCard from './EventCard';
-import EventGalleryModal from './EventGalleryModal';
 import { EVENTS } from '../data';
-import type { EventItem } from '../data';
 
 export default function Roadmap() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
-
-  const handleExploreClick = useCallback((event: EventItem) => {
-    setSelectedEvent(event);
-    setModalOpen(true);
-  }, []);
-
-  const handleClose = useCallback(() => {
-    setModalOpen(false);
-  }, []);
-
   return (
     <>
-      <section className="relative py-16 lg:py-20 px-4 bg-transparent overflow-hidden" id="roadmap">
+      <section className="relative py-16 lg:py-24 px-4 bg-transparent overflow-hidden" id="events-list">
         {/* Circuit board decorative visuals */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0">
           {/* Ambient glows */}
@@ -38,17 +24,10 @@ export default function Roadmap() {
               <circle cx="20" cy="200" r="3" fill="var(--primary)" opacity="0.48" />
               <rect x="36.5" y="346.5" width="7" height="7" fill="var(--primary)" opacity="0.48" className="rotate-45" />
             </svg>
-            {/* Moving Pulse 1 */}
             <motion.div
               animate={{ top: ['-10%', '110%'] }}
               transition={{ duration: 7, repeat: Infinity, ease: 'linear' }}
               className="absolute left-[19.4px] w-[2.5px] h-32 bg-gradient-to-b from-transparent via-primary to-transparent shadow-[0_0_15px_var(--color-primary)]"
-            />
-            {/* Moving Pulse 2 */}
-            <motion.div
-              animate={{ top: ['-20%', '120%'] }}
-              transition={{ duration: 10, repeat: Infinity, ease: 'linear', delay: 3 }}
-              className="absolute left-[59.4px] w-[2.5px] h-24 bg-gradient-to-b from-transparent via-accent to-transparent shadow-[0_0_12px_var(--color-accent)]"
             />
           </div>
 
@@ -58,16 +37,7 @@ export default function Roadmap() {
               <path d="M100 0 V250 L80 270 V450 L100 470 V1000" stroke="var(--primary)" strokeWidth="1.5" fill="none" opacity="0.36" />
               <path d="M60 0 V350 L80 370 V550 L60 570 V1000" stroke="var(--primary)" strokeWidth="1.5" fill="none" opacity="0.42" />
               <path d="M20 0 V450 L40 470 L20 670 V1000" stroke="var(--primary)" strokeWidth="1.5" fill="none" opacity="0.36" />
-              <circle cx="100" cy="250" r="3" fill="var(--primary)" opacity="0.48" />
-              <rect x="36.5" y="466.5" width="7" height="7" fill="var(--primary)" opacity="0.48" className="rotate-45" />
             </svg>
-            {/* Moving Pulse 1 */}
-            <motion.div
-              animate={{ top: ['-15%', '115%'] }}
-              transition={{ duration: 9, repeat: Infinity, ease: 'linear', delay: 1 }}
-              className="absolute left-[19.4px] w-[2.5px] h-40 bg-gradient-to-b from-transparent via-primary to-transparent shadow-[0_0_15px_var(--color-primary)]"
-            />
-            {/* Moving Pulse 2 */}
             <motion.div
               animate={{ top: ['-10%', '110%'] }}
               transition={{ duration: 12, repeat: Infinity, ease: 'linear', delay: 5 }}
@@ -76,40 +46,12 @@ export default function Roadmap() {
           </div>
         </div>
 
-        <div className="relative max-w-5xl mx-auto flex flex-col items-center z-10">
-          {EVENTS.map((event, index) => {
-            const isRight = index % 2 === 0;
-            return (
-              <React.Fragment key={event.id}>
-                <div className="w-full relative z-10">
-                  <EventCard event={event} index={index} isRight={isRight} onExplore={handleExploreClick} />
-                </div>
-
-                {index !== EVENTS.length - 1 && (
-                  <div className="flex justify-center items-center py-6 sm:py-10 w-full">
-                    <div className="flex items-center gap-4 w-full max-w-sm opacity-60">
-                      <div className="flex-1 h-[2px] bg-gradient-to-r from-transparent to-primary/40" />
-                      <div className="w-2 h-2 rounded-full bg-accent shadow-[0_0_10px_var(--color-accent)]" />
-                      <div className="flex-1 h-[2px] bg-gradient-to-l from-transparent to-primary/40" />
-                    </div>
-                  </div>
-                )}
-              </React.Fragment>
-            );
-          })}
+        <div className="relative max-w-6xl mx-auto z-10 space-y-8">
+          {EVENTS.map((event, index) => (
+            <EventCard key={event.id} event={event} index={index} />
+          ))}
         </div>
       </section>
-
-      {/* Gallery Modal — rendered outside section to avoid stacking context issues */}
-      <AnimatePresence>
-        {modalOpen && selectedEvent && (
-          <EventGalleryModal
-            isOpen={modalOpen}
-            onClose={handleClose}
-            event={selectedEvent}
-          />
-        )}
-      </AnimatePresence>
     </>
   );
 }
