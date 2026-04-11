@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { Mail } from "lucide-react";
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -48,7 +47,7 @@ export default function ContactForm() {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      className="w-full h-full flex flex-col p-8 md:py-10 md:pr-10 md:pl-[calc(2.5rem+36%)] relative z-10 text-white"
+      className="w-full h-full flex flex-col p-8 md:py-10 md:pr-10 md:pl-[calc(2.5rem+36%)] relative z-10 text-white [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:p-10"
     >
       {/* Decorative Blur Orbs */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
@@ -100,7 +99,7 @@ export default function ContactForm() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="group relative flex items-center justify-center gap-3 w-full md:w-auto bg-white px-10 py-3 rounded-[6px] text-[15px] font-black text-[#00589e] uppercase tracking-wider overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] disabled:opacity-70 disabled:hover:scale-100"
+            className="group relative flex items-center justify-center gap-3 w-full md:w-auto bg-white px-10 py-3 rounded-[6px] text-[15px] font-black text-[#00589e] uppercase tracking-wider overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] disabled:opacity-70 disabled:hover:scale-100 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:w-full"
           >
             {/* Hover Expansion Background */}
             <div className="absolute inset-0 w-0 bg-gray-100 transition-all duration-300 ease-out group-hover:w-full z-0" />

@@ -7,16 +7,16 @@ export default function ContactMap() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
-      className="relative w-full h-[320px] md:h-[560px] p-4 md:p-8 flex items-center justify-center"
+      className="relative w-full h-[260px] sm:h-[320px] md:h-[560px] p-2 sm:p-4 md:p-8 flex items-center justify-center [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:h-[420px] [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:p-6"
     >
       {/* Solid Blue Offset Shadow Block - Darker Blue variation */}
-      <div className="absolute inset-4 md:inset-8 translate-x-6 translate-y-6 bg-[#004071] -z-10 shadow-lg rounded-[6px]" />
+      <div className="absolute inset-2 sm:inset-4 md:inset-8 translate-x-3 translate-y-3 sm:translate-x-6 sm:translate-y-6 bg-[#004071] -z-10 shadow-lg rounded-[6px] [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:inset-6" />
       
       {/* Map Container */}
       <div className="relative w-full h-full z-10 overflow-hidden shadow-sm bg-[#e4dfd0] rounded-[6px]">
         {/* Aesthetic Map Overlay Pin - Adjusted for uom.png location */}
         <motion.div 
-          className="absolute top-[31%] left-[51%] -translate-x-1/2 -translate-y-[calc(100%+8px)] z-30 pointer-events-none flex flex-col items-center"
+          className="absolute top-[31%] left-[51%] -translate-x-1/2 -translate-y-[calc(100%+8px)] z-30 pointer-events-none flex flex-col items-center [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:top-[32%]"
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -33,7 +33,7 @@ export default function ContactMap() {
                 width="64" 
                 height="80" 
                 viewBox="0 0 384 512" 
-                className="filter drop-shadow-lg transition-transform duration-300 group-hover:drop-shadow-2xl"
+                className="w-12 h-[60px] md:w-16 md:h-20 filter drop-shadow-lg transition-transform duration-300 group-hover:drop-shadow-2xl [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:w-14 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:h-[72px]"
               >
                 <path 
                   fill="#00589e" 
@@ -44,16 +44,16 @@ export default function ContactMap() {
               </svg>
               
               {/* Logo Container inside the pin's white circle - Precisely centered */}
-              <div className="absolute top-[37.5%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center">
+              <div className="absolute top-[37.5%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:w-9 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:h-9">
                 <img 
                   src="/logo/ieee-sb-logo-traced.svg" 
                   alt="IEEE Logo" 
-                  className="w-10 h-10 object-contain"
+                  className="w-8 h-8 md:w-10 md:h-10 object-contain [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:w-9 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:h-9"
                 />
               </div>
 
               {/* Subtle Glow beneath the pin */}
-              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-10 h-2 bg-black/20 blur-md rounded-[100%] group-hover:w-12 group-hover:h-3 transition-all duration-300" />
+              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 md:w-10 h-2 bg-black/20 blur-md rounded-[100%] group-hover:w-10 md:group-hover:w-12 group-hover:h-3 transition-all duration-300 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:w-9" />
             </div>
           </a>
         </motion.div>
@@ -64,7 +64,7 @@ export default function ContactMap() {
         <img 
           src="/uom.png" 
           alt="University of Moratuwa Map" 
-          className="w-full h-full object-cover scale-[1.05]"
+          className="w-full h-full object-cover scale-[1.02] md:scale-[1.05] [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:scale-[1.04]"
           style={{ 
             filter: 'grayscale(0.15) sepia(0.15) contrast(1.1) brightness(1.02)' 
           }}
