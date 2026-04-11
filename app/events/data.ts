@@ -1,5 +1,6 @@
 export interface EventItem {
   id: number;
+  slug: string;
   name: string;
   date: string;
   year: string;
@@ -13,6 +14,7 @@ export interface EventItem {
 export const EVENTS: EventItem[] = [
   {
     id: 1,
+    slug: 'open-week',
     name: 'OpenWeek',
     date: 'March–April 2026',
     year: '2026',
@@ -26,7 +28,7 @@ export const EVENTS: EventItem[] = [
       '/images/OpenWeek/490548038_1070622688430707_7495209506968855661_n.jpg',
       '/images/OpenWeek/491738205_1072774714882171_3527162206185045752_n.jpg',
       '/images/OpenWeek/491403887_1072266908266285_6922001982055160357_n.jpg',
-      '/images/OpenWeek/491263908_1070622021764107_5522331274366610838_n.jpg',
+      '/images/OpenWeek/491263908_1070620165097626_5522331274366610838_n.jpg',
       '/images/OpenWeek/491933533_1072775714882071_1377160089076719646_n.jpg',
       '/images/OpenWeek/491168232_1072271611599148_8691819334989874517_n.jpg',
       '/images/OpenWeek/491822725_1072268451599464_2237674188760635955_n.jpg',
@@ -46,6 +48,7 @@ export const EVENTS: EventItem[] = [
   },
   {
     id: 2,
+    slug: 'moraxtreme',
     name: 'MoraXtreme',
     date: 'October 2025 – January 2026',
     year: '2025',
@@ -69,6 +72,7 @@ export const EVENTS: EventItem[] = [
   },
   {
     id: 3,
+    slug: 'foresight',
     name: 'Foresight',
     date: 'Late 2025',
     year: '2025',
@@ -120,6 +124,7 @@ export const EVENTS: EventItem[] = [
   },
   {
     id: 4,
+    slug: 'ballerina',
     name: 'Ballerina',
     date: 'October 2025',
     year: '2025',
@@ -146,6 +151,7 @@ export const EVENTS: EventItem[] = [
   },
   {
     id: 5,
+    slug: 'agm-award-ceremony',
     name: 'AGM & Award Ceremony',
     date: 'October 2025',
     year: '2025',
@@ -178,6 +184,7 @@ export const EVENTS: EventItem[] = [
   },
   {
     id: 6,
+    slug: 'mercon',
     name: 'MERCon',
     date: 'August 2025',
     year: '2025',
@@ -217,6 +224,7 @@ export const EVENTS: EventItem[] = [
   },
   {
     id: 7,
+    slug: 'robotics-day',
     name: 'Robotics Day',
     date: 'Mid‑year 2025',
     year: '2025',
@@ -239,6 +247,7 @@ export const EVENTS: EventItem[] = [
   },
   {
     id: 8,
+    slug: 'finnc',
     name: 'FInnC',
     date: 'March–June 2025',
     year: '2025',
@@ -260,6 +269,7 @@ export const EVENTS: EventItem[] = [
   },
   {
     id: 9,
+    slug: 'ieeextreme',
     name: 'IEEEXtreme',
     date: 'October each year',
     year: 'Annual',
@@ -286,6 +296,7 @@ export const EVENTS: EventItem[] = [
   },
   {
     id: 10,
+    slug: 'riceup',
     name: 'RiceUP',
     date: '31 July 2025',
     year: '2025',
