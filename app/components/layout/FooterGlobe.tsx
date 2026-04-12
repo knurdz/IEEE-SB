@@ -115,9 +115,9 @@ export default function FooterGlobe() {
       const radius = GLOBE_RADIUS;
 
       const halo = ctx.createRadialGradient(cx, cy, radius * 0.74, cx, cy, radius * 1.34);
-      halo.addColorStop(0, 'rgba(8, 15, 26, 0)');
-      halo.addColorStop(0.66, 'rgba(12, 18, 31, 0.08)');
-      halo.addColorStop(1, 'rgba(0, 139, 230, 0.1)');
+      halo.addColorStop(0, 'rgba(255, 255, 255, 0)');
+      halo.addColorStop(0.66, 'rgba(255, 255, 255, 0.08)');
+      halo.addColorStop(1, 'rgba(255, 255, 255, 0.15)');
 
       ctx.beginPath();
       ctx.arc(cx, cy, radius * 1.3, 0, Math.PI * 2);
@@ -130,17 +130,15 @@ export default function FooterGlobe() {
       ctx.clip();
 
       const sphereFill = ctx.createRadialGradient(
-        cx - radius * 0.34,
-        cy - radius * 0.42,
-        radius * 0.14,
         cx,
         cy,
-        radius * 1.06,
+        radius * 0.1,
+        cx,
+        cy,
+        radius * 1.05,
       );
-      sphereFill.addColorStop(0, 'rgba(66, 74, 88, 0.22)');
-      sphereFill.addColorStop(0.18, 'rgba(15, 18, 27, 0.95)');
-      sphereFill.addColorStop(0.72, 'rgba(4, 6, 12, 0.99)');
-      sphereFill.addColorStop(1, 'rgba(0, 0, 0, 1)');
+      sphereFill.addColorStop(0, 'rgba(0, 60, 140, 0.95)');
+      sphereFill.addColorStop(1, 'rgba(0, 20, 60, 1)');
 
       ctx.fillStyle = sphereFill;
       ctx.fillRect(cx - radius, cy - radius, radius * 2, radius * 2);
@@ -298,7 +296,7 @@ export default function FooterGlobe() {
       ctx.arc(mapPinX, mapPinY, 5, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(255, 255, 255, 0.98)';
       ctx.shadowBlur = 26;
-      ctx.shadowColor = 'rgba(0, 139, 230, 0.8)';
+      ctx.shadowColor = 'rgba(255, 255, 255, 0.9)';
       ctx.fill();
 
       ctx.beginPath();
