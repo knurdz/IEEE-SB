@@ -84,14 +84,11 @@ function EventCard({ event, offset, dragOffset, onClick }: EventCardProps) {
 
         <div className="absolute left-4 top-4">
           <span className="rounded-sm border border-white/20 bg-black/40 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md">
-            {event.date}
+            {event.category}
           </span>
         </div>
 
         <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 text-left">
-          <p className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.25em] text-[#008be6] mb-2 drop-shadow-md">
-            {event.category}
-          </p>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <h4 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tighter text-white drop-shadow-xl uppercase italic">
               {event.title}
@@ -327,8 +324,8 @@ export default function EventsSection() {
                 onClick={() => setCenterIndex(index)}
                 className={
                   isActive
-                    ? "h-2 w-10 sm:w-16 rounded-full bg-[#00589e] transition-all duration-300"
-                    : "h-2 w-2 rounded-full bg-slate-300 hover:bg-slate-400 transition-all duration-300"
+                    ? "h-2.5 w-12 sm:w-20 rounded-full bg-[#00589e] transition-all duration-300"
+                    : "h-2.5 w-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all duration-300"
                 }
                 aria-label={`View ${event.title}`}
               />
@@ -371,9 +368,6 @@ export default function EventsSection() {
               <div className="flex w-full flex-1 flex-col overflow-y-auto p-4 sm:p-6 lg:p-8">
                 <div className="mb-5 flex flex-wrap items-center gap-2 sm:gap-3">
                   <span className="rounded-full border border-[#00589e]/20 bg-[#00589e]/5 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#00589e]">
-                    {selectedEvent.date}
-                  </span>
-                  <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
                     {selectedEvent.category}
                   </span>
                 </div>
