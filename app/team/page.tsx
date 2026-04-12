@@ -23,7 +23,6 @@ export default function TeamPage() {
           transition={fadeUpTransition()}
         >
           <SectionHeading
-            badge="IEEE Student Branch"
             title="Meet Our Team"
             highlight="Team"
             description="A connected structure of executive leaders and committee teams, organized to keep the branch moving with clarity, collaboration, and shared ownership."

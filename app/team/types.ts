@@ -1,5 +1,6 @@
 export const COMMITTEE_ORDER = [
   'Executive Committee',
+  'Leadership Body',
   'Logistics Management Committee',
   'Editorial Committee',
   'Design Committee',
@@ -23,7 +24,17 @@ export type PositionName =
   | 'WEBMASTER'
   | 'CHAPTER & AFFINITY GROUP COORDINATOR'
   | 'Committee Lead'
-  | 'Committee Member';
+  | 'Committee Member'
+  | 'EVENTS COMMITTEE LEAD'
+  | 'DESIGN COMMITTEE LEAD'
+  | 'FINANCE & IR COMMITTEE LEAD'
+  | 'LOGISTIC MANAGEMENT COMMITTEE CO-LEAD'
+  | 'LOGISTICS MANAGEMENT COMMITTEE CO-LEAD'
+  | 'PUBLICITY COMMITTEE LEAD'
+  | 'EDITORIAL COMMITTEE LEAD'
+  | 'VOLUNTEER MANAGEMENT COMMITTEE LEAD'
+  | 'MEMBERSHIP DEVELOPMENT COMMITTEE LEAD'
+  | 'RoboRoarZ 2025 CHAIRPERSON';
 
 export interface MemberInput {
   name: string;

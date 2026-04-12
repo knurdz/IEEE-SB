@@ -18,6 +18,16 @@ const POSITION_PRIORITY: Record<PositionName, number> = {
   WEBMASTER: 6,
   'CHAPTER & AFFINITY GROUP COORDINATOR': 7,
   'Committee Lead': 8,
+  'EVENTS COMMITTEE LEAD': 8,
+  'DESIGN COMMITTEE LEAD': 8,
+  'FINANCE & IR COMMITTEE LEAD': 8,
+  'LOGISTIC MANAGEMENT COMMITTEE CO-LEAD': 8,
+  'LOGISTICS MANAGEMENT COMMITTEE CO-LEAD': 8,
+  'PUBLICITY COMMITTEE LEAD': 8,
+  'EDITORIAL COMMITTEE LEAD': 8,
+  'VOLUNTEER MANAGEMENT COMMITTEE LEAD': 8,
+  'MEMBERSHIP DEVELOPMENT COMMITTEE LEAD': 8,
+  'RoboRoarZ 2025 CHAIRPERSON': 8,
   'Committee Member': 9,
 };
 
@@ -59,6 +69,7 @@ export function sortMembersByPriority(members: Member[]): Member[] {
 }
 
 function getTopRowSize(memberCount: number, topPriorityCount: number): number {
+  if (memberCount === 10) return 5;
   if (memberCount <= 3) return memberCount;
   if (memberCount <= 6) return topPriorityCount >= 2 ? 4 : 3;
   if (memberCount === 7) return topPriorityCount >= 2 ? 4 : 3;
