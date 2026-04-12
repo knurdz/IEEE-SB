@@ -25,9 +25,14 @@ export default function ClosingCTA() {
         Stay connected to get the latest updates on our upcoming events and workshops.
       </p>
 
-      <button className="glow-button px-10 py-3.5">
+      <a 
+        href="https://whatsapp.com/channel/0029VawdYwuFnSzHnM7b8J30" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="glow-button px-10 py-3.5 inline-block"
+      >
         Join IEEE UOM
-      </button>
+      </a>
 
       {/* Decorative glow */}
       <div className="absolute bottom-0 top-[50%] left-1/2 -translate-x-1/2 w-full max-w-sm h-[300px] bg-primary opacity-[0.05] blur-[100px] rounded-full pointer-events-none" />
