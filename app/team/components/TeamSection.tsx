@@ -59,7 +59,6 @@ export default function TeamSection({
 
         <div className="mb-10">
           <SectionHeading
-            badge={title === 'Executive Committee' ? 'Core Leadership' : 'Committee Network'}
             title={title}
             highlight={highlight}
             titleClassName="text-3xl font-bold uppercase tracking-[0.24em] text-slate-800 md:text-4xl"
