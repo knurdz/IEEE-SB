@@ -63,7 +63,7 @@ export default function Footer() {
         </div>
 
         {/* Quick Links */}
-        <div className="footer-links-col">
+        <div className="footer-links-col hidden lg:flex">
           <h3 className="footer-col-title">Quick Links</h3>
           <nav className="footer-link-list" aria-label="Footer quick links">
             {footerQuickLinks.map((item) => (
@@ -75,7 +75,7 @@ export default function Footer() {
         </div>
 
         {/* Contact Info */}
-        <div className="footer-links-col">
+        <div className="footer-links-col hidden lg:flex">
           <h3 className="footer-col-title">Get in Touch</h3>
           <div className="footer-link-list">
             <div className="flex items-center gap-3">

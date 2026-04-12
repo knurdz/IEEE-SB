@@ -8,7 +8,7 @@ import NetworkVisualization from './components/NetworkVisualization';
 import SiteBackground from '@/app/components/layout/SiteBackground';
 import { teamSections } from './data';
 
-export default function TeamsPage() {
+export default function TeamPage() {
   return (
     <div className="min-h-screen bg-white text-gray-900 overflow-x-hidden pt-20 relative">
       <SiteBackground />
@@ -24,8 +24,8 @@ export default function TeamsPage() {
         >
           <SectionHeading
             badge="IEEE Student Branch"
-            title="Meet Our Teams"
-            highlight="Teams"
+            title="Meet Our Team"
+            highlight="Team"
             description="A connected structure of executive leaders and committee teams, organized to keep the branch moving with clarity, collaboration, and shared ownership."
             titleClassName="text-5xl font-bold text-slate-800 md:text-6xl"
             descriptionClassName="text-slate-600 max-w-2xl mx-auto mt-4"

@@ -51,7 +51,7 @@ export default function Navbar() {
               )}
             >
               <Image
-                src="/logo/ieeesblogo.png"
+                src="/logo/ieeesblogo-light2.png"
                 alt="IEEE SB Logo"
                 className="h-9 w-auto object-contain"
                 width={172}
