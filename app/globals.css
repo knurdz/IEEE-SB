@@ -664,17 +664,17 @@ button {
 
 .footer-brand-desc {
   color: rgba(148, 163, 184, 0.85);
-  font-size: clamp(0.8rem, 0.95vw, 0.95rem);
-  line-height: 1.75;
-  max-width: 380px;
+  font-size: clamp(0.85rem, 1vw, 1rem); /* Slightly larger for better readability */
+  line-height: 1.8;
+  max-width: 580px; /* Expanded to fill space elegantly without overlapping globe */
   margin: 0;
 }
 
 /* Social links strip */
 .footer-social {
   display: flex;
-  gap: 0.75rem;
-  margin-top: 0.5rem;
+  gap: 1.25rem; /* Increased for better spatial distribution and touch targets */
+  margin-top: 1rem;
 }
 
 .footer-social-link {
