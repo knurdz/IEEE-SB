@@ -1,6 +1,5 @@
 import Image from 'next/image';
-import Link from 'next/link';
-import { footerSocialItems, footerQuickLinks } from '@/lib/site';
+import { footerSocialItems } from '@/lib/site';
 import FooterGlobe from './FooterGlobe';
 
 export default function Footer() {
@@ -60,18 +59,6 @@ export default function Footer() {
               </a>
             ))}
           </div>
-        </div>
-
-        {/* Quick Links */}
-        <div className="footer-links-col hidden lg:flex">
-          <h3 className="footer-col-title">Quick Links</h3>
-          <nav className="footer-link-list" aria-label="Footer quick links">
-            {footerQuickLinks.map((item) => (
-              <Link key={item.label} href={item.href} className="footer-link">
-                {item.label}
-              </Link>
-            ))}
-          </nav>
         </div>
 
       </div>

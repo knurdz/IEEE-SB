@@ -528,7 +528,7 @@ button {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: linear-gradient(180deg, #0a1628 0%, #060e1a 100%);
+  background: linear-gradient(180deg, #00589e 0%, #00457c 100%);
   padding: clamp(4rem, 6vw, 6rem) clamp(1.5rem, 5vw, 3rem) 0;
 }
 
@@ -637,11 +637,11 @@ button {
   z-index: 1;
   width: min(100%, 1280px);
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: clamp(2rem, 4vw, 5rem);
-  padding-right: clamp(4rem, 15vw, 20rem); /* Optimized clearance for globe */
-  padding-bottom: clamp(2rem, 3vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 5vw, 6rem);
+  padding-right: clamp(20rem, 45vw, 60rem); /* Aggressive clearance to keep text away from globe */
+  padding-bottom: clamp(3rem, 5vw, 6rem);
 }
 
 /* Brand column */
@@ -678,36 +678,37 @@ button {
 }
 
 .footer-social-link {
-  width: 38px;
-  height: 38px;
+  width: 42px; /* Slightly larger for better tap targets and visibility */
+  height: 42px;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   overflow: hidden;
+  backdrop-filter: blur(4px);
 }
 
 .footer-social-link img {
-  width: 100%;
-  height: 100%;
+  width: 20px; /* Precise sizing for icons */
+  height: 20px;
   display: block;
-  opacity: 0.8;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 1;
+  filter: brightness(0) invert(1); /* Ensures all icons are consistent high-contrast white */
+  transition: all 0.3s ease;
 }
 
 .footer-social-link:hover {
-  background: rgba(0, 139, 230, 0.15);
-  border-color: rgba(0, 139, 230, 0.35);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 139, 230, 0.15);
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .footer-social-link:hover img {
-  opacity: 1;
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
 /* Link columns */
@@ -871,12 +872,13 @@ button {
   }
 
   .footer-content {
-    grid-template-columns: 1fr 1fr;
     padding-right: 0;
   }
 
   .footer-brand {
     grid-column: 1 / -1;
+    align-items: center;
+    text-align: center;
   }
 }
 
@@ -895,7 +897,9 @@ button {
   }
 
   .footer-content {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    padding-right: 0;
     gap: 2.5rem;
   }
 
