@@ -9,7 +9,7 @@ import { footerSocialItems } from '@/lib/site';
 
 export default function ContactSection() {
   return (
-    <section className="relative w-full min-h-screen bg-white overflow-hidden py-20 px-4 md:px-0 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:px-8" id="contact">
+    <section className="relative w-full min-h-screen bg-white overflow-hidden py-16 lg:py-20 px-4 md:px-0 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:px-8" id="contact">
       {/* Topographic Background Pattern */}
       <div className="absolute inset-0 opacity-[0.05] pointer-events-none">
         <svg width="100%" height="100%" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
