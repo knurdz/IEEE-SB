@@ -32,19 +32,10 @@ function ArrowRight({ className }: { className?: string }) {
 
 const EventCard = React.memo<EventCardProps>(function EventCard({ event, index }) {
   const [imgFailed, setImgFailed] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const shouldReduceMotion = useReducedMotion();
 
-  const images = event.images && event.images.length > 0 ? event.images : [];
-
-  // Auto-play carousel
-  useEffect(() => {
-    if (images.length <= 1) return;
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [images.length]);
+  // Use mainImage if available, else fallback to images array
+  const displayImage = event.mainImage || (event.images && event.images.length > 0 ? event.images[0] : null);
 
   return (
     <motion.div
@@ -63,24 +54,20 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index }
       <div className="flex flex-col md:flex-row min-h-[300px] md:min-h-[260px]">
         {/* Left Side: Image */}
         <div className="relative w-full md:w-[40%] h-[200px] md:h-auto overflow-hidden bg-surface-alt">
-          {!imgFailed && images.length > 0 && (
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentImageIndex}
-                className="absolute inset-0 w-full h-full"
-                initial={{ opacity: 0, scale: 1.1 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 1.2, ease: 'easeInOut' }}
-              >
-                <img
-                  src={images[currentImageIndex]}
-                  alt={event.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  onError={() => setImgFailed(true)}
-                />
-              </motion.div>
-            </AnimatePresence>
+          {!imgFailed && displayImage && (
+            <motion.div
+              className="absolute inset-0 w-full h-full"
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, ease: 'easeInOut' }}
+            >
+              <img
+                src={displayImage}
+                alt={event.name}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                onError={() => setImgFailed(true)}
+              />
+            </motion.div>
           )}
           
           {/* Category Badge on Image (Mobile) */}
