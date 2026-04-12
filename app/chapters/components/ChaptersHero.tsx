@@ -48,7 +48,7 @@ export default function ChaptersHero() {
         .hero-tagline-2 {
           font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
           font-weight: 700; /* standard bold to avoid synthetic bolding */
-          font-size: 32px;
+          font-size: 28px;
           line-height: 1.1;
           letter-spacing: -0.02em;
           background: linear-gradient(90deg, #00579d 0%, #008be6 100%);
@@ -309,22 +309,13 @@ export default function ChaptersHero() {
         className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-32 pb-0 flex flex-col items-center"
         style={{ y, opacity }}
       >
-        <motion.p 
-            className="hero-tagline-1"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={fadeUpTransition(0.2, 0.8)}
-        >
-          IEEE Technical Communities
-        </motion.p>
-        
         <motion.h1 
             className="hero-tagline-2 pb-2"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={fadeUpTransition(0.4, 0.8)}
         >
-          Our Societies
+          Our Technical Chapter & Affinity groups
         </motion.h1>
       </motion.div>
     </section>
