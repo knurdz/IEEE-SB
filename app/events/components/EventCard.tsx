@@ -123,10 +123,7 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index }
               {event.name}
             </h3>
 
-            <p className="text-accent/80 font-medium text-sm mb-4 italic flex items-center gap-2">
-               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
-               {event.date}
-            </p>
+            {/* Removed event date display */}
 
             <p className="text-muted-foreground text-[14px] md:text-[15px] leading-relaxed line-clamp-3 md:line-clamp-2 max-w-xl">
               {event.description}
