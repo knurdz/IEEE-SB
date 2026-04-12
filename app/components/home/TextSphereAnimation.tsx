@@ -449,13 +449,16 @@ export default function TextSphereAnimation() {
         }
 
         const pinsData = [
-          { name: 'USA', lat: 37.0, lon: -95.0 },
-          { name: 'Canada', lat: 56.1, lon: -106.3 },
-          { name: 'UK', lat: 51.5, lon: -0.1 },
-          { name: 'Africa', lat: 9.0, lon: 8.0 },
-          { name: 'Sri Lanka', lat: 7.87, lon: 80.77 },
-          { name: 'Japan', lat: 36.2, lon: 138.2 },
-          { name: 'India', lat: 20.59, lon: 78.96 },
+          { name: 'Region 1', lat: 42.3601, lon: -71.0589 }, // Boston, USA
+          { name: 'Region 2', lat: 41.2033, lon: -77.1945 }, // Pennsylvania, USA
+          { name: 'Region 3', lat: 33.7490, lon: -84.3880 }, // Atlanta, USA
+          { name: 'Region 4', lat: 41.8781, lon: -87.6298 }, // Chicago, USA
+          { name: 'Region 5', lat: 31.9686, lon: -99.9018 }, // Texas, USA
+          { name: 'Region 6', lat: 37.7749, lon: -122.4194 }, // San Francisco, USA
+          { name: 'Region 7', lat: 43.6532, lon: -79.3832 }, // Toronto, Canada
+          { name: 'Region 8', lat: 52.5200, lon: 13.4050 }, // Berlin, Germany
+          { name: 'Region 9', lat: -23.5505, lon: -46.6333 }, // São Paulo, Brazil
+          { name: 'Region 10', lat: 6.7951, lon: 79.9009 }, // Sri Lanka, University of Moratuwa
         ];
 
         const extraMaterials: any[] = [];
@@ -474,7 +477,7 @@ export default function TextSphereAnimation() {
 
           const pinExtras: any[] = [];
 
-          if (pin.name === 'Sri Lanka') {
+          if (pin.name === 'Region 10') {
             const spikeHeight = 8;
             const topSphereRadius = 2.2;
 
@@ -522,7 +525,7 @@ export default function TextSphereAnimation() {
             pinExtras.push(dot);
 
             const { sprite: labelSprite, material: labelMat } =
-              createLabelSprite('UoM Student Branch');
+              createLabelSprite('University of Moratuwa');
             labelSprite.position.copy(labelPos);
             earth.add(labelSprite);
             extraMaterials.push(labelMat);
