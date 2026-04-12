@@ -106,10 +106,6 @@ export default function Footer() {
         <p className="footer-copyright">
           © {currentYear} IEEE Student Branch — University of Moratuwa. All rights reserved.
         </p>
-        <p className="footer-legal">
-          IEEE is the world&apos;s largest technical professional organization
-          dedicated to advancing technology for the benefit of humanity.
-        </p>
       </div>
     </footer>
   );
