@@ -72,30 +72,30 @@ export default function EventDetailPage({ params }: EventPageProps) {
               <h1 className="text-4xl md:text-6xl font-orbitron font-bold text-primary mb-6 leading-tight">
                 {event.name}
               </h1>
+
+              {event.mainImage && (
+                <motion.div 
+                  className="relative w-full aspect-video md:aspect-[21/9] rounded-3xl overflow-hidden shadow-2xl border border-primary/10 mb-12"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                >
+                  <img 
+                    src={event.mainImage} 
+                    alt={event.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
+                </motion.div>
+              )}
             </div>
 
-            <div className="lg:col-span-7">
+            <div className="lg:col-span-12">
               <div className="prose prose-lg max-w-none">
                 <p className="text-[17px] md:text-[19px] leading-relaxed text-muted-foreground font-sans text-justify">
                   {event.description}
                 </p>
               </div>
-            </div>
-
-            <div className="lg:col-span-5">
-              <motion.div 
-                className="relative rounded-3xl overflow-hidden shadow-2xl border border-primary/10"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8 }}
-              >
-                <img 
-                  src={event.images[0]} 
-                  alt={event.name}
-                  className="w-full h-auto object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
-              </motion.div>
             </div>
           </div>
         </div>
