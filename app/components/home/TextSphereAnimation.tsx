@@ -113,9 +113,12 @@ export default function TextSphereAnimation() {
           container.appendChild(this.renderer.domElement);
         }
 
+        const width = container ? container.clientWidth : window.innerWidth;
+        const height = container ? container.clientHeight : window.innerHeight;
+
         this.camera = new THREE.PerspectiveCamera(
           params.fov,
-          window.innerWidth / window.innerHeight,
+          width / height,
           params.zNear,
           params.zFar
         );
@@ -124,9 +127,11 @@ export default function TextSphereAnimation() {
         this.onUpdate = null;
 
         this.resize = () => {
-          this.camera.aspect = window.innerWidth / window.innerHeight;
+          const w = container ? container.clientWidth : window.innerWidth;
+          const h = container ? container.clientHeight : window.innerHeight;
+          this.camera.aspect = w / h;
           this.camera.updateProjectionMatrix();
-          this.renderer.setSize(window.innerWidth, window.innerHeight);
+          this.renderer.setSize(w, h);
         };
 
         this.tick = () => {
@@ -694,6 +699,14 @@ export default function TextSphereAnimation() {
 
           earthSphere.rotation.y += idleSpeed.value * timeScale;
 
+          // Responsive scale for sphereGroup
+          const container = document.getElementById('three-container');
+          const width = container ? container.clientWidth : window.innerWidth;
+          const height = container ? container.clientHeight : window.innerHeight;
+          const K = Math.min(0.756, (width * 0.75) / height);
+          const targetScale = 2.5 * (K / Math.sqrt(3 + K * K));
+          sphereGroup.scale.set(targetScale, targetScale, targetScale);
+
           textAnimation.visible = textAnimation.material.opacity > 0.01;
 
           const pinData: any[] = (earthSphere as any).pinObjects || [];
@@ -815,7 +828,7 @@ export default function TextSphereAnimation() {
   }, []);
 
   return (
-    <div className="relative w-full h-screen bg-white overflow-hidden">
+    <div className="relative w-full h-[65vh] md:h-screen bg-white overflow-hidden">
       {/* Loading Indicator */}
       {isLoading && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-white">
@@ -1130,8 +1143,8 @@ export default function TextSphereAnimation() {
         id="bg-globe"
         className="absolute inset-0 m-auto rounded-full pointer-events-none"
         style={{
-          width: '75.6vh',
-          height: '75.6vh',
+          width: 'min(75.6vh, 75vw)',
+          height: 'min(75.6vh, 75vw)',
           zIndex: 5,
           border: '1px solid rgba(0, 82, 255, 0.12)',
           boxShadow: '0 0 20px rgba(0, 82, 255, 0.08), 0 0 40px rgba(0, 82, 255, 0.04)'
@@ -1144,8 +1157,8 @@ export default function TextSphereAnimation() {
         ref={hitAreaRef}
         className="absolute inset-0 m-auto rounded-full z-30 cursor-pointer"
         style={{
-          width: '75.6vh',
-          height: '75.6vh',
+          width: 'min(75.6vh, 75vw)',
+          height: 'min(75.6vh, 75vw)',
         }}
       />
 
@@ -1166,10 +1179,10 @@ export default function TextSphereAnimation() {
       </div>
 
       {/* --- LEFT VERTICAL LABEL FOR GLOBE STATE --- */}
-      <div id="side-label-globe" className="absolute left-[13px] md:left-[18px] top-1/2 -translate-y-1/2 z-40 flex flex-col items-center opacity-100 pointer-events-none">
+      <div id="side-label-globe" className="absolute left-[4px] md:left-[18px] top-1/2 -translate-y-1/2 z-40 flex flex-col items-center opacity-100 pointer-events-none">
         <div className="w-[1px] h-24 md:h-36 bg-gradient-to-b from-transparent to-[#173599]/60 mb-6" />
         <p
-          className="text-[#173599] text-[13px] uppercase font-bold tracking-[0.4em]"
+          className="text-[#173599] text-[9px] md:text-[13px] uppercase font-bold tracking-[0.2em] md:tracking-[0.4em]"
           style={{
             fontFamily: "'Inter', sans-serif",
             writingMode: 'vertical-rl',
@@ -1182,10 +1195,10 @@ export default function TextSphereAnimation() {
       </div>
 
       {/* --- LEFT VERTICAL LABEL FOR TEXT STATE --- */}
-      <div id="side-label" className="absolute left-[13px] md:left-[18px] top-1/2 -translate-y-1/2 z-40 flex flex-col items-center opacity-0 pointer-events-none">
+      <div id="side-label" className="absolute left-[4px] md:left-[18px] top-1/2 -translate-y-1/2 z-40 flex flex-col items-center opacity-0 pointer-events-none">
         <div className="w-[1px] h-24 md:h-36 bg-gradient-to-b from-transparent to-[#173599]/60 mb-6" />
         <p
-          className="text-[#173599] text-[13px] uppercase font-bold tracking-[0.4em]"
+          className="text-[#173599] text-[9px] md:text-[13px] uppercase font-bold tracking-[0.2em] md:tracking-[0.4em]"
           style={{
             fontFamily: "'Inter', sans-serif",
             writingMode: 'vertical-rl',
