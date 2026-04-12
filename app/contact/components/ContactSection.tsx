@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import ContactForm from './ContactForm';
 import ContactMap from './ContactMap';
+import { footerSocialItems } from '@/lib/site';
 
 export default function ContactSection() {
   return (
@@ -48,17 +49,6 @@ export default function ContactSection() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-6 group">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center text-[#00589e] shrink-0 border-2 border-[#00589e]/20 group-hover:bg-[#00589e] group-hover:text-white transition-all cursor-pointer">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <div className="flex flex-col items-start flex-1">
-                   <p className="text-[15px] font-bold text-black/60 text-left leading-tight">
-                     +94 11 123 4567
-                   </p>
-                </div>
-              </div>
-
               <div className="flex items-center gap-6 group text-left">
                 <div className="w-10 h-10 rounded-full flex items-center justify-center text-[#00589e] shrink-0 border-2 border-[#00589e]/30 bg-[#00589e]/5 group-hover:bg-[#00589e] group-hover:text-white transition-all cursor-pointer">
                   <Mail className="w-5 h-5" />
@@ -74,16 +64,18 @@ export default function ContactSection() {
             {/* Social Connect Icons */}
             <div className="flex flex-col gap-4 mt-12 md:mt-16">
               <span className="text-[12px] font-bold text-black/40 uppercase tracking-widest">Connect With Us</span>
-              <div className="flex items-center gap-4">
-                <a href="https://facebook.com/ieeeuom" target="_blank" rel="noopener noreferrer" className="transition-transform hover:-translate-y-1 hover:brightness-110 drop-shadow-md">
-                  <Image src="/social/FB.svg" alt="Facebook" width={44} height={44} />
-                </a>
-                <a href="https://twitter.com/ieeeuom" target="_blank" rel="noopener noreferrer" className="transition-transform hover:-translate-y-1 hover:brightness-110 drop-shadow-md">
-                  <Image src="/social/X.svg" alt="X (Twitter)" width={44} height={44} />
-                </a>
-                <a href="https://instagram.com/ieeeuom" target="_blank" rel="noopener noreferrer" className="transition-transform hover:-translate-y-1 hover:brightness-110 drop-shadow-md">
-                  <Image src="/social/Insta.svg" alt="Instagram" width={44} height={44} />
-                </a>
+              <div className="flex items-center flex-wrap gap-4">
+                {footerSocialItems.map((social) => (
+                  <a 
+                    key={social.label} 
+                    href={social.href} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="transition-transform hover:-translate-y-1 hover:brightness-110 drop-shadow-md"
+                  >
+                    <Image src={social.icon} alt={social.label} width={44} height={44} />
+                  </a>
+                ))}
               </div>
             </div>
           </motion.div>

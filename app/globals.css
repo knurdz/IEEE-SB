@@ -638,9 +638,9 @@ button {
   width: min(100%, 1280px);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.5fr 0.4fr 1.1fr;
+  grid-template-columns: 1.5fr 1fr;
   gap: clamp(2rem, 4vw, 5rem);
-  padding-right: clamp(12rem, 25vw, 30rem); /* Increased clearance for globe */
+  padding-right: clamp(4rem, 15vw, 20rem); /* Optimized clearance for globe */
   padding-bottom: clamp(2rem, 3vw, 3rem);
 }
 
