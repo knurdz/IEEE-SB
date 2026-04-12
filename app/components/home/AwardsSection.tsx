@@ -29,7 +29,41 @@ export default function AwardsSection() {
 
         <div className="relative flex flex-col lg:flex-row items-center lg:items-center justify-between gap-12 lg:gap-8">
           
-          {/* Left Side: National Trophies */}
+          {/* Left Side: International Certificate */}
+          <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="w-full lg:w-[45%] relative z-20"
+          >
+            {/* Tech frame around certificate */}
+            <div className="relative rounded-xl bg-gradient-to-br from-gray-300 via-gray-100 to-gray-400 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/50">
+              {/* Glass reflection overlay */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-white/40 rounded-lg pointer-events-none z-10" />
+              
+              <div className="relative rounded-lg overflow-hidden border-4 border-[#2c3e50]">
+                {/* Fallback layout if specific image isn't available, otherwise use next/image */}
+                <Image
+                  src={featuredAward.image || "/images/placeholder-cert.jpg"}
+                  alt={featuredAward.imageAlt}
+                  width={3309}
+                  height={2310}
+                  className="w-full h-auto block"
+                  priority
+                />
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <h3 className="text-xl font-bold uppercase text-gray-900 mb-2">International Awards</h3>
+              <p className="text-gray-700 leading-relaxed max-w-md">
+                Most Outstanding Student Branch in the Asia-Pacific Region at the IEEE Region 10 SAC Awards.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Right Side: National Trophies */}
           <div className="w-full lg:w-[45%] flex flex-col gap-10 relative z-10">
             <div className="mb-[-20px]">
               <h3 className="text-xl font-bold uppercase text-gray-900 mb-2">National (Sri Lankan) Awards</h3>
@@ -41,7 +75,7 @@ export default function AwardsSection() {
             {secondaryAwards.slice(0, 3).map((award, index) => (
               <motion.div 
                 key={award.id}
-                initial={{ opacity: 0, x: -50 }}
+                initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
@@ -50,7 +84,7 @@ export default function AwardsSection() {
                 {/* Tech Base with original award image */}
                 <div className="relative shrink-0 w-24 h-28 transform transition-transform group-hover:scale-110">
                   <div className="absolute bottom-0 w-full h-12 bg-gradient-to-b from-gray-300 to-gray-500 rounded-lg transform skew-x-[-10deg] border border-blue-200 shadow-[0_0_15px_rgba(91,192,235,0.3)]"></div>
-                  <div className="absolute bottom-2 w-full h-10 bg-gradient-to-b from-gray-200 to-gray-400 rounded-lg transform skew-x-10 border border-blue-200"></div>
+                  <div className="absolute bottom-2 w-full h-10 bg-gradient-to-b from-gray-200 to-gray-400 rounded-lg transform skew-x10 border border-blue-200"></div>
                   <div className="absolute inset-x-0 bottom-4 flex justify-center h-20 w-20 mx-auto overflow-hidden rounded-md border-2 border-white/50 shadow-md">
                     <Image
                       src={award.image}
@@ -76,40 +110,6 @@ export default function AwardsSection() {
               </motion.div>
             ))}
           </div>
-
-          {/* Right Side: International Certificate */}
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="w-full lg:w-[45%] relative z-20"
-          >
-            {/* Tech frame around certificate */}
-            <div className="relative p-3 rounded-xl bg-gradient-to-br from-gray-300 via-gray-100 to-gray-400 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/50">
-              {/* Glass reflection overlay */}
-              <div className="absolute inset-2 bg-gradient-to-tr from-white/10 to-white/40 rounded-lg pointer-events-none z-10" />
-              
-              <div className="relative rounded-lg overflow-hidden border-4 border-[#2c3e50] bg-white aspect-[4/3]">
-                {/* Fallback layout if specific image isn't available, otherwise use next/image */}
-                <Image
-                  src={featuredAward.image || "/images/placeholder-cert.jpg"}
-                  alt={featuredAward.imageAlt}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-contain"
-                  priority
-                />
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <h3 className="text-xl font-bold uppercase text-gray-900 mb-2">International Awards</h3>
-              <p className="text-gray-700 leading-relaxed max-w-md">
-                Most Outstanding Student Branch in the Asia-Pacific Region at the IEEE Region 10 SAC Awards.
-              </p>
-            </div>
-          </motion.div>
         </div>
       </div>
     </section>
