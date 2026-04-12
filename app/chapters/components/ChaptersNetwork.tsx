@@ -41,39 +41,49 @@ export default function ChaptersNetwork() {
   const rightNodes = ALL_NODES.slice(8);
 
   return (
-    <section className="relative w-full pt-0 pb-4 md:pb-12 bg-transparent overflow-hidden flex flex-col items-center justify-center -mt-16 md:-mt-24 z-10 px-4">
+    <section className="relative w-full pt-0 pb-4 md:pb-12 bg-transparent overflow-hidden flex flex-col items-center justify-center mt-8 md:-mt-12 z-10 px-4">
       <style jsx>{`
         .network-container {
-          transform: scale(0.4);
+          transform: scale(0.7); /* Mobile scales just the center hexagon */
+        }
+        @media (min-width: 375px) {
+          .network-container {
+            transform: scale(0.85);
+          }
         }
         @media (min-width: 480px) {
           .network-container {
-            transform: scale(0.5);
+            transform: scale(1);
           }
         }
         @media (min-width: 640px) {
           .network-container {
-            transform: scale(0.65);
+            transform: scale(1.1);
           }
         }
         @media (min-width: 768px) {
           .network-container {
-            transform: scale(0.75);
+            transform: scale(0.53); /* Back to fitting the entire extended grid */
           }
         }
         @media (min-width: 1024px) {
           .network-container {
-            transform: scale(0.9);
+            transform: scale(0.72);
           }
         }
         @media (min-width: 1200px) {
+          .network-container {
+            transform: scale(0.85);
+          }
+        }
+        @media (min-width: 1400px) {
           .network-container {
             transform: scale(1);
           }
         }
       `}</style>
       
-      <div className="relative w-full max-w-[1200px] h-[350px] sm:h-[450px] md:h-[600px] flex items-center justify-center z-20 overflow-visible">
+      <div className="relative w-full max-w-[1200px] h-[220px] min-[375px]:h-[260px] min-[480px]:h-[300px] sm:h-[350px] md:h-[500px] lg:h-[600px] xl:h-[650px] flex items-center justify-center z-20 overflow-visible">
         <div className="network-container relative w-full h-full flex items-center justify-center transition-transform duration-500 ease-out">
           {/* ── CENTER IEEE HEXAGON (z-30) ── */}
           <motion.div
@@ -105,7 +115,7 @@ export default function ChaptersNetwork() {
             return (
               <motion.div
                 key={`left-${node.id}`}
-                className="absolute z-20"
+                className="absolute z-20 hidden md:block"
                 initial={{ opacity: 0, x: node.x - 50, y: node.y }}
                 whileInView={{ opacity: 1, x: node.x, y: node.y }}
                 viewport={{ once: true }}
@@ -141,7 +151,7 @@ export default function ChaptersNetwork() {
             return (
               <motion.div
                 key={`right-${node.id}`}
-                className="absolute z-20"
+                className="absolute z-20 hidden md:block"
                 initial={{ opacity: 0, x: node.x + 50, y: node.y }}
                 whileInView={{ opacity: 1, x: node.x, y: node.y }}
                 viewport={{ once: true }}
