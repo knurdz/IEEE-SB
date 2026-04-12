@@ -273,6 +273,7 @@ export default function EventsSection() {
           </div>
 
           <motion.div
+            suppressHydrationWarning
             className="relative flex h-[360px] sm:h-[430px] lg:h-[470px] w-full cursor-grab items-center justify-center [perspective:1200px] active:cursor-grabbing"
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
