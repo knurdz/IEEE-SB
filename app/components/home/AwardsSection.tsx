@@ -16,7 +16,7 @@ export default function AwardsSection() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="mb-12 lg:mb-16 text-center">
-          <h2 className="text-4xl lg:text-7xl text-gray-800 flex items-baseline justify-center gap-4 font-sans tracking-tight mb-6">
+          <h2 className="text-[2rem] sm:text-4xl lg:text-7xl text-gray-800 flex flex-col sm:flex-row items-center sm:items-baseline justify-center gap-2 sm:gap-4 font-sans tracking-tight mb-6 text-center">
             <span className="font-light text-gray-700">Awards &</span>
             <span className="font-black font-serif text-gray-900 uppercase">
               Recognition
