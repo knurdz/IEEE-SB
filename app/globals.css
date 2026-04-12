@@ -678,37 +678,36 @@ button {
 }
 
 .footer-social-link {
-  width: 42px; /* Slightly larger for better tap targets and visibility */
-  height: 42px;
+  width: 38px;
+  height: 38px;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   text-decoration: none;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.3s ease;
   overflow: hidden;
-  backdrop-filter: blur(4px);
 }
 
 .footer-social-link img {
-  width: 20px; /* Precise sizing for icons */
-  height: 20px;
+  width: 100%;
+  height: 100%;
   display: block;
-  opacity: 1;
-  filter: brightness(0) invert(1); /* Ensures all icons are consistent high-contrast white */
-  transition: all 0.3s ease;
+  opacity: 0.8;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .footer-social-link:hover {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  background: rgba(0, 139, 230, 0.15);
+  border-color: rgba(0, 139, 230, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 139, 230, 0.15);
 }
 
 .footer-social-link:hover img {
-  transform: scale(1.1);
+  opacity: 1;
+  transform: scale(1.05);
 }
 
 /* Link columns */
@@ -872,13 +871,18 @@ button {
   }
 
   .footer-content {
-    padding-right: 0;
+    /* Maintain generous clearance for globe on tablets */
+    padding-right: 35%; 
   }
 
   .footer-brand {
     grid-column: 1 / -1;
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .footer-globe-wrapper {
+    transform: translate(18%, 10%);
   }
 }
 
