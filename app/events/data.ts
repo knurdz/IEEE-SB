@@ -9,6 +9,7 @@ export interface EventItem {
   description: string;
   images: string[];
   gallery: string[];
+  facebookUrl?: string;
 }
 
 export const EVENTS: EventItem[] = [
@@ -45,6 +46,7 @@ export const EVENTS: EventItem[] = [
       '/images/OpenWeek/490966013_1072268101599499_10819310994757897_n.jpg',
       '/images/OpenWeek/491974489_1072769378216038_6614258640913092672_n.jpg'
     ],
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1046768850816091&type=3'
   },
   {
     id: 2,
@@ -69,6 +71,7 @@ export const EVENTS: EventItem[] = [
       '/images/MoraXtreme/618330677_1293602622799378_7537267846512385473_n.jpg',
       '/images/MoraXtreme/616111877_1293600412799599_1585596267977142708_n.jpg'
     ],
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1293608876132086&type=3'
   },
   {
     id: 3,
@@ -121,6 +124,7 @@ export const EVENTS: EventItem[] = [
       '/images/foresight/536269592_1171389341687374_4781447601355860113_n.jpg',
       '/images/foresight/536273478_1171391118353863_296049353392202877_n.jpg'
     ],
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1171313061695002&type=3'
   },
   {
     id: 4,
@@ -181,6 +185,7 @@ export const EVENTS: EventItem[] = [
       '/images/AGM & Award Ceremony/568708526_1222965406529767_4480867106999546070_n.jpg',
       '/images/AGM & Award Ceremony/568833701_1222975843195390_2988351440961654452_n.jpg'
     ],
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.953390813487229&type=3'
   },
   {
     id: 6,
@@ -221,6 +226,7 @@ export const EVENTS: EventItem[] = [
       '/images/Mercon/539414806_1176439994515642_36171394262379708_n.jpg',
       '/images/Mercon/539632214_1176417277851247_2303665440838680537_n.jpg'
     ],
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.417277851247230&type=3'
   },
   {
     id: 7,
@@ -244,6 +250,7 @@ export const EVENTS: EventItem[] = [
       '/images/Robotics Day/495375690_1090885933071049_8908086758718771207_n.jpg',
       '/images/Robotics Day/497444705_1090881616404814_1269796916803844776_n.jpg'
     ],
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1090920843067558&type=3'
   },
   {
     id: 8,
@@ -266,6 +273,7 @@ export const EVENTS: EventItem[] = [
       '/images/Finnc/524374949_1149901283836180_1465204607473100205_n.jpg',
       '/images/Finnc/524426322_1149901920502783_2288821748845296099_n.jpg'
     ],
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1107733941386248&type=3'
   },
   {
     id: 9,
@@ -293,6 +301,7 @@ export const EVENTS: EventItem[] = [
       '/images/IEEEXtreme/594964387_1263594965800144_5872589232680750969_n.jpg',
       '/images/IEEEXtreme/596314411_1263595729133401_1307120687459112949_n.jpg'
     ],
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.964019195757724&type=3'
   },
   {
     id: 10,
@@ -325,5 +334,6 @@ export const EVENTS: EventItem[] = [
       '/images/riceup/537700902_1173265464833095_1273390993585438876_n.jpg',
       '/images/riceup/538360935_1173269878165987_7039391497052785480_n.jpg'
     ],
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1146157547543887&type=3'
   },
 ];
