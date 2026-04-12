@@ -297,9 +297,6 @@ export default function SocietySections() {
                 </p>
 
                 <div className="w-full max-w-md mb-8 md:mb-10 flex flex-col items-center md:items-start">
-                  <p className="text-xs font-semibold tracking-[0.18em] uppercase text-gray-500 mb-4 text-center md:text-left">
-                    Connect with {society.title}
-                  </p>
                   <div className="flex justify-center md:justify-start w-full">
                     <SocialLinks
                       links={society.links}
@@ -308,23 +305,6 @@ export default function SocietySections() {
                     />
                   </div>
                 </div>
-
-                {websiteUrl ? (
-                  <a
-                    href={websiteUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ backgroundColor: society.color }}
-                    className="inline-flex items-center gap-2 px-8 py-3.5 text-white rounded-full font-bold shadow-lg transition-all hover:-translate-y-1 hover:shadow-2xl hover:brightness-110"
-                  >
-                    Visit Website
-                    <span aria-hidden="true">↗</span>
-                  </a>
-                ) : (
-                  <span className="px-8 py-3.5 rounded-full font-semibold text-gray-500 bg-gray-100 border border-gray-200 cursor-not-allowed">
-                    Website coming soon
-                  </span>
-                )}
               </div>
             </motion.div>
           );
