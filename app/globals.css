@@ -529,7 +529,7 @@ button {
   isolation: isolate;
   overflow: hidden;
   background: linear-gradient(180deg, #00589e 0%, #00457c 100%);
-  padding: clamp(4rem, 6vw, 6rem) clamp(1.5rem, 5vw, 3rem) 0;
+  padding: clamp(1.25rem, 2vw, 2rem) clamp(1.5rem, 5vw, 3rem) 0;
 }
 
 /* Footer globe wrapper for high-vis corner decoration */
@@ -639,9 +639,9 @@ button {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: clamp(2.5rem, 5vw, 6rem);
+  gap: clamp(1rem, 2vw, 3rem);
   padding-right: clamp(20rem, 45vw, 60rem); /* Aggressive clearance to keep text away from globe */
-  padding-bottom: clamp(3rem, 5vw, 6rem);
+  padding-bottom: clamp(1rem, 2vw, 3rem);
 }
 
 /* Brand column */
@@ -673,8 +673,8 @@ button {
 /* Social links strip */
 .footer-social {
   display: flex;
-  gap: 1.25rem; /* Increased for better spatial distribution and touch targets */
-  margin-top: 1rem;
+  gap: 1rem; 
+  margin-top: 0.5rem;
 }
 
 .footer-social-link {
@@ -815,7 +815,7 @@ button {
 .footer-bottom {
   width: min(100%, 1280px);
   margin: 0 auto;
-  padding: clamp(1rem, 1.5vw, 1.5rem) 0;
+  padding: 0.5rem 0;
   position: relative;
   z-index: 1;
   display: flex;
@@ -985,7 +985,7 @@ button {
   }
 
   .site-footer {
-    padding: clamp(2.5rem, 4vw, 4rem) 1.25rem 0;
+    padding: clamp(1.5rem, 2.5vw, 2.5rem) 1.25rem 0;
   }
 
   .footer-globe-wrapper {
@@ -1010,7 +1010,7 @@ button {
   }
 
   .site-footer {
-    padding: 2rem 1rem 0;
+    padding: 1.25rem 1rem 0;
   }
 
   .footer-globe-wrapper {
