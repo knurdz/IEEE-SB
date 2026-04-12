@@ -290,7 +290,7 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                       letterSpacing: '0.05em'
                     }}
                   >
-                    {event.name} Collection · © {new Date().getFullYear()} IEEE UOM Student Branch
+                    {event.name} Collection · © {new Date().getFullYear()}
                   </p>
                 </div>
               </div>

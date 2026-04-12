@@ -173,8 +173,8 @@ export default function EventsHero() {
           initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
           animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-        >
-          — IEEE UOM Student Branch —
+          >
+          {/* Removed IEEE UOM Student Branch text */}
         </motion.p>
 
         <motion.h1

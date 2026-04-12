@@ -22,8 +22,7 @@ export default function ClosingCTA() {
         More Events Coming Soon
       </h2>
       <p className="font-sans text-muted text-lg mb-8 max-w-lg mx-auto">
-        Stay connected with IEEE UOM Student Branch to get the latest updates on our upcoming
-        events and workshops.
+        Stay connected to get the latest updates on our upcoming events and workshops.
       </p>
 
       <button className="glow-button px-10 py-3.5">
