@@ -12,15 +12,15 @@ interface OctagonFrameProps {
 export default function OctagonFrame({ src, alt, className = '' }: OctagonFrameProps) {
   return (
     <div className={`relative flex items-center justify-center ${className}`}>
-      {/* Glow effect */}
+      {/* Reduced glow effect */}
       <motion.div
-        className="absolute w-60 h-60 rounded-full opacity-20 blur-3xl"
+        className="absolute w-40 h-40 rounded-full opacity-10 blur-2xl"
         style={{
-          background: 'radial-gradient(circle, rgba(0, 212, 255, 0.3) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(0, 212, 255, 0.2) 0%, transparent 70%)',
         }}
         whileHover={{
-          scale: 1.25,
-          opacity: 0.3,
+          scale: 1.15,
+          opacity: 0.2,
         }}
         transition={{ duration: 0.6 }}
       />
