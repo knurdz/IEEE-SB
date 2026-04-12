@@ -301,7 +301,19 @@ export default function TextSphereAnimation() {
           anchor: { x: 0.5, y: 0.5, z: 0.0 },
         });
 
-        ieeeGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, 70, 0));
+        ieeeGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, 100, 0));
+
+        const branchGeometry = generateTextGeometry('STUDENT BRANCH', {
+          size: 30,
+          height: 0.1,
+          curveSegments: 24,
+          bevelSize: 0,
+          bevelThickness: 0,
+          bevelEnabled: false,
+          anchor: { x: 0.5, y: 0.5, z: 0.0 },
+        });
+
+        branchGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, -15, 0));
 
         const uniGeometry = generateTextGeometry('UNIVERSITY OF MORATUWA', {
           size: 30,
@@ -313,8 +325,9 @@ export default function TextSphereAnimation() {
           anchor: { x: 0.5, y: 0.5, z: 0.0 },
         });
 
-        uniGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, -60, 0));
+        uniGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, -75, 0));
 
+        ieeeGeometry.merge(branchGeometry);
         ieeeGeometry.merge(uniGeometry);
         ieeeGeometry.computeBoundingBox();
 
