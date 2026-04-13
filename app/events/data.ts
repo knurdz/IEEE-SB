@@ -7,8 +7,10 @@ export interface EventItem {
   category: string;
   categoryColor: string;
   description: string;
+  fullDescription?: string;
   images: string[];
   gallery: string[];
+  groupedGallery?: { name: string; images: string[] }[];
   mainImage?: string;
   facebookUrl?: string;
   websiteUrl?: string;
@@ -27,7 +29,9 @@ export const EVENTS: EventItem[] = [
     category: 'COMMUNITY',
     categoryColor: '#10B981',
     description:
-      'OpenWeek is an introductory two‑day event welcoming new students into the IEEE community at the University of Moratuwa. It includes talks, short workshops, and hands‑on demos in robotics, embedded systems, and data science. The event also highlights volunteering, leadership roles, and opportunities to join major IEEE competitions and projects.',
+      'IEEE OpenWeek is organized by the IEEE Student Branch of the University of Moratuwa, bringing together students, professionals, and industry partners for four days of interactive sessions, activities, and networking opportunities.The event welcomed 420 new members to the IEEE community, expanding its presence on campus.',
+    fullDescription: 
+      'IEEE OpenWeek is organized by the IEEE Student Branch of the University of Moratuwa, bringing together students, professionals, and industry partners for four days of interactive sessions, activities, and networking opportunities.The event welcomed 420 new members to the IEEE community, expanding its presence on campus.\n\nThe IEEE OpenWeek 2025 featured a diverse range of activities: Day 1 focused on IEEE awareness with interactive games and a physical hackathon to encourage teamwork; Day 2 highlighted IEEE chapters, allowing undergraduates to explore technical fields and engage with specialized chapters; and Day 3 celebrated new members through the induction ceremony, a guest speaker session by Mr. Peshan Sampath, and the launch of the official newsletter and website, concluding with a vibrant DJ Night.\n\nIEEE Open Week successfully enhances engagement, expands outreach, and delivers a seamless experience for all participants. The event fostered collaboration and encourages innovation strengthening connections between students, professionals, and industry partners, leaving a lasting impact on the IEEE community at the University of Moratuwa',
     images: ['/images/OpenWeek/OpenWeek.jpg'],
     gallery: [
       '/images/OpenWeek/490775784_1070628858430090_8669397192788408804_n.jpg',
@@ -52,6 +56,7 @@ export const EVENTS: EventItem[] = [
       '/images/OpenWeek/491974489_1072769378216038_6614258640913092672_n.jpg'
     ],
     mainImage: '/images/OpenWeek/491974489_1072769378216038_6614258640913092672_n.jpg',
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1046768850816091&type=3'
   },
   {
     id: 2,
@@ -62,7 +67,9 @@ export const EVENTS: EventItem[] = [
     category: 'HACKATHON',
     categoryColor: '#F59E0B',
     description:
-      'MoraXtreme is a national competitive‑programming championship organized by the IEEE Student Branch, University of Moratuwa. Teams from universities across Sri Lanka solve algorithmic problems under time pressure. The event includes training sessions and a grand‑final awards ceremony to recognize top coders.',
+      'MoraXtreme stands as one of the most prominent competitive programming initiatives organized by the IEEE Student Branch of the University of Moratuwa, proudly contributing to Sri Lanka’s presence in global programming competitions and fostering a culture of problem-solving and innovation among university students.',
+    fullDescription:
+      'MoraXtreme stands as one of the most prominent competitive programming initiatives organized by the IEEE Student Branch of the University of Moratuwa, proudly contributing to Sri Lanka’s presence in global programming competitions and fostering a culture of problem-solving and innovation among university students.\n\nMoraXtreme 10.0, the tenth edition of this flagship initiative, saw participation from 1,152 students forming 467 teams from universities across Sri Lanka. The event featured a rigorous two-round format, including an online elimination round. Participants were engaged in challenging algorithmic and programming tasks, showcasing analytical thinking, coding skills, and teamwork.\n\nMoraXtreme 10.0 not only challenged participants to push the boundaries of their coding and problem-solving skills but also fostered a collaborative and competitive spirit, establishing itself as a landmark event in Sri Lanka’s journey toward excellence in competitive programming.',
     images: ['/images/MoraXtreme/MoraXtreme.jpg'],
     gallery: [
       '/images/MoraXtreme/615854920_1293603689465938_254720086095671295_n.jpg',
@@ -89,7 +96,9 @@ export const EVENTS: EventItem[] = [
     category: 'INNOVATION',
     categoryColor: '#7C3AED',
     description:
-      'Foresight is an insight‑driven career and innovation event by the IEEE Student Branch, University of Moratuwa. It features talks on AI, robotics, and future job markets, along with networking and mentorship opportunities. The event helps students connect classroom learning with practical engineering foresight.',
+      'MoraForesight stands as one of the most pioneering initiatives organized by the IEEE Student Branch of the University of Moratuwa, proudly carrying a nation-wide impact with an award-winning legacy, along with a transformative influence that has reshaped the journeys and stories of an entire community.',
+    fullDescription:
+      'MoraForesight stands as one of the most pioneering initiatives organized by the IEEE Student Branch of the University of Moratuwa, proudly carrying a nation-wide impact with an award-winning legacy, along with a transformative influence that has reshaped the journeys and stories of an entire community.\n\nMoraForesight 3.0, the third and latest edition of the flagship initiative by the IEEE Student Branch of the University of Moratuwa, was designed for Sri Lankan students aged 16–20 who had completed their O/Ls and were preparing for their A/Ls (2025–2027). From a competitive pool of over 2,000 applicants, 80 outstanding students were selected to participate in a fully funded 3-day Residential Boot Camp, offering an intensive and immersive experience in technology, innovation, and leadership development.\n\nThe program not only nurtured technical skills and innovative mindsets but also fostered confidence, teamwork, and problem-solving abilities among Sri Lanka’s future leaders. MoraForesight continues to inspire and empower the next generation of innovators, reinforcing its legacy as a transformative force in the country’s educational and technological landscape.',
     images: ['/images/foresight/foresight.jpg'],
     gallery: [
       '/images/foresight/536282916_1171311998361775_6505005724168856005_n.jpg',
@@ -147,7 +156,9 @@ export const EVENTS: EventItem[] = [
     category: 'CREATIVE',
     categoryColor: '#F472B6',
     description:
-      '“Ballerina” is a themed technical and social event combining art with engineering and robotics. It features interactive installations, light‑based robots, and music‑synchronized machines. The event promotes creativity and design thinking, making engineering more visually engaging for students.',
+      'Innovate with Ballerina stands as a landmark initiative organized by the IEEE Student Branch of the University of Moratuwa in collaboration with WSO2, bringing together university students from across Sri Lanka to explore creative applications of the Ballerina programming language.',
+    fullDescription:
+      'Innovate with Ballerina stands as a landmark initiative organized by the IEEE Student Branch of the University of Moratuwa in collaboration with WSO2, bringing together university students from across Sri Lanka to explore creative applications of the Ballerina programming language. The event fosters a competitive and collaborative environment, empowering participants to enhance their technical expertise, problem-solving skills, and innovative thinking.\n\nThe hackathon commenced with an introductory session, followed by technical workshops on Data Handling and AI Capabilities in Ballerina, preparing participants to develop solutions for real-world challenges. Teams competed to design and implement their projects, culminating in a Grand Finale and Awards Ceremony at WSO2, where top teams were recognized for their innovative achievements and practical applications of Ballerina.\n\nThe event leaves a lasting impact on students, inspiring the next generation of software developers and innovators, and reinforcing its reputation as a transformative platform in Sri Lanka’s technological and educational landscape.',
     images: ['/images/Ballerina/Ballerina.png'],
     gallery: [
       '/images/Ballerina/558882943_1211858660973775_3321328697140575032_n.jpg',
@@ -177,7 +188,9 @@ export const EVENTS: EventItem[] = [
     category: 'ANNUAL',
     categoryColor: '#00A3FF',
     description:
-      'The AGM & Award Ceremony is the formal closing event of the IEEE Student Branch, University of Moratuwa, where officers present annual reports and hand over leadership. It includes recognition of top volunteers and contributors, guest speeches, and a roadmap for the next year.',
+      'The Annual General Meeting (AGM) was held on the 15th of October 2025 at Rubert Peris Hall at University of Moratuwa. The event marked the official conclusion of the outgoing term and brought together members of the organization to reflect on a year of growth, commitment, and impactful initiatives.',
+    fullDescription:
+      'The Annual General Meeting (AGM) was held on the 15th of October 2025 at Rubert Peris Hall at University of Moratuwa. The event marked the official conclusion of the outgoing term and brought together members of the organization to reflect on a year of growth, commitment, and impactful initiatives.\n\nThe proceedings captured both reflection and transition, beginning with a structured overview of the previous term’s journey and continuing with the formal handover of responsibilities. The outgoing leadership was acknowledged for their dedication and service, celebrating their contributions toward strengthening the organization’s presence and activities throughout the year.\n\nThe AGM culminated in the election of the new Executive Committee, symbolizing a seamless transition into the upcoming term. The event stood as a testament to continuity, leadership, and shared vision, reinforcing the organization’s commitment to sustained excellence and future advancement.',
     images: ['/images/AGM & Award Ceremony/AGM & Award Ceremony.jpg'],
     gallery: [
       '/images/AGM & Award Ceremony/559853374_1222951646531143_2688869702501887411_n.jpg',
@@ -201,6 +214,7 @@ export const EVENTS: EventItem[] = [
       '/images/AGM & Award Ceremony/568833701_1222975843195390_2988351440961654452_n.jpg'
     ],
     mainImage: '/images/AGM & Award Ceremony/566320867_1222966146529693_6619199067605645621_n.jpg',
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.953390813487229&type=3'
   },
   {
     id: 6,
@@ -211,7 +225,9 @@ export const EVENTS: EventItem[] = [
     category: 'CONFERENCE',
     categoryColor: '#6366F1',
     description:
-      'Mercon is an annual conference organized by the IEEE Student Branch celebrating academic and professional excellence in engineering. The event includes research paper presentations, talks, and workshops on engineering topics. It brings together academics, researchers, and students in a collaborative setting.',
+      'MERCon, the Moratuwa Engineering Research Conference, was organized by the Engineering Research Unit (ERU) in collaboration with the IEEE Student Branch of the University of Moratuwa.',
+    fullDescription:
+      'MERCon, the Moratuwa Engineering Research Conference, was organized by the Engineering Research Unit (ERU) in collaboration with the IEEE Student Branch of the University of Moratuwa. The conference brought together researchers, academics, students, and industry professionals from across Sri Lanka to explore emerging technologies, share knowledge, and foster innovation in engineering.\n\nThe three-day program featured keynote sessions, technical research presentations, and hands-on workshops on topics including renewable energy integration, 5G connectivity, TinyML, signal processing, integrated circuit design, and advancements in artificial intelligence. MerCon. The conference provided participants with opportunities to discuss research challenges, exchange ideas, and gain insights into practical applications of modern engineering innovations.\n\nMERCon fosters meaningful connections between academia and industry, encourages the exchange of innovative ideas, and highlights the latest advancements in engineering research across Sri Lanka.',
     images: ['/images/Mercon/Mercon.jpg'],
     gallery: [
       '/images/Mercon/538633922_1176462754513366_2832240042918389319_n.jpg',
@@ -255,7 +271,9 @@ export const EVENTS: EventItem[] = [
     category: 'SHOWCASE',
     categoryColor: '#14B8A6',
     description:
-      'Robotics Day is a festival showcasing robotics projects, competitions, and live demos from student teams and research groups. It covers autonomous navigation, drones, robot arms, and humanoid robots. The event also includes short talks and interactive sessions to promote robotics among undergraduates.',
+      'Robotics Day was an innovation-driven robotics event organized by the IEEE Student Branch of the University of Moratuwa, in collaboration with the IEEE Robotics and Automation Society Student Branch Chapter.',
+    fullDescription:
+      'Robotics Day was an innovation-driven robotics event organized by the IEEE Student Branch of the University of Moratuwa, in collaboration with the IEEE Robotics and Automation Society Student Branch Chapter. The event brought together students, robotics enthusiasts, and industry professionals to explore the latest advancements in robotics and automation.\n\nThe program featured robotics exhibitions, live demonstrations, and expert-led sessions, offering participants hands-on exposure to emerging technologies and real-world applications. Attendees experienced humanoid and quadruped robot demonstrations, interacted with innovative projects, and received expert feedback to enhance their own developments. The exhibition provided a platform for students to showcase their robotics innovations, followed by keynote sessions that highlighted trends and future directions in robotics.\n\nRobotics Day not only fosters technical skills and creativity but also encourages collaboration, networking, and innovation among participants. The event inspires the next generation of engineers and innovators, reinforcing its role as a transformative platform in Sri Lanka’s robotics and technological landscape.',
     images: ['/images/Robotics Day/Robotics Day.jpeg'],
     gallery: [
       '/images/Robotics Day/495301494_1090880113071631_3068262929101572922_n.jpg',
@@ -269,6 +287,7 @@ export const EVENTS: EventItem[] = [
       '/images/Robotics Day/497444705_1090881616404814_1269796916803844776_n.jpg'
     ],
     mainImage: '/images/Robotics Day/495377340_1090887113070931_3714688918436566927_n.jpg',
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1090920843067558&type=3'
   },
   {
     id: 8,
@@ -279,7 +298,9 @@ export const EVENTS: EventItem[] = [
     category: 'INNOVATION',
     categoryColor: '#7C3AED',
     description:
-      'FInnC (Future Innovators Challenge) is an innovation competition where undergraduate teams develop prototype solutions to real‑world problems. Participants work on projects in IoT, robotics, energy, and smart systems. The event ends with an on‑site evaluation and awards for creativity, technical depth, and impact.',
+      'FInnC (Future Innovators Challenge) is an innovative electronics design competition organized by the IEEE Student Branch of the University of Moratuwa in collaboration with the IEEE Industrial Electronics Society (IES).',
+    fullDescription:
+      'FInnC (Future Innovators Challenge) is an innovative electronics design competition organized by the IEEE Student Branch of the University of Moratuwa in collaboration with the IEEE Industrial Electronics Society (IES). The competition brings together undergraduate students from universities across Sri Lanka to develop creative electronic solutions, enhancing their technical expertise, problem-solving skills, and innovative thinking.\n\nFinnC’25 featured a series of knowledge-sharing sessions and workshops, including an introductory session, a workshop on Product Design and Development, and hands-on prototyping sessions led by the RoboticGen team. Participants submitted innovation proposals and demonstration videos throughout the competition, culminating in a Grand Finale, where finalists showcased their projects to a panel of industry experts.\n\nFFinnC’25 provides a dynamic platform for creativity and innovation, awarding champions and top performers while offering participants valuable industry exposure and expert feedback. The competition successfully inspires young innovators to transform their ideas into impactful technological solutions, reinforcing its role as a key platform for fostering Sri Lanka’s future electronics and engineering leaders.',
     images: ['/images/Finnc/Finnc.jpeg'],
     gallery: [
       '/images/Finnc/503686137_1107726958053613_4286845553822979762_n.jpg',
@@ -292,6 +313,7 @@ export const EVENTS: EventItem[] = [
       '/images/Finnc/524426322_1149901920502783_2288821748845296099_n.jpg'
     ],
     mainImage: '/images/Finnc/524163752_1149907193835589_1666494559508167772_n.jpg',
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1107733941386248&type=3'
   },
   {
     id: 9,
@@ -302,7 +324,9 @@ export const EVENTS: EventItem[] = [
     category: 'COMPETITION',
     categoryColor: '#FF6B35',
     description:
-      "IEEEXtreme is IEEE's flagship 24‑hour global programming competition for student teams. Participants solve challenging algorithmic problems in a single day under time pressure. The contest is hosted through local IEEE branches and serves as practice for international coding contests and technical interviews.",
+      'IEEEXtreme 19.0 is a 24-hour global programming competition organized by IEEE, where university students from around the world compete in teams to solve complex algorithmic challenges under strict time constraints.',
+    fullDescription:
+      'IEEEXtreme 19.0 is a 24-hour global programming competition organized by IEEE, where university students from around the world compete in teams to solve complex algorithmic challenges under strict time constraints. The 19th edition continued its tradition of bringing together thousands of participants globally, providing a platform that tests endurance, teamwork, and advanced problem-solving skills.\n\nAs a worldwide initiative, IEEEXtreme 19.0 promotes collaboration and computational thinking across borders, enabling students to engage in high-pressure competitive programming while connecting with a global community of problem solvers.',
     images: ['/images/IEEEXtreme/IEEEXtreme.jpg'],
     gallery: [
       '/images/IEEEXtreme/594961516_1263594819133492_8317781972009123551_n.jpg',
@@ -320,6 +344,7 @@ export const EVENTS: EventItem[] = [
       '/images/IEEEXtreme/596314411_1263595729133401_1307120687459112949_n.jpg'
     ],
     mainImage: '/images/IEEEXtreme/594962004_1263594422466865_8735085998910189412_n.jpg',
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.964019195757724&type=3'
   },
   {
     id: 10,
@@ -330,7 +355,9 @@ export const EVENTS: EventItem[] = [
     category: 'CAREER',
     categoryColor: '#84CC16',
     description:
-      'Rise Up Mora is an IEEE‑organized, internship‑focused career development initiative by the IEEE Student Branch, University of Moratuwa. It connects students with industry partners, startups, and research groups through workshops, talks, and project‑based phases. The program is structured over multiple phases that build skills such as communication, project management, and technical depth. The 2025 edition ran as a full‑day flagship event on 31 July, continuing to grow as one of the branch’s most anticipated undergraduate‑empowerment programs.',
+      'Rise Up Mora is a premier career readiness initiative organized by the IEEE Student Branch of the University of Moratuwa, designed to equip undergraduates with the skills, knowledge, and confidence required to excel in internships and the corporate landscape.',
+    fullDescription:
+      'Rise Up Mora is a premier career readiness initiative organized by the IEEE Student Branch of the University of Moratuwa, designed to equip undergraduates with the skills, knowledge, and confidence required to excel in internships and the corporate landscape.\n\nRise Up Mora 2025 consisted of a series of workshops conducted both physically and virtually, covering topics such as CV writing, professional networking, workplace readiness, LinkedIn profile optimization, and interview preparation. The program culminated in an Internship and Mock Interview Fair, where participants applied their skills in real-time interviews and gained valuable feedback from industry professionals.\n\nRise Up Mora 2025 not only equipped students with practical knowledge and career-oriented skills but also strengthened the connection between academia and industry, earning recognition as the Best Industry Collaborative Project at the IEEE Sri Lanka Section Awards 2025 and establishing itself as a key platform for shaping Sri Lanka’s next generation of professionals.',
     images: ['/images/riceup/riceup.jpg'],
     gallery: [
       '/images/riceup/538314147_1173265281499780_317201833541306729_n.jpg',
@@ -357,4 +384,165 @@ export const EVENTS: EventItem[] = [
     websiteUrl: 'https://riseupmora.lk/',
     linkedinUrl: 'http://linkedin.com/company/rise-up-mora'
   },
+  {
+    id: 11,
+    slug: 'nfb-championship',
+    name: 'NFB Championship',
+    date: 'TBA',
+    year: '2025',
+    category: 'COMPETITION',
+    categoryColor: '#EAB308',
+    description: 'NFB Championship is a competitive event designed to challenge participants in new frontiers of technology and engineering.',
+    images: ['/images/NFB Championship/481252349_1033836118776031_472465518764129267_n.jpg'],
+    gallery: [
+      '/images/NFB Championship/480836742_1033834842109492_8551140352823286849_n.jpg',
+      '/images/NFB Championship/480931817_1033834865442823_7268405779627401676_n.jpg',
+      '/images/NFB Championship/480983913_1033835792109397_7858902922809836028_n.jpg',
+      '/images/NFB Championship/481069211_1033834652109511_299246510168752567_n.jpg',
+      '/images/NFB Championship/481149836_1033835732109403_1655845870321506352_n.jpg',
+      '/images/NFB Championship/481190925_1033834875442822_8620728556875998783_n.jpg',
+      '/images/NFB Championship/481196376_1033837135442596_1656232314589717041_n.jpg',
+      '/images/NFB Championship/481231863_1033836165442693_9216739019214905027_n.jpg',
+      '/images/NFB Championship/481252349_1033836118776031_472465518764129267_n.jpg',
+      '/images/NFB Championship/482001557_1033836872109289_5304005323481615888_n.jpg',
+      '/images/NFB Championship/482004349_1033835712109405_7155580846501703875_n.jpg',
+      '/images/NFB Championship/482005900_1033835948776048_2438648459899287747_n.jpg'
+    ],
+    mainImage: '/images/NFB Championship/481252349_1033836118776031_472465518764129267_n.jpg',
+    facebookUrl: 'https://web.facebook.com/media/set?vanity=ieeesbuom&set=a.626383876187926'
+  },
+  {
+    id: 12,
+    slug: 'ictir',
+    name: 'ICTIR',
+    date: 'TBA',
+    year: '2025',
+    category: 'CONFERENCE',
+    categoryColor: '#3B82F6',
+    description: 'ICTIR, the International Conference on Information Technology Research, is organized by the Information Technology Research Unit (ITRU) in collaboration with the Faculty of Information Technology and the IEEE Student Branch of the University of Moratuwa.',
+    fullDescription: 
+      'ICTIR, the International Conference on Information Technology Research, is organized by the Information Technology Research Unit (ITRU) in collaboration with the Faculty of Information Technology and the IEEE Student Branch of the University of Moratuwa. The conference serves as a platform for researchers, academics, and industry professionals to share knowledge and explore emerging advancements in information technology and related disciplines.\n\nThe conference features keynote addresses, technical paper presentations, and research discussions across diverse areas such as artificial intelligence, data science, cybersecurity, software engineering, and intelligent systems. It promotes scientific exchange and provides opportunities for participants to present novel research contributions and engage in meaningful academic dialogue.\n\nICTIR fosters collaboration between academia and industry while highlighting innovative research that drives the advancement of information technology both locally and globally.',
+    images: ['/images/ICTIR/600479028_1267669762059331_4503430071750942877_n.jpg'],
+    gallery: [
+      '/images/ICTIR/597258275_1267674338725540_1778343347160699941_n.jpg',
+      '/images/ICTIR/597316989_1267684812057826_2972413746360932107_n.jpg',
+      '/images/ICTIR/597663097_1267673318725642_5006020798267700864_n.jpg',
+      '/images/ICTIR/597664357_1267670178725956_8326768395980497527_n.jpg',
+      '/images/ICTIR/598052973_1267670738725900_2025134237329919025_n.jpg',
+      '/images/ICTIR/598110693_1267691965390444_4947488376914076445_n.jpg',
+      '/images/ICTIR/599486461_1267674085392232_4967884445839911913_n.jpg',
+      '/images/ICTIR/599528954_1267691842057123_4179746980209577009_n.jpg',
+      '/images/ICTIR/600229221_1267691605390480_2503303115055002601_n (1).jpg',
+      '/images/ICTIR/600479028_1267669762059331_4503430071750942877_n.jpg'
+    ],
+    mainImage: '/images/ICTIR/600479028_1267669762059331_4503430071750942877_n.jpg',
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1267700392056268&type=3'
+  },
+  {
+    id: 13,
+    slug: 'jamborieee',
+    name: 'JamborIEEE',
+    date: 'TBA',
+    year: '2025',
+    category: 'COMMUNITY',
+    categoryColor: '#EC4899',
+    description: 'Jamboriee 2025, hosted at the University of Rajarata, brought together six IEEE student branches from across Sri Lanka for a vibrant day filled with engaging activities and collaborative experiences.',
+    fullDescription: 
+      'Jamboriee 2025, hosted at the University of Rajarata, brought together six IEEE student branches from across Sri Lanka for a vibrant day filled with engaging activities and collaborative experiences. The participating institutions included the IEEE Student Branch of SLIIT, IEEE Student Branch of the University of Rajarata, IEEE Student Branch of the Vocational Training Institute, IEEE Student Branch of the University of Moratuwa, IEEE Student Branch of the University of Jaffna, and IEEE Student Branch of the University of Ruhuna.\n\nThe event created a lively environment where students from diverse backgrounds came together to interact, participate, and build meaningful connections. Throughout the day, participants engaged in a variety of fun and interactive activities that encouraged teamwork, communication, and camaraderie beyond their individual institutions.\n\nJamboriee 2025 stood out as a memorable experience that fostered friendship, networking, and a strong sense of unity among IEEE student branches across the country.',
+    images: ['/images/jamborIEEE/541794185_748018911451847_6234089389239009766_n.jpg'],
+    gallery: [
+      '/images/jamborIEEE/541423110_749931634593908_4172302328836472502_n.jpg',
+      '/images/jamborIEEE/541623742_749932784593793_6249507404548374793_n.jpg',
+      '/images/jamborIEEE/541625891_748023738118031_6974941148976964897_n.jpg',
+      '/images/jamborIEEE/541794185_748018911451847_6234089389239009766_n.jpg',
+      '/images/jamborIEEE/542188835_748022801451458_4377998341717009414_n.jpg',
+      '/images/jamborIEEE/542591163_748022531451485_5546966912589689399_n.jpg',
+      '/images/jamborIEEE/542759764_748023014784770_3126087325785667217_n.jpg'
+    ],
+    mainImage: '/images/jamborIEEE/541794185_748018911451847_6234089389239009766_n.jpg',
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.912029977623313&type=3'
+  },
+  {
+    id: 14,
+    slug: 'roboroaz',
+    name: 'Roboroaz',
+    date: 'TBA',
+    year: '2025',
+    category: 'SHOWCASE',
+    categoryColor: '#8B5CF6',
+    description: 'RoboRoarZ Sri Lanka 2025 is a founding initiative organized by the IEEE Student Branch of the University of Moratuwa, bringing the globally recognized RoboRoarZ competition to Sri Lanka for the very first time.',
+    fullDescription: 
+      'RoboRoarZ Sri Lanka 2025 is a founding initiative organized by the IEEE Student Branch of the University of Moratuwa, bringing the globally recognized RoboRoarZ competition to Sri Lanka for the very first time. Targeted at university students across the island and beyond, it aims to ignite interest in robotics and STEM while bridging the gap between emerging talent and the rapidly advancing world of technology.\n\nThe competition unfolds across multiple rounds, starting with an online elimination round followed by a two-day on-site grand finale. The final stage features two core challenges: Smorphi Imaginary (simulation-based design) and Smorphi Autonomous (real-world execution), where teams apply engineering and design-thinking skills using the Smorphi robotic platform.\n\nParticipants also gain practical experience in robot design and development through expert-led workshops, mentorship from industry professionals and academics, and access to the international RoboRoarZ network and resources.',
+    images: ['/images/Roboroaz/APU-2-(Roboroarz-Malaysia-2025) (1).jpg'],
+    gallery: [],
+    groupedGallery: [
+      {
+        name: 'India',
+        images: [
+          '/images/Roboroaz/India/3b4e14_aebc2a5aaa364660ab6833349e53103e~mv2.avif',
+          '/images/Roboroaz/India/3b4e14_c4de0210c04f4d43b0db20d27d6213a4~mv2.avif',
+          '/images/Roboroaz/India/3b4e14_da5ebbda36764f689b50a4adf35de982~mv2.avif'
+        ]
+      },
+      {
+        name: 'Indonesia',
+        images: [
+          '/images/Roboroaz/indonesia/3b4e14_7af9bf595d9547a7a996637aabb1ff63~mv2.avif',
+          '/images/Roboroaz/indonesia/3b4e14_876a9b0c9c7b4e3bb98b9a2f19e48cb5~mv2.avif',
+          '/images/Roboroaz/indonesia/3b4e14_a8673b7bcf714eccada0a09d361e6ddf~mv2.avif'
+        ]
+      },
+      {
+        name: 'Malaysia',
+        images: [
+          '/images/Roboroaz/malaysia/3b4e14_098217b80c2b4910b0ce77dd3cde5795~mv2.avif',
+          '/images/Roboroaz/malaysia/3b4e14_d4596451a40c460aa615fd1ff5785957~mv2.avif',
+          '/images/Roboroaz/malaysia/3b4e14_f1e59ecf22b14acdb1a7c180f131e804~mv2.avif'
+        ]
+      },
+      {
+        name: 'Singapore',
+        images: [
+          '/images/Roboroaz/singapore/3b4e14_2587899552044ff9bdbd4d892b8979f2~mv2.avif',
+          '/images/Roboroaz/singapore/3b4e14_6fde984a0d4144a2a3d5769859bc13b9~mv2.avif',
+          '/images/Roboroaz/singapore/3b4e14_d4e680a342ae40828a1e2d8f4a48881f~mv2.avif',
+          '/images/Roboroaz/singapore/3b4e14_fc30b984add841aaa1ba3511c7820d6c~mv2.avif'
+        ]
+      }
+    ],
+    mainImage: '/images/Roboroaz/APU-2-(Roboroarz-Malaysia-2025) (1).jpg',
+  },
+  {
+    id: 15,
+    slug: 'morauxplore',
+    name: 'MoraUxplore',
+    date: 'TBA',
+    year: '2025',
+    category: 'COMPETITION',
+    categoryColor: '#F59E0B',
+    description: 'MoraUxplore stands as one of the most prominent competitive programming initiatives organized by the IEEE Student Branch of the University of Moratuwa.',
+    fullDescription: 'MoraUxplore stands as one of the most prominent competitive programming initiatives organized by the IEEE Student Branch of the University of Moratuwa, proudly contributing to Sri Lanka’s presence in global programming competitions and fostering a culture of problem-solving and innovation among university students.',
+    images: ['/images/MoraUxplore/486360176_1054648060028170_4764194240728831850_n.jpg'],
+    gallery: [
+      '/images/MoraUxplore/486190563_1054549363371373_865845245182204826_n.jpg',
+      '/images/MoraUxplore/486287658_1054648893361420_4994882715247962926_n.jpg',
+      '/images/MoraUxplore/486360176_1054648060028170_4764194240728831850_n.jpg',
+      '/images/MoraUxplore/486454054_1054649153361394_3768168395657757073_n.jpg',
+      '/images/MoraUxplore/486507659_1054648996694743_2852044224853729141_n.jpg',
+      '/images/MoraUxplore/486508037_1054550540037922_8893811677253898458_n.jpg',
+      '/images/MoraUxplore/486554969_1054648020028174_7286329591169980418_n.jpg',
+      '/images/MoraUxplore/486605024_1054647973361512_1436357605641104567_n.jpg',
+      '/images/MoraUxplore/486630379_1054648916694751_307291691245798899_n.jpg',
+      '/images/MoraUxplore/486632047_1054648923361417_4322883218803699278_n.jpg',
+      '/images/MoraUxplore/486653610_1054648820028094_8122357806799091917_n.jpg',
+      '/images/MoraUxplore/486677115_1054549353371374_1431334053400051781_n.jpg',
+      '/images/MoraUxplore/486761635_1054549586704684_6745582083363428002_n.jpg',
+      '/images/MoraUxplore/486768983_1054647996694843_3564848040649766722_n.jpg',
+      '/images/MoraUxplore/486951461_1054648676694775_876386906523009962_n.jpg',
+      '/images/MoraUxplore/487114209_1054649023361407_199870124990414019_n.jpg',
+      '/images/MoraUxplore/487241761_1054649026694740_8214488359126833679_n.jpg'
+    ],
+    mainImage: '/images/MoraUxplore/486605024_1054647973361512_1436357605641104567_n.jpg',
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.912029977623313&type=3'
+  }
 ];

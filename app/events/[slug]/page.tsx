@@ -38,6 +38,7 @@ export default function EventDetailPage({ params }: EventPageProps) {
   }
 
   const galleryImages = event.gallery ?? [];
+  const groupedGallery = event.groupedGallery ?? [];
 
   return (
     <main className="min-h-screen relative bg-white text-foreground overflow-x-hidden">
@@ -92,8 +93,8 @@ export default function EventDetailPage({ params }: EventPageProps) {
 
             <div className="lg:col-span-12">
               <div className="prose prose-lg max-w-none">
-                <p className="text-[17px] md:text-[19px] leading-relaxed text-muted-foreground font-sans text-justify">
-                  {event.description}
+                <p className="text-[17px] md:text-[19px] leading-relaxed text-muted-foreground font-sans text-justify whitespace-pre-line">
+                  {event.fullDescription || event.description}
                 </p>
               </div>
             </div>
@@ -102,7 +103,7 @@ export default function EventDetailPage({ params }: EventPageProps) {
       </section>
 
       {/* Gallery Section */}
-      {galleryImages.length > 0 && (
+      {galleryImages.length > 0 && groupedGallery.length === 0 && (
         <section className="relative py-20 px-4 z-10">
           <div className="max-w-6xl mx-auto">
             <div className="flex items-center gap-4 mb-12">
@@ -136,6 +137,55 @@ export default function EventDetailPage({ params }: EventPageProps) {
                   </motion.div>
                 );
               })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Grouped Gallery Section (e.g. Roboroaz) */}
+      {groupedGallery.length > 0 && (
+        <section className="relative py-20 px-4 z-10">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex items-center gap-4 mb-12">
+              <h2 className="text-3xl font-orbitron font-bold text-primary">Event Gallery</h2>
+              <div className="flex-1 h-[2px] bg-gradient-to-r from-primary to-transparent opacity-20" />
+            </div>
+
+            <div className="flex flex-col gap-16">
+              {groupedGallery.map((group, gIdx) => (
+                <div key={group.name}>
+                  <h3 className="text-2xl font-orbitron font-bold text-primary/80 mb-6 border-b border-primary/10 pb-2">
+                    {group.name}
+                  </h3>
+                  <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+                    {group.images.map((src, idx) => {
+                      const isLoaded = loadedImages.has(src);
+                      return (
+                        <motion.div
+                          key={src}
+                          className="relative rounded-2xl overflow-hidden cursor-pointer border border-primary/10 group bg-surface-alt"
+                          initial={{ opacity: 0, y: 20 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: idx * 0.05 }}
+                          onClick={() => setSelectedImage(src)}
+                        >
+                          {!isLoaded && (
+                            <div className="aspect-square bg-slate-100 animate-pulse" />
+                          )}
+                          <img
+                            src={src}
+                            alt={`${group.name} gallery ${idx + 1}`}
+                            className={`w-full h-auto transition-transform duration-500 group-hover:scale-105 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+                            onLoad={() => handleImageLoad(src)}
+                          />
+                          <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/20 transition-colors duration-300" />
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>

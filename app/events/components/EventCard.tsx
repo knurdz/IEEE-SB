@@ -138,7 +138,7 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index }
                   <Globe size={18} />
                 </a>
               )}
-              {event.facebookUrl && (
+              {event.facebookUrl && (['foresight', 'mercon'].includes(event.slug)) && (
                 <a
                   href={event.facebookUrl}
                   target="_blank"
@@ -159,7 +159,7 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index }
                   title="LinkedIn"
                   onClick={(e) => e.stopPropagation()}
                 >
-                   <Image src="/social/Linkdin.svg" alt="LinkedIn" width={18} height={18} className="opacity-80 group-hover:opacity-100" />
+                  <Image src="/social/Linkdin.svg" alt="LinkedIn" width={18} height={18} className="opacity-80 group-hover:opacity-100" />
                 </a>
               )}
               {event.instagramUrl && (
