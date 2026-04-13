@@ -44,14 +44,17 @@ export default function AwardsSection() {
               
               <div className="relative rounded-lg overflow-hidden border-4 border-[#2c3e50]">
                 {/* Fallback layout if specific image isn't available, otherwise use next/image */}
-                <Image
-                  src={featuredAward.image || "/events/placeholder-cert.jpg"}
-                  alt={featuredAward.imageAlt}
-                  width={3309}
-                  height={2310}
-                  className="w-full h-auto block"
-                  priority
-                />
+                <div className="relative min-h-[300px] w-full bg-slate-100 flex items-center justify-center">
+                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 -translate-x-full animate-[shimmer_2s_infinite]" />
+                  <Image
+                    src={featuredAward.image || "/events/placeholder-cert.jpg"}
+                    alt={featuredAward.imageAlt}
+                    width={3309}
+                    height={2310}
+                    className="w-full h-auto block relative z-10"
+                    priority
+                  />
+                </div>
               </div>
             </div>
 
@@ -84,13 +87,15 @@ export default function AwardsSection() {
                 {/* Clean tech base for the logo */}
                 <div className="relative shrink-0 w-24 h-28 transform transition-transform group-hover:scale-110 flex items-end justify-center">
                   <div className="absolute inset-x-0 bottom-0 h-4 bg-gray-200/50 backdrop-blur-md rounded-full blur-sm"></div>
-                  <div className="relative flex justify-center h-20 w-20 overflow-hidden rounded-xl border border-blue-100 shadow-lg bg-white/10 backdrop-blur-md">
+                  <div className="relative flex justify-center h-20 w-20 overflow-hidden rounded-xl border border-blue-100 shadow-lg bg-white/20 backdrop-blur-md">
+                    {/* Tiny Skeleton */}
+                    <div className="absolute inset-0 bg-slate-50 animate-pulse opacity-40" />
                     <Image
                       src={award.image}
                       alt={award.imageAlt}
                       fill
                       sizes="(max-width: 768px) 100px, 100px"
-                      className="object-contain"
+                      className="object-contain relative z-10 p-1"
                     />
                   </div>
                 </div>

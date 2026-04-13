@@ -84,6 +84,37 @@ export const EVENTS: EventItem[] = [
     websiteUrl: 'https://moraxtreme.lk/'
   },
   {
+    id: 9,
+    slug: 'ieeextreme',
+    name: 'IEEEXtreme',
+    year: 'Annual',
+    category: 'COMPETITION',
+    categoryColor: '#FF6B35',
+    description:
+      'IEEEXtreme 19.0 is a 24-hour global programming competition organized by IEEE, where university students from around the world compete in teams to solve complex algorithmic challenges under strict time constraints.',
+    fullDescription:
+      'IEEEXtreme 19.0 is a 24-hour global programming competition organized by IEEE, where university students from around the world compete in teams to solve complex algorithmic challenges under strict time constraints. The 19th edition continued its tradition of bringing together thousands of participants globally, providing a platform that tests endurance, teamwork, and advanced problem-solving skills.\n\nAs a worldwide initiative, IEEEXtreme 19.0 promotes collaboration and computational thinking across borders, enabling students to engage in high-pressure competitive programming while connecting with a global community of problem solvers.',
+
+    images: ['/events/IEEEXtreme/594962004_1263594422466865_8735085998910189412_n.jpg'],
+    gallery: [
+      '/events/IEEEXtreme/594961516_1263594819133492_8317781972009123551_n.jpg',
+      '/events/IEEEXtreme/594965118_1263622389130735_7463960053348444917_n.jpg',
+      '/events/IEEEXtreme/596504208_1263602079132766_4589208568788544070_n.jpg',
+      '/events/IEEEXtreme/594962004_1263594422466865_8735085998910189412_n.jpg',
+      '/events/IEEEXtreme/594968399_1263594482466859_3064400369289053188_n.jpg',
+      '/events/IEEEXtreme/597303469_1263595349133439_5196367804135448614_n.jpg',
+      '/events/IEEEXtreme/594963075_1263596179133356_6548345293121081946_n.jpg',
+      '/events/IEEEXtreme/594972773_1263617262464581_2691592322258414722_n.jpg',
+      '/events/IEEEXtreme/597572767_1263619262464381_4038665259802609461_n.jpg',
+      '/events/IEEEXtreme/594963167_1263617765797864_7882244259867078976_n.jpg',
+      '/events/IEEEXtreme/594974179_1263600052466302_7932778597452630050_n.jpg',
+      '/events/IEEEXtreme/594964387_1263594965800144_5872589232680750969_n.jpg',
+      '/events/IEEEXtreme/596314411_1263595729133401_1307120687459112949_n.jpg'
+    ],
+    mainImage: '/events/IEEEXtreme/594962004_1263594422466865_8735085998910189412_n.jpg',
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.964019195757724&type=3'
+  },
+  {
     id: 3,
     slug: 'foresight',
     name: 'Foresight',
@@ -307,37 +338,6 @@ export const EVENTS: EventItem[] = [
     ],
     mainImage: '/events/Finnc/524163752_1149907193835589_1666494559508167772_n.jpg',
     facebookUrl: 'https://web.facebook.com/media/set/?set=a.1107733941386248&type=3'
-  },
-  {
-    id: 9,
-    slug: 'ieeextreme',
-    name: 'IEEEXtreme',
-    year: 'Annual',
-    category: 'COMPETITION',
-    categoryColor: '#FF6B35',
-    description:
-      'IEEEXtreme 19.0 is a 24-hour global programming competition organized by IEEE, where university students from around the world compete in teams to solve complex algorithmic challenges under strict time constraints.',
-    fullDescription:
-      'IEEEXtreme 19.0 is a 24-hour global programming competition organized by IEEE, where university students from around the world compete in teams to solve complex algorithmic challenges under strict time constraints. The 19th edition continued its tradition of bringing together thousands of participants globally, providing a platform that tests endurance, teamwork, and advanced problem-solving skills.\n\nAs a worldwide initiative, IEEEXtreme 19.0 promotes collaboration and computational thinking across borders, enabling students to engage in high-pressure competitive programming while connecting with a global community of problem solvers.',
-
-    images: ['/events/IEEEXtreme/594962004_1263594422466865_8735085998910189412_n.jpg'],
-    gallery: [
-      '/events/IEEEXtreme/594961516_1263594819133492_8317781972009123551_n.jpg',
-      '/events/IEEEXtreme/594965118_1263622389130735_7463960053348444917_n.jpg',
-      '/events/IEEEXtreme/596504208_1263602079132766_4589208568788544070_n.jpg',
-      '/events/IEEEXtreme/594962004_1263594422466865_8735085998910189412_n.jpg',
-      '/events/IEEEXtreme/594968399_1263594482466859_3064400369289053188_n.jpg',
-      '/events/IEEEXtreme/597303469_1263595349133439_5196367804135448614_n.jpg',
-      '/events/IEEEXtreme/594963075_1263596179133356_6548345293121081946_n.jpg',
-      '/events/IEEEXtreme/594972773_1263617262464581_2691592322258414722_n.jpg',
-      '/events/IEEEXtreme/597572767_1263619262464381_4038665259802609461_n.jpg',
-      '/events/IEEEXtreme/594963167_1263617765797864_7882244259867078976_n.jpg',
-      '/events/IEEEXtreme/594974179_1263600052466302_7932778597452630050_n.jpg',
-      '/events/IEEEXtreme/594964387_1263594965800144_5872589232680750969_n.jpg',
-      '/events/IEEEXtreme/596314411_1263595729133401_1307120687459112949_n.jpg'
-    ],
-    mainImage: '/events/IEEEXtreme/594962004_1263594422466865_8735085998910189412_n.jpg',
-    facebookUrl: 'https://web.facebook.com/media/set/?set=a.964019195757724&type=3'
   },
   {
     id: 10,
