@@ -26,9 +26,9 @@ export const footerQuickLinks: NavItem[] = [
 ];
 
 export const footerSocialItems: SocialItem[] = [
-  { href: "https://www.facebook.com/ABORIEEE/", icon: "/social/FB.svg", label: "Facebook" },
-  { href: "https://www.instagram.com/iaborieee/", icon: "/social/Insta.svg", label: "Instagram" },
-  { href: "https://www.youtube.com/@iaborieee", icon: "/social/You-tube.svg", label: "YouTube" },
-  { href: "https://www.linkedin.com/company/ieeesbuom/", icon: "/social/Linkdin.svg", label: "LinkedIn" },
-  { href: "https://wa.me/9198765432154", icon: "/social/Whatsapp.svg", label: "WhatsApp" },
+  { href: "https://web.facebook.com/ieeesbuom", icon: "/social/FB.svg", label: "Facebook" },
+  { href: "https://www.instagram.com/ieeesbuom", icon: "/social/Insta.svg", label: "Instagram" },
+  { href: "https://www.youtube.com/@ieeesbuom", icon: "/social/You-tube.svg", label: "YouTube" },
+  { href: "https://www.linkedin.com/company/ieeesbuom", icon: "/social/Linkdin.svg", label: "LinkedIn" },
+  { href: "https://whatsapp.com/channel/0029VawdYwuFnSzHnM7b8J30", icon: "/social/Whatsapp.svg", label: "WhatsApp" },
 ];
