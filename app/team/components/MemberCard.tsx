@@ -18,6 +18,7 @@ export default function MemberCard({
   isTopRow?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
+  const [isImageLoading, setIsImageLoading] = useState(true);
   const hasActions = Boolean(member.linkedin || member.email);
 
   const { resting, hover } = useMemo(
@@ -94,16 +95,27 @@ export default function MemberCard({
                 : "bg-slate-50/30 shadow-[0_4px_20px_rgba(0,0,0,0.04)]",
           )}
         >
-        <Image
-          src={member.image}
-          alt={member.name}
-          fill
-          className={cn(
-            "object-cover object-top transition-transform duration-700",
-            hovered ? "scale-105" : "scale-100"
-          )}
-          sizes="(max-width: 768px) 50vw, 220px"
-        />
+          {/* Skeleton Loader */}
+          <div className={cn(
+            "absolute inset-0 bg-gradient-to-br from-slate-100 to-slate-200 animate-pulse transition-opacity duration-700",
+            !isImageLoading ? "opacity-0 pointer-events-none" : "opacity-100"
+          )}>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 -translate-x-full animate-[shimmer_2s_infinite]" />
+          </div>
+
+          <Image
+            src={member.image}
+            alt={member.name}
+            fill
+            className={cn(
+              "object-cover object-top transition-all duration-700",
+              hovered ? "scale-105" : "scale-100",
+              isImageLoading ? "opacity-0" : "opacity-100"
+            )}
+            sizes="(max-width: 768px) 50vw, 220px"
+            onLoad={() => setIsImageLoading(false)}
+            loading={isLead ? "eager" : "lazy"}
+          />
 
           <div
             className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center justify-end text-center transition-all duration-500"

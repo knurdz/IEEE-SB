@@ -42,6 +42,7 @@ export interface MemberInput {
   position: PositionName;
   linkedin?: string;
   email?: string;
+  image?: string;
 }
 
 export interface Member {

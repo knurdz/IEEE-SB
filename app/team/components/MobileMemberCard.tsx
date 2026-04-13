@@ -1,10 +1,11 @@
+import { useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/cn";
 import { Member } from "../types";
 
 export default function MobileMemberCard({ member }: { member: Member }) {
+  const [isImageLoading, setIsImageLoading] = useState(true);
   const hasActions = Boolean(member.linkedin || member.email);
-
   const nameFontSize = "1.05rem";
   const positionFontSize = "0.7rem";
 
@@ -43,15 +44,26 @@ export default function MobileMemberCard({ member }: { member: Member }) {
           )}
         >
           <div className="relative w-full h-full overflow-hidden">
+            {/* Skeleton Loader */}
+            <div className={cn(
+              "absolute inset-0 bg-gradient-to-br from-slate-100 to-slate-200 animate-pulse transition-opacity duration-700",
+              !isImageLoading ? "opacity-0 pointer-events-none" : "opacity-100"
+            )}>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 -translate-x-full animate-[shimmer_2s_infinite]" />
+            </div>
+
             <Image
               src={member.image}
               alt={member.name}
               fill
               className={cn(
-                "object-cover object-top transition-transform duration-700 group-hover:scale-105",
-                !isLead && "opacity-90 group-hover:opacity-100"
+                "object-cover object-top transition-all duration-700 group-hover:scale-105",
+                !isLead && "opacity-90 group-hover:opacity-100",
+                isImageLoading ? "opacity-0" : "opacity-100"
               )}
               sizes="(max-width: 768px) 100vw, 350px"
+              onLoad={() => setIsImageLoading(false)}
+              loading={isLead ? "eager" : "lazy"}
             />
             <div
               className={cn(

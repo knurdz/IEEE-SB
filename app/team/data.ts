@@ -2,12 +2,14 @@ import { groupMembersByCommittee, withMemberMetadata } from './helpers';
 import { Member, MemberInput, TeamSectionData } from './types';
 
 const rawMembers: MemberInput[] = [
+  // Executive Committee
   {
     name: 'Chanuka Anjana',
     committee: 'ExCom',
     position: 'CHAIRMAN',
     email: 'chanukaanjana01@gmail.com',
     linkedin: 'https://www.linkedin.com/in/chanukaanjana',
+    image: '/team-memebrs/ExCom/Chanuka.png',
   },
   {
     name: 'Uthsara Manul',
@@ -15,6 +17,7 @@ const rawMembers: MemberInput[] = [
     position: 'VICE CHAIRMAN',
     email: 'uthzaaawim@gmail.com',
     linkedin: 'https://www.linkedin.com/in/uthsara-manul-wimalarathne-b3b91121b',
+    image: '/team-memebrs/ExCom/Uthsara.png',
   },
   {
     name: 'Praveesha De Silva',
@@ -22,6 +25,7 @@ const rawMembers: MemberInput[] = [
     position: 'SECRETARY',
     email: 'praveeshadesilva@gmail.com',
     linkedin: 'https://www.linkedin.com/in/praveesha-de-silva-2a43a9277',
+    image: '/team-memebrs/ExCom/Praveesha.png',
   },
   {
     name: 'Oshadha Kandamby',
@@ -29,6 +33,7 @@ const rawMembers: MemberInput[] = [
     position: 'TREASURER',
     email: 'kandambyoshadha@gmail.com',
     linkedin: 'https://www.linkedin.com/in/oshadha-kandamby-8a78872a4',
+    image: '/team-memebrs/ExCom/Oshadha.png',
   },
   {
     name: 'Yasiru Nilupul',
@@ -36,6 +41,7 @@ const rawMembers: MemberInput[] = [
     position: 'ASSISTANT SECRETARY',
     email: 'yasiru0254321@gmail.com',
     linkedin: 'https://www.linkedin.com/in/yasiru-wickramage-2b6789387',
+    image: '/team-memebrs/ExCom/Yasiru.png',
   },
   {
     name: 'Ishan Hansaka',
@@ -43,6 +49,7 @@ const rawMembers: MemberInput[] = [
     position: 'WEBMASTER',
     email: 'ishanhansakasilva@gmail.com',
     linkedin: 'https://www.linkedin.com/in/ishanhansakasilva',
+    image: '/team-memebrs/ExCom/Ishan.png',
   },
   {
     name: 'Vindhya Kulasinghe',
@@ -50,177 +57,17 @@ const rawMembers: MemberInput[] = [
     position: 'CHAPTER & AFFINITY GROUP COORDINATOR',
     email: 'vindhyakulasingheieeesb25@gmail.com',
     linkedin: 'https://www.linkedin.com/in/vindhya-kumari-kulasinghe-4a828925b',
+    image: '/team-memebrs/ExCom/Vindhya.png',
   },
-  {
-    name: 'Chanuka Dissanayaka',
-    committee: 'Logistics Management Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Imesh Yasindu',
-    committee: 'Editorial Committee',
-    position: 'Committee Lead',
-    email: 'imesh7lk@gmail.com',
-    linkedin: 'https://www.linkedin.com/in/imeshmunasinghe/',
-  },
-  {
-    name: 'Seniya Amarakoon',
-    committee: 'Design Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Buddhima Gayashan',
-    committee: 'Publicity Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Sahas Samuditha',
-    committee: 'Design Committee',
-    position: 'Committee Lead',
-    email: 'sahas.samuditha@gmail.com',
-    linkedin: 'https://www.linkedin.com/in/sahas-samuditha',
-  },
-  {
-    name: 'Randi Kaweesha',
-    committee: 'Volunteer Management Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Dulmi Jayasooriya',
-    committee: 'Publicity Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Gayangi Devindi',
-    committee: 'Volunteer Management Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Hiruna Malavipathirana',
-    committee: 'Events Committee',
-    position: 'Committee Lead',
-    email: 'hirunamalavipathirana.333@gmail.com',
-    linkedin: 'https://www.linkedin.com/in/hiruna-malavipathirana-b0904916a',
-  },
-  {
-    name: 'Inuka Jithmal',
-    committee: 'Finance & IR Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Kushani Umanda',
-    committee: 'Logistics Management Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Manjari Manesha',
-    committee: 'Membership Development Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Ranudi Namarathna',
-    committee: 'Editorial Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Gishan Chamith',
-    committee: 'Volunteer Management Committee',
-    position: 'Committee Lead',
-    email: 'gishanchamith77@gmail.com',
-    linkedin: 'https://www.linkedin.com/in/gishan-chamith-66b49b340',
-  },
-  {
-    name: 'Sandali Kadawedduwa',
-    committee: 'Events Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Oshini Ravintha',
-    committee: 'Membership Development Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Adeesha Surawiman',
-    committee: 'Publicity Committee',
-    position: 'Committee Member',
-  },
+
+  // Logistics Management Committee
   {
     name: 'Ishakya Gamage',
     committee: 'Logistics Management Committee',
     position: 'Committee Lead',
     email: 'ishakyaranhiru@gmail.com',
     linkedin: 'https://www.linkedin.com/in/ishakya-gamage-71765b349',
-  },
-  {
-    name: 'Thamalu Bambaravanage',
-    committee: 'Publicity Committee',
-    position: 'Committee Lead',
-    email: 'thamaludinu@gmail.com',
-    linkedin: 'https://www.linkedin.com/in/thamalu',
-  },
-  {
-    name: 'Sandakelum Dissanayake',
-    committee: 'Volunteer Management Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Kusal Nirukshan Amantha',
-    committee: 'Editorial Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Sasmini Wanniarachchi',
-    committee: 'Finance & IR Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Dulmini Aththanayaka',
-    committee: 'Events Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Hasaruvi Kodithuwakku',
-    committee: 'Membership Development Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Yashini Gunasekara',
-    committee: 'Finance & IR Committee',
-    position: 'Committee Lead',
-    email: 'yjgunasekara@gmail.com',
-    linkedin: 'https://www.linkedin.com/in/yashini-gunasekara-773b59313',
-  },
-  {
-    name: 'Kevin Ambrose',
-    committee: 'Membership Development Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Rashmika Dilshan',
-    committee: 'Publicity Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Sanduni Gamage',
-    committee: 'Finance & IR Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Kalana Abeysundara',
-    committee: 'Membership Development Committee',
-    position: 'Committee Lead',
-    email: 'knbabeysundara@gmail.com',
-    linkedin: 'https://www.linkedin.com/in/kalana-abeysundara',
-  },
-  {
-    name: 'Senuja Jayaweera',
-    committee: 'Logistics Management Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Sineth Wickramaratna',
-    committee: 'Design Committee',
-    position: 'Committee Member',
+    image: '/team-memebrs/Leadership Body/Ishakya.png',
   },
   {
     name: 'Lasan Perera',
@@ -228,120 +75,353 @@ const rawMembers: MemberInput[] = [
     position: 'Committee Lead',
     email: 'lasanperera.lsp@gmail.com',
     linkedin: 'https://www.linkedin.com/in/lasan-perera-0881a3280',
+    image: '/team-memebrs/Leadership Body/Lasan.png',
   },
   {
-    name: 'Nimindu Prishmika',
-    committee: 'Events Committee',
+    name: 'Dinesh Dissanayaka',
+    committee: 'Logistics Management Committee',
     position: 'Committee Member',
+    image: '/team-memebrs/Logistics/Dinesh.png',
   },
   {
-    name: 'Thisandi Rajapaksha',
-    committee: 'Volunteer Management Committee',
+    name: 'Kushani Umanda',
+    committee: 'Logistics Management Committee',
     position: 'Committee Member',
+    image: '/team-memebrs/Logistics/Kushani.png',
+  },
+  {
+    name: 'Nisal Jayaweera',
+    committee: 'Logistics Management Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Logistics/Nisal.png',
   },
   {
     name: 'Sadil Ephraims',
     committee: 'Logistics Management Committee',
     position: 'Committee Member',
-  },
-  {
-    name: 'Sadeepa Herath',
-    committee: 'Publicity Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Suvindu Ranchigoda',
-    committee: 'Finance & IR Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Induru Adeesha',
-    committee: 'Events Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Sandali Sathsarani',
-    committee: 'Publicity Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Janiru Dewanmith',
-    committee: 'Volunteer Management Committee',
-    position: 'Committee Member',
-  },
-  {
-    name: 'Umesh Bandara',
-    committee: 'Membership Development Committee',
-    position: 'Committee Member',
+    image: '/team-memebrs/Logistics/Ephraims.png',
   },
   {
     name: 'Devindi Wickramarathna',
     committee: 'Logistics Management Committee',
     position: 'Committee Member',
+    image: '/team-memebrs/Logistics/Devindi.png',
+  },
+
+  // Editorial Committee
+  {
+    name: 'Imesh Yasindu',
+    committee: 'Editorial Committee',
+    position: 'Committee Lead',
+    email: 'imesh7lk@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/imeshmunasinghe/',
+    image: '/team-memebrs/Leadership Body/Imesh.png',
   },
   {
-    name: 'Mindiya Karunasinghe',
-    committee: 'Events Committee',
+    name: 'Ranudi Namarathna',
+    committee: 'Editorial Committee',
     position: 'Committee Member',
+    image: '/team-memebrs/Editorial/Ranudi.png',
+  },
+  {
+    name: 'Kusal Nirukshan Amantha',
+    committee: 'Editorial Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Editorial/Kusal.png',
   },
   {
     name: 'Kamitha Akash',
     committee: 'Editorial Committee',
     position: 'Committee Member',
-  },
-  {
-    name: 'Kumudya Gnanaweera',
-    committee: 'Finance & IR Committee',
-    position: 'Committee Member',
+    image: '/team-memebrs/Editorial/Kamitha.png',
   },
   {
     name: 'Jithmini Munasinghe',
     committee: 'Editorial Committee',
     position: 'Committee Member',
+    image: '/team-memebrs/Editorial/Jithmini.png',
   },
   {
     name: 'Asheni Bandara',
     committee: 'Editorial Committee',
     position: 'Committee Member',
+    image: '/team-memebrs/Editorial/Asheni.png',
   },
   {
     name: 'Senaya Bandara',
     committee: 'Editorial Committee',
     position: 'Committee Member',
+    image: '/team-memebrs/Editorial/Senaya.png',
+  },
+
+  // Design Committee
+  {
+    name: 'Sahas Samuditha',
+    committee: 'Design Committee',
+    position: 'Committee Lead',
+    email: 'sahas.samuditha@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/sahas-samuditha',
+    image: '/team-memebrs/Leadership Body/Sahas.png',
   },
   {
-    name: 'Janidu Janadara',
-    committee: 'Publicity Committee',
+    name: 'Seniya Amarakoon',
+    committee: 'Design Committee',
     position: 'Committee Member',
+    image: '/team-memebrs/Design/Seniya.png',
   },
   {
-    name: 'Chamoth Sandeepa',
-    committee: 'Publicity Committee',
+    name: 'Sineth Wickramaratna',
+    committee: 'Design Committee',
     position: 'Committee Member',
+    image: '/team-memebrs/Design/Sineth.png',
   },
   {
     name: 'Minuka De Silva',
     committee: 'Design Committee',
     position: 'Committee Member',
+    image: '/team-memebrs/Design/Minuka.png',
   },
   {
     name: 'Thisul Dulneth',
     committee: 'Design Committee',
     position: 'Committee Member',
+    image: '/team-memebrs/Design/Thisul.png',
   },
+
+  // Publicity Committee
+  {
+    name: 'Thamalu Bambaravanage',
+    committee: 'Publicity Committee',
+    position: 'Committee Lead',
+    email: 'thamaludinu@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/thamalu',
+    image: '/team-memebrs/Leadership Body/Thamalu.png',
+  },
+  {
+    name: 'Buddhima Gayashan',
+    committee: 'Publicity Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Publicity/Buddhima.png',
+  },
+  {
+    name: 'Dulmi Jayasooriya',
+    committee: 'Publicity Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Publicity/Dulmi.png',
+  },
+  {
+    name: 'Adeesha Surawiman',
+    committee: 'Publicity Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Publicity/Adeesha.png',
+  },
+  {
+    name: 'Rashmika Dilshan',
+    committee: 'Publicity Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Publicity/Rashmika.png',
+  },
+  {
+    name: 'Sadeepa Herath',
+    committee: 'Publicity Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Publicity/Sadeepa.png',
+  },
+  {
+    name: 'Sandali Sathsarani',
+    committee: 'Publicity Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Publicity/Sandali.png',
+  },
+  {
+    name: 'Janidu Janadara',
+    committee: 'Publicity Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Publicity/Janindu.png',
+  },
+  {
+    name: 'Chamoth Sandeepa',
+    committee: 'Publicity Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Publicity/Chamoth.png',
+  },
+
+  // Volunteer Management Committee
+  {
+    name: 'Gishan Chamith',
+    committee: 'Volunteer Management Committee',
+    position: 'Committee Lead',
+    email: 'gishanchamith77@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/gishan-chamith-66b49b340',
+    image: '/team-memebrs/Leadership Body/Gishan.png',
+  },
+  {
+    name: 'Randi Kaweesha',
+    committee: 'Volunteer Management Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Volunteer/Randi.png',
+  },
+  {
+    name: 'Gayangi Devindi',
+    committee: 'Volunteer Management Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Volunteer/Gayangi.png',
+  },
+  {
+    name: 'Sandakelum Dissanayake',
+    committee: 'Volunteer Management Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Volunteer/Sandakelum.png',
+  },
+  {
+    name: 'Thisandi Rajapaksha',
+    committee: 'Volunteer Management Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Volunteer/Thisandi.png',
+  },
+  {
+    name: 'Janiru Dewanmith',
+    committee: 'Volunteer Management Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Volunteer/Janiru.png',
+  },
+
+  // Events Committee
+  {
+    name: 'Hiruna Malavipathirana',
+    committee: 'Events Committee',
+    position: 'Committee Lead',
+    email: 'hirunamalavipathirana.333@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/hiruna-malavipathirana-b0904916a',
+    image: '/team-memebrs/Leadership Body/Hiruna.png',
+  },
+  {
+    name: 'Sandali Kadawedduwa',
+    committee: 'Events Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Events/Sandali.png',
+  },
+  {
+    name: 'Dulmini Aththanayaka',
+    committee: 'Events Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Events/Dulmini.png',
+  },
+  {
+    name: 'Nimindu Prishmika',
+    committee: 'Events Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Events/Nimindu.png',
+  },
+  {
+    name: 'Induru Adeesha',
+    committee: 'Events Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Events/Induru.png',
+  },
+  {
+    name: 'Mindiya Karunasinghe',
+    committee: 'Events Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Events/Mindiya.png',
+  },
+
+  // Finance & IR Committee
+  {
+    name: 'Yashini Gunasekara',
+    committee: 'Finance & IR Committee',
+    position: 'Committee Lead',
+    email: 'yjgunasekara@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/yashini-gunasekara-773b59313',
+    image: '/team-memebrs/Leadership Body/Yashini.png',
+  },
+  {
+    name: 'Inuka Jithmal',
+    committee: 'Finance & IR Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Finance/Inuka.png',
+  },
+  {
+    name: 'Randula Wanniarachchi',
+    committee: 'Finance & IR Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Finance/Randula.png',
+  },
+  {
+    name: 'Sanduni Gamage',
+    committee: 'Finance & IR Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Finance/Sanduni.png',
+  },
+  {
+    name: 'Suvindu Ranchigoda',
+    committee: 'Finance & IR Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Finance/Suvindu.png',
+  },
+  {
+    name: 'Kumudya Gnanaweera',
+    committee: 'Finance & IR Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Finance/Kumudya.png',
+  },
+
+  // Membership Development Committee
+  {
+    name: 'Kalana Abeysundara',
+    committee: 'Membership Development Committee',
+    position: 'Committee Lead',
+    email: 'knbabeysundara@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/kalana-abeysundara',
+    image: '/team-memebrs/Leadership Body/Kalana.png',
+  },
+  {
+    name: 'Manjari Manesha',
+    committee: 'Membership Development Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Membership/Manjari.png',
+  },
+  {
+    name: 'Oshini Ravintha',
+    committee: 'Membership Development Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Membership/Oshini.png',
+  },
+  {
+    name: 'Hasaruvi Kodithuwakku',
+    committee: 'Membership Development Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Membership/Hasaruvi.png',
+  },
+  {
+    name: 'Kevin Ambrose',
+    committee: 'Membership Development Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Membership/Kevin.png',
+  },
+  {
+    name: 'Umesh Bandara',
+    committee: 'Membership Development Committee',
+    position: 'Committee Member',
+    image: '/team-memebrs/Membership/Umesh.png',
+  },
+
+  // Leadership Body (Summary entries for Leads section)
   {
     name: 'Hiruna Malavipathirana',
     committee: 'Leadership Body',
     position: 'EVENTS COMMITTEE LEAD',
     email: 'hirunamalavipathirana.333@gmail.com',
     linkedin: 'https://www.linkedin.com/in/hiruna-malavipathirana-b0904916a',
+    image: '/team-memebrs/Leadership Body/Hiruna.png',
   },
   {
     name: 'Sahas Samuditha',
     committee: 'Leadership Body',
     position: 'DESIGN COMMITTEE LEAD',
     email: 'sahas.samuditha@gmail.com',
-    linkedin: 'https://www.linkedin.com/in/sahas-samuditha',
+    linkedin: 'https://www.linkedin.com/in/sahas.samuditha',
+    image: '/team-memebrs/Leadership Body/Sahas.png',
   },
   {
     name: 'Yashini Gunasekara',
@@ -349,6 +429,7 @@ const rawMembers: MemberInput[] = [
     position: 'FINANCE & IR COMMITTEE LEAD',
     email: 'yjgunasekara@gmail.com',
     linkedin: 'https://www.linkedin.com/in/yashini-gunasekara-773b59313',
+    image: '/team-memebrs/Leadership Body/Yashini.png',
   },
   {
     name: 'Lasan Perera',
@@ -356,6 +437,7 @@ const rawMembers: MemberInput[] = [
     position: 'LOGISTIC MANAGEMENT COMMITTEE CO-LEAD',
     email: 'lasanperera.lsp@gmail.com',
     linkedin: 'https://www.linkedin.com/in/lasan-perera-0881a3280',
+    image: '/team-memebrs/Leadership Body/Lasan.png',
   },
   {
     name: 'Ishakya Gamage',
@@ -363,6 +445,7 @@ const rawMembers: MemberInput[] = [
     position: 'LOGISTICS MANAGEMENT COMMITTEE CO-LEAD',
     email: 'ishakyaranhiru@gmail.com',
     linkedin: 'https://www.linkedin.com/in/ishakya-gamage-71765b349',
+    image: '/team-memebrs/Leadership Body/Ishakya.png',
   },
   {
     name: 'Thamalu Bambaravanage',
@@ -370,6 +453,7 @@ const rawMembers: MemberInput[] = [
     position: 'PUBLICITY COMMITTEE LEAD',
     email: 'thamaludinu@gmail.com',
     linkedin: 'https://www.linkedin.com/in/thamalu',
+    image: '/team-memebrs/Leadership Body/Thamalu.png',
   },
   {
     name: 'Imesh Yasindu',
@@ -377,6 +461,7 @@ const rawMembers: MemberInput[] = [
     position: 'EDITORIAL COMMITTEE LEAD',
     email: 'imesh7lk@gmail.com',
     linkedin: 'https://www.linkedin.com/in/imeshmunasinghe',
+    image: '/team-memebrs/Leadership Body/Imesh.png',
   },
   {
     name: 'Gishan Chamith',
@@ -384,6 +469,7 @@ const rawMembers: MemberInput[] = [
     position: 'VOLUNTEER MANAGEMENT COMMITTEE LEAD',
     email: 'gishanchamith77@gmail.com',
     linkedin: 'https://www.linkedin.com/in/gishan-chamith-66b49b340',
+    image: '/team-memebrs/Leadership Body/Gishan.png',
   },
   {
     name: 'Kalana Abeysundara',
@@ -391,6 +477,7 @@ const rawMembers: MemberInput[] = [
     position: 'MEMBERSHIP DEVELOPMENT COMMITTEE LEAD',
     email: 'knbabeysundara@gmail.com',
     linkedin: 'https://www.linkedin.com/in/kalana-abeysundara',
+    image: '/team-memebrs/Leadership Body/Kalana.png',
   },
   {
     name: 'Banula Balasooriya',
@@ -398,6 +485,7 @@ const rawMembers: MemberInput[] = [
     position: 'RoboRoarZ 2025 CHAIRPERSON',
     email: 'banulabalasooriya@gmail.com',
     linkedin: 'https://www.linkedin.com/in/banula-balasooriya-43897239a',
+    image: '/team-memebrs/Leadership Body/Banula.png',
   },
 ];
 

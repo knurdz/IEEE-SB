@@ -52,7 +52,7 @@ export function withMemberMetadata(member: MemberInput, sourceIndex: number): Me
   return {
     ...member,
     committee: normalizeCommitteeName(member.committee),
-    image: PLACEHOLDER_IMAGES[sourceIndex % PLACEHOLDER_IMAGES.length],
+    image: member.image || PLACEHOLDER_IMAGES[sourceIndex % PLACEHOLDER_IMAGES.length],
     priority: getPositionPriority(member.position),
     sourceIndex,
   };
