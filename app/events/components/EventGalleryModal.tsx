@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
+import { cn } from '@/lib/cn';
 import type { EventItem } from '../data';
 
 interface EventGalleryModalProps {
@@ -257,20 +259,16 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                               }}
                             />
                           )}
-                          <img
+                          <Image
                             src={src}
                             alt={`${event.name} gallery`}
-                            loading="lazy"
-                            style={{
-                              width: '100%',
-                              height: 'auto',
-                              display: 'block',
-                              opacity: isLoaded ? 1 : 0,
-                              transition: 'opacity 0.4s ease',
-                              willChange: 'opacity',
-                              transform: 'scale(1.001)', // Subtile scale to force GPU rendering
-                            }}
-                            onLoad={() => handleImageLoad(src)}
+                            width={800}
+                            height={600}
+                            className={cn(
+                              "w-full h-auto block transition-all duration-500",
+                              isLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                            )}
+                            onLoadingComplete={() => handleImageLoad(src)}
                             onError={() => handleImageError(src)}
                           />
                         </motion.div>
@@ -339,15 +337,15 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                   </button>
                 </div>
 
-                <motion.img
-                  src={selectedImage}
-                  alt="Full screen view"
-                  className="max-w-full max-h-full object-contain pointer-events-none"
-                  initial={{ scale: 0.9, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0.9, opacity: 0 }}
-                  transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                />
+                <div className="relative w-full h-full max-w-[95vw] max-h-[95vh] flex items-center justify-center">
+                  <Image
+                    src={selectedImage}
+                    alt="Full screen view"
+                    fill
+                    priority
+                    className="object-contain"
+                  />
+                </div>
               </motion.div>
             )}
           </AnimatePresence>

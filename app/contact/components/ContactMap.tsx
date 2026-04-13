@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 export default function ContactMap() {
   return (
@@ -45,10 +46,12 @@ export default function ContactMap() {
               
               {/* Logo Container inside the pin's white circle - Precisely centered */}
               <div className="absolute top-[37.5%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:w-9 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:h-9">
-                <img 
+                <Image 
                   src="/logo/ieee-sb-logo-traced.svg" 
                   alt="IEEE Logo" 
-                  className="w-8 h-8 md:w-10 md:h-10 object-contain [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:w-9 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:h-9"
+                  width={40}
+                  height={40}
+                  className="object-contain"
                 />
               </div>
 
@@ -58,17 +61,21 @@ export default function ContactMap() {
           </a>
         </motion.div>
 
-
-
         {/* Static Map Image */}
-        <img 
+        <Image 
           src="/uom.png" 
           alt="University of Moratuwa Map" 
-          className="w-full h-full object-cover scale-[1.02] md:scale-[1.05] [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:scale-[1.04]"
+          fill
+          priority
+          className="object-cover scale-[1.02] md:scale-[1.05] transition-opacity duration-700 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:scale-[1.04]"
           style={{ 
             filter: 'grayscale(0.15) sepia(0.15) contrast(1.1) brightness(1.02)' 
           }}
         />
+        
+        {/* Skeleton/Placeholder overlay */}
+        <div className="absolute inset-0 bg-[#e4dfd0] animate-pulse pointer-events-none transition-opacity duration-1000 -z-0" 
+             style={{ opacity: 0.5 }} />
       </div>
     </motion.div>
   );

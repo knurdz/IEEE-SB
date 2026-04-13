@@ -44,13 +44,18 @@ export default function StrategicPartnerSection() {
             </div>
 
             <div className="lg:col-span-5 flex items-center justify-center p-8 sm:p-10 lg:p-12 bg-transparent">
-              <div className="w-full flex items-center justify-center">
+              <div className="w-full flex items-center justify-center relative min-h-[140px]">
+                {/* Skeleton Loader */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+                  <div className="w-48 h-12 bg-slate-200 animate-pulse rounded-lg" />
+                </div>
+                
                 <Image
                   src="/partners/IFS.png"
                   alt="IFS strategic partner logo"
                   width={560}
                   height={280}
-                  className="w-full max-w-[280px] sm:max-w-[340px] h-auto object-contain"
+                  className="w-full max-w-[280px] sm:max-w-[340px] h-auto object-contain relative z-10"
                   priority={false}
                 />
               </div>

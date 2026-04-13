@@ -71,13 +71,19 @@ function EventCard({ event, offset, dragOffset, onClick }: EventCardProps) {
         isActive ? `Open ${event.title} gallery` : `Focus ${event.title}`
       }
     >
-      <div className="relative h-full w-full overflow-hidden rounded-[4px] border border-black/10 bg-white shadow-[0_18px_45px_-22px_rgba(0,0,0,0.35)]">
+      <div className="relative h-full w-full overflow-hidden rounded-[4px] border border-black/10 bg-slate-100 shadow-[0_18px_45px_-22px_rgba(0,0,0,0.35)]">
+        {/* Skeleton Background */}
+        <div className="absolute inset-0 bg-slate-200 animate-pulse flex items-center justify-center">
+           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 -translate-x-full animate-[shimmer_2s_infinite]" />
+        </div>
+
         <Image
           src={event.image}
           alt={event.title}
           fill
+          priority={isActive}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1400px"
-          className={`object-cover ${customObjectPosition}`}
+          className={`object-cover transition-opacity duration-700 ${customObjectPosition} ${isActive ? 'opacity-100' : 'opacity-90'}`}
         />
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
