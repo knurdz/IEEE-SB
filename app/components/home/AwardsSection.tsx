@@ -45,7 +45,7 @@ export default function AwardsSection() {
               <div className="relative rounded-lg overflow-hidden border-4 border-[#2c3e50]">
                 {/* Fallback layout if specific image isn't available, otherwise use next/image */}
                 <Image
-                  src={featuredAward.image || "/images/placeholder-cert.jpg"}
+                  src={featuredAward.image || "/events/placeholder-cert.jpg"}
                   alt={featuredAward.imageAlt}
                   width={3309}
                   height={2310}

@@ -48,7 +48,7 @@ export default function Roadmap() {
 
         <div className="relative max-w-6xl mx-auto z-10 space-y-8">
           {EVENTS.map((event, index) => (
-            <EventCard key={event.id} event={event} index={index} />
+            <EventCard key={event.id} event={event} index={index} priority={index < 2} />
           ))}
         </div>
       </section>

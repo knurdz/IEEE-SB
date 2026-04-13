@@ -1,7 +1,6 @@
 export interface HomeEvent {
   id: number;
   title: string;
-  date: string;
   category: string;
   description: string;
   image: string;
@@ -59,7 +58,6 @@ export const homeEvents: HomeEvent[] = [
   {
     id: 1,
     title: "Ballerina",
-    date: "July 12",
     category: "Workshop",
     description:
       "A deep dive into the Ballerina programming language, exploring cloud-native development and integration patterns for modern engineers.",
@@ -69,7 +67,6 @@ export const homeEvents: HomeEvent[] = [
   {
     id: 2,
     title: "Foresight",
-    date: "June 05",
     category: "Symposium",
     description:
       "Bridging the gap between academia and industry through expert talks on AI, robotics, and the future of engineering job markets.",
@@ -79,7 +76,6 @@ export const homeEvents: HomeEvent[] = [
   {
     id: 3,
     title: "Mercon",
-    date: "Sept 10",
     category: "Conference",
     description:
       "Our premier annual conference celebrating research excellence and technical innovation across all engineering disciplines.",
@@ -89,7 +85,6 @@ export const homeEvents: HomeEvent[] = [
   {
     id: 4,
     title: "MoraXtreme",
-    date: "Dec 15",
     category: "Hackathon",
     description:
       "A national-level competitive programming championship where the best coders solve complex algorithmic problems under pressure.",
@@ -99,7 +94,6 @@ export const homeEvents: HomeEvent[] = [
   {
     id: 5,
     title: "Rise Up Mora",
-    date: "Aug 20",
     category: "Career",
     description:
       "An internship-focused career development initiative connecting students with top industry partners and mentorship opportunities.",

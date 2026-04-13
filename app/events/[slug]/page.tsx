@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback, use } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { EVENTS } from '../data';
 import type { EventItem } from '../data';
 import SiteBackground from '../../components/layout/SiteBackground';
@@ -81,10 +82,12 @@ export default function EventDetailPage({ params }: EventPageProps) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
                 >
-                  <img 
+                  <Image 
                     src={event.mainImage} 
                     alt={event.name}
-                    className="w-full h-full object-cover"
+                    fill
+                    priority
+                    className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
                 </motion.div>
@@ -127,11 +130,13 @@ export default function EventDetailPage({ params }: EventPageProps) {
                     {!isLoaded && (
                       <div className="aspect-square bg-slate-100 animate-pulse" />
                     )}
-                    <img
+                    <Image
                       src={src}
                       alt={`${event.name} gallery ${idx + 1}`}
+                      width={600}
+                      height={400}
                       className={`w-full h-auto transition-transform duration-500 group-hover:scale-105 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-                      onLoad={() => handleImageLoad(src)}
+                      onLoadingComplete={() => handleImageLoad(src)}
                     />
                     <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/20 transition-colors duration-300" />
                   </motion.div>
@@ -173,11 +178,13 @@ export default function EventDetailPage({ params }: EventPageProps) {
                           {!isLoaded && (
                             <div className="aspect-square bg-slate-100 animate-pulse" />
                           )}
-                          <img
+                          <Image
                             src={src}
                             alt={`${group.name} gallery ${idx + 1}`}
+                            width={600}
+                            height={400}
                             className={`w-full h-auto transition-transform duration-500 group-hover:scale-105 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-                            onLoad={() => handleImageLoad(src)}
+                            onLoadingComplete={() => handleImageLoad(src)}
                           />
                           <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/20 transition-colors duration-300" />
                         </motion.div>
