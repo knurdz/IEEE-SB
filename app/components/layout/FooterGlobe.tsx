@@ -246,22 +246,8 @@ export default function FooterGlobe() {
 
       ctx.restore();
 
-      const shadowGradient = ctx.createRadialGradient(
-        cx - radius * 0.4,
-        cy - radius * 0.4,
-        radius * 0.2,
-        cx,
-        cy,
-        radius * 1.1,
-      );
-      shadowGradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
-      shadowGradient.addColorStop(0.7, 'rgba(0, 0, 0, 0.05)');
-      shadowGradient.addColorStop(1, 'rgba(0, 0, 0, 0.42)');
+      // Removed globe shadow gradient for a cleaner look
 
-      ctx.beginPath();
-      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-      ctx.fillStyle = shadowGradient;
-      ctx.fill();
 
       ctx.beginPath();
       ctx.arc(cx, cy, radius, 0, Math.PI * 2);

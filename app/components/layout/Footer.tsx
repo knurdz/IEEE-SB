@@ -4,22 +4,13 @@ import FooterGlobe from './FooterGlobe';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  const universityMapUrl =
-    'https://www.google.com/maps/search/?api=1&query=University+of+Moratuwa%2C+Sri+Lanka';
 
   return (
     <footer id="footer-section" className="site-footer" aria-label="IEEE UoM footer">
-      {/* Clickable globe accent focused on University of Moratuwa */}
-      <a
-        className="footer-globe-wrapper footer-globe-link"
-        href={universityMapUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Open University of Moratuwa on Google Maps"
-        title="View University of Moratuwa on the map"
-      >
+      {/* Globe accent focused on University of Moratuwa (Non-interactive) */}
+      <div className="footer-globe-wrapper">
         <FooterGlobe />
-      </a>
+      </div>
 
       {/* Main Footer Content */}
       <div className="footer-content">
@@ -30,8 +21,8 @@ export default function Footer() {
             alt="IEEE University of Moratuwa Student Branch"
             className="footer-logo"
             width={280}
-            height={80}
-            style={{ width: 'auto', height: 'auto' }}
+            height={85}
+            priority
           />
           <p className="footer-brand-desc">
             Empowering future engineers through innovation and collaboration.
