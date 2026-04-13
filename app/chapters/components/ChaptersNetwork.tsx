@@ -2,8 +2,8 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useMemo } from 'react';
 import { societies } from '../data';
+import AnimatedLogoProcedural from './AnimatedLogoProcedural';
 
 const SMALL_ROUNDED_HEX = `url("data:image/svg+xml,%3Csvg width='150' height='130' viewBox='0 0 150 130' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='46,16 104,16 134,65 104,114 46,114 16,65' fill='black' stroke='black' stroke-width='32' stroke-linejoin='round'/%3E%3C/svg%3E")`;
 const BIG_ROUNDED_HEX = `url("data:image/svg+xml,%3Csvg width='300' height='260' viewBox='0 0 300 260' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='87,24 213,24 276,130 213,236 87,236 24,130' fill='black' stroke='black' stroke-width='48' stroke-linejoin='round'/%3E%3C/svg%3E")`;
@@ -99,12 +99,8 @@ export default function ChaptersNetwork() {
                 className="relative w-[300px] h-[260px] bg-transparent flex items-center justify-center overflow-hidden"
                 style={{ maskImage: BIG_ROUNDED_HEX, WebkitMaskImage: BIG_ROUNDED_HEX }}
               >
-                <Image
-                  src="/logo-2.gif"
-                  alt="IEEE Logo"
-                  width={240} height={240}
-                  className="relative z-10 w-56 h-auto object-contain"
-                />
+                {/* Replaced GIF with the new high-fidelity SVG component */}
+                <AnimatedLogoProcedural className="relative z-10 w-64 h-auto object-contain" />
               </div>
             </div>
           </motion.div>
@@ -160,7 +156,7 @@ export default function ChaptersNetwork() {
                 <div className="relative group hover:scale-110 transition-transform duration-300">
                   <svg width='150' height='130' viewBox='0 0 150 130' className="absolute inset-0 pointer-events-none text-[#008be6]/15 overflow-visible">
                     <polygon points='46,16 104,16 134,65 104,114 46,114 16,65' fill='none' stroke='currentColor' strokeWidth='34' strokeLinejoin='round'/>
-                  </svg>
+                    </svg>
                   <div
                     onClick={() => {
                       const society = societies.find(s => s.logo === `/chapter-logos/${node.id}.png`);
