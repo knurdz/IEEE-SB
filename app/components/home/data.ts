@@ -33,24 +33,24 @@ export const secondaryAwards: AwardItem[] = [
     id: "sls-best-branch-award",
     year: "",
     title: "Best Student Branch Project Award (MoraForesight)",
-    image: "/award.jpg",
-    imageAlt: "Sri Lankan section best student branch award banner",
+    image: "/events-assets/Foresight/logo.png",
+    imageAlt: "MoraForesight logo",
     description: "The Best Student Branch Project award for MoraForesight was presented at IEEE Sri Lanka Section awards"
   },
   {
     id: "sls-outstanding-tech-initiative-award",
     year: "",
     title: "Best Industry Collaborative Project Award (Rise Up Mora)",
-    image: "/award.jpg",
-    imageAlt: "Sri Lankan section outstanding technical initiative award banner",
+    image: "/events-assets/RUM/logo.png",
+    imageAlt: "Rise Up Mora logo",
     description: "The Best Industry Collaborative Project award for Rise Up Mora was presented at IEEE Sri Lanka Section awards"
   },
   {
     id: "sls-community-impact-award",
     year: "",
     title: "Outstanding Technical Chapter Award (IEEE EMBS)",
-    image: "/award.jpg",
-    imageAlt: "Sri Lankan section community impact award banner",
+    image: "/chapter-logos/CL1.png",
+    imageAlt: "IEEE EMBS logo",
     description: "The Outstanding Technical Chapter award for IEEE EMBS was presented at IEEE Sri Lanka Section awards"
   },
 ];

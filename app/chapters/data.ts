@@ -127,7 +127,7 @@ export const societies: Society[] = [
     title: "IEEE Microwave Theory and Techniques Society",
     description: "The IEEE Microwave Theory and Techniques Society specializes in high-frequency engineering and advanced communication technologies. It introduces students to RF systems, microwave circuits, antenna design, and signal propagation. Through simulations, laboratory work, and technical sessions, members gain in-depth practical knowledge. The chapter strengthens expertise in communication hardware and prepares students for specialized engineering domains.",
     logo: "/chapter-logos/CL10.png",
-    color: "#00b5e2",
+    color: "#00629b",
     links: {
       facebook: "https://www.facebook.com/share/1ApAx3Qep7/",
       linkedin: "https://www.linkedin.com/company/ieee-mtt-s-student-branch-chapter-university-of-moratuwa/"
@@ -171,7 +171,7 @@ export const societies: Society[] = [
     title: "IEEE Circuits and Systems Society",
     description: "IEEE Circuits and Systems Society of the University of Moratuwa is dedicated to advancing knowledge in circuit design, system architecture, and intelligent electronic technologies. The chapter provides a platform for students to explore analog and digital circuits, embedded systems, VLSI technologies, and modern hardware innovations. Through technical programs, design-oriented workshops, and research initiatives, it develops the expertise required to engineer efficient, reliable, and future-ready electronic systems.",
     logo: "/chapter-logos/CL14.png",
-    color: "#00b5e2",
+    color: "#00965e",
     links: {
       linkedin: "https://www.linkedin.com/company/ieee-cas-uom/",
       instagram: "https://www.instagram.com/ieeecasuom?igsh=bmFqeG95YWFzdnJ2"

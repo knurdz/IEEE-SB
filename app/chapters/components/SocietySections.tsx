@@ -251,12 +251,24 @@ export default function SocietySections() {
                       className="relative w-full h-full bg-gray-50 flex items-center justify-center overflow-hidden"
                       style={{ clipPath: `url(#hexClipImg-${society.id})` }}
                     >
+                      {/* Loading Skeleton */}
+                      <div className="absolute inset-0 bg-gray-100 animate-pulse flex items-center justify-center">
+                        <div className="w-1/3 h-1/3 bg-gray-200 rounded-full blur-xl opacity-50" />
+                      </div>
+                      
                       <Image
                         src={society.logo || "/chapter-logos/society_logo.png"}
                         alt={society.title}
                         fill
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                        className="object-contain p-6 lg:p-10 transition-transform duration-700 hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+                        className="object-contain p-10 lg:p-16 transition-all duration-1000 ease-out hover:scale-110 opacity-0"
+                        onLoad={(e) => {
+                          const img = e.currentTarget;
+                          img.classList.remove('opacity-0');
+                          // Find the skeleton sibling and hide it
+                          const skeleton = img.previousElementSibling;
+                          if (skeleton) skeleton.classList.add('opacity-0', 'pointer-events-none');
+                        }}
                       />
                     </div>
                   </motion.div>

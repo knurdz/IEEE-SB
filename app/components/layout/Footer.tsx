@@ -31,7 +31,7 @@ export default function Footer() {
             className="footer-logo"
             width={280}
             height={80}
-            style={{ height: 'auto' }}
+            style={{ width: 'auto', height: 'auto' }}
           />
           <p className="footer-brand-desc">
             Empowering future engineers through innovation and collaboration.
@@ -55,6 +55,7 @@ export default function Footer() {
                   alt={social.label}
                   width={36}
                   height={36}
+                  style={{ width: 'auto', height: 'auto' }}
                 />
               </a>
             ))}
