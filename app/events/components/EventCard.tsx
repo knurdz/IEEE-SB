@@ -12,6 +12,7 @@ import type { EventItem } from '../data';
 interface EventCardProps {
   event: EventItem;
   index: number;
+  priority?: boolean;
 }
 
 function ArrowRight({ className }: { className?: string }) {
@@ -34,7 +35,7 @@ function ArrowRight({ className }: { className?: string }) {
   );
 }
 
-const EventCard = React.memo<EventCardProps>(function EventCard({ event, index }) {
+const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, priority = false }) {
   const [imgFailed, setImgFailed] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
@@ -65,10 +66,13 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index }
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1.2, ease: 'easeInOut' }}
             >
-              <img
+              <Image
                 src={displayImage}
-                alt={event.name}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                alt={event.name || 'Event image'}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 40vw, 30vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                priority={priority}
                 onError={() => setImgFailed(true)}
               />
             </motion.div>
@@ -118,14 +122,14 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index }
             </p>
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center gap-4 relative z-30">
+          <div className="mt-6 flex flex-wrap items-center gap-4">
             <span className="inline-flex items-center gap-2 text-primary font-bold text-[13px] uppercase tracking-widest group-hover:text-accent transition-colors duration-300 pointer-events-none">
               Explore Event
               <ArrowRight className="group-hover:translate-x-1.5 transition-transform duration-300" />
             </span>
 
             {/* Social Links / Website Buttons */}
-            <div className="flex items-center gap-2 ml-auto">
+            <div className="flex items-center gap-2 ml-auto relative z-30">
               {event.websiteUrl && (
                 <a
                   href={event.websiteUrl}
