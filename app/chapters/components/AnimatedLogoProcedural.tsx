@@ -1,66 +1,51 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 
 /**
  * AnimatedLogoProcedural
  * 
- * To achieve 100% visual parity with the original logo asset, this component 
- * uses the exact SVG structure and PNG layers from the logo project.
- * 
- * The previous procedural version was optimized for performance (32MB -> 5KB),
- * but for absolute visual consistency, we are reverting to the original assets
- * with fixed absolute pathing to resolve the rendering issues in Next.js.
+ * Optimized for performance and delivery.
+ * Uses Next.js Image components for automatic weight reduction (WebP) 
+ * and CSS animations for GPU-accelerated performance.
  */
 export default function AnimatedLogoProcedural({ className }: { className?: string }) {
-  const VIEWBOX_SIZE = 2048;
-  
   return (
-    <svg 
-      xmlns="http://www.w3.org/2000/svg" 
-      width={VIEWBOX_SIZE} 
-      height={VIEWBOX_SIZE} 
-      viewBox={`0 0 ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`} 
-      className={className}
-      role="img" 
-      aria-label="IEEE SB animated logo" 
-      shapeRendering="geometricPrecision"
-    >
-      <title>IEEE SB animated logo</title>
-      
-      {/* Background layer (Transparent) */}
-      <rect width="100%" height="100%" fill="none" />
-      
-      {/* Moving Background Layer - Layer 01 (Rotating Hexagon Field) */}
-      <g className="moving-layer moving-layer-1">
-        <animateTransform 
-          attributeName="transform" 
-          attributeType="XML" 
-          type="rotate" 
-          from="0 1024.0 1024.0" 
-          to="360 1024.0 1024.0" 
-          dur="40s" 
-          repeatCount="indefinite" 
+    <div className={`relative aspect-square w-full h-full overflow-hidden ${className}`}>
+      <style jsx>{`
+        @keyframes rotate-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .animate-rotate {
+          animation: rotate-slow 40s linear infinite;
+        }
+      `}</style>
+
+      {/* Background Rotating Layer - Optimized via Next.js Image */}
+      <div className="absolute inset-0 animate-rotate scale-110">
+        <Image
+          src="/logo-animated/ieee-sb-logo-animated-layer-01.png"
+          alt=""
+          fill
+          priority
+          sizes="(max-width: 768px) 300px, 600px"
+          className="object-contain opacity-80"
         />
-        <image 
-          href="/logo-animated/ieee-sb-logo-animated-layer-01.png" 
-          x="0" 
-          y="0" 
-          width={VIEWBOX_SIZE} 
-          height={VIEWBOX_SIZE} 
-          preserveAspectRatio="none" 
+      </div>
+
+      {/* Static Center Branding */}
+      <div className="absolute inset-0 z-10">
+        <Image
+          src="/logo-animated/ieee-sb-logo-animated-center.png"
+          alt="IEEE SB Logo"
+          fill
+          priority
+          sizes="(max-width: 768px) 300px, 600px"
+          className="object-contain"
         />
-      </g>
-      
-      {/* Static Foreground Layer (Center Logo & Branding) */}
-      <image 
-        href="/logo-animated/ieee-sb-logo-animated-center.png" 
-        x="0" 
-        y="0" 
-        width={VIEWBOX_SIZE} 
-        height={VIEWBOX_SIZE} 
-        preserveAspectRatio="none" 
-      />
-    </svg>
+      </div>
+    </div>
   );
 }

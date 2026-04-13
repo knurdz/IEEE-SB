@@ -81,17 +81,16 @@ export default function AwardsSection() {
                 transition={{ duration: 0.6, delay: index * 0.2 }}
                 className="flex items-center gap-6 group"
               >
-                {/* Tech Base with original award image */}
-                <div className="relative shrink-0 w-24 h-28 transform transition-transform group-hover:scale-110">
-                  <div className="absolute bottom-0 w-full h-12 bg-gradient-to-b from-gray-300 to-gray-500 rounded-lg transform skew-x-[-10deg] border border-blue-200 shadow-[0_0_15px_rgba(91,192,235,0.3)]"></div>
-                  <div className="absolute bottom-2 w-full h-10 bg-gradient-to-b from-gray-200 to-gray-400 rounded-lg transform skew-x10 border border-blue-200"></div>
-                  <div className="absolute inset-x-0 bottom-4 flex justify-center h-20 w-20 mx-auto overflow-hidden rounded-md border-2 border-white/50 shadow-md">
+                {/* Clean tech base for the logo */}
+                <div className="relative shrink-0 w-24 h-28 transform transition-transform group-hover:scale-110 flex items-end justify-center">
+                  <div className="absolute inset-x-0 bottom-0 h-4 bg-gray-200/50 backdrop-blur-md rounded-full blur-sm"></div>
+                  <div className="relative flex justify-center h-20 w-20 overflow-hidden rounded-xl border border-blue-100 shadow-lg bg-white/10 backdrop-blur-md">
                     <Image
                       src={award.image}
                       alt={award.imageAlt}
                       fill
                       sizes="(max-width: 768px) 100px, 100px"
-                      className="object-cover"
+                      className="object-contain"
                     />
                   </div>
                 </div>

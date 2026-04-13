@@ -137,13 +137,19 @@ export default function ChaptersNetwork() {
                     className="relative cursor-pointer w-[150px] h-[130px] bg-white flex items-center justify-center p-4 overflow-hidden"
                     style={{ maskImage: SMALL_ROUNDED_HEX, WebkitMaskImage: SMALL_ROUNDED_HEX }}
                   >
+                    <div className="absolute inset-0 bg-gray-50/50 animate-pulse transition-opacity duration-500" />
                     <Image 
                       src={`/chapter-logos/CL${node.id}.png`} 
                       alt={`Partner ${node.id}`} 
                       width={80} 
                       height={80} 
-                      className="object-contain w-full h-full" 
+                      className="object-contain w-full h-full opacity-0 transition-opacity duration-1000" 
                       priority={i < 4}
+                      onLoad={(e) => {
+                        const img = e.currentTarget;
+                        img.classList.remove('opacity-0');
+                        if (img.previousElementSibling) img.previousElementSibling.classList.add('opacity-0');
+                      }}
                     />
                   </div>
                 </div>
@@ -180,13 +186,19 @@ export default function ChaptersNetwork() {
                     className="relative cursor-pointer w-[150px] h-[130px] bg-white flex items-center justify-center p-4 overflow-hidden"
                     style={{ maskImage: SMALL_ROUNDED_HEX, WebkitMaskImage: SMALL_ROUNDED_HEX }}
                   >
+                    <div className="absolute inset-0 bg-gray-50/50 animate-pulse transition-opacity duration-500" />
                     <Image 
                       src={`/chapter-logos/CL${node.id}.png`} 
                       alt={`Partner ${node.id}`} 
                       width={80} 
                       height={80} 
-                      className="object-contain w-full h-full" 
-                      priority={node.id <= 8} // Preload the first visible cluster
+                      className="object-contain w-full h-full opacity-0 transition-opacity duration-1000" 
+                      priority={i < 4}
+                      onLoad={(e) => {
+                        const img = e.currentTarget;
+                        img.classList.remove('opacity-0');
+                        if (img.previousElementSibling) img.previousElementSibling.classList.add('opacity-0');
+                      }}
                     />
                   </div>
                 </div>
