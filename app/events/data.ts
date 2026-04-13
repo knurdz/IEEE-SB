@@ -11,6 +11,10 @@ export interface EventItem {
   gallery: string[];
   mainImage?: string;
   facebookUrl?: string;
+  websiteUrl?: string;
+  instagramUrl?: string;
+  linkedinUrl?: string;
+  whatsappUrl?: string;
 }
 
 export const EVENTS: EventItem[] = [
@@ -48,7 +52,6 @@ export const EVENTS: EventItem[] = [
       '/images/OpenWeek/491974489_1072769378216038_6614258640913092672_n.jpg'
     ],
     mainImage: '/images/OpenWeek/491974489_1072769378216038_6614258640913092672_n.jpg',
-    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1046768850816091&type=3'
   },
   {
     id: 2,
@@ -74,7 +77,8 @@ export const EVENTS: EventItem[] = [
       '/images/MoraXtreme/616111877_1293600412799599_1585596267977142708_n.jpg'
     ],
     mainImage: '/images/MoraXtreme/617541107_1293606722798968_6063331189995054013_n.jpg',
-    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1293608876132086&type=3'
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1293608876132086&type=3',
+    websiteUrl: 'https://moraxtreme.lk/'
   },
   {
     id: 3,
@@ -128,7 +132,11 @@ export const EVENTS: EventItem[] = [
       '/images/foresight/536273478_1171391118353863_296049353392202877_n.jpg'
     ],
     mainImage: '/images/foresight/536270154_1171385821687726_248709497198309389_n.jpg',
-    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1171313061695002&type=3'
+    facebookUrl: 'https://facebook.com/moraforesight',
+    websiteUrl: 'https://moraforesight.lk/',
+    linkedinUrl: 'https://www.linkedin.com/company/moraforesight',
+    instagramUrl: 'https://www.instagram.com/moraforesight._',
+    whatsappUrl: 'https://whatsapp.com/channel/0029Vb82hWMEwEjowRgP0X0K'
   },
   {
     id: 4,
@@ -157,7 +165,8 @@ export const EVENTS: EventItem[] = [
       '/images/Ballerina/557822357_1211849037641404_7907102675257494088_n.jpg'
     ],
     mainImage: '/images/Ballerina/557639154_1211833787642929_4546847834616922527_n.jpg',
-    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1211869624306012&type=3'
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1211869624306012&type=3',
+    websiteUrl: 'https://innovatewithballerina.com/'
   },
   {
     id: 5,
@@ -192,7 +201,6 @@ export const EVENTS: EventItem[] = [
       '/images/AGM & Award Ceremony/568833701_1222975843195390_2988351440961654452_n.jpg'
     ],
     mainImage: '/images/AGM & Award Ceremony/566320867_1222966146529693_6619199067605645621_n.jpg',
-    facebookUrl: 'https://web.facebook.com/media/set/?set=a.953390813487229&type=3'
   },
   {
     id: 6,
@@ -234,7 +242,9 @@ export const EVENTS: EventItem[] = [
       '/images/Mercon/539632214_1176417277851247_2303665440838680537_n.jpg'
     ],
     mainImage: '/images/Mercon/540598471_1176409737852001_6607515367642355102_n (1).jpg',
-    facebookUrl: 'https://web.facebook.com/media/set/?set=a.417277851247230&type=3'
+    facebookUrl: 'https://facebook.com/erumercon',
+    websiteUrl: 'https://riseupmora.lk/',
+    linkedinUrl: 'https://www.linkedin.com/company/mercon-moratuwa-engineering-research-conference'
   },
   {
     id: 7,
@@ -259,7 +269,6 @@ export const EVENTS: EventItem[] = [
       '/images/Robotics Day/497444705_1090881616404814_1269796916803844776_n.jpg'
     ],
     mainImage: '/images/Robotics Day/495377340_1090887113070931_3714688918436566927_n.jpg',
-    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1090920843067558&type=3'
   },
   {
     id: 8,
@@ -283,7 +292,6 @@ export const EVENTS: EventItem[] = [
       '/images/Finnc/524426322_1149901920502783_2288821748845296099_n.jpg'
     ],
     mainImage: '/images/Finnc/524163752_1149907193835589_1666494559508167772_n.jpg',
-    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1107733941386248&type=3'
   },
   {
     id: 9,
@@ -312,7 +320,6 @@ export const EVENTS: EventItem[] = [
       '/images/IEEEXtreme/596314411_1263595729133401_1307120687459112949_n.jpg'
     ],
     mainImage: '/images/IEEEXtreme/594962004_1263594422466865_8735085998910189412_n.jpg',
-    facebookUrl: 'https://web.facebook.com/media/set/?set=a.964019195757724&type=3'
   },
   {
     id: 10,
@@ -346,6 +353,8 @@ export const EVENTS: EventItem[] = [
       '/images/riceup/538360935_1173269878165987_7039391497052785480_n.jpg'
     ],
     mainImage: '/images/riceup/538314147_1173265281499780_317201833541306729_n.jpg',
-    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1146157547543887&type=3'
+    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1146157547543887&type=3',
+    websiteUrl: 'https://riseupmora.lk/',
+    linkedinUrl: 'http://linkedin.com/company/rise-up-mora'
   },
 ];

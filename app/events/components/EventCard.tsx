@@ -3,6 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
+import { 
+  Globe 
+} from 'lucide-react';
 import type { EventItem } from '../data';
 
 interface EventCardProps {
@@ -101,9 +105,6 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index }
               >
                 {event.category}
               </span>
-              <span className="text-muted text-sm font-medium opacity-60">
-                {event.year}
-              </span>
             </div>
 
             <h3 className="font-orbitron font-bold text-2xl md:text-3xl text-primary mb-2 group-hover:text-accent transition-colors duration-300">
@@ -117,11 +118,75 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index }
             </p>
           </div>
 
-          <div className="mt-6 flex items-center justify-between relative z-30 pointer-events-none">
-            <span className="inline-flex items-center gap-2 text-primary font-bold text-[13px] uppercase tracking-widest group-hover:text-accent transition-colors duration-300">
+          <div className="mt-6 flex flex-wrap items-center gap-4 relative z-30">
+            <span className="inline-flex items-center gap-2 text-primary font-bold text-[13px] uppercase tracking-widest group-hover:text-accent transition-colors duration-300 pointer-events-none">
               Explore Event
               <ArrowRight className="group-hover:translate-x-1.5 transition-transform duration-300" />
             </span>
+
+            {/* Social Links / Website Buttons */}
+            <div className="flex items-center gap-2 ml-auto">
+              {event.websiteUrl && (
+                <a
+                  href={event.websiteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-full bg-primary/5 hover:bg-primary/10 text-primary transition-all duration-300 hover:scale-110"
+                  title="Website"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Globe size={18} />
+                </a>
+              )}
+              {event.facebookUrl && (
+                <a
+                  href={event.facebookUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-full bg-primary/5 hover:bg-primary/10 text-primary transition-all duration-300 hover:scale-110 flex items-center justify-center w-9 h-9"
+                  title="Facebook"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Image src="/social/FB.svg" alt="Facebook" width={18} height={18} className="opacity-80 group-hover:opacity-100" />
+                </a>
+              )}
+              {event.linkedinUrl && (
+                <a
+                  href={event.linkedinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-full bg-primary/5 hover:bg-primary/10 text-primary transition-all duration-300 hover:scale-110 flex items-center justify-center w-9 h-9"
+                  title="LinkedIn"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                   <Image src="/social/Linkdin.svg" alt="LinkedIn" width={18} height={18} className="opacity-80 group-hover:opacity-100" />
+                </a>
+              )}
+              {event.instagramUrl && (
+                <a
+                  href={event.instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-full bg-primary/5 hover:bg-primary/10 text-primary transition-all duration-300 hover:scale-110 flex items-center justify-center w-9 h-9"
+                  title="Instagram"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Image src="/social/Insta.svg" alt="Instagram" width={18} height={18} className="opacity-80 group-hover:opacity-100" />
+                </a>
+              )}
+              {event.whatsappUrl && (
+                <a
+                  href={event.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-full bg-primary/5 hover:bg-primary/10 text-primary transition-all duration-300 hover:scale-110 flex items-center justify-center w-9 h-9"
+                  title="WhatsApp"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Image src="/social/Whatsapp.svg" alt="WhatsApp" width={18} height={18} className="opacity-80 group-hover:opacity-100" />
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </div>
