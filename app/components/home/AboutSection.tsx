@@ -6,9 +6,9 @@ import SiteBackground from '@/app/components/layout/SiteBackground';
 
 const stats = [
   { num: 500, plus: '+', label: 'Active Members' },
-  { num: 50, plus: '+', label: 'Annual Events' },
-  { num: 15, plus: '+', label: 'Years Experience' },
-  { num: 15, plus: '+', label: 'Chapters & Societies' },
+  { num: 100, plus: '+', label: 'Annual Events' },
+  { num: 17, plus: '+', label: 'Years Experience' },
+  { num: 17, label: 'Chapters & Affnity Groups' },
 ];
 
 const WavyLine = ({ className }: { className?: string }) => (
