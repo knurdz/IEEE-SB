@@ -32,43 +32,6 @@ export default function ChaptersHero() {
           stroke-dasharray: 20 100;
           animation: circuit-pulse 40s linear infinite both;
         }
-
-        .hero-tagline-1 {
-          font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
-          font-weight: 600;
-          font-size: 13px;
-          letter-spacing: 0.25em;
-          color: #008be6;
-          margin-top: 1rem;
-          margin-bottom: 0.5rem;
-          text-transform: uppercase;
-          text-shadow: 0 4px 12px rgba(0, 139, 230, 0.15);
-        }
-
-        .hero-tagline-2 {
-          font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
-          font-weight: 700; /* standard bold to avoid synthetic bolding */
-          font-size: 28px;
-          line-height: 1.1;
-          letter-spacing: -0.02em;
-          background: linear-gradient(90deg, #00579d 0%, #008be6 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          text-shadow: 0 4px 12px rgba(23, 53, 153, 0.1);
-        }
-          
-        @media (min-width: 480px) {
-           .hero-tagline-2 {
-              font-size: 40px;
-           }
-        }
-
-        @media (min-width: 768px) {
-           .hero-tagline-2 {
-              font-size: 64px;
-           }
-        }
       `}</style>
       
       {/* Background hexagon grid based on home hero */}
@@ -310,12 +273,12 @@ export default function ChaptersHero() {
         style={{ y, opacity }}
       >
         <motion.h1 
-            className="hero-tagline-2 pb-2"
-            initial={{ opacity: 0, y: 20 }}
+            className="font-orbitron font-bold text-4xl sm:text-5xl md:text-6xl text-foreground tracking-tight pb-2"
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={fadeUpTransition(0.4, 0.8)}
+            transition={{ delay: 0.4, duration: 0.6 }}
         >
-          Our Technical Chapter & Affinity groups
+          Technical Chapters & <br /> <span className="text-gradient">Affinity groups</span>
         </motion.h1>
       </motion.div>
     </section>

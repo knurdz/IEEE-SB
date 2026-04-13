@@ -34,6 +34,8 @@ const ALL_NODES = [
   { id: 14, x:  2 * DX + RIGHT_SHIFT, y: -DY      },
   { id: 15, x:  2 * DX + RIGHT_SHIFT, y:  DY      },
   { id: 16, x:  3 * DX + RIGHT_SHIFT, y: 0        },
+  // Extra node for the 17th chapter, positioned above the right side cluster logos for better balance
+  { id: 17, x:  2 * DX + RIGHT_SHIFT, y: -3 * DY  }, 
 ];
 
 export default function ChaptersNetwork() {
@@ -123,7 +125,7 @@ export default function ChaptersNetwork() {
                   </svg>
                   <div
                     onClick={() => {
-                      const society = societies.find(s => s.logo === `/chapter-logos/${node.id}.png`);
+                      const society = societies.find(s => s.logo === `/chapter-logos/CL${node.id}.png`);
                       if (society) {
                         const el = document.getElementById(`society-${society.id}`);
                         if (el) {
@@ -135,7 +137,14 @@ export default function ChaptersNetwork() {
                     className="relative cursor-pointer w-[150px] h-[130px] bg-white flex items-center justify-center p-4 overflow-hidden"
                     style={{ maskImage: SMALL_ROUNDED_HEX, WebkitMaskImage: SMALL_ROUNDED_HEX }}
                   >
-                    <Image src={`/chapter-logos/${node.id}.png`} alt={`Partner ${node.id}`} width={80} height={80} className="object-contain w-full h-full" />
+                    <Image 
+                      src={`/chapter-logos/CL${node.id}.png`} 
+                      alt={`Partner ${node.id}`} 
+                      width={80} 
+                      height={80} 
+                      className="object-contain w-full h-full" 
+                      priority={i < 4}
+                    />
                   </div>
                 </div>
               </motion.div>
@@ -159,7 +168,7 @@ export default function ChaptersNetwork() {
                     </svg>
                   <div
                     onClick={() => {
-                      const society = societies.find(s => s.logo === `/chapter-logos/${node.id}.png`);
+                      const society = societies.find(s => s.logo === `/chapter-logos/CL${node.id}.png`);
                       if (society) {
                         const el = document.getElementById(`society-${society.id}`);
                         if (el) {
@@ -171,7 +180,14 @@ export default function ChaptersNetwork() {
                     className="relative cursor-pointer w-[150px] h-[130px] bg-white flex items-center justify-center p-4 overflow-hidden"
                     style={{ maskImage: SMALL_ROUNDED_HEX, WebkitMaskImage: SMALL_ROUNDED_HEX }}
                   >
-                    <Image src={`/chapter-logos/${node.id}.png`} alt={`Partner ${node.id}`} width={80} height={80} className="object-contain w-full h-full" />
+                    <Image 
+                      src={`/chapter-logos/CL${node.id}.png`} 
+                      alt={`Partner ${node.id}`} 
+                      width={80} 
+                      height={80} 
+                      className="object-contain w-full h-full" 
+                      priority={node.id <= 8} // Preload the first visible cluster
+                    />
                   </div>
                 </div>
               </motion.div>
