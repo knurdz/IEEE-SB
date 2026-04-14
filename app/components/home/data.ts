@@ -57,26 +57,26 @@ export const secondaryAwards: AwardItem[] = [
 export const homeEvents: HomeEvent[] = [
   {
     id: 1,
-    title: "Ballerina",
-    category: "Workshop",
-    description:
-      "A deep dive into the Ballerina programming language, exploring cloud-native development and integration patterns for modern engineers.",
-    image: "/events-assets/Ballerina/banner.jpg",
-    link: "/events/ballerina",
-  },
-  {
-    id: 2,
-    title: "Foresight",
-    category: "Symposium",
+    title: "MoraForesight",
+    category: "Residential Boot Camp",
     description:
       "Bridging the gap between academia and industry through expert talks on AI, robotics, and the future of engineering job markets.",
     image: "/events-assets/Foresight/banner.jpg",
-    link: "/events/foresight",
+    link: "/events/moraforesight",
+  },
+  {
+    id: 2,
+    title: "Rise Up Mora",
+    category: "Career Fair & Mock Interviews",
+    description:
+      "An internship-focused career development initiative connecting students with top industry partners and mentorship opportunities.",
+    image: "/events-assets/RUM/banner.jpg",
+    link: "/events/rise-up-mora",
   },
   {
     id: 3,
     title: "Mercon",
-    category: "Conference",
+    category: "EngineeringConference",
     description:
       "Our premier annual conference celebrating research excellence and technical innovation across all engineering disciplines.",
     image: "/events-assets/Mercon/banner.jpg",
@@ -84,20 +84,20 @@ export const homeEvents: HomeEvent[] = [
   },
   {
     id: 4,
+    title: "Innovate with Ballerina",
+    category: "Idea Hackathon",
+    description:
+      "A deep dive into the Ballerina programming language, exploring cloud-native development and integration patterns for modern engineers.",
+    image: "/events-assets/Ballerina/banner.jpg",
+    link: "/events/innovate-with-ballerina",
+  },
+  {
+    id: 5,
     title: "MoraXtreme",
-    category: "Hackathon",
+    category: "Algorithmic Contest",
     description:
       "A national-level competitive programming championship where the best coders solve complex algorithmic problems under pressure.",
     image: "/events-assets/Moraxtreme/banner.jpg",
     link: "/events/moraxtreme",
-  },
-  {
-    id: 5,
-    title: "Rise Up Mora",
-    category: "Career",
-    description:
-      "An internship-focused career development initiative connecting students with top industry partners and mentorship opportunities.",
-    image: "/events-assets/RUM/banner.jpg",
-    link: "/events/rise-up-mora",
   },
   ];

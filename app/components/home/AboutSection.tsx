@@ -5,10 +5,10 @@ import { motion, useInView, useSpring, useTransform } from 'framer-motion';
 import SiteBackground from '@/app/components/layout/SiteBackground';
 
 const stats = [
-  { num: 500, plus: '+', label: 'Active Members' },
+  { num: 600, plus: '+', label: 'Active Volunteers' },
   { num: 100, plus: '+', label: 'Annual Events' },
-  { num: 17, plus: '+', label: 'Years Experience' },
-  { num: 17, label: 'Chapters & Affnity Groups' },
+  { num: 18, plus: '+', label: 'Years Experience' },
+  { num: 17, label: 'Chapters & Affinity Groups' },
 ];
 
 const WavyLine = ({ className }: { className?: string }) => (
@@ -82,7 +82,7 @@ export default function AboutSection() {
 
       <div ref={ref} className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 flex flex-col items-center">
         <div className="text-justify [text-align-last:center] font-medium leading-normal md:leading-relaxed text-lg md:text-xl lg:text-2xl max-w-7xl tracking-tight text-slate-800">
-          As one of the most dynamic and leading influential student branches in Sri Lanka, the IEEE Student Branch of the University of Moratuwa serves to nurture innovation and technical excellence among undergraduates. With a strong community of over 300 active members and a passionate network of volunteers, the branch engages in a wide range of initiatives that foster both personal and professional growth. <span className="text-slate-400">In addition, the IEEE Student Branch of the University of Moratuwa prioritizes fostering a culture of unity and harmony among its members. The IEEE Student Branch of the University of Moratuwa represents more than an organization, it is a supportive community driven by shared values, collective ambition, and a spirit of fellowship.</span>
+          As one of the most dynamic and leading influential student branches in Sri Lanka, the IEEE Student Branch of the University of Moratuwa serves to nurture innovation and technical excellence among undergraduates. With a strong community of over 300 active members and a passionate network of volunteers, the branch engages in a wide range of initiatives that foster both personal and professional growth. <span className="text-slate-500">In addition, the IEEE Student Branch of the University of Moratuwa prioritizes fostering a culture of unity and harmony among its members. The IEEE Student Branch of the University of Moratuwa represents more than an organization, it is a supportive community driven by shared values, collective ambition, and a spirit of fellowship.</span>
         </div>
 
         {/* Stats Row */}

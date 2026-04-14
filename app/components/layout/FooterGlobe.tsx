@@ -347,7 +347,7 @@ export default function FooterGlobe() {
         aria-hidden="true"
       />
       <div className="footer-globe-callout" style={markerStyle}>
-        <span className="footer-globe-label">IEEE SB of UOM</span>
+        <span className="footer-globe-label">University of Moratuwa</span>
         <span className="footer-globe-marker" />
       </div>
     </div>

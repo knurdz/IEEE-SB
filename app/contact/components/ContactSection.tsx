@@ -32,14 +32,14 @@ export default function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl lg:text-7xl xl:text-8xl flex flex-wrap items-baseline justify-start gap-4 font-sans tracking-tight mb-12">
+            <h2 className="text-4xl lg:text-7xl xl:text-7xl flex flex-wrap items-baseline justify-start gap-4 font-sans tracking-tight mb-12">
               <span className="font-light text-black uppercase">IEEE Student</span>
               <span className="font-black font-serif text-black uppercase">BRANCH</span>
             </h2>
 
             <div className="flex flex-col gap-8 max-w-[20rem]">
               <div className="flex items-center gap-6 group">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center text-[#00589e] shrink-0 border-2 border-[#00589e]/20 group-hover:bg-[#00589e] group-hover:text-white transition-all cursor-pointer">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-[#00589e] shrink-0 border-2 border-[#00589e]/20 group-hover:bg-[#00589e] group-hover:text-white transition-all">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col items-start flex-1">
@@ -50,7 +50,7 @@ export default function ContactSection() {
               </div>
 
               <div className="flex items-center gap-6 group text-left">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center text-[#00589e] shrink-0 border-2 border-[#00589e]/30 bg-[#00589e]/5 group-hover:bg-[#00589e] group-hover:text-white transition-all cursor-pointer">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-[#00589e] shrink-0 border-2 border-[#00589e]/30 bg-[#00589e]/5 group-hover:bg-[#00589e] group-hover:text-white transition-all">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col items-start flex-1">

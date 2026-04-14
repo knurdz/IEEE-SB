@@ -74,7 +74,7 @@ export default function ContactMap() {
         />
         
         {/* Skeleton/Placeholder overlay */}
-        <div className="absolute inset-0 bg-[#e4dfd0] animate-pulse pointer-events-none transition-opacity duration-1000 -z-0" 
+        <div className="absolute inset-0 bg-[#f5f4f2] animate-pulse pointer-events-none transition-opacity duration-1000 -z-0" 
              style={{ opacity: 0.5 }} />
       </div>
     </motion.div>
