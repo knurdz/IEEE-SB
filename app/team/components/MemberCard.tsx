@@ -50,7 +50,7 @@ const MemberCard = memo(function MemberCard({
     ).join(' ');
   };
 
-  const displayPosition = !isLead && (member.position === "Committee Member" || member.position === "COMMITTEE MEMBER")
+  const displayPosition = !isLead && member.position === "Committee Member"
     ? "Member" 
     : formatPosition(member.position);
 
