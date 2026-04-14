@@ -44,9 +44,9 @@ const MemberCard = memo(function MemberCard({
 
   const cardStyle: React.CSSProperties = {
     position: "relative",
-    flex: "0 0 190px",
-    height: "360px",
-    margin: "0 4px",
+    flex: "0 0 11.875rem",
+    height: "22.5rem",
+    margin: "0 0.25rem",
     zIndex: hovered ? 30 : isLead ? 10 : restingTransform.z || 1,
     transform: hovered
       ? `translateY(${hoverTransform.y}px) scale(${hoverTransform.scale})`
@@ -70,7 +70,7 @@ const MemberCard = memo(function MemberCard({
           className={cn(
             "z-40 w-full rounded-t-2xl border-x border-t px-1 py-3 text-center font-bold uppercase leading-none shadow-[0_-8px_20px_rgba(0,87,157,0.06)] backdrop-blur-xl transition-all duration-500",
             hovered
-              ? "border-primary/40 bg-white shadow-lg translate-y-[-1px] text-primary"
+              ? "border-primary/40 bg-white shadow-lg translate-y-[-0.0625rem] text-primary"
               : isLead
                 ? "border-primary/15 bg-white/90 text-primary/80"
                 : "border-black/5 bg-slate-50/90 text-slate-500/90",
@@ -78,7 +78,7 @@ const MemberCard = memo(function MemberCard({
           style={{
             fontSize: positionFontSize,
             letterSpacing: "0.22em",
-            marginBottom: "-1px"
+            marginBottom: "-0.0625rem"
           }}
         >
           {!isLead && member.position === "Committee Member" ? "MEMBER" : member.position}
@@ -116,7 +116,7 @@ const MemberCard = memo(function MemberCard({
               transformOrigin: "top center",
               objectPosition: member.imageOffset ?? "top center",
             }}
-            sizes="(max-width: 768px) 50vw, 220px"
+            sizes="(max-width: 48rem) 50vw, 13.75rem"
             onLoad={() => setIsImageLoading(false)}
             loading={isLead ? "eager" : "lazy"}
           />
@@ -125,9 +125,9 @@ const MemberCard = memo(function MemberCard({
             className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center justify-end text-center transition-all duration-500"
             style={{
               height: hovered ? "34%" : "30%",
-              paddingLeft: "10px",
-              paddingRight: "10px",
-              paddingBottom: "16px",
+              paddingLeft: "0.625rem",
+              paddingRight: "0.625rem",
+              paddingBottom: "1rem",
               background: hovered
                 ? "linear-gradient(to top, rgba(255,255,255,1) 35%, rgba(255,255,255,0.85) 75%, transparent 100%)"
                 : "linear-gradient(to top, rgba(255,255,255,0.95) 25%, rgba(255,255,255,0.7) 65%, transparent 100%)",
@@ -215,7 +215,7 @@ const MemberCard = memo(function MemberCard({
           )}
           style={{
             boxShadow:
-              "0 0 30px rgba(0, 87, 157, 0.1), inset 0 0 20px rgba(0, 87, 157, 0.05)",
+              "0 0 1.875rem rgba(0, 87, 157, 0.1), inset 0 0 1.25rem rgba(0, 87, 157, 0.05)",
           }}
         />
         </div>

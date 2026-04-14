@@ -18,7 +18,7 @@ const MobileMemberCard = memo(function MobileMemberCard({ member }: { member: Me
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        height: "380px",
+        height: "23.75rem",
         filter: !isLead ? "brightness(0.96) grayscale(0.05)" : undefined,
       }}
     >
@@ -33,7 +33,7 @@ const MobileMemberCard = memo(function MobileMemberCard({ member }: { member: Me
           style={{
             fontSize: positionFontSize,
             letterSpacing: "0.22em",
-            marginBottom: "-1px"
+            marginBottom: "-0.0625rem"
           }}
         >
           {!isLead && member.position === "Committee Member" ? "MEMBER" : member.position}
@@ -69,7 +69,7 @@ const MobileMemberCard = memo(function MobileMemberCard({ member }: { member: Me
                 transformOrigin: "top center",
                 objectPosition: member.imageOffset ?? "top center",
               }}
-              sizes="(max-width: 768px) 100vw, 350px"
+              sizes="(max-width: 48rem) 100vw, 21.875rem"
               onLoad={() => setIsImageLoading(false)}
               loading={isLead ? "eager" : "lazy"}
             />
@@ -82,7 +82,7 @@ const MobileMemberCard = memo(function MobileMemberCard({ member }: { member: Me
           </div>
 
           <div
-            className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-center justify-end px-5 pb-5 text-center transition-transform duration-500 group-hover:translate-y-[-1px]"
+            className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-center justify-end px-5 pb-5 text-center transition-transform duration-500 group-hover:translate-y-[-0.0625rem]"
             style={{ height: "30%" }}
           >
             <div className="flex flex-col items-center justify-end w-full">
@@ -121,7 +121,7 @@ const MobileMemberCard = memo(function MobileMemberCard({ member }: { member: Me
                       href={member.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[10px] font-bold text-primary hover:bg-primary hover:text-white transition-all bg-blue-50 px-3 py-1.5 rounded-full border border-blue-100 shadow-sm"
+                      className="text-[0.625rem] font-bold text-primary hover:bg-primary hover:text-white transition-all bg-blue-50 px-3 py-1.5 rounded-full border border-blue-100 shadow-sm"
                     >
                       LinkedIn
                     </a>
@@ -129,7 +129,7 @@ const MobileMemberCard = memo(function MobileMemberCard({ member }: { member: Me
                   {member.email ? (
                     <a
                       href={`mailto:${member.email}`}
-                      className="text-[10px] font-bold text-primary hover:bg-primary hover:text-white transition-all bg-blue-50 px-3 py-1.5 rounded-full border border-blue-100 shadow-sm"
+                      className="text-[0.625rem] font-bold text-primary hover:bg-primary hover:text-white transition-all bg-blue-50 px-3 py-1.5 rounded-full border border-blue-100 shadow-sm"
                     >
                       Email
                     </a>

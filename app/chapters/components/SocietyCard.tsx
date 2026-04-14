@@ -59,7 +59,7 @@ export default function SocietyCard({ society, reverse = false, index }: Society
         )}
         onMouseMove={handleMouseMove}
         style={{
-          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 212, 255, 0.04), transparent 40%)`,
+          background: `radial-gradient(37.5rem circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 212, 255, 0.04), transparent 40%)`,
         }}
       >
         <div className="flex-shrink-0">

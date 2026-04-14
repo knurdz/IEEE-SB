@@ -22,10 +22,62 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "IEEE Student Branch - University of Moratuwa",
-  description: "Official website of IEEE Student Branch, University of Moratuwa. Empowering future engineers through innovation and collaboration.",
+  metadataBase: new URL("https://ieeesb.uom.lk"),
+  title: {
+    default: "IEEE Student Branch - University of Moratuwa",
+    template: "%s | IEEE Student Branch - University of Moratuwa",
+  },
+  description: "Official website of IEEE Student Branch, University of Moratuwa. Empowering future engineers through innovation, technical excellence, and collaboration. Join a community of over 500+ active members.",
+  keywords: [
+    "IEEE",
+    "ieee uom",
+    "university of moratuwa",
+    "uom ieee",
+    "IEEESB",
+    "ieeesb uom",
+    "student branch uom",
+    "ieee student branch uom",
+    "ieee sb moratuwa",
+    "engineering",
+    "technology",
+    "innovation",
+    "sri lanka",
+    "uom student branch",
+  ],
+  authors: [{ name: "IEEE Student Branch, University of Moratuwa" }],
+  creator: "IEEE Student Branch, University of Moratuwa",
+  publisher: "IEEE Student Branch, University of Moratuwa",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://ieeesb.uom.lk",
+    siteName: "IEEE Student Branch - University of Moratuwa",
+    title: "IEEE Student Branch - University of Moratuwa",
+    description: "Empowering future engineers through innovation and collaboration at the University of Moratuwa.",
+    images: [
+      {
+        url: "/logo/ieeesblogo.png",
+        width: 1200,
+        height: 630,
+        alt: "IEEE Student Branch University of Moratuwa",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "IEEE Student Branch - University of Moratuwa",
+    description: "Empowering future engineers through innovation and collaboration at the University of Moratuwa.",
+    images: ["/logo/ieeesblogo.png"],
+  },
   icons: {
     icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
   },
 };
 
@@ -42,6 +94,29 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "NGO",
+              "name": "IEEE Student Branch - University of Moratuwa",
+              "url": "https://ieeesb.uom.lk",
+              "logo": "https://ieeesb.uom.lk/logo/ieeesblogo.png",
+              "sameAs": [
+                "https://web.facebook.com/ieeesbuom",
+                "https://www.linkedin.com/company/ieee-student-branch-university-of-moratuwa",
+                "https://www.instagram.com/ieee_uom/",
+              ],
+              "description": "The official IEEE Student Branch of the University of Moratuwa, empowering students through innovation and technical excellence.",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Moratuwa",
+                "addressCountry": "Sri Lanka"
+              }
+            }),
+          }}
+        />
         <Navbar />
         {children}
         <Footer />

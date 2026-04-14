@@ -87,10 +87,10 @@ export default function Navbar() {
                     }}
                   >
                     {isActive && (
-                      <span className="absolute inset-0 bg-[#0A2540]" style={{ borderRadius: '9999px' }} />
+                      <span className="absolute inset-0 bg-[#0A2540]" style={{ borderRadius: '624.938rem' }} />
                     )}
                     {hoveredLink === link.href && !isActive && (
-                      <span className="absolute inset-0 bg-slate-100 transition-opacity duration-200" style={{ borderRadius: '9999px' }} />
+                      <span className="absolute inset-0 bg-slate-100 transition-opacity duration-200" style={{ borderRadius: '624.938rem' }} />
                     )}
                     <span className="relative z-10">{link.label}</span>
                   </Link>

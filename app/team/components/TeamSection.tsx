@@ -48,7 +48,7 @@ export default function TeamSection({
 
   return (
     <motion.div
-      className="w-full max-w-[1100px] px-6 lg:px-10"
+      className="w-full max-w-[68.75rem] px-6 lg:px-10"
       variants={fadeUp}
       initial="hidden"
       whileInView="visible"
@@ -72,7 +72,7 @@ export default function TeamSection({
             <>
               <div
                 className="relative flex items-center justify-center"
-                style={{ height: hasTwoRows ? '360px' : '340px', overflow: 'visible' }}
+                style={{ height: hasTwoRows ? '22.5rem' : '21.25rem', overflow: 'visible' }}
               >
                 {topRow.map((member, index) => (
                   <MemberCard
@@ -88,7 +88,7 @@ export default function TeamSection({
               {hasTwoRows && (
                 <div
                   className="relative flex items-center justify-center mt-6"
-                  style={{ height: '340px', overflow: 'visible' }}
+                  style={{ height: '21.25rem', overflow: 'visible' }}
                 >
                   {bottomRow.map((member, index) => (
                     <MemberCard
@@ -103,7 +103,7 @@ export default function TeamSection({
               )}
             </>
           ) : (
-            <div className="h-[340px] flex items-center justify-center text-slate-300 italic text-sm">
+            <div className="h-[21.25rem] flex items-center justify-center text-slate-300 italic text-sm">
               Loading committee members...
             </div>
           )}
@@ -129,7 +129,7 @@ export default function TeamSection({
               </div>
             </>
           ) : (
-            <div className="h-[200px] flex items-center justify-center text-slate-300 italic text-sm">
+            <div className="h-[12.5rem] flex items-center justify-center text-slate-300 italic text-sm">
               Loading members...
             </div>
           )}

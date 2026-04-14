@@ -16,7 +16,7 @@ export default function Home() {
         <TextSphereAnimation />
         {/* Bottom Fade Mask to blend with next section */}
         <div className="absolute inset-x-0 bottom-0 h-[20vh] bg-gradient-to-t from-white via-white/60 to-transparent z-10" />
-        <div className="absolute bottom-[-160px] md:bottom-[-256px] left-0 w-full z-20 pointer-events-none text-white lg:text-[#4A3B6B]">
+        <div className="absolute bottom-[-10rem] md:bottom-[-16rem] left-0 w-full z-20 pointer-events-none text-white lg:text-[#4A3B6B]">
           <SectionDivider flipX flipY className="!mt-0 !mb-0" />
         </div>
       </div>

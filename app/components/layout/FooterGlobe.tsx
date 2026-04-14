@@ -307,7 +307,7 @@ export default function FooterGlobe() {
         return;
       }
 
-      maskContext.filter = 'blur(1.5px)';
+      maskContext.filter = 'blur(0.09375rem)';
       maskContext.drawImage(earthImage, 0, 0, maskCanvas.width, maskCanvas.height);
       maskContext.filter = 'none';
 

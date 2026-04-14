@@ -65,13 +65,13 @@ function EventCard({ event, offset, dragOffset, onClick }: EventCardProps) {
         pointerEvents: absoluteOffset > 0.5 ? "none" : "auto",
       }}
       transition={{ type: "spring", stiffness: 270, damping: 28, mass: 0.85 }}
-      className="absolute h-[380px] w-full max-w-7xl sm:h-[440px] lg:h-[500px] rounded-[4px] focus:outline-none"
+      className="absolute h-[23.75rem] w-full max-w-7xl sm:h-[27.5rem] lg:h-[31.25rem] rounded-[0.25rem] focus:outline-none"
       onClick={onClick}
       aria-label={
         isActive ? `Open ${event.title} gallery` : `Focus ${event.title}`
       }
     >
-      <div className="relative h-full w-full overflow-hidden rounded-[4px] border border-black/10 bg-slate-100 shadow-[0_18px_45px_-22px_rgba(0,0,0,0.35)]">
+      <div className="relative h-full w-full overflow-hidden rounded-[0.25rem] border border-black/10 bg-slate-100 shadow-[0_18px_45px_-22px_rgba(0,0,0,0.35)]">
         {/* Skeleton Background */}
         <div className="absolute inset-0 bg-slate-200 animate-pulse flex items-center justify-center">
            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 -translate-x-full animate-[shimmer_2s_infinite]" />
@@ -82,14 +82,14 @@ function EventCard({ event, offset, dragOffset, onClick }: EventCardProps) {
           alt={event.title}
           fill
           priority={isActive}
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1400px"
+          sizes="(max-width: 40rem) 100vw, (max-width: 64rem) 100vw, 87.5rem"
           className={`object-cover transition-opacity duration-700 ${customObjectPosition} ${isActive ? 'opacity-100' : 'opacity-90'}`}
         />
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
 
         <div className="absolute left-4 top-4">
-          <span className="rounded-sm border border-white/20 bg-black/40 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md">
+          <span className="rounded-sm border border-white/20 bg-black/40 px-3 py-1.5 text-[0.625rem] font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md">
             {event.category}
           </span>
         </div>
@@ -280,7 +280,7 @@ export default function EventsSection() {
 
           <motion.div
             suppressHydrationWarning
-            className="relative flex h-[360px] sm:h-[430px] lg:h-[470px] w-full cursor-grab items-center justify-center [perspective:1200px] active:cursor-grabbing"
+            className="relative flex h-[22.5rem] sm:h-[26.875rem] lg:h-[29.375rem] w-full cursor-grab items-center justify-center [perspective:75rem] active:cursor-grabbing"
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={0}
@@ -374,7 +374,7 @@ export default function EventsSection() {
 
               <div className="flex w-full flex-1 flex-col overflow-y-auto p-4 sm:p-6 lg:p-8">
                 <div className="mb-5 flex flex-wrap items-center gap-2 sm:gap-3">
-                  <span className="rounded-full border border-[#00589e]/20 bg-[#00589e]/5 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#00589e]">
+                  <span className="rounded-full border border-[#00589e]/20 bg-[#00589e]/5 px-3 py-1 text-[0.625rem] font-semibold uppercase tracking-[0.14em] text-[#00589e]">
                     {selectedEvent.category}
                   </span>
                 </div>
@@ -386,12 +386,12 @@ export default function EventsSection() {
                   {selectedEvent.description}
                 </p>
 
-                <div className="group relative mb-4 h-[36vh] min-h-[260px] w-full shrink-0 overflow-hidden rounded-2xl bg-slate-100 sm:h-[48vh] lg:h-[56vh]">
+                <div className="group relative mb-4 h-[36vh] min-h-[16.25rem] w-full shrink-0 overflow-hidden rounded-2xl bg-slate-100 sm:h-[48vh] lg:h-[56vh]">
                   <Image
                     src={activeImage || selectedEvent.image}
                     alt={selectedEvent.title}
                     fill
-                    sizes="(max-width: 1024px) 100vw, 80vw"
+                    sizes="(max-width: 64rem) 100vw, 80vw"
                     className="object-cover"
                   />
 
@@ -476,7 +476,7 @@ export default function EventsSection() {
                           src={image}
                           alt={`${selectedEvent.title} preview ${index + 1}`}
                           fill
-                          sizes="(max-width: 768px) 25vw, 20vw"
+                          sizes="(max-width: 48rem) 25vw, 20vw"
                           className="object-cover"
                         />
                       </button>

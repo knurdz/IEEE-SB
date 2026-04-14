@@ -76,8 +76,8 @@ export default function SocietySections() {
       id="societies-list"
     >
       {/* Background large decorative line matching the reference */}
-      <WavyLine className="absolute top-1/4 left-0 w-full h-[300px] text-purple-100/50 -translate-x-1/4 z-0 pointer-events-none" />
-      <WavyLine className="absolute bottom-1/4 right-0 w-[150%] h-[300px] text-orange-100/50 translate-x-1/4 z-0 pointer-events-none transform rotate-180" />
+      <WavyLine className="absolute top-1/4 left-0 w-full h-[18.75rem] text-purple-100/50 -translate-x-1/4 z-0 pointer-events-none" />
+      <WavyLine className="absolute bottom-1/4 right-0 w-[150%] h-[18.75rem] text-orange-100/50 translate-x-1/4 z-0 pointer-events-none transform rotate-180" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {societies.map((society, index) => {
@@ -161,7 +161,7 @@ export default function SocietySections() {
               </svg>
 
               {/* Image Side */}
-              <div className="w-full md:w-1/2 relative flex justify-center items-center py-6 md:py-10 min-h-[300px] md:min-h-[400px]">
+              <div className="w-full md:w-1/2 relative flex justify-center items-center py-6 md:py-10 min-h-[18.75rem] md:min-h-[25rem]">
                 {/* Wavy line decors (abstract corner squiggles) */}
                 <motion.div
                   animate={{ rotate: 360 }}
@@ -214,7 +214,7 @@ export default function SocietySections() {
                     clipPath: `url(#hexClipBg-${society.id})`,
                     backgroundColor: society.color,
                   }}
-                  className={`absolute w-[240px] h-[260px] sm:w-[300px] sm:h-[320px] lg:w-[420px] lg:h-[450px] z-0 origin-center ${isReversed ? "translate-x-4 md:translate-x-6 -translate-y-4 md:-translate-y-6" : "-translate-x-4 md:-translate-x-6 translate-y-4 md:translate-y-6"}`}
+                  className={`absolute w-[15rem] h-[16.25rem] sm:w-[18.75rem] sm:h-[20rem] lg:w-[26.25rem] lg:h-[28.125rem] z-0 origin-center ${isReversed ? "translate-x-4 md:translate-x-6 -translate-y-4 md:-translate-y-6" : "-translate-x-4 md:-translate-x-6 translate-y-4 md:translate-y-6"}`}
                 >
                   {/* Inner nested hexagons for depth, using inset square parents so clipPath scales down seamlessly */}
                   <div
@@ -232,7 +232,7 @@ export default function SocietySections() {
                 </motion.div>
 
                 {/* Main Image with Hexagon Shape */}
-                <div className="relative z-10 w-[210px] h-[230px] sm:w-[260px] sm:h-[280px] lg:w-[380px] lg:h-[410px] drop-shadow-[0_15px_35px_rgba(0,0,0,0.15)]">
+                <div className="relative z-10 w-[13.125rem] h-[14.375rem] sm:w-[16.25rem] sm:h-[17.5rem] lg:w-[23.75rem] lg:h-[25.625rem] drop-shadow-[0_15px_35px_rgba(0,0,0,0.15)]">
                   {/* Outer clipped white border */}
                   <motion.div
                     animate={{
@@ -260,7 +260,7 @@ export default function SocietySections() {
                         src={society.logo || "/chapter-logos/society_logo.png"}
                         alt={society.title}
                         fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+                        sizes="(max-width: 48rem) 100vw, (max-width: 75rem) 50vw, 25rem"
                         className="object-contain p-10 lg:p-16 transition-all duration-1000 ease-out hover:scale-110 opacity-0"
                         onLoad={(e) => {
                           const img = e.currentTarget;

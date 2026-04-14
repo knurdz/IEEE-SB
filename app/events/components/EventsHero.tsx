@@ -196,7 +196,7 @@ export default function EventsHero() {
         </motion.p>
 
         <motion.div
-          className="h-[2px] w-[60px] bg-accent origin-left rounded-full fiber-glow"
+          className="h-[0.125rem] w-[3.75rem] bg-accent origin-left rounded-full fiber-glow"
           initial={shouldReduceMotion ? { opacity: 0 } : { scaleX: 0 }}
           animate={shouldReduceMotion ? { opacity: 1 } : { scaleX: 1 }}
           transition={{ delay: 0.8, duration: 0.8, ease: 'circOut' }}

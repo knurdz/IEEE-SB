@@ -572,7 +572,7 @@ export default function TextSphereAnimation() {
         maskCanvas.width = canvas.width;
         maskCanvas.height = canvas.height;
         const mCtx = maskCanvas.getContext('2d')!;
-        mCtx.filter = 'blur(1.5px)';
+        mCtx.filter = 'blur(0.09375rem)';
         mCtx.drawImage(earthImage, 0, 0, canvas.width, canvas.height);
         mCtx.filter = 'none';
 
@@ -878,34 +878,34 @@ export default function TextSphereAnimation() {
         .hero-tagline-1 {
           font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
           font-weight: 600;
-          font-size: 11px;
+          font-size: 0.6875rem;
           letter-spacing: 0.25em;
           color: #008be6;
           margin-top: 3rem;
           margin-bottom: 0.5rem;
           text-transform: uppercase;
-          text-shadow: 0 4px 12px rgba(0, 139, 230, 0.15);
+          text-shadow: 0 0.25rem 0.75rem rgba(0, 139, 230, 0.15);
         }
 
         .hero-tagline-2 {
           font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
           font-weight: 700;
-          font-size: 20px;
+          font-size: 1.25rem;
           line-height: 1.2;
           letter-spacing: -0.02em;
           background: linear-gradient(90deg, #00579d 0%, #008be6 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-          text-shadow: 0 4px 12px rgba(23, 53, 153, 0.1);
+          text-shadow: 0 0.25rem 0.75rem rgba(23, 53, 153, 0.1);
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 48rem) {
            .hero-tagline-1 {
-              font-size: 13px;
+              font-size: 0.8125rem;
            }
            .hero-tagline-2 {
-              font-size: 24px;
+              font-size: 1.5rem;
            }
         }
       `}</style>
@@ -1146,8 +1146,8 @@ export default function TextSphereAnimation() {
           width: 'min(75.6vh, 75vw)',
           height: 'min(75.6vh, 75vw)',
           zIndex: 5,
-          border: '1px solid rgba(0, 82, 255, 0.12)',
-          boxShadow: '0 0 20px rgba(0, 82, 255, 0.08), 0 0 40px rgba(0, 82, 255, 0.04)'
+          border: '0.0625rem solid rgba(0, 82, 255, 0.12)',
+          boxShadow: '0 0 1.25rem rgba(0, 82, 255, 0.08), 0 0 2.5rem rgba(0, 82, 255, 0.04)'
         }}
       />
 
@@ -1179,10 +1179,10 @@ export default function TextSphereAnimation() {
       </div>
 
       {/* --- LEFT VERTICAL LABEL FOR GLOBE STATE --- */}
-      <div id="side-label-globe" className="absolute left-[4px] md:left-[18px] top-1/2 -translate-y-1/2 z-40 flex flex-col items-center opacity-100 pointer-events-none">
-        <div className="w-[1px] h-24 md:h-36 bg-gradient-to-b from-transparent to-[#173599]/60 mb-6" />
+      <div id="side-label-globe" className="absolute left-[0.25rem] md:left-[1.125rem] top-1/2 -translate-y-1/2 z-40 flex flex-col items-center opacity-100 pointer-events-none">
+        <div className="w-[0.0625rem] h-24 md:h-36 bg-gradient-to-b from-transparent to-[#173599]/60 mb-6" />
         <p
-          className="text-[#173599] text-[9px] md:text-[13px] uppercase font-bold tracking-[0.2em] md:tracking-[0.4em]"
+          className="text-[#173599] text-[0.5625rem] md:text-[0.8125rem] uppercase font-bold tracking-[0.2em] md:tracking-[0.4em]"
           style={{
             fontFamily: "'Inter', sans-serif",
             writingMode: 'vertical-rl',
@@ -1191,14 +1191,14 @@ export default function TextSphereAnimation() {
         >
           IEEE Student Branch
         </p>
-        <div className="w-[1px] h-24 md:h-36 bg-gradient-to-t from-transparent to-[#173599]/60 mt-6" />
+        <div className="w-[0.0625rem] h-24 md:h-36 bg-gradient-to-t from-transparent to-[#173599]/60 mt-6" />
       </div>
 
       {/* --- LEFT VERTICAL LABEL FOR TEXT STATE --- */}
-      <div id="side-label" className="absolute left-[4px] md:left-[18px] top-1/2 -translate-y-1/2 z-40 flex flex-col items-center opacity-0 pointer-events-none">
-        <div className="w-[1px] h-24 md:h-36 bg-gradient-to-b from-transparent to-[#173599]/60 mb-6" />
+      <div id="side-label" className="absolute left-[0.25rem] md:left-[1.125rem] top-1/2 -translate-y-1/2 z-40 flex flex-col items-center opacity-0 pointer-events-none">
+        <div className="w-[0.0625rem] h-24 md:h-36 bg-gradient-to-b from-transparent to-[#173599]/60 mb-6" />
         <p
-          className="text-[#173599] text-[9px] md:text-[13px] uppercase font-bold tracking-[0.2em] md:tracking-[0.4em]"
+          className="text-[#173599] text-[0.5625rem] md:text-[0.8125rem] uppercase font-bold tracking-[0.2em] md:tracking-[0.4em]"
           style={{
             fontFamily: "'Inter', sans-serif",
             writingMode: 'vertical-rl',
@@ -1207,7 +1207,7 @@ export default function TextSphereAnimation() {
         >
           Since 2008
         </p>
-        <div className="w-[1px] h-24 md:h-36 bg-gradient-to-t from-transparent to-[#173599]/60 mt-6" />
+        <div className="w-[0.0625rem] h-24 md:h-36 bg-gradient-to-t from-transparent to-[#173599]/60 mt-6" />
       </div>
     </div>
   );

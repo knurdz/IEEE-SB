@@ -31,7 +31,7 @@ export default function OctagonFrame({ src, alt, className = '' }: OctagonFrameP
         style={{
           clipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)',
           background: 'linear-gradient(145deg, #ffffff, #e8ecf4)',
-          boxShadow: '0 10px 40px rgba(0, 0, 0, 0.5)',
+          boxShadow: '0 0.625rem 2.5rem rgba(0, 0, 0, 0.5)',
         }}
         whileHover={{
           scale: 1.04,
@@ -45,7 +45,7 @@ export default function OctagonFrame({ src, alt, className = '' }: OctagonFrameP
             alt={alt}
             fill
             className="object-contain drop-shadow-md"
-            sizes="(max-width: 768px) 120px, 180px"
+            sizes="(max-width: 48rem) 7.5rem, 11.25rem"
           />
         </div>
       </motion.div>

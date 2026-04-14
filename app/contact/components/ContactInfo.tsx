@@ -59,7 +59,7 @@ export default function ContactInfo() {
       transition={fadeUpTransition(0.3, 0.8)}
       className="flex flex-col w-full h-full relative z-10 lg:pt-12"
     >
-      <div className="flex flex-col w-full max-w-full sm:max-w-[550px] mx-auto lg:mr-auto lg:ml-12 pl-4">
+      <div className="flex flex-col w-full max-w-full sm:max-w-[34.375rem] mx-auto lg:mr-auto lg:ml-12 pl-4">
         
         {/* Premium Info Center */}
         <div className="bg-white/40 backdrop-blur-xl border border-white/60 p-6 md:p-8 rounded-[2rem] shadow-lg mb-6 text-left">
@@ -87,7 +87,7 @@ export default function ContactInfo() {
             </a>
           </div>
 
-          <div className="h-[1px] w-full bg-gray-200/50 mb-6 rounded-full"></div>
+          <div className="h-[0.0625rem] w-full bg-gray-200/50 mb-6 rounded-full"></div>
 
           {/* Address Card */}
           <div className="flex gap-4 group">
@@ -106,16 +106,16 @@ export default function ContactInfo() {
         {/* Social Connect */}
         <div className="mt-4">
           <div className="flex items-center gap-4 mb-3">
-            <div className="h-[1px] flex-1 bg-gray-200"></div>
+            <div className="h-[0.0625rem] flex-1 bg-gray-200"></div>
             <span className="text-[0.65rem] font-bold text-gray-400 uppercase tracking-[0.3em]">Connect</span>
-            <div className="h-[1px] flex-1 bg-gray-200"></div>
+            <div className="h-[0.0625rem] flex-1 bg-gray-200"></div>
           </div>
           <div className="flex justify-center gap-4">
             <a 
               href="https://facebook.com/ieeeuom" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="w-14 h-14 rounded-[18px] bg-white border border-gray-100 shadow-[0_8px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] flex items-center justify-center group transition-all duration-300 hover:-translate-y-1 hover:bg-[#1877F2] hover:border-[#1877F2]"
+              className="w-14 h-14 rounded-[1.125rem] bg-white border border-gray-100 shadow-[0_8px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] flex items-center justify-center group transition-all duration-300 hover:-translate-y-1 hover:bg-[#1877F2] hover:border-[#1877F2]"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-[#1877F2] group-hover:text-white transition-colors duration-300">
                 <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
@@ -125,7 +125,7 @@ export default function ContactInfo() {
               href="https://twitter.com/ieeeuom" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="w-14 h-14 rounded-[18px] bg-white border border-gray-100 shadow-[0_8px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30_rgba(0,0,0,0.08)] flex items-center justify-center group transition-all duration-300 hover:-translate-y-1 hover:bg-[#1DA1F2] hover:border-[#1DA1F2]"
+              className="w-14 h-14 rounded-[1.125rem] bg-white border border-gray-100 shadow-[0_8px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30_rgba(0,0,0,0.08)] flex items-center justify-center group transition-all duration-300 hover:-translate-y-1 hover:bg-[#1DA1F2] hover:border-[#1DA1F2]"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-[#1DA1F2] group-hover:text-white transition-colors duration-300">
                 <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
@@ -135,7 +135,7 @@ export default function ContactInfo() {
               href="https://instagram.com/ieeeuom" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="w-14 h-14 rounded-[18px] bg-white border border-gray-100 shadow-[0_8px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] flex items-center justify-center group transition-all duration-300 hover:-translate-y-1 hover:bg-gradient-to-tr hover:from-[#f9ce34] hover:via-[#ee2a7b] hover:to-[#6228d7] hover:border-transparent"
+              className="w-14 h-14 rounded-[1.125rem] bg-white border border-gray-100 shadow-[0_8px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] flex items-center justify-center group transition-all duration-300 hover:-translate-y-1 hover:bg-gradient-to-tr hover:from-[#f9ce34] hover:via-[#ee2a7b] hover:to-[#6228d7] hover:border-transparent"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 text-[#E4405F] group-hover:text-white transition-colors duration-300">
                 <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />

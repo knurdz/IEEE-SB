@@ -69,8 +69,8 @@ export default function AboutSection() {
       <SiteBackground showTopFade={true} showBottomFade={true} />
 
       {/* Background Decorative Elements */}
-      {/* <WavyLine className="absolute top-0 left-0 w-full h-[300px] text-purple-100/40 -translate-x-1/4 z-0 pointer-events-none" /> */}
-      <WavyLine className="absolute bottom-0 right-0 w-[150%] h-[300px] text-orange-100/40 translate-x-1/4 z-0 pointer-events-none transform rotate-180" />
+      {/* <WavyLine className="absolute top-0 left-0 w-full h-[18.75rem] text-purple-100/40 -translate-x-1/4 z-0 pointer-events-none" /> */}
+      <WavyLine className="absolute bottom-0 right-0 w-[150%] h-[18.75rem] text-orange-100/40 translate-x-1/4 z-0 pointer-events-none transform rotate-180" />
       
       {/* Blurred decorative blobs */}
       <div className="absolute top-1/4 right-0 w-96 h-96 bg-blue-50/50 rounded-full filter blur-3xl opacity-60 -translate-y-1/2 translate-x-1/2 z-0" />
@@ -100,7 +100,7 @@ export default function AboutSection() {
                   <span className="text-4xl lg:text-5xl font-bold tracking-tighter text-slate-900">
                     <Counter value={stat.num} isInView={isInView} />
                   </span>
-                  <span className="text-4xl lg:text-5xl font-bold tracking-tighter text-slate-900 ml-[2px]">
+                  <span className="text-4xl lg:text-5xl font-bold tracking-tighter text-slate-900 ml-[0.125rem]">
                     {stat.plus}
                   </span>
                 </div>
