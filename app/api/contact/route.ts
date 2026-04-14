@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     }
 
     await transporter.sendMail({
-      from: `"IEEE SB Website" <${process.env.SMTP_FROM}>`,
+      from: `"${process.env.SMTP_FROM_NAME || 'IEEE SB Website'}" <${process.env.SMTP_FROM}>`,
       to: process.env.SMTP_TO,
       subject: `New Contact Form Message from ${name}`,
       replyTo: email,
