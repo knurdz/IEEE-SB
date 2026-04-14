@@ -227,11 +227,11 @@ export default function EventDetailPageClient({ params }: EventPageProps) {
       </AnimatePresence>
 
       {/* Facebook Post Link */}
-      {event.facebookUrl && (
+      {event.albumUrl && (
         <section className="relative pb-20 px-4 z-10">
           <div className="max-w-6xl mx-auto flex justify-center">
             <motion.a
-              href={event.facebookUrl}
+              href={event.albumUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 px-8 py-4 bg-[#1877F2] hover:bg-[#166fe5] text-white rounded-full font-orbitron font-bold transition-all hover:scale-105 shadow-[0_0_20px_rgba(24,119,242,0.3)] group"
