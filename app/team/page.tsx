@@ -14,7 +14,7 @@ export default function TeamPage() {
       <SiteBackground />
       <NetworkVisualization />
 
-      <div className="relative pt-16 pb-16 flex flex-col items-center gap-10 z-10">
+      <div className="relative pt-16 pb-16 flex flex-col items-center gap-16 md:gap-24 z-10">
         <motion.div
           className="px-6 text-center"
           variants={fadeUp}
