@@ -1,13 +1,11 @@
 'use client';
 
-import { useMemo, useState, memo } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import SectionHeading from '@/app/components/ui/SectionHeading';
 import { fadeUp, fadeUpTransition, inViewOnce } from '@/lib/motion';
-import { splitMembersIntoRows } from '../helpers';
 import { Member } from '../types';
 import MemberCard from './MemberCard';
-import MobileMemberCard from './MobileMemberCard';
 
 export default function TeamSection({
   title,
@@ -20,31 +18,14 @@ export default function TeamSection({
 }) {
   const [hasBeenInView, setHasBeenInView] = useState(sectionIndex === 0);
   const highlight = title.replace(/ Committee$/, '');
-  const { topRow, bottomRow } = useMemo(() => splitMembersIntoRows(members), [members]);
-  const hasTwoRows = bottomRow.length > 0;
-  const mobileFeaturedMember = useMemo(() => {
-    if (members.length <= 2) {
-      return null;
-    }
 
-    const highestPriority = members[0]?.priority;
-    if (highestPriority === undefined) {
-      return null;
-    }
-
-    const topPriorityMembers = members.filter((member) => member.priority === highestPriority);
-    return topPriorityMembers.length === 1 ? topPriorityMembers[0] : null;
-  }, [members]);
-
-  const mobileGridMembers = useMemo(() => {
-    if (!mobileFeaturedMember) {
-      return members;
-    }
-
-    return members.filter(
-      (member) => member.sourceIndex !== mobileFeaturedMember.sourceIndex,
-    );
-  }, [members, mobileFeaturedMember]);
+  // Find the highest priority score in this committee to highlight the lead(s)
+  const highestPriority = Math.min(...members.map((m) => m.priority));
+  
+  // Separate leads from regular members for visual hierarchy, unless it's ExCom or Leadership Body
+  // where we might just want to list everyone in order. We can use a unified flow but emphasize leads.
+  const leads = members.filter((m) => m.priority === highestPriority);
+  const regularMembers = members.filter((m) => m.priority !== highestPriority);
 
   return (
     <motion.div
@@ -56,10 +37,10 @@ export default function TeamSection({
       viewport={inViewOnce}
       transition={fadeUpTransition(sectionIndex * 0.12, 0.5)}
     >
-      <div className="relative rounded-3xl border border-black/5 bg-white/60 backdrop-blur-xl shadow-lg p-10 overflow-visible">
+      <div className="relative rounded-3xl border border-black/5 bg-white/60 backdrop-blur-xl shadow-lg p-8 md:p-12 overflow-visible">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
-        <div className="mb-10">
+        <div className="mb-12">
           <SectionHeading
             title={title}
             highlight={highlight}
@@ -67,73 +48,41 @@ export default function TeamSection({
           />
         </div>
 
-        <div className="hidden md:block" style={{ overflow: 'visible' }}>
-          {hasBeenInView ? (
-            <>
-              <div
-                className="relative flex items-center justify-center"
-                style={{ height: hasTwoRows ? '22.5rem' : '21.25rem', overflow: 'visible' }}
-              >
-                {topRow.map((member, index) => (
+        {hasBeenInView ? (
+          <div className="flex flex-col gap-10 md:gap-14 items-center">
+            {/* Leads Section */}
+            {leads.length > 0 && (
+              <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+                {leads.map((member, index) => (
                   <MemberCard
-                    key={`top-${member.committee}-${member.name}`}
+                    key={`${member.committee}-${member.name}`}
                     member={member}
                     index={index}
-                    totalInRow={topRow.length}
-                    isTopRow
+                    isLead={true}
                   />
                 ))}
               </div>
+            )}
 
-              {hasTwoRows && (
-                <div
-                  className="relative flex items-center justify-center mt-6"
-                  style={{ height: '21.25rem', overflow: 'visible' }}
-                >
-                  {bottomRow.map((member, index) => (
-                    <MemberCard
-                      key={`bottom-${member.committee}-${member.name}`}
-                      member={member}
-                      index={index}
-                      totalInRow={bottomRow.length}
-                      isTopRow={false}
-                    />
-                  ))}
-                </div>
-              )}
-            </>
-          ) : (
-            <div className="h-[21.25rem] flex items-center justify-center text-slate-300 italic text-sm">
-              Loading committee members...
-            </div>
-          )}
-        </div>
-
-        <div className="md:hidden mt-4">
-          {hasBeenInView ? (
-            <>
-              {mobileFeaturedMember ? (
-                <div className="mb-8 flex justify-center">
-                  <div className="w-full sm:max-w-[calc(50%-1rem)]">
-                    <MobileMemberCard member={mobileFeaturedMember} />
-                  </div>
-                </div>
-              ) : null}
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                {mobileGridMembers.map((member) => (
-                  <div key={`${member.committee}-${member.name}`} className="w-full">
-                    <MobileMemberCard member={member} />
-                  </div>
+            {/* Regular Members Section */}
+            {regularMembers.length > 0 && (
+              <div className="flex flex-wrap justify-center gap-8 md:gap-10">
+                {regularMembers.map((member, index) => (
+                  <MemberCard
+                    key={`${member.committee}-${member.name}`}
+                    member={member}
+                    index={index}
+                    isLead={false}
+                  />
                 ))}
               </div>
-            </>
-          ) : (
-            <div className="h-[12.5rem] flex items-center justify-center text-slate-300 italic text-sm">
-              Loading members...
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        ) : (
+          <div className="min-h-[22.5rem] flex items-center justify-center text-slate-300 italic text-sm">
+            Loading committee members...
+          </div>
+        )}
       </div>
     </motion.div>
   );
