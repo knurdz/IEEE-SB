@@ -5,7 +5,7 @@ import StrategicPartnerSection from "./components/home/StrategicPartnerSection";
 import EventsSection from "./components/home/EventsSection";
 import WhyJoinBento from "./components/home/WhyJoinBento";
 import SiteBackground from "./components/layout/SiteBackground";
-import SectionDivider from "@/app/chapters/components/SectionDivider";
+import SectionDivider from "@/app/components/ui/SectionDivider";
 import ContactForm from "./contact/components/ContactForm";
 import ContactSection from "./contact/components/ContactSection";
 

@@ -3,7 +3,7 @@ import ChaptersHero from './components/ChaptersHero';
 import ChaptersNetwork from './components/ChaptersNetwork';
 import SiteBackground from '../components/layout/SiteBackground';
 import SocietySections from './components/SocietySections';
-import SectionDivider from './components/SectionDivider';
+import SectionDivider from '../components/ui/SectionDivider';
 
 export const metadata: Metadata = {
   title: 'IEEE Societies',
