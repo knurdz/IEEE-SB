@@ -6,7 +6,7 @@ import SocietySections from './components/SocietySections';
 import SectionDivider from '../components/ui/SectionDivider';
 
 export const metadata: Metadata = {
-  title: 'IEEE Societies',
+  title: 'Chapters',
   description:
     'Discover the 17 IEEE societies shaping the future of technology, connecting professionals worldwide through conferences, publications, and educational resources.',
 };

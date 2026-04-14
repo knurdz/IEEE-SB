@@ -25,10 +25,10 @@ export const COMMITTEE_ORDER = [
   'Logistics Management Committee',
   'Editorial Committee',
   'Design Committee',
-  'Publicity Committee',
-  'Volunteer Management Committee',
   'Events Committee',
+  'Publicity Committee',
   'Finance & IR Committee',
+  'Volunteer Management Committee',
   'Membership Development Committee',
 ] as const;
 
@@ -55,7 +55,8 @@ export type PositionName =
   | 'EDITORIAL COMMITTEE LEAD'
   | 'VOLUNTEER MANAGEMENT COMMITTEE LEAD'
   | 'MEMBERSHIP DEVELOPMENT COMMITTEE LEAD'
-  | 'RoboRoarZ 2025 CHAIRPERSON';
+  | 'RoboRoarZ 2025 CHAIRPERSON'
+  | 'MoraForesight 4.0 CHAIRPERSON';
 
 export interface MemberInput {
   name: string;
