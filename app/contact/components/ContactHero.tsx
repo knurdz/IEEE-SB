@@ -36,31 +36,31 @@ export default function ContactHero() {
         .hero-tagline-1 {
           font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
           font-weight: 600;
-          font-size: 13px;
+          font-size: 0.8125rem;
           letter-spacing: 0.25em;
           color: #008be6;
           margin-top: 1rem;
           margin-bottom: 0.5rem;
           text-transform: uppercase;
-          text-shadow: 0 4px 12px rgba(0, 139, 230, 0.15);
+          text-shadow: 0 0.25rem 0.75rem rgba(0, 139, 230, 0.15);
         }
 
         .hero-tagline-2 {
           font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
           font-weight: 700;
-          font-size: 40px;
+          font-size: 2.5rem;
           line-height: 1.1;
           letter-spacing: -0.02em;
           background: linear-gradient(90deg, #00579d 0%, #008be6 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-          text-shadow: 0 4px 12px rgba(23, 53, 153, 0.1);
+          text-shadow: 0 0.25rem 0.75rem rgba(23, 53, 153, 0.1);
         }
           
-        @media (min-width: 768px) {
+        @media (min-width: 48rem) {
            .hero-tagline-2 {
-              font-size: 64px;
+              font-size: 4rem;
            }
         }
       `}</style>

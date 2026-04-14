@@ -35,7 +35,7 @@ export default function ClosingCTA() {
       </a>
 
       {/* Decorative glow */}
-      <div className="absolute bottom-0 top-[50%] left-1/2 -translate-x-1/2 w-full max-w-sm h-[300px] bg-primary opacity-[0.05] blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 top-[50%] left-1/2 -translate-x-1/2 w-full max-w-sm h-[18.75rem] bg-primary opacity-[0.05] blur-[6.25rem] rounded-full pointer-events-none" />
     </motion.section>
   );
 }

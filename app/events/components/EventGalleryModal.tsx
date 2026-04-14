@@ -69,7 +69,7 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
           <motion.div
             key="gallery-overlay"
             className="fixed inset-0 z-[1000] flex items-center justify-center p-4 sm:p-6"
-            style={{ backgroundColor: 'rgba(0, 0, 0, 0.65)', backdropFilter: 'blur(12px)' }}
+            style={{ backgroundColor: 'rgba(0, 0, 0, 0.65)', backdropFilter: 'blur(0.75rem)' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -80,12 +80,12 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
             <motion.div
               className="relative w-full overflow-y-auto"
               style={{
-                maxWidth: '1400px',
+                maxWidth: '87.5rem',
                 height: '90vh',
                 background: 'var(--color-surface)',
-                border: '1px solid rgba(0, 87, 157, 0.3)',
-                borderRadius: '24px',
-                boxShadow: '0 0 80px rgba(0, 87, 157, 0.2), 0 32px 100px rgba(0,0,0,0.7)',
+                border: '0.0625rem solid rgba(0, 87, 157, 0.3)',
+                borderRadius: '1.5rem',
+                boxShadow: '0 0 5rem rgba(0, 87, 157, 0.2), 0 2rem 6.25rem rgba(0,0,0,0.7)',
                 scrollbarWidth: 'thin',
                 scrollbarColor: 'var(--color-primary) var(--color-surface)',
               }}
@@ -102,21 +102,21 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                   top: 0, 
                   zIndex: 100, 
                   background: 'rgba(255, 255, 255, 0.05)',
-                  backdropFilter: 'blur(10px)',
-                  padding: '24px 32px 16px',
-                  borderBottom: '1px solid rgba(0, 87, 157, 0.15)',
-                  marginBottom: '24px'
+                  backdropFilter: 'blur(0.625rem)',
+                  padding: '1.5rem 2rem 1rem',
+                  borderBottom: '0.0625rem solid rgba(0, 87, 157, 0.15)',
+                  marginBottom: '1.5rem'
                 }}
               >
                 <div className="flex items-start justify-between">
                   <div>
                     <p
                       style={{
-                        fontSize: '11px',
+                        fontSize: '0.6875rem',
                         letterSpacing: '0.2em',
                         textTransform: 'uppercase',
                         color: 'var(--color-muted)',
-                        marginBottom: '4px',
+                        marginBottom: '0.25rem',
                         fontFamily: 'var(--font-orbitron)',
                         fontWeight: 600
                       }}
@@ -127,9 +127,9 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                       style={{
                         fontFamily: 'var(--font-orbitron)',
                         fontWeight: 700,
-                        fontSize: '28px',
+                        fontSize: '1.75rem',
                         color: 'var(--color-foreground)',
-                        marginBottom: '8px',
+                        marginBottom: '0.5rem',
                         lineHeight: 1.1,
                       }}
                     >
@@ -138,15 +138,15 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                     <span
                       style={{
                         display: 'inline-block',
-                        padding: '3px 12px',
-                        borderRadius: '9999px',
-                        fontSize: '10px',
+                        padding: '0.1875rem 0.75rem',
+                        borderRadius: '624.938rem',
+                        fontSize: '0.625rem',
                         fontWeight: 700,
                         letterSpacing: '0.1em',
                         textTransform: 'uppercase',
                         fontFamily: 'var(--font-orbitron)',
                         backgroundColor: `${event.categoryColor}1A`,
-                        border: `1px solid ${event.categoryColor}`,
+                        border: `0.0625rem solid ${event.categoryColor}`,
                         color: event.categoryColor,
                       }}
                     >
@@ -159,13 +159,13 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                     aria-label="Close gallery"
                     className="gallery-close-btn"
                     style={{
-                      width: '40px',
-                      height: '40px',
-                      borderRadius: '12px',
+                      width: '2.5rem',
+                      height: '2.5rem',
+                      borderRadius: '0.75rem',
                       background: 'rgba(255,255,255,0.05)',
-                      border: '1px solid rgba(255,255,255,0.1)',
+                      border: '0.0625rem solid rgba(255,255,255,0.1)',
                       color: 'var(--color-foreground)',
-                      fontSize: '24px',
+                      fontSize: '1.5rem',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -189,7 +189,7 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
               </div>
 
               {/* Masonry Grid Area */}
-              <div style={{ padding: '0 32px 32px' }}>
+              <div style={{ padding: '0 2rem 2rem' }}>
                 {allFailed || galleryImages.length === 0 ? (
                   <div
                     style={{
@@ -197,11 +197,11 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                       flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      padding: '100px 0',
+                      padding: '6.25rem 0',
                       color: 'var(--color-muted)',
                       fontFamily: 'var(--font-sans)',
-                      fontSize: '16px',
-                      gap: '16px',
+                      fontSize: '1rem',
+                      gap: '1rem',
                     }}
                   >
                     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
@@ -215,8 +215,8 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                   <div
                     style={{
                       columnCount: 'auto',
-                      columnWidth: '350px',
-                      columnGap: '16px',
+                      columnWidth: '21.875rem',
+                      columnGap: '1rem',
                       width: '100%'
                     }}
                   >
@@ -230,7 +230,7 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                           whileHover={{ 
                             y: -8,
                             borderColor: 'var(--color-primary)',
-                            boxShadow: '0 15px 35px rgba(0,87,157,0.25)' 
+                            boxShadow: '0 0.9375rem 2.1875rem rgba(0,87,157,0.25)' 
                           }}
                           transition={{ 
                             duration: 0.3, 
@@ -238,13 +238,13 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                           }}
                           style={{
                             breakInside: 'avoid',
-                            marginBottom: '16px',
-                            borderRadius: '16px',
+                            marginBottom: '1rem',
+                            borderRadius: '1rem',
                             overflow: 'hidden',
                             background: 'var(--color-surface-alt)',
                             position: 'relative',
                             cursor: 'pointer',
-                            border: '1px solid rgba(0,87,157,0.1)',
+                            border: '0.0625rem solid rgba(0,87,157,0.1)',
                             willChange: 'transform',
                             backfaceVisibility: 'hidden',
                           }}
@@ -252,7 +252,7 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                           {!isLoaded && (
                             <div
                               style={{
-                                height: '200px',
+                                height: '12.5rem',
                                 background: 'linear-gradient(90deg, var(--color-surface) 25%, var(--color-surface-alt) 50%, var(--color-surface) 75%)',
                                 backgroundSize: '200% 100%',
                                 animation: 'gallery-shimmer 1.5s infinite',
@@ -268,7 +268,7 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                               "w-full h-auto block transition-all duration-500",
                               isLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95"
                             )}
-                            onLoadingComplete={() => handleImageLoad(src)}
+                            onLoad={() => handleImageLoad(src)}
                             onError={() => handleImageError(src)}
                           />
                         </motion.div>
@@ -278,12 +278,12 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                 )}
 
                 {/* Footer Section */}
-                <div style={{ marginTop: '40px', borderTop: '1px solid rgba(0,87,157,0.1)', paddingTop: '24px' }}>
+                <div style={{ marginTop: '2.5rem', borderTop: '0.0625rem solid rgba(0,87,157,0.1)', paddingTop: '1.5rem' }}>
                   <p
                     style={{
                       textAlign: 'center',
                       color: 'var(--color-muted)',
-                      fontSize: '12px',
+                      fontSize: '0.75rem',
                       fontFamily: 'var(--font-sans)',
                       letterSpacing: '0.05em'
                     }}
@@ -313,13 +313,13 @@ export default function EventGalleryModal({ isOpen, onClose, event }: EventGalle
                   <button
                     onClick={() => setSelectedImage(null)}
                     style={{
-                      width: '48px',
-                      height: '48px',
+                      width: '3rem',
+                      height: '3rem',
                       borderRadius: '50%',
                       background: 'rgba(255,255,255,0.1)',
-                      border: '1px solid rgba(255,255,255,0.2)',
+                      border: '0.0625rem solid rgba(255,255,255,0.2)',
                       color: '#ffffff',
-                      fontSize: '28px',
+                      fontSize: '1.75rem',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',

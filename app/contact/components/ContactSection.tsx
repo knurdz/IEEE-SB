@@ -9,7 +9,7 @@ import { footerSocialItems } from '@/lib/site';
 
 export default function ContactSection() {
   return (
-    <section className="relative w-full min-h-screen bg-white overflow-hidden py-16 lg:py-20 px-4 md:px-0 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:px-8" id="contact">
+    <section className="relative w-full min-h-screen bg-white overflow-hidden py-16 lg:py-20 px-4 md:px-0 [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:px-8" id="contact">
       {/* Topographic Background Pattern */}
       <div className="absolute inset-0 opacity-[0.05] pointer-events-none">
         <svg width="100%" height="100%" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
@@ -22,10 +22,10 @@ export default function ContactSection() {
         </svg>
       </div>
 
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-stretch relative z-10 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:gap-8 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:flex-col">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-stretch relative z-10 [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:gap-8 [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:flex-col">
         
         {/* Left Column: Organization Branding & Info */}
-        <div className="w-full md:w-[45%] flex flex-col justify-start pt-4 pb-12 md:pr-12 relative z-10 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:max-w-[42rem] [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:mx-auto [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:w-full [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:pb-4 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:pr-0">
+        <div className="w-full md:w-[45%] flex flex-col justify-start pt-4 pb-12 md:pr-12 relative z-10 [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:max-w-[42rem] [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:mx-auto [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:w-full [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:pb-4 [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:pr-0">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -37,13 +37,13 @@ export default function ContactSection() {
               <span className="font-black font-serif text-black uppercase">BRANCH</span>
             </h2>
 
-            <div className="flex flex-col gap-8 max-w-[320px]">
+            <div className="flex flex-col gap-8 max-w-[20rem]">
               <div className="flex items-center gap-6 group">
                 <div className="w-10 h-10 rounded-full flex items-center justify-center text-[#00589e] shrink-0 border-2 border-[#00589e]/20 group-hover:bg-[#00589e] group-hover:text-white transition-all cursor-pointer">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col items-start flex-1">
-                   <p className="text-[15px] font-bold text-black/60 text-left leading-tight">
+                   <p className="text-[0.9375rem] font-bold text-black/60 text-left leading-tight">
                      IEEE Student Branch, University of Moratuwa, Katubedda, 10400
                    </p>
                 </div>
@@ -54,7 +54,7 @@ export default function ContactSection() {
                   <Mail className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col items-start flex-1">
-                   <p className="text-[15px] font-bold text-black/70 text-left leading-tight break-all font-sans">
+                   <p className="text-[0.9375rem] font-bold text-black/70 text-left leading-tight break-all font-sans">
                      Ieeesbuom.2526@gmail.com
                    </p>
                 </div>
@@ -63,7 +63,7 @@ export default function ContactSection() {
 
             {/* Social Connect Icons */}
             <div className="flex flex-col gap-4 mt-12 md:mt-16">
-              <span className="text-[12px] font-bold text-black/40 uppercase tracking-widest">Connect With Us</span>
+              <span className="text-[0.75rem] font-bold text-black/40 uppercase tracking-widest">Connect With Us</span>
               <div className="flex items-center flex-wrap gap-4">
                 {footerSocialItems.map((social) => (
                   <a 
@@ -82,19 +82,19 @@ export default function ContactSection() {
         </div>
 
         {/* Middle Overlapping Map Container - Increased Width and Size */}
-        <div className="w-full md:w-[42%] min-h-[400px] relative z-20 md:-ml-24 md:-mr-8 my-12 md:my-0 flex flex-col justify-center -translate-x-[10px] -translate-y-[10px] [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:max-w-[42rem] [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:mx-auto [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:w-full [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:my-0 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:translate-x-0 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:translate-y-0 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:ml-0 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:mr-0">
+        <div className="w-full md:w-[42%] min-h-[25rem] relative z-20 md:-ml-24 md:-mr-8 my-12 md:my-0 flex flex-col justify-center -translate-x-[0.625rem] -translate-y-[0.625rem] [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:max-w-[42rem] [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:mx-auto [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:w-full [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:my-0 [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:translate-x-0 [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:translate-y-0 [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:ml-0 [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:mr-0">
           <ContactMap />
         </div>
 
         {/* Right Column: Premium Contact Form Area Wrapper - Expanded for no overlap */}
-        <div className="w-full md:w-[70%] flex flex-col justify-center py-10 md:py-8 lg:py-6 relative z-10 hidden md:flex md:-ml-[20%] [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:hidden">
-          <div className="w-full bg-[#00589e] overflow-hidden shadow-2xl rounded-[6px] h-fit">
+        <div className="w-full md:w-[70%] flex flex-col justify-center py-10 md:py-8 lg:py-6 relative z-10 hidden md:flex md:-ml-[20%] [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:hidden">
+          <div className="w-full bg-[#00589e] overflow-hidden shadow-2xl rounded-[0.375rem] h-fit">
              <ContactForm />
           </div>
         </div>
 
         {/* Mobile View rendering of form */}
-        <div className="w-full bg-[#00589e] overflow-hidden shadow-2xl rounded-[6px] relative z-10 md:hidden mt-4 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:block [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:max-w-[42rem] [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:mx-auto [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:mt-0">
+        <div className="w-full bg-[#00589e] overflow-hidden shadow-2xl rounded-[0.375rem] relative z-10 md:hidden mt-4 [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:block [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:max-w-[42rem] [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:mx-auto [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:mt-0">
            <ContactForm />
         </div>
 

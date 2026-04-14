@@ -19,7 +19,7 @@ export default function ContactForm() {
   if (submitted) {
     return (
       <motion.div
-        className="flex flex-col items-center justify-center h-full min-h-[400px] text-center p-8 md:p-12 text-white relative z-20"
+        className="flex flex-col items-center justify-center h-full min-h-[25rem] text-center p-8 md:p-12 text-white relative z-20"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
@@ -47,15 +47,15 @@ export default function ContactForm() {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      className="w-full h-full flex flex-col p-8 md:py-10 md:pr-10 md:pl-[calc(2.5rem+36%)] relative z-10 text-white [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:p-10"
+      className="w-full h-full flex flex-col p-8 md:py-10 md:pr-10 md:pl-[calc(2.5rem+36%)] relative z-10 text-white [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:p-10"
     >
       {/* Decorative Blur Orbs */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#00457c]/50 rounded-full blur-[60px] translate-y-1/4 -translate-x-1/4 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full blur-[5rem] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#00457c]/50 rounded-full blur-[3.75rem] translate-y-1/4 -translate-x-1/4 pointer-events-none" />
 
       <div className="mb-6 relative z-20">
         <h3 className="text-3xl md:text-5xl font-bold uppercase tracking-tighter mb-3">Let&apos;s Talk</h3>
-        <p className="text-white/80 font-medium max-w-[320px] text-[15px] leading-relaxed">
+        <p className="text-white/80 font-medium max-w-[20rem] text-[0.9375rem] leading-relaxed">
           Have a question or want to collaborate? Send us a message and we&apos;ll get back to you within 24 hours
         </p>
       </div>
@@ -63,34 +63,34 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full mb-0 relative z-20">
         
         <div className="flex flex-col gap-2 w-full">
-          <label htmlFor="name" className="text-[12px] font-bold text-white uppercase tracking-widest pl-1">Name</label>
+          <label htmlFor="name" className="text-[0.75rem] font-bold text-white uppercase tracking-widest pl-1">Name</label>
           <input
             type="text"
             id="name"
             required
-            className="bg-white/10 border border-white/20 outline-none focus:border-white focus:bg-white/20 focus:ring-4 focus:ring-white/10 rounded-[6px] text-white font-medium text-base w-full px-5 py-2.5 transition-all placeholder:text-white/40"
+            className="bg-white/10 border border-white/20 outline-none focus:border-white focus:bg-white/20 focus:ring-4 focus:ring-white/10 rounded-[0.375rem] text-white font-medium text-base w-full px-5 py-2.5 transition-all placeholder:text-white/40"
             placeholder="Your name"
           />
         </div>
 
         <div className="flex flex-col gap-2 w-full">
-          <label htmlFor="email" className="text-[12px] font-bold text-white uppercase tracking-widest pl-1">Email Address</label>
+          <label htmlFor="email" className="text-[0.75rem] font-bold text-white uppercase tracking-widest pl-1">Email Address</label>
           <input
             type="email"
             id="email"
             required
-            className="bg-white/10 border border-white/20 outline-none focus:border-white focus:bg-white/20 focus:ring-4 focus:ring-white/10 rounded-[6px] text-white font-medium text-base w-full px-5 py-2.5 transition-all placeholder:text-white/40"
+            className="bg-white/10 border border-white/20 outline-none focus:border-white focus:bg-white/20 focus:ring-4 focus:ring-white/10 rounded-[0.375rem] text-white font-medium text-base w-full px-5 py-2.5 transition-all placeholder:text-white/40"
             placeholder="Your email"
           />
         </div>
 
         <div className="flex flex-col gap-2 w-full">
-          <label htmlFor="message" className="text-[12px] font-bold text-white uppercase tracking-widest pl-1">Message</label>
+          <label htmlFor="message" className="text-[0.75rem] font-bold text-white uppercase tracking-widest pl-1">Message</label>
           <textarea
             id="message"
             required
             rows={3}
-            className="bg-white/10 border border-white/20 outline-none focus:border-white focus:bg-white/20 focus:ring-4 focus:ring-white/10 rounded-[6px] text-white font-medium text-base w-full px-5 py-2.5 resize-none transition-all placeholder:text-white/40"
+            className="bg-white/10 border border-white/20 outline-none focus:border-white focus:bg-white/20 focus:ring-4 focus:ring-white/10 rounded-[0.375rem] text-white font-medium text-base w-full px-5 py-2.5 resize-none transition-all placeholder:text-white/40"
             placeholder="Write your message here..."
           />
         </div>
@@ -99,7 +99,7 @@ export default function ContactForm() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="group relative flex items-center justify-center gap-3 w-full md:w-auto bg-white px-10 py-3 rounded-[6px] text-[15px] font-black text-[#00589e] uppercase tracking-wider overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] disabled:opacity-70 disabled:hover:scale-100 [@media(min-width:768px)_and_(max-width:1024px)_and_(orientation:portrait)]:w-full"
+            className="group relative flex items-center justify-center gap-3 w-full md:w-auto bg-white px-10 py-3 rounded-[0.375rem] text-[0.9375rem] font-black text-[#00589e] uppercase tracking-wider overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] disabled:opacity-70 disabled:hover:scale-100 [@media(min-width:48rem)_and_(max-width:64rem)_and_(orientation:portrait)]:w-full"
           >
             {/* Hover Expansion Background */}
             <div className="absolute inset-0 w-0 bg-gray-100 transition-all duration-300 ease-out group-hover:w-full z-0" />

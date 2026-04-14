@@ -12,8 +12,8 @@ export default function Roadmap() {
         {/* Circuit board decorative visuals */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0">
           {/* Ambient glows */}
-          <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/5 rounded-full blur-[120px]" />
-          <div className="absolute top-2/3 -right-20 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[150px]" />
+          <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/5 rounded-full blur-[7.5rem]" />
+          <div className="absolute top-2/3 -right-20 w-[31.25rem] h-[31.25rem] bg-accent/5 rounded-full blur-[9.375rem]" />
 
           {/* Left circuit tracks */}
           <div className="hidden lg:block absolute left-0 top-0 w-[12%] h-full opacity-55 border-r border-primary/10">
@@ -27,7 +27,7 @@ export default function Roadmap() {
             <motion.div
               animate={{ top: ['-10%', '110%'] }}
               transition={{ duration: 7, repeat: Infinity, ease: 'linear' }}
-              className="absolute left-[19.4px] w-[2.5px] h-32 bg-gradient-to-b from-transparent via-primary to-transparent shadow-[0_0_15px_var(--color-primary)]"
+              className="absolute left-[1.2125rem] w-[0.15625rem] h-32 bg-gradient-to-b from-transparent via-primary to-transparent shadow-[0_0_15px_var(--color-primary)]"
             />
           </div>
 
@@ -41,7 +41,7 @@ export default function Roadmap() {
             <motion.div
               animate={{ top: ['-10%', '110%'] }}
               transition={{ duration: 12, repeat: Infinity, ease: 'linear', delay: 5 }}
-              className="absolute left-[99.4px] w-[2.5px] h-28 bg-gradient-to-b from-transparent via-accent to-transparent shadow-[0_0_12px_var(--color-accent)]"
+              className="absolute left-[6.2125rem] w-[0.15625rem] h-28 bg-gradient-to-b from-transparent via-accent to-transparent shadow-[0_0_12px_var(--color-accent)]"
             />
           </div>
         </div>

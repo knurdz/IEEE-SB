@@ -1,0 +1,20 @@
+import { MetadataRoute } from 'next';
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: 'IEEE Student Branch University of Moratuwa',
+    short_name: 'IEEE SB UOM',
+    description: 'Official website of IEEE Student Branch, University of Moratuwa.',
+    start_url: '/',
+    display: 'standalone',
+    background_color: '#ffffff',
+    theme_color: '#00629b',
+    icons: [
+      {
+        src: '/favicon.png',
+        sizes: 'any',
+        type: 'image/png',
+      },
+    ],
+  };
+}

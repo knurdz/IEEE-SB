@@ -12,7 +12,7 @@
 
 .mindmap-section {
   width: 100%;
-  padding: 40px 20px;
+  padding: 2.5rem 1.25rem;
   display: flex;
   justify-content: center;
   background: #FFFFFF;
@@ -23,8 +23,8 @@
 .mindmap-wrapper {
   position: relative;
   width: 100%;
-  max-width: 1200px;
-  min-width: 900px;
+  max-width: 75rem;
+  min-width: 56.25rem;
   aspect-ratio: 1.5;
 }
 
@@ -41,7 +41,7 @@
 .line {
   fill: none;
   stroke: var(--navy-blue);
-  stroke-width: 4px;
+  stroke-width: 0.25rem;
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -49,24 +49,24 @@
   position: absolute;
   transform: translate(-50%, -50%);
   background: var(--card-bg);
-  border: 1px solid rgba(0, 82, 255, 0.15);
-  border-radius: 8px;
-  padding: 24px;
-  width: 250px;
+  border: 0.0625rem solid rgba(0, 82, 255, 0.15);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  width: 15.625rem;
   text-align: center;
   z-index: 2;
   cursor: pointer;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(0.5rem);
+  -webkit-backdrop-filter: blur(0.5rem);
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  box-shadow: 0 0.25rem 1.25rem rgba(0,0,0,0.06);
 }
 
 .card h3 {
-  margin: 0 0 12px 0;
+  margin: 0 0 0.75rem 0;
   color: var(--text-main);
   font-size: 1.25rem;
-  letter-spacing: 1.5px;
+  letter-spacing: 0.09375rem;
   transition: color 0.4s ease;
   font-family: 'Montserrat', sans-serif;
 }
@@ -84,12 +84,12 @@
   top: 50%;
   transform: translate(-50%, -50%);
   background: #FFFFFF;
-  border: 1px solid rgba(0, 82, 255, 0.2);
-  border-radius: 6px;
-  padding: 30px 40px;
+  border: 0.0625rem solid rgba(0, 82, 255, 0.2);
+  border-radius: 0.375rem;
+  padding: 1.875rem 2.5rem;
   text-align: center;
   z-index: 3;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0.625rem 2.5rem rgba(0, 0, 0, 0.08);
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -98,7 +98,7 @@
   font-size: 2.2rem;
   color: var(--text-main);
   text-transform: uppercase;
-  letter-spacing: 4px;
+  letter-spacing: 0.25rem;
   line-height: 1.2;
   font-family: 'Montserrat', sans-serif;
 }
@@ -109,12 +109,12 @@
 .mindmap-wrapper:has(.card-3:hover) .card:not(.card-3),
 .mindmap-wrapper:has(.card-4:hover) .card:not(.card-4),
 .mindmap-wrapper:has(.card-5:hover) .card:not(.card-5) {
-  filter: blur(2px) opacity(0.35);
+  filter: blur(0.125rem) opacity(0.35);
   transform: translate(-50%, -50%) scale(0.95);
 }
 
 .mindmap-wrapper:has(.card:hover) .center-card {
-  filter: blur(2px) brightness(0.6);
+  filter: blur(0.125rem) brightness(0.6);
 }
 
 .mindmap-wrapper:has(.card-1:hover) .line:not(.line-1),
@@ -132,14 +132,14 @@
 
 .card:hover {
   border-color: var(--neon-hover);
-  box-shadow: 0 0 15px rgba(0, 82, 255, 0.1), inset 0 0 8px rgba(0, 82, 255, 0.05);
+  box-shadow: 0 0 0.9375rem rgba(0, 82, 255, 0.1), inset 0 0 0.5rem rgba(0, 82, 255, 0.05);
   transform: translate(-50%, -50%) scale(1.05);
   z-index: 10;
 }
 
 .card:hover h3 {
   color: var(--neon-hover);
-  text-shadow: 0 0 8px rgba(0, 82, 255, 0.1);
+  text-shadow: 0 0 0.5rem rgba(0, 82, 255, 0.1);
 }
 
 .card:hover p {
@@ -154,10 +154,10 @@
 .pulse {
   fill: none;
   stroke: var(--neon-blue);
-  filter: drop-shadow(0 0 8px rgba(0, 82, 255, 0.4));
+  filter: drop-shadow(0 0 0.5rem rgba(0, 82, 255, 0.4));
   stroke-dasharray: 80 720;
   animation: flowPulse 2.5s linear infinite;
-  stroke-width: 5px;
+  stroke-width: 0.3125rem;
   pointer-events: none;
   stroke-linecap: round;
   z-index: 6;
@@ -170,8 +170,8 @@
 .mindmap-wrapper:has(.card-4:hover) .line-4,
 .mindmap-wrapper:has(.card-5:hover) .line-5 {
   stroke: rgba(0, 82, 255, 0.2);
-  filter: drop-shadow(0 0 4px rgba(0, 82, 255, 0.1));
-  stroke-width: 4px;
+  filter: drop-shadow(0 0 0.25rem rgba(0, 82, 255, 0.1));
+  stroke-width: 0.25rem;
   z-index: 5;
 }
 
@@ -180,11 +180,11 @@
 .mindmap-wrapper:has(.card-3:hover) .pulse-3,
 .mindmap-wrapper:has(.card-4:hover) .pulse-4,
 .mindmap-wrapper:has(.card-5:hover) .pulse-5 {
-  filter: drop-shadow(0 0 12px rgba(0, 82, 255, 0.6));
-  stroke-width: 6px;
+  filter: drop-shadow(0 0 0.75rem rgba(0, 82, 255, 0.6));
+  stroke-width: 0.375rem;
 }
 
 .center-card:hover h1 {
   color: var(--neon-hover);
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 0 0.625rem rgba(255, 255, 255, 0.5);
 }

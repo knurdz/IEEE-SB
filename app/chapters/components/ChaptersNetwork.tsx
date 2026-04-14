@@ -48,44 +48,44 @@ export default function ChaptersNetwork() {
         .network-container {
           transform: scale(0.7); /* Mobile scales just the center hexagon */
         }
-        @media (min-width: 375px) {
+        @media (min-width: 23.4375rem) {
           .network-container {
             transform: scale(0.85);
           }
         }
-        @media (min-width: 480px) {
+        @media (min-width: 30rem) {
           .network-container {
             transform: scale(1);
           }
         }
-        @media (min-width: 640px) {
+        @media (min-width: 40rem) {
           .network-container {
             transform: scale(1.1);
           }
         }
-        @media (min-width: 768px) {
+        @media (min-width: 48rem) {
           .network-container {
             transform: scale(0.53); /* Back to fitting the entire extended grid */
           }
         }
-        @media (min-width: 1024px) {
+        @media (min-width: 64rem) {
           .network-container {
             transform: scale(0.72);
           }
         }
-        @media (min-width: 1200px) {
+        @media (min-width: 75rem) {
           .network-container {
             transform: scale(0.85);
           }
         }
-        @media (min-width: 1400px) {
+        @media (min-width: 87.5rem) {
           .network-container {
             transform: scale(1);
           }
         }
       `}</style>
       
-      <div className="relative w-full max-w-[1200px] h-[220px] min-[375px]:h-[260px] min-[480px]:h-[300px] sm:h-[350px] md:h-[500px] lg:h-[600px] xl:h-[650px] flex items-center justify-center z-20 overflow-visible">
+      <div className="relative w-full max-w-[75rem] h-[13.75rem] min-[23.4375rem]:h-[16.25rem] min-[30rem]:h-[18.75rem] sm:h-[21.875rem] md:h-[31.25rem] lg:h-[37.5rem] xl:h-[40.625rem] flex items-center justify-center z-20 overflow-visible">
         <div className="network-container relative w-full h-full flex items-center justify-center transition-transform duration-500 ease-out">
           {/* ── CENTER IEEE HEXAGON (z-30) ── */}
           <motion.div
@@ -98,7 +98,7 @@ export default function ChaptersNetwork() {
           >
             <div>
               <div
-                className="relative w-[300px] h-[260px] bg-transparent flex items-center justify-center overflow-hidden"
+                className="relative w-[18.75rem] h-[16.25rem] bg-transparent flex items-center justify-center overflow-hidden"
                 style={{ maskImage: BIG_ROUNDED_HEX, WebkitMaskImage: BIG_ROUNDED_HEX }}
               >
                 {/* Replaced GIF with the new high-fidelity SVG component */}
@@ -134,7 +134,7 @@ export default function ChaptersNetwork() {
                         }
                       }
                     }}
-                    className="relative cursor-pointer w-[150px] h-[130px] bg-white flex items-center justify-center p-4 overflow-hidden"
+                    className="relative cursor-pointer w-[9.375rem] h-[8.125rem] bg-white flex items-center justify-center p-4 overflow-hidden"
                     style={{ maskImage: SMALL_ROUNDED_HEX, WebkitMaskImage: SMALL_ROUNDED_HEX }}
                   >
                     <div className="absolute inset-0 bg-gray-50/50 animate-pulse transition-opacity duration-500" />
@@ -183,7 +183,7 @@ export default function ChaptersNetwork() {
                         }
                       }
                     }}
-                    className="relative cursor-pointer w-[150px] h-[130px] bg-white flex items-center justify-center p-4 overflow-hidden"
+                    className="relative cursor-pointer w-[9.375rem] h-[8.125rem] bg-white flex items-center justify-center p-4 overflow-hidden"
                     style={{ maskImage: SMALL_ROUNDED_HEX, WebkitMaskImage: SMALL_ROUNDED_HEX }}
                   >
                     <div className="absolute inset-0 bg-gray-50/50 animate-pulse transition-opacity duration-500" />

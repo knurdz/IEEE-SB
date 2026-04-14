@@ -116,7 +116,7 @@ export default function SocialLinks({
                 borderColor: social.hoverColor,
                 backgroundColor: social.color,
                 color: social.hoverColor,
-                boxShadow: `0 4px 16px ${social.color}`,
+                boxShadow: `0 0.25rem 1rem ${social.color}`,
               }}
               transition={{ duration: 0.2 }}
               aria-label={social.name}

@@ -51,14 +51,14 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
       transition={{ duration: 0.8, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ 
         y: -5,
-        boxShadow: "0 20px 40px rgba(0, 87, 157, 0.12), 0 0 1px rgba(0, 87, 157, 0.1) inset"
+        boxShadow: "0 1.25rem 2.5rem rgba(0, 87, 157, 0.12), 0 0 0.0625rem rgba(0, 87, 157, 0.1) inset"
       }}
     >
       <Link href={`/events/${event.slug}`} className="absolute inset-0 z-20 cursor-pointer" aria-label={`View ${event.name}`} />
       
-      <div className="flex flex-col md:flex-row min-h-[300px] md:min-h-[260px]">
+      <div className="flex flex-col md:flex-row min-h-[18.75rem] md:min-h-[16.25rem]">
         {/* Left Side: Image */}
-        <div className="relative w-full md:w-[40%] h-[200px] md:h-auto overflow-hidden bg-surface-alt">
+        <div className="relative w-full md:w-[40%] h-[12.5rem] md:h-auto overflow-hidden bg-surface-alt">
           {!imgFailed && displayImage && (
             <motion.div
               className="absolute inset-0 w-full h-full"
@@ -70,7 +70,7 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
                 src={displayImage}
                 alt={event.name || 'Event image'}
                 fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 40vw, 30vw"
+                sizes="(max-width: 48rem) 100vw, (max-width: 75rem) 40vw, 30vw"
                 className="object-cover group-hover:scale-105 transition-transform duration-700"
                 priority={priority}
                 onError={() => setImgFailed(true)}
@@ -81,10 +81,10 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
           {/* Category Badge on Image (Mobile) */}
           <div className="absolute top-4 left-4 md:hidden z-10">
              <span
-              className="px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase backdrop-blur-md shadow-lg"
+              className="px-3 py-1 rounded-full text-[0.625rem] font-bold tracking-widest uppercase backdrop-blur-md shadow-lg"
               style={{
                 backgroundColor: `${event.categoryColor}33`,
-                border: `1px solid ${event.categoryColor}`,
+                border: `0.0625rem solid ${event.categoryColor}`,
                 color: event.categoryColor,
               }}
             >
@@ -100,10 +100,10 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
           <div>
             <div className="hidden md:flex items-center justify-between mb-4">
               <span
-                className="px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase font-orbitron"
+                className="px-3 py-1 rounded-full text-[0.625rem] font-bold tracking-widest uppercase font-orbitron"
                 style={{
                   backgroundColor: `${event.categoryColor}15`,
-                  border: `1px solid ${event.categoryColor}40`,
+                  border: `0.0625rem solid ${event.categoryColor}40`,
                   color: event.categoryColor,
                 }}
               >
@@ -117,13 +117,13 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
 
             {/* Removed event date display */}
 
-            <p className="text-muted-foreground text-[14px] md:text-[15px] leading-relaxed line-clamp-3 md:line-clamp-2 max-w-xl">
+            <p className="text-muted-foreground text-[0.875rem] md:text-[0.9375rem] leading-relaxed line-clamp-3 md:line-clamp-2 max-w-xl">
               {event.description}
             </p>
           </div>
 
           <div className="mt-6 flex flex-wrap items-center gap-4">
-            <span className="inline-flex items-center gap-2 text-primary font-bold text-[13px] uppercase tracking-widest group-hover:text-accent transition-colors duration-300 pointer-events-none">
+            <span className="inline-flex items-center gap-2 text-primary font-bold text-[0.8125rem] uppercase tracking-widest group-hover:text-accent transition-colors duration-300 pointer-events-none">
               Explore Event
               <ArrowRight className="group-hover:translate-x-1.5 transition-transform duration-300" />
             </span>
@@ -197,7 +197,7 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
       
       {/* Decorative pulse line on top */}
       <motion.div 
-        className="absolute top-0 left-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        className="absolute top-0 left-0 h-[0.125rem] bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         style={{ width: '100%' }}
       />
     </motion.div>

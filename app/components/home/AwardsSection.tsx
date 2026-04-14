@@ -44,7 +44,7 @@ export default function AwardsSection() {
               
               <div className="relative rounded-lg overflow-hidden border-4 border-[#2c3e50]">
                 {/* Fallback layout if specific image isn't available, otherwise use next/image */}
-                <div className="relative min-h-[300px] w-full bg-slate-100 flex items-center justify-center">
+                <div className="relative min-h-[18.75rem] w-full bg-slate-100 flex items-center justify-center">
                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 -translate-x-full animate-[shimmer_2s_infinite]" />
                   <Image
                     src={featuredAward.image || "/events/placeholder-cert.jpg"}
@@ -68,7 +68,7 @@ export default function AwardsSection() {
 
           {/* Right Side: National Trophies */}
           <div className="w-full lg:w-[45%] flex flex-col gap-10 relative z-10">
-            <div className="mb-[-20px]">
+            <div className="mb-[-1.25rem]">
               <h3 className="text-xl font-bold uppercase text-gray-900 mb-2">National (Sri Lankan) Awards</h3>
               <p className="text-gray-700 leading-relaxed text-sm">
                 Celebrating local chapter and project achievements within Sri Lanka.
@@ -94,7 +94,7 @@ export default function AwardsSection() {
                       src={award.image}
                       alt={award.imageAlt}
                       fill
-                      sizes="(max-width: 768px) 100px, 100px"
+                      sizes="(max-width: 48rem) 6.25rem, 6.25rem"
                       className="object-contain relative z-10 p-1"
                     />
                   </div>

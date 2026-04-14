@@ -210,7 +210,7 @@ const HexBentoGraphic = ({ color, strokeColor, Shape, patternType = 'crosses', c
   const patternId = `grid-${patternType}-${color.replace('#','')}`;
   
   return (
-    <div className={`absolute pointer-events-none flex items-center justify-center ${className || 'bottom-6 left-0 right-0 h-[240px]'}`}>
+    <div className={`absolute pointer-events-none flex items-center justify-center ${className || 'bottom-6 left-0 right-0 h-[15rem]'}`}>
       
       {/* Background Grid Layer */}
       <div className="absolute inset-0 w-full h-full [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
@@ -264,7 +264,7 @@ const bentoContent: BentoItem[] = [
     bg: "bg-[#eff6ff]",
     text: "text-[#00589e]",
     desc: "text-[#00589e]",
-    className: "md:col-span-1 lg:col-span-1 min-h-[480px]",
+    className: "md:col-span-1 lg:col-span-1 min-h-[30rem]",
     Graphic: () => <HexBentoGraphic color="#60a5fa" strokeColor="#00589e" patternType="diagonal-dashes" Shape={ShapeIEEE} />
   },
   {
@@ -273,7 +273,7 @@ const bentoContent: BentoItem[] = [
     bg: "bg-[#f2fdf5]",
     text: "text-[#1a1a1a]",
     desc: "text-gray-600",
-    className: "md:col-span-1 lg:col-span-1 min-h-[480px]",
+    className: "md:col-span-1 lg:col-span-1 min-h-[30rem]",
     Graphic: () => <HexBentoGraphic color="#166534" strokeColor="#1a1a1a" patternType="crosses" Shape={ShapeNetwork} />
   },
   {
@@ -282,7 +282,7 @@ const bentoContent: BentoItem[] = [
     bg: "bg-[#fcfaff]",
     text: "text-[#1a1a1a]",
     desc: "text-gray-600",
-    className: "md:col-span-1 lg:col-span-1 min-h-[480px]",
+    className: "md:col-span-1 lg:col-span-1 min-h-[30rem]",
     Graphic: () => <HexBentoGraphic color="#6b21a8" strokeColor="#1a1a1a" patternType="diagonal-dashes" Shape={ShapeResources} />
   },
   {
@@ -291,7 +291,7 @@ const bentoContent: BentoItem[] = [
     bg: "bg-[#f0f9ff]",
     text: "text-[#1a1a1a]",
     desc: "text-gray-600",
-    className: "md:col-span-1 lg:col-span-1 min-h-[480px]",
+    className: "md:col-span-1 lg:col-span-1 min-h-[30rem]",
     Graphic: () => <HexBentoGraphic color="#075985" strokeColor="#1a1a1a" patternType="crosses" Shape={ShapeSkills} />
   },
   {
@@ -300,7 +300,7 @@ const bentoContent: BentoItem[] = [
     bg: "bg-[#f8fafc]",
     text: "text-[#1a1a1a]",
     desc: "text-gray-600",
-    className: "md:col-span-1 lg:col-span-1 min-h-[480px]",
+    className: "md:col-span-1 lg:col-span-1 min-h-[30rem]",
     Graphic: () => <HexBentoGraphic color="#1e293b" strokeColor="#1a1a1a" patternType="diagonal-dashes" Shape={ShapeTrends} />
   },
   {
@@ -309,7 +309,7 @@ const bentoContent: BentoItem[] = [
     bg: "bg-[#fff1f2]",
     text: "text-[#1a1a1a]",
     desc: "text-gray-600",
-    className: "md:col-span-1 lg:col-span-1 min-h-[480px]",
+    className: "md:col-span-1 lg:col-span-1 min-h-[30rem]",
     Graphic: () => <HexBentoGraphic color="#9f1239" strokeColor="#1a1a1a" patternType="crosses" Shape={ShapeCareer} />
   },
   {
@@ -318,7 +318,7 @@ const bentoContent: BentoItem[] = [
     bg: "bg-[#fefce8]",
     text: "text-[#1a1a1a]",
     desc: "text-gray-600",
-    className: "md:col-span-1 lg:col-span-1 min-h-[480px]",
+    className: "md:col-span-1 lg:col-span-1 min-h-[30rem]",
     Graphic: () => <HexBentoGraphic color="#854d0e" strokeColor="#1a1a1a" patternType="diagonal-dashes" Shape={ShapeSociety} />
   },
   {
@@ -327,7 +327,7 @@ const bentoContent: BentoItem[] = [
     bg: "bg-[#171717]",
     text: "text-white",
     desc: "text-gray-400",
-    className: "md:col-span-1 lg:col-span-1 min-h-[480px]",
+    className: "md:col-span-1 lg:col-span-1 min-h-[30rem]",
     Graphic: () => <HexBentoGraphic color="#ffffff" strokeColor="#06b6d4" patternType="crosses" Shape={ShapeImpact} />
   }
 ];
@@ -356,8 +356,8 @@ export default function WhyJoinBento() {
       <SiteBackground showTopFade={true} showBottomFade={true} />
 
       {/* Background Decorative Elements */}
-      <WavyLine className="absolute top-0 left-0 w-full h-[300px] text-purple-100/40 -translate-x-1/4 z-0 pointer-events-none" />
-      <WavyLine className="absolute bottom-0 right-0 w-[150%] h-[300px] text-orange-100/40 translate-x-1/4 z-0 pointer-events-none transform rotate-180" />
+      <WavyLine className="absolute top-0 left-0 w-full h-[18.75rem] text-purple-100/40 -translate-x-1/4 z-0 pointer-events-none" />
+      <WavyLine className="absolute bottom-0 right-0 w-[150%] h-[18.75rem] text-orange-100/40 translate-x-1/4 z-0 pointer-events-none transform rotate-180" />
       
       {/* Blurred decorative blobs */}
       <div className="absolute top-1/4 right-0 w-96 h-96 bg-blue-50/50 rounded-full filter blur-3xl opacity-60 -translate-y-1/2 translate-x-1/2 z-0" />
@@ -390,11 +390,11 @@ export default function WhyJoinBento() {
                 variants={itemVariants}
                 className={`relative overflow-hidden rounded-2xl p-8 flex transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl ${bg} ${className}`}
               >
-                <div className="relative z-20 flex flex-col mb-[250px]">
-                  <h3 className={`text-[26px] font-medium leading-[1.2] tracking-tight mb-3 ${text}`}>
+                <div className="relative z-20 flex flex-col mb-[15.625rem]">
+                  <h3 className={`text-[1.625rem] font-medium leading-[1.2] tracking-tight mb-3 ${text}`}>
                     {title}
                   </h3>
-                  <p className={`text-[15px] leading-relaxed ${desc}`}>
+                  <p className={`text-[0.9375rem] leading-relaxed ${desc}`}>
                     {description}
                   </p>
                 </div>

@@ -6,7 +6,7 @@ import SiteBackground from '../components/layout/SiteBackground';
 import SectionDivider from '../chapters/components/SectionDivider';
 
 export const metadata: Metadata = {
-  title: 'Contact Us | IEEE Student Branch - University of Moratuwa',
+  title: 'Contact Us',
   description:
     'Get in touch with the IEEE Student Branch at the University of Moratuwa. Reach out for collaborations, inquiries, or more information about our activities.',
 };

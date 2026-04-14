@@ -30,7 +30,7 @@ export default function AnimatedLogoProcedural({ className }: { className?: stri
           alt=""
           fill
           priority
-          sizes="(max-width: 768px) 300px, 600px"
+          sizes="(max-width: 48rem) 18.75rem, 37.5rem"
           className="object-contain opacity-80"
         />
       </div>
@@ -42,7 +42,7 @@ export default function AnimatedLogoProcedural({ className }: { className?: stri
           alt="IEEE SB Logo"
           fill
           priority
-          sizes="(max-width: 768px) 300px, 600px"
+          sizes="(max-width: 48rem) 18.75rem, 37.5rem"
           className="object-contain"
         />
       </div>
