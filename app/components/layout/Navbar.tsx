@@ -53,10 +53,10 @@ export default function Navbar() {
               <Image
                 src="/logo/ieeesblogo-light2.png"
                 alt="IEEE SB Logo"
-                className="h-9 w-auto object-contain"
+                className="object-contain"
                 width={172}
-                height={40}
-                style={{ width: 'auto', height: 'auto' }}
+                height={36}
+                style={{ width: 'auto', height: '36px' }}
                 priority
               />
             </Link>
