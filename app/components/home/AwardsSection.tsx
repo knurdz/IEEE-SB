@@ -82,32 +82,30 @@ export default function AwardsSection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="flex items-center gap-6 group"
+                className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 group"
               >
-                {/* Clean tech base for the logo */}
-                <div className="relative shrink-0 w-24 h-28 transform transition-transform group-hover:scale-110 flex items-end justify-center">
-                  <div className="absolute inset-x-0 bottom-0 h-4 bg-gray-200/50 backdrop-blur-md rounded-full blur-sm"></div>
-                  <div className="relative flex justify-center h-20 w-20 overflow-hidden rounded-xl border border-blue-100 shadow-lg bg-white/20 backdrop-blur-md">
-                    {/* Tiny Skeleton */}
-                    <div className="absolute inset-0 bg-slate-50 animate-pulse opacity-40" />
-                    <Image
+                {/* Stage Photo Thumbnail */}
+                <div className="relative shrink-0 w-full sm:w-36 lg:w-40 h-48 sm:h-28 rounded-xl overflow-hidden shadow-sm border border-white/50 group-hover:border-white transition-all duration-500 group-hover:shadow-[0_10px_40px_rgba(0,0,0,0.15)] group-hover:-translate-y-1 z-10 bg-slate-100 flex items-center justify-center">
+                   {/* Glass glare effect */}
+                   <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent z-20 pointer-events-none"></div>
+                   <div className="absolute inset-0 bg-slate-200 animate-pulse opacity-40 z-0" />
+                   <Image
                       src={award.image}
                       alt={award.imageAlt}
                       fill
-                      sizes="(max-width: 48rem) 6.25rem, 6.25rem"
-                      className="object-contain relative z-10 p-1"
-                    />
-                  </div>
+                      sizes="(max-width: 640px) 100vw, 10rem"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105 relative z-10"
+                   />
                 </div>
 
                 {/* Text Content */}
-                <div className="relative bg-white/50 backdrop-blur-sm p-4 rounded-xl border border-blue-100 shadow-sm flex-1">
+                <div className="relative bg-white/50 group-hover:bg-white/70 transition-colors duration-500 backdrop-blur-sm p-4 sm:p-5 rounded-xl border border-blue-50 shadow-sm flex-1 flex flex-col justify-center">
                   {/* Decorative corner brackets */}
-                  <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-[#4da8da] rounded-tl-lg"></div>
-                  <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-[#4da8da] rounded-br-lg"></div>
+                  <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-[#4da8da]/60 rounded-tl-lg transition-colors group-hover:border-[#4da8da]"></div>
+                  <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-[#4da8da]/60 rounded-br-lg transition-colors group-hover:border-[#4da8da]"></div>
                   
-                  <h4 className="text-lg font-bold text-gray-900 mb-1 leading-tight">{award.title}</h4>
-                  <p className="text-sm text-gray-600 leading-snug">
+                  <h4 className="text-base sm:text-lg font-bold text-gray-900 mb-1 leading-tight group-hover:text-blue-900 transition-colors">{award.title}</h4>
+                  <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                     {award.description || "Presented at IEEE Sri Lanka Section awards."}
                   </p>
                 </div>

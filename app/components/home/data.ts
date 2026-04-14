@@ -22,7 +22,7 @@ export const featuredAward: AwardItem = {
   id: "international-award",
   year: "",
   title: "Most Outstanding Student Branch in the Asia-Pacific Region at the IEEE Region 10 SAC Awards",
-  image: "/International awrd.jpg.jpeg",
+  image: "/awards/International awrd.jpeg",
   imageAlt: "Most Outstanding Student Branch in the Asia-Pacific Region Award",
   badge: "International Recognition",
 };
@@ -32,24 +32,24 @@ export const secondaryAwards: AwardItem[] = [
     id: "sls-best-branch-award",
     year: "",
     title: "Best Student Branch Project Award (MoraForesight)",
-    image: "/events-assets/Foresight/logo.png",
-    imageAlt: "MoraForesight logo",
+    image: "/awards/Sl award1.jpg",
+    imageAlt: "Best Student Branch Project Award stage moment",
     description: "The Best Student Branch Project award for MoraForesight was presented at IEEE Sri Lanka Section awards"
   },
   {
     id: "sls-outstanding-tech-initiative-award",
     year: "",
     title: "Best Industry Collaborative Project Award (Rise Up Mora)",
-    image: "/events-assets/RUM/logo.png",
-    imageAlt: "Rise Up Mora logo",
+    image: "/awards/Sl award2.jpg",
+    imageAlt: "Best Industry Collaborative Project Award stage moment",
     description: "The Best Industry Collaborative Project award for Rise Up Mora was presented at IEEE Sri Lanka Section awards"
   },
   {
     id: "sls-community-impact-award",
     year: "",
     title: "Outstanding Technical Chapter Award (IEEE EMBS)",
-    image: "/chapter-logos/CL1.png",
-    imageAlt: "IEEE EMBS logo",
+    image: "/awards/Sl award3.jpg",
+    imageAlt: "Outstanding Technical Chapter Award stage moment",
     description: "The Outstanding Technical Chapter award for IEEE EMBS was presented at IEEE Sri Lanka Section awards"
   },
 ];
