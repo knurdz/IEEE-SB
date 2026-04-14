@@ -94,6 +94,7 @@ export default function SocietyCard({ society, reverse = false, index }: Society
           <SocialLinks
             links={society.links}
             align={reverse ? 'right' : 'left'}
+            hoverColor={society.color}
           />
         </div>
       </motion.div>

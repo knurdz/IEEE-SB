@@ -12,13 +12,21 @@ interface SocialLinksProps {
   };
   align?: "left" | "right" | "center";
   theme?: "dark" | "light";
+  hoverColor?: string;
 }
 
 export default function SocialLinks({
   links,
   align = "left",
   theme = "dark",
+  hoverColor: propHoverColor,
 }: SocialLinksProps) {
+  const hexToRgba = (hex: string, alpha: number) => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  };
   const alignClass = {
     left: "justify-start",
     right: "justify-end",
@@ -113,10 +121,14 @@ export default function SocialLinks({
               style={baseStyles}
               whileHover={{
                 y: -2,
-                borderColor: social.hoverColor,
-                backgroundColor: social.color,
-                color: social.hoverColor,
-                boxShadow: `0 0.25rem 1rem ${social.color}`,
+                borderColor: propHoverColor || social.hoverColor,
+                backgroundColor: propHoverColor 
+                  ? hexToRgba(propHoverColor, 0.1) 
+                  : social.color,
+                color: propHoverColor || social.hoverColor,
+                boxShadow: `0 0.25rem 1rem ${
+                  propHoverColor ? hexToRgba(propHoverColor, 0.15) : social.color
+                }`,
               }}
               transition={{ duration: 0.2 }}
               aria-label={social.name}
