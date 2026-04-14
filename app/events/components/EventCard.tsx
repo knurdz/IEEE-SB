@@ -39,8 +39,8 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
   const [imgFailed, setImgFailed] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
-  // Use mainImage if available, else fallback to images array
-  const displayImage = event.mainImage || (event.images && event.images.length > 0 ? event.images[0] : null);
+  // Use cardImage if available, else mainImage, else fallback to images array
+  const displayImage = event.cardImage || event.mainImage || (event.images && event.images.length > 0 ? event.images[0] : null);
 
   return (
     <motion.div

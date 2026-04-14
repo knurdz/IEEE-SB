@@ -17,7 +17,7 @@ export default function EventsPage() {
       <EventsHero />
 
       {/* Hero Separator */}
-      <div className="w-full flex justify-center py-6 bg-transparent relative z-10">
+      <div className="w-full flex justify-center py-2 bg-transparent relative z-10">
         <div className="w-[95%] h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent fiber-glow" />
       </div>
 
