@@ -1,7 +1,15 @@
 import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT) || 587,
+  secure: (process.env.SMTP_SECURE ?? 'false') === 'true',
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
 
 export async function POST(req: Request) {
   try {
@@ -14,9 +22,9 @@ export async function POST(req: Request) {
       );
     }
 
-    const { data, error } = await resend.emails.send({
-      from: 'IEEE SB Website <onboarding@resend.dev>',
-      to: ['sadeepahearth@gmail.com'], // Temporarily using account owner email to bypass restrictions
+    await transporter.sendMail({
+      from: `"${process.env.SMTP_FROM_NAME || 'IEEE SB Website'}" <${process.env.SMTP_FROM}>`,
+      to: process.env.SMTP_TO,
       subject: `New Contact Form Message from ${name}`,
       replyTo: email,
       html: `
@@ -32,13 +40,9 @@ export async function POST(req: Request) {
       `,
     });
 
-    if (error) {
-      console.error('Resend API Error:', error);
-      return NextResponse.json({ error }, { status: 400 });
-    }
-
-    return NextResponse.json({ success: true, data });
+    return NextResponse.json({ success: true });
   } catch (error) {
+    console.error('SMTP Error:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

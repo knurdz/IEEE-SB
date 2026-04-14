@@ -314,6 +314,7 @@ export default function SocietySections() {
                       links={society.links}
                       align="center"
                       theme="light"
+                      hoverColor={society.color}
                     />
                   </div>
                 </div>

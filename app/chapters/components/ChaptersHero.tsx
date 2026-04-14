@@ -1,22 +1,11 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import { fadeUpTransition } from '@/lib/motion';
 
 export default function ChaptersHero() {
-  const containerRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end start'],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
   return (
     <section
-      ref={containerRef}
       className="relative min-h-[25vh] md:min-h-[30vh] flex items-center justify-center overflow-hidden bg-transparent pb-0"
     >
       <style>{`
@@ -268,9 +257,8 @@ export default function ChaptersHero() {
         </svg>
       </div>
 
-      <motion.div
+      <div
         className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-32 pb-0 flex flex-col items-center"
-        style={{ y, opacity }}
       >
         <motion.h1 
             className="font-orbitron font-bold text-4xl sm:text-5xl md:text-6xl text-foreground tracking-tight pb-2"
@@ -280,7 +268,7 @@ export default function ChaptersHero() {
         >
           Chapters & <span className="text-gradient">Affinity Groups</span>
         </motion.h1>
-      </motion.div>
+      </div>
     </section>
   );
 }

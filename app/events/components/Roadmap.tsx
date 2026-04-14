@@ -1,14 +1,43 @@
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import EventCard from './EventCard';
 import { EVENTS } from '../data';
 
 export default function Roadmap() {
+  const containerRef = useRef<HTMLElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
+  // Track scroll position of the section.
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start 60%', 'end 60%']
+  });
+
+  // Apply a smooth but tight spring effect to the scroll to track precisely
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 150,
+    damping: 35,
+    restDelta: 0.001
+  });
+
+  // Create a delayed, softer physics spring for the second line.
+  // Instead of math mapping which can break on tall pages, 
+  // giving it a heavily damped "lazy" spring makes it organically trail behind!
+  const trailingProgress = useSpring(scrollYProgress, {
+    stiffness: 40,
+    damping: 25,
+    restDelta: 0.001
+  });
+
   return (
     <>
-      <section className="relative pt-4 pb-16 lg:pt-6 lg:pb-24 px-4 bg-transparent overflow-hidden" id="events-list">
+      <section ref={containerRef} className="relative pt-4 pb-16 lg:pt-6 lg:pb-24 px-4 bg-transparent overflow-hidden" id="events-list">
         {/* Circuit board decorative visuals */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0">
           {/* Ambient glows */}
@@ -18,31 +47,32 @@ export default function Roadmap() {
           {/* Left circuit tracks */}
           <div className="hidden lg:block absolute left-0 top-0 w-[12%] h-full opacity-55 border-r border-primary/10">
             <svg className="w-full h-full" viewBox="0 0 120 1000" preserveAspectRatio="none">
-              <path d="M20 0 V200 L40 220 V400 L20 420 V1000" stroke="var(--primary)" strokeWidth="1.5" fill="none" opacity="0.36" />
-              <path d="M60 0 V150 L40 170 V350 L60 370 V1000" stroke="var(--primary)" strokeWidth="1.5" fill="none" opacity="0.42" />
-              <path d="M100 0 V300 L80 320 V500 L100 520 V1000" stroke="var(--primary)" strokeWidth="1.5" fill="none" opacity="0.36" />
-              <circle cx="20" cy="200" r="3" fill="var(--primary)" opacity="0.48" />
-              <rect x="36.5" y="346.5" width="7" height="7" fill="var(--primary)" opacity="0.48" className="rotate-45" />
-            </svg>
-            <motion.div
-              animate={{ top: ['-10%', '110%'] }}
-              transition={{ duration: 7, repeat: Infinity, ease: 'linear' }}
-              className="absolute left-[1.2125rem] w-[0.15625rem] h-32 bg-gradient-to-b from-transparent via-primary to-transparent shadow-[0_0_15px_var(--color-primary)]"
-            />
-          </div>
+              {/* Base, dim tracks */}
+              <path d="M20 0 V200 L40 220 V400 L20 420 V1000" stroke="var(--primary)" strokeWidth="1.5" fill="none" opacity="0.15" />
+              <path d="M80 0 V300 L60 320 V500 L80 520 V1000" stroke="var(--primary)" strokeWidth="1.5" fill="none" opacity="0.15" />
+              
+              {/* Animated fill tracks */}
+              <motion.path 
+                d="M20 0 V200 L40 220 V400 L20 420 V1000" 
+                stroke="var(--primary)" 
+                strokeWidth="1.5" 
+                fill="none" 
+                opacity="1"
+                style={mounted ? { pathLength: smoothProgress } : {}}
+              />
+              <motion.path 
+                d="M80 0 V300 L60 320 V500 L80 520 V1000" 
+                stroke="var(--primary)" 
+                strokeWidth="1.5" 
+                fill="none" 
+                opacity="1"
+                style={mounted ? { pathLength: trailingProgress } : {}}
+              />
 
-          {/* Right circuit tracks */}
-          <div className="hidden lg:block absolute right-0 top-0 w-[12%] h-full opacity-55 border-l border-primary/10">
-            <svg className="w-full h-full" viewBox="0 0 120 1000" preserveAspectRatio="none">
-              <path d="M100 0 V250 L80 270 V450 L100 470 V1000" stroke="var(--primary)" strokeWidth="1.5" fill="none" opacity="0.36" />
-              <path d="M60 0 V350 L80 370 V550 L60 570 V1000" stroke="var(--primary)" strokeWidth="1.5" fill="none" opacity="0.42" />
-              <path d="M20 0 V450 L40 470 L20 670 V1000" stroke="var(--primary)" strokeWidth="1.5" fill="none" opacity="0.36" />
+              {/* Decorative nodes */}
+              <circle cx="20" cy="200" r="3" fill="var(--primary)" opacity="0.48" />
+              <rect x="56.5" y="316.5" width="7" height="7" fill="var(--primary)" opacity="0.48" className="rotate-45" />
             </svg>
-            <motion.div
-              animate={{ top: ['-10%', '110%'] }}
-              transition={{ duration: 12, repeat: Infinity, ease: 'linear', delay: 5 }}
-              className="absolute left-[6.2125rem] w-[0.15625rem] h-28 bg-gradient-to-b from-transparent via-accent to-transparent shadow-[0_0_12px_var(--color-accent)]"
-            />
           </div>
         </div>
 

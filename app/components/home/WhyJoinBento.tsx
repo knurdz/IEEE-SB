@@ -223,8 +223,8 @@ export default function WhyJoinBento() {
           })}
         </motion.div>
 
-        <div className="mt-14">
-          <div className="max-w-4xl mx-auto">
+        <div className="mt-14 w-full">
+          <div className="w-full mx-auto">
             <div className="rounded-2xl overflow-hidden border border-black/10 bg-white/90 shadow-[0_18px_45px_-24px_rgba(0,0,0,0.35)]">
               <div className="relative w-full pb-[56.25%]">
                 <iframe
