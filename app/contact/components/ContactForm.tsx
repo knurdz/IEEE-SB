@@ -47,7 +47,7 @@ export default function ContactForm() {
   if (submitted) {
     return (
       <motion.div
-        className="flex flex-col items-center justify-center h-full min-h-[25rem] text-center p-8 lg:py-10 lg:pr-10 lg:pl-[calc(2.5rem+36%)] text-white relative z-20"
+        className="flex flex-col items-center justify-center h-full min-h-[25rem] text-center p-8 lg:py-10 lg:pr-10 lg:pl-[calc(2rem+30%)] text-white relative z-20"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
@@ -56,15 +56,22 @@ export default function ContactForm() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-3xl font-black mb-4 uppercase tracking-tighter">Message Sent</h3>
-        <p className="text-white/80 text-lg max-w-sm mx-auto font-medium">
+        <h3 className="text-3xl md:text-5xl font-bold uppercase tracking-tighter mb-3">Message Sent</h3>
+        <p className="text-white/80 font-medium max-w-[20rem] mx-auto text-[0.9375rem] leading-relaxed">
           Thanks for reaching out! Our team will review your message and get back to you shortly.
         </p>
         <button
           onClick={() => setSubmitted(false)}
-          className="mt-8 bg-white/10 hover:bg-white/20 border border-white/30 text-white px-8 py-3 rounded-xl font-bold uppercase tracking-wider transition-all hover:scale-105 cursor-pointer"
+          className="mt-8 group relative flex items-center justify-center gap-3 w-full md:w-auto bg-white px-10 py-3 rounded-[0.375rem] text-[0.9375rem] font-black text-[#00589e] uppercase tracking-wider overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] cursor-pointer"
         >
-          Send another
+          <div className="absolute inset-0 w-0 bg-gray-100 transition-all duration-300 ease-out group-hover:w-full z-0" />
+          <span className="relative z-10">Send Another</span>
+          <motion.div className="relative z-10">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover:translate-x-1 transition-transform">
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </motion.div>
         </button>
       </motion.div>
     );
