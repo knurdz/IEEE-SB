@@ -28,6 +28,7 @@ const POSITION_PRIORITY: Record<PositionName, number> = {
   'VOLUNTEER MANAGEMENT COMMITTEE LEAD': 8,
   'MEMBERSHIP DEVELOPMENT COMMITTEE LEAD': 8,
   'RoboRoarZ 2025 CHAIRPERSON': 8,
+  'MoraForesight 4.0 CHAIRPERSON': 8,
   'Committee Member': 9,
 };
 
