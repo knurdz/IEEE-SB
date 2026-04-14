@@ -3,7 +3,7 @@ import ContactHero from './components/ContactHero';
 import ContactForm from './components/ContactForm';
 import ContactInfo from './components/ContactInfo';
 import SiteBackground from '../components/layout/SiteBackground';
-import SectionDivider from '../chapters/components/SectionDivider';
+import SectionDivider from '../components/ui/SectionDivider';
 
 export const metadata: Metadata = {
   title: 'Contact Us',
