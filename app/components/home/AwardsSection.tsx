@@ -47,7 +47,7 @@ export default function AwardsSection() {
                 <div className="relative min-h-[18.75rem] w-full bg-slate-100 flex items-center justify-center">
                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 -translate-x-full animate-[shimmer_2s_infinite]" />
                   <Image
-                    src={featuredAward.image || "/events/placeholder-cert.jpg"}
+                    src={featuredAward.image || "/event/placeholder-cert.jpg"}
                     alt={featuredAward.imageAlt}
                     width={3309}
                     height={2310}
