@@ -43,6 +43,16 @@ const MemberCard = memo(function MemberCard({
     transform: hovered ? "translateY(-8px)" : "translateY(0px)",
     transition: "all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)",
   };
+  // Title case formatter for positions
+  const formatPosition = (text: string) => {
+    return text.split(' ').map(word => 
+      word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+    ).join(' ');
+  };
+
+  const displayPosition = !isLead && (member.position === "Committee Member" || member.position === "COMMITTEE MEMBER")
+    ? "Member" 
+    : formatPosition(member.position);
 
   return (
     <div
@@ -123,7 +133,7 @@ const MemberCard = memo(function MemberCard({
               "md:min-h-[2.5rem]"
             )}
           >
-            {!isLead && member.position === "Committee Member" ? "MEMBER" : member.position}
+            {!isLead && displayPosition === "Committee Member" ? "Member" : displayPosition}
           </p>
 
           {/* Action Buttons - Always show social media */}
