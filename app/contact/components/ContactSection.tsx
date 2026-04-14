@@ -25,14 +25,14 @@ export default function ContactSection() {
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-stretch relative z-10 [@media(min-width:48rem)_and_(max-width:64rem)]:gap-8 [@media(min-width:48rem)_and_(max-width:64rem)]:flex-col">
         
         {/* Left Column: Organization Branding & Info */}
-        <div className="w-full lg:w-[45%] flex flex-col justify-start pt-4 pb-12 lg:pr-12 relative z-10 [@media(min-width:48rem)_and_(max-width:64rem)]:max-w-[42rem] [@media(min-width:48rem)_and_(max-width:64rem)]:mx-auto [@media(min-width:48rem)_and_(max-width:64rem)]:w-full [@media(min-width:48rem)_and_(max-width:64rem)]:pb-4 [@media(min-width:48rem)_and_(max-width:64rem)]:pr-0">
+        <div className="w-full lg:w-[40%] flex flex-col justify-start pt-4 pb-12 lg:pr-16 relative z-10 [@media(min-width:48rem)_and_(max-width:64rem)]:max-w-[42rem] [@media(min-width:48rem)_and_(max-width:64rem)]:mx-auto [@media(min-width:48rem)_and_(max-width:64rem)]:w-full [@media(min-width:48rem)_and_(max-width:64rem)]:pb-4 [@media(min-width:48rem)_and_(max-width:64rem)]:pr-0">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl lg:text-7xl flex flex-wrap items-baseline justify-start gap-4 font-sans tracking-tight mb-12">
+            <h2 className="text-4xl lg:text-7xl xl:text-8xl flex flex-wrap items-baseline justify-start gap-4 font-sans tracking-tight mb-12">
               <span className="font-light text-black uppercase">IEEE Student</span>
               <span className="font-black font-serif text-black uppercase">BRANCH</span>
             </h2>
@@ -81,13 +81,13 @@ export default function ContactSection() {
           </motion.div>
         </div>
 
-        {/* Middle Overlapping Map Container - Increased Width and Size */}
-        <div className="w-full lg:w-[42%] min-h-[25rem] relative z-20 lg:-ml-24 lg:-mr-8 my-12 lg:my-0 flex flex-col justify-center translate-x-0 lg:-translate-x-[0.625rem] lg:-translate-y-[0.625rem] [@media(min-width:48rem)_and_(max-width:64rem)]:max-w-[42rem] [@media(min-width:48rem)_and_(max-width:64rem)]:mx-auto [@media(min-width:48rem)_and_(max-width:64rem)]:w-full [@media(min-width:48rem)_and_(max-width:64rem)]:my-0 [@media(min-width:48rem)_and_(max-width:64rem)]:translate-x-0 [@media(min-width:48rem)_and_(max-width:64rem)]:translate-y-0 [@media(min-width:48rem)_and_(max-width:64rem)]:ml-0 [@media(min-width:48rem)_and_(max-width:64rem)]:mr-0">
+        {/* Middle Overlapping Map Container - Adjusted Width for better fit */}
+        <div className="w-full lg:w-[38%] min-h-[25rem] relative z-20 lg:-ml-16 lg:-mr-4 my-12 lg:my-0 flex flex-col justify-center translate-x-0 lg:-translate-x-[0.625rem] lg:-translate-y-[0.625rem] [@media(min-width:48rem)_and_(max-width:64rem)]:max-w-[42rem] [@media(min-width:48rem)_and_(max-width:64rem)]:mx-auto [@media(min-width:48rem)_and_(max-width:64rem)]:w-full [@media(min-width:48rem)_and_(max-width:64rem)]:my-0 [@media(min-width:48rem)_and_(max-width:64rem)]:translate-x-0 [@media(min-width:48rem)_and_(max-width:64rem)]:translate-y-0 [@media(min-width:48rem)_and_(max-width:64rem)]:ml-0 [@media(min-width:48rem)_and_(max-width:64rem)]:mr-0">
           <ContactMap />
         </div>
 
-        {/* Right Column: Premium Contact Form Area Wrapper - Expanded for no overlap */}
-        <div className="w-full lg:w-[70%] flex flex-col justify-center py-10 lg:py-6 relative z-10 hidden lg:flex lg:-ml-[20%] [@media(min-width:48rem)_and_(max-width:64rem)]:hidden">
+        {/* Right Column: Premium Contact Form Area Wrapper - Adjusted offset */}
+        <div className="w-full lg:w-[65%] flex flex-col justify-center py-10 lg:py-6 relative z-10 hidden lg:flex lg:-ml-[15%] [@media(min-width:48rem)_and_(max-width:64rem)]:hidden">
           <div className="w-full bg-[#00589e] overflow-hidden shadow-2xl rounded-[0.375rem] h-fit">
              <ContactForm />
           </div>

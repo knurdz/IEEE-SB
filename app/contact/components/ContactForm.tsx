@@ -7,19 +7,47 @@ export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [status, setStatus] = useState<'' | 'success' | 'error'>('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
+    setStatus('');
+
+    const form = e.target as HTMLFormElement;
+    const formData = {
+      name: (form.elements.namedItem('name') as HTMLInputElement).value,
+      email: (form.elements.namedItem('email') as HTMLInputElement).value,
+      message: (form.elements.namedItem('message') as HTMLTextAreaElement).value,
+    };
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+        setStatus('success');
+      } else {
+        setStatus('error');
+        alert('Failed to send message. Please try again later.');
+      }
+    } catch (error) {
+      console.error('Email error:', error);
+      setStatus('error');
+      alert('An error occurred. Please try again.');
+    } finally {
       setIsSubmitting(false);
-      setSubmitted(true);
-    }, 1500);
+    }
   };
 
   if (submitted) {
     return (
       <motion.div
-        className="flex flex-col items-center justify-center h-full min-h-[25rem] text-center p-8 md:p-12 text-white relative z-20"
+        className="flex flex-col items-center justify-center h-full min-h-[25rem] text-center p-8 lg:py-10 lg:pr-10 lg:pl-[calc(2.5rem+36%)] text-white relative z-20"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
