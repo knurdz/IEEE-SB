@@ -2,12 +2,18 @@
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import CustomAlert from '@/app/components/ui/CustomAlert';
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const [status, setStatus] = useState<'' | 'success' | 'error'>('');
+  const [alertConfig, setAlertConfig] = useState<{isOpen: boolean, message: string, type: 'error'|'success'|'info'}>({
+    isOpen: false,
+    message: '',
+    type: 'error'
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,12 +39,12 @@ export default function ContactForm() {
         setStatus('success');
       } else {
         setStatus('error');
-        alert('Failed to send message. Please try again later.');
+        setAlertConfig({ isOpen: true, message: 'Failed to send message. Please try again later.', type: 'error' });
       }
     } catch (error) {
       console.error('Email error:', error);
       setStatus('error');
-      alert('An error occurred. Please try again.');
+      setAlertConfig({ isOpen: true, message: 'An error occurred. Please try again.', type: 'error' });
     } finally {
       setIsSubmitting(false);
     }
@@ -71,7 +77,14 @@ export default function ContactForm() {
   }
 
   return (
-    <motion.div
+    <>
+      <CustomAlert 
+        isOpen={alertConfig.isOpen} 
+        message={alertConfig.message} 
+        type={alertConfig.type} 
+        onClose={() => setAlertConfig(prev => ({ ...prev, isOpen: false }))} 
+      />
+      <motion.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
@@ -147,5 +160,6 @@ export default function ContactForm() {
         </div>
       </form>
     </motion.div>
+    </>
   );
 }
