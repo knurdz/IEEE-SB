@@ -1,10 +1,12 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import emailjs from '@emailjs/browser';
 import CustomAlert from '@/app/components/ui/CustomAlert';
 
 export default function ContactForm() {
+  const formRef = useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -20,31 +22,23 @@ export default function ContactForm() {
     setIsSubmitting(true);
     setStatus('');
 
-    const form = e.target as HTMLFormElement;
-    const formData = {
-      name: (form.elements.namedItem('name') as HTMLInputElement).value,
-      email: (form.elements.namedItem('email') as HTMLInputElement).value,
-      message: (form.elements.namedItem('message') as HTMLTextAreaElement).value,
-    };
-
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
-      if (response.ok) {
-        setSubmitted(true);
-        setStatus('success');
-      } else {
-        setStatus('error');
-        setAlertConfig({ isOpen: true, message: 'Failed to send message. Please try again later.', type: 'error' });
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error('EmailJS configuration is missing');
       }
+
+      await emailjs.sendForm(serviceId, templateId, formRef.current!, publicKey);
+
+      setSubmitted(true);
+      setStatus('success');
     } catch (error) {
       console.error('Email error:', error);
       setStatus('error');
-      setAlertConfig({ isOpen: true, message: 'An error occurred. Please try again.', type: 'error' });
+      setAlertConfig({ isOpen: true, message: 'Failed to send message. Please try again later.', type: 'error' });
     } finally {
       setIsSubmitting(false);
     }
@@ -101,13 +95,14 @@ export default function ContactForm() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full mb-0 relative z-20">
+      <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-4 w-full mb-0 relative z-20">
         
         <div className="flex flex-col gap-2 w-full">
           <label htmlFor="name" className="text-[0.75rem] font-bold text-white uppercase tracking-widest pl-1">Name</label>
           <input
             type="text"
             id="name"
+            name="from_name"
             required
             className="bg-white/10 border border-white/20 outline-none focus:border-white focus:bg-white/20 focus:ring-4 focus:ring-white/10 rounded-[0.375rem] text-white font-medium text-base w-full px-5 py-2.5 transition-all placeholder:text-white/40"
             placeholder="Your name"
@@ -119,6 +114,7 @@ export default function ContactForm() {
           <input
             type="email"
             id="email"
+            name="from_email"
             required
             className="bg-white/10 border border-white/20 outline-none focus:border-white focus:bg-white/20 focus:ring-4 focus:ring-white/10 rounded-[0.375rem] text-white font-medium text-base w-full px-5 py-2.5 transition-all placeholder:text-white/40"
             placeholder="Your email"
@@ -129,6 +125,7 @@ export default function ContactForm() {
           <label htmlFor="message" className="text-[0.75rem] font-bold text-white uppercase tracking-widest pl-1">Message</label>
           <textarea
             id="message"
+            name="message"
             required
             rows={3}
             className="bg-white/10 border border-white/20 outline-none focus:border-white focus:bg-white/20 focus:ring-4 focus:ring-white/10 rounded-[0.375rem] text-white font-medium text-base w-full px-5 py-2.5 resize-none transition-all placeholder:text-white/40"

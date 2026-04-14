@@ -1,6 +1,8 @@
 import { MetadataRoute } from 'next';
 import { EVENTS } from './events/data';
 
+export const dynamic = 'force-static';
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://ieeesb.uom.lk';
 

@@ -6,6 +6,13 @@ interface EventPageProps {
   params: Promise<{ slug: string }>;
 }
 
+// Required for static export: tells Next.js all possible slug values at build time
+export function generateStaticParams() {
+  return EVENTS.map((event) => ({
+    slug: event.slug,
+  }));
+}
+
 export async function generateMetadata(
   { params }: EventPageProps
 ): Promise<Metadata> {
