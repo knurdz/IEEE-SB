@@ -266,7 +266,7 @@ export default function ChaptersHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
         >
-          Technical Chapters & <br /> <span className="text-gradient">Affinity groups</span>
+          Chapters & <span className="text-gradient">Affinity Groups</span>
         </motion.h1>
       </div>
     </section>
