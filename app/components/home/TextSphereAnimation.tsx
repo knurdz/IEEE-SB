@@ -838,7 +838,7 @@ export default function TextSphereAnimation() {
               <div className="absolute inset-0 border-4 border-transparent border-t-blue-700 rounded-full animate-spin"></div>
             </div>
             <p className="text-blue-700/80 text-sm font-jetbrains tracking-[0.3em] animate-pulse">
-              LOADING GLOBE
+              LOADING
             </p>
           </div>
         </div>
