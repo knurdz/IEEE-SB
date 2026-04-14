@@ -55,6 +55,9 @@ export function withMemberMetadata(member: MemberInput, sourceIndex: number): Me
     image: member.image || PLACEHOLDER_IMAGES[sourceIndex % PLACEHOLDER_IMAGES.length],
     priority: getPositionPriority(member.position),
     sourceIndex,
+    imageScale: member.imageScale ?? 1.0,
+    imageTranslateY: member.imageTranslateY ?? '0%',
+    imageTranslateX: member.imageTranslateX ?? '0%',
   };
 }
 

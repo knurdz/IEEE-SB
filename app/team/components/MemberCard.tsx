@@ -1,12 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, memo } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/cn";
 import { generateArchTransforms } from "../constants";
 import { Member } from "../types";
 
-export default function MemberCard({
+const MemberCard = memo(function MemberCard({
   member,
   index,
   totalInRow,
@@ -108,10 +108,14 @@ export default function MemberCard({
             alt={member.name}
             fill
             className={cn(
-              "object-cover object-top transition-all duration-700",
-              hovered ? "scale-105" : "scale-100",
+              "object-cover transition-all duration-700",
               isImageLoading ? "opacity-0" : "opacity-100"
             )}
+            style={{
+              transform: `scale(${(member.imageScale ?? 1) * (hovered ? 1.05 : 1)}) translate(${member.imageTranslateX ?? "0"}, ${member.imageTranslateY ?? "0"})`,
+              transformOrigin: "top center",
+              objectPosition: member.imageOffset ?? "top center",
+            }}
             sizes="(max-width: 768px) 50vw, 220px"
             onLoad={() => setIsImageLoading(false)}
             loading={isLead ? "eager" : "lazy"}
@@ -218,4 +222,6 @@ export default function MemberCard({
       </div>
     </div>
   );
-}
+});
+
+export default MemberCard;

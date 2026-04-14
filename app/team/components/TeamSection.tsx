@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState, memo } from 'react';
 import { motion } from 'framer-motion';
 import SectionHeading from '@/app/components/ui/SectionHeading';
 import { fadeUp, fadeUpTransition, inViewOnce } from '@/lib/motion';
@@ -18,6 +18,7 @@ export default function TeamSection({
   members: Member[];
   sectionIndex: number;
 }) {
+  const [hasBeenInView, setHasBeenInView] = useState(sectionIndex === 0);
   const highlight = title.replace(/ Committee$/, '');
   const { topRow, bottomRow } = useMemo(() => splitMembersIntoRows(members), [members]);
   const hasTwoRows = bottomRow.length > 0;
@@ -51,6 +52,7 @@ export default function TeamSection({
       variants={fadeUp}
       initial="hidden"
       whileInView="visible"
+      onViewportEnter={() => !hasBeenInView && setHasBeenInView(true)}
       viewport={inViewOnce}
       transition={fadeUpTransition(sectionIndex * 0.12, 0.5)}
     >
@@ -66,55 +68,71 @@ export default function TeamSection({
         </div>
 
         <div className="hidden md:block" style={{ overflow: 'visible' }}>
-          <div
-            className="relative flex items-center justify-center"
-            style={{ height: hasTwoRows ? '360px' : '340px', overflow: 'visible' }}
-          >
-            {topRow.map((member, index) => (
-              <MemberCard
-                key={`top-${member.committee}-${member.name}`}
-                member={member}
-                index={index}
-                totalInRow={topRow.length}
-                isTopRow
-              />
-            ))}
-          </div>
+          {hasBeenInView ? (
+            <>
+              <div
+                className="relative flex items-center justify-center"
+                style={{ height: hasTwoRows ? '360px' : '340px', overflow: 'visible' }}
+              >
+                {topRow.map((member, index) => (
+                  <MemberCard
+                    key={`top-${member.committee}-${member.name}`}
+                    member={member}
+                    index={index}
+                    totalInRow={topRow.length}
+                    isTopRow
+                  />
+                ))}
+              </div>
 
-          {hasTwoRows && (
-            <div
-              className="relative flex items-center justify-center mt-6"
-              style={{ height: '340px', overflow: 'visible' }}
-            >
-              {bottomRow.map((member, index) => (
-                <MemberCard
-                  key={`bottom-${member.committee}-${member.name}`}
-                  member={member}
-                  index={index}
-                  totalInRow={bottomRow.length}
-                  isTopRow={false}
-                />
-              ))}
+              {hasTwoRows && (
+                <div
+                  className="relative flex items-center justify-center mt-6"
+                  style={{ height: '340px', overflow: 'visible' }}
+                >
+                  {bottomRow.map((member, index) => (
+                    <MemberCard
+                      key={`bottom-${member.committee}-${member.name}`}
+                      member={member}
+                      index={index}
+                      totalInRow={bottomRow.length}
+                      isTopRow={false}
+                    />
+                  ))}
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="h-[340px] flex items-center justify-center text-slate-300 italic text-sm">
+              Loading committee members...
             </div>
           )}
         </div>
 
         <div className="md:hidden mt-4">
-          {mobileFeaturedMember ? (
-            <div className="mb-8 flex justify-center">
-              <div className="w-full sm:max-w-[calc(50%-1rem)]">
-                <MobileMemberCard member={mobileFeaturedMember} />
-              </div>
-            </div>
-          ) : null}
+          {hasBeenInView ? (
+            <>
+              {mobileFeaturedMember ? (
+                <div className="mb-8 flex justify-center">
+                  <div className="w-full sm:max-w-[calc(50%-1rem)]">
+                    <MobileMemberCard member={mobileFeaturedMember} />
+                  </div>
+                </div>
+              ) : null}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {mobileGridMembers.map((member) => (
-              <div key={`${member.committee}-${member.name}`} className="w-full">
-                <MobileMemberCard member={member} />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                {mobileGridMembers.map((member) => (
+                  <div key={`${member.committee}-${member.name}`} className="w-full">
+                    <MobileMemberCard member={member} />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          ) : (
+            <div className="h-[200px] flex items-center justify-center text-slate-300 italic text-sm">
+              Loading members...
+            </div>
+          )}
         </div>
       </div>
     </motion.div>
