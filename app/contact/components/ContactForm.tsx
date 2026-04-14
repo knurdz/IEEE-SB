@@ -68,7 +68,7 @@ export default function ContactForm() {
         </p>
         <button
           onClick={() => setSubmitted(false)}
-          className="mt-8 bg-white/10 hover:bg-white/20 border border-white/30 text-white px-8 py-3 rounded-xl font-bold uppercase tracking-wider transition-all hover:scale-105"
+          className="mt-8 bg-white/10 hover:bg-white/20 border border-white/30 text-white px-8 py-3 rounded-xl font-bold uppercase tracking-wider transition-all hover:scale-105 cursor-pointer"
         >
           Send another
         </button>
@@ -88,7 +88,7 @@ export default function ContactForm() {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      className="w-full h-full flex flex-col p-8 lg:py-10 lg:pr-10 lg:pl-[calc(2.5rem+36%)] relative z-10 text-white [@media(min-width:48rem)_and_(max-width:64rem)]:p-10"
+      className="w-full h-full flex flex-col p-8 lg:py-10 lg:pr-10 lg:pl-[calc(2rem+30%)] relative z-10 text-white [@media(min-width:48rem)_and_(max-width:64rem)]:p-10"
     >
       {/* Decorative Blur Orbs */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full blur-[5rem] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
@@ -140,7 +140,7 @@ export default function ContactForm() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="group relative flex items-center justify-center gap-3 w-full md:w-auto bg-white px-10 py-3 rounded-[0.375rem] text-[0.9375rem] font-black text-[#00589e] uppercase tracking-wider overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] disabled:opacity-70 disabled:hover:scale-100 [@media(min-width:48rem)_and_(max-width:64rem)]:w-full"
+            className="group relative flex items-center justify-center gap-3 w-full md:w-auto bg-white px-10 py-3 rounded-[0.375rem] text-[0.9375rem] font-black text-[#00589e] uppercase tracking-wider overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] disabled:opacity-70 disabled:hover:scale-100 cursor-pointer [@media(min-width:48rem)_and_(max-width:64rem)]:w-full"
           >
             {/* Hover Expansion Background */}
             <div className="absolute inset-0 w-0 bg-gray-100 transition-all duration-300 ease-out group-hover:w-full z-0" />
