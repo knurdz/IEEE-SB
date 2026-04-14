@@ -43,6 +43,10 @@ export interface MemberInput {
   linkedin?: string;
   email?: string;
   image?: string;
+  imageScale?: number;
+  imageOffset?: string;
+  imageTranslateY?: string;
+  imageTranslateX?: string;
 }
 
 export interface Member {
@@ -54,6 +58,10 @@ export interface Member {
   email?: string;
   priority: number;
   sourceIndex: number;
+  imageScale?: number;
+  imageOffset?: string;
+  imageTranslateY?: string;
+  imageTranslateX?: string;
 }
 
 export interface TeamSectionData {

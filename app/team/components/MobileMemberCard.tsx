@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/cn";
 import { Member } from "../types";
 
-export default function MobileMemberCard({ member }: { member: Member }) {
+const MobileMemberCard = memo(function MobileMemberCard({ member }: { member: Member }) {
+  const [hovered, setHovered] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(true);
   const hasActions = Boolean(member.linkedin || member.email);
   const nameFontSize = "1.05rem";
@@ -14,6 +15,8 @@ export default function MobileMemberCard({ member }: { member: Member }) {
   return (
     <div
       className="relative w-full group"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       style={{
         height: "380px",
         filter: !isLead ? "brightness(0.96) grayscale(0.05)" : undefined,
@@ -23,9 +26,9 @@ export default function MobileMemberCard({ member }: { member: Member }) {
         <div
           className={cn(
             "z-30 w-full rounded-t-2xl border-x border-t px-5 py-3.5 text-center font-bold uppercase leading-none shadow-[0_-8px_20px_rgba(0,87,157,0.06)] backdrop-blur-xl transition-all duration-500",
-            isLead 
-              ? "border-primary/20 bg-white/95 text-primary group-hover:border-primary/30"
-              : "border-black/5 bg-slate-50/90 text-slate-500/90 group-hover:border-primary/20 group-hover:text-primary"
+            hovered || isLead 
+              ? "border-primary/20 bg-white/95 text-primary"
+              : "border-black/5 bg-slate-50/90 text-slate-500/90"
           )}
           style={{
             fontSize: positionFontSize,
@@ -40,7 +43,7 @@ export default function MobileMemberCard({ member }: { member: Member }) {
           className={cn(
             "relative flex-1 w-full flex-col overflow-hidden border transition-all duration-500 rounded-b-2xl",
             isLead ? "border-primary/20 bg-white" : "border-black/5 bg-slate-50/50",
-            "hover:border-primary/30 hover:shadow-[0_16px_40px_rgba(0,87,157,0.15)]",
+            hovered && "border-primary/30 shadow-[0_16px_40px_rgba(0,87,157,0.15)]",
           )}
         >
           <div className="relative w-full h-full overflow-hidden">
@@ -57,10 +60,15 @@ export default function MobileMemberCard({ member }: { member: Member }) {
               alt={member.name}
               fill
               className={cn(
-                "object-cover object-top transition-all duration-700 group-hover:scale-105",
-                !isLead && "opacity-90 group-hover:opacity-100",
+                "object-cover transition-all duration-700",
+                !isLead && (hovered ? "opacity-100" : "opacity-90"),
                 isImageLoading ? "opacity-0" : "opacity-100"
               )}
+              style={{
+                transform: `scale(${(member.imageScale ?? 1) * (hovered ? 1.05 : 1)}) translate(${member.imageTranslateX ?? "0"}, ${member.imageTranslateY ?? "0"})`,
+                transformOrigin: "top center",
+                objectPosition: member.imageOffset ?? "top center",
+              }}
               sizes="(max-width: 768px) 100vw, 350px"
               onLoad={() => setIsImageLoading(false)}
               loading={isLead ? "eager" : "lazy"}
@@ -134,4 +142,6 @@ export default function MobileMemberCard({ member }: { member: Member }) {
       </div>
     </div>
   );
-}
+});
+
+export default MobileMemberCard;
