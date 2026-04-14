@@ -38,7 +38,7 @@ export default function StrategicPartnerSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Visit Partner Website
+                  Visit Website
                 </a>
               </div>
             </div>

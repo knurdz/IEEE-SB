@@ -31,7 +31,7 @@ export default function ClosingCTA() {
         rel="noopener noreferrer"
         className="glow-button px-10 py-3.5 inline-block"
       >
-        Join IEEE UOM
+        Follow WhatsApp Channel
       </a>
 
       {/* Decorative glow */}
