@@ -12,6 +12,7 @@ export interface EventItem {
   groupedGallery?: { name: string; images: string[] }[];
   mainImage?: string;
   cardImage?: string;
+  albumUrl?: string;
   facebookUrl?: string;
   websiteUrl?: string;
   instagramUrl?: string;
@@ -56,7 +57,7 @@ export const EVENTS: EventItem[] = [
     ],
     mainImage: '/event/OpenWeek/491974489_1072769378216038_6614258640913092672_n.jpg',
     cardImage: '/event/OpenWeek/490775784_1070628858430090_8669397192788408804_n.jpg',
-    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1046768850816091&type=3'
+    albumUrl: 'https://web.facebook.com/media/set/?set=a.1048515690641407&type=3'
   },
   {
     id: 2,
@@ -84,7 +85,8 @@ export const EVENTS: EventItem[] = [
     ],
     mainImage: '/event/MoraXtreme/617541107_1293606722798968_6063331189995054013_n.jpg',
     cardImage: '/event/MoraXtreme/615854840_1293602799466027_4213933293901733169_n.jpg',
-    websiteUrl: 'https://moraxtreme.lk/'
+    websiteUrl: 'https://moraxtreme.lk/',
+    albumUrl: 'https://web.facebook.com/media/set/?set=a.1293608876132086&type=3'
   },
   {
     id: 9,
@@ -116,7 +118,7 @@ export const EVENTS: EventItem[] = [
     ],
     mainImage: '/event/IEEEXtreme/594962004_1263594422466865_8735085998910189412_n.jpg',
     cardImage: '/event/IEEEXtreme/594963075_1263596179133356_6548345293121081946_n.jpg',
-    facebookUrl: 'https://web.facebook.com/media/set/?set=a.964019195757724&type=3'
+    albumUrl: 'https://web.facebook.com/media/set/?set=a.1263623579130616&type=3'
   },
   {
     id: 3,
@@ -173,6 +175,7 @@ export const EVENTS: EventItem[] = [
     mainImage: '/event/foresight/536270154_1171385821687726_248709497198309389_n.jpg',
     cardImage: '/event/foresight/514269731_1167453365414305_6387581330595867284_n.jpg',
     facebookUrl: 'https://facebook.com/moraforesight',
+    albumUrl: 'https://web.facebook.com/media/set/?set=a.1171396608353314&type=3',
     websiteUrl: 'https://moraforesight.lk/',
     linkedinUrl: 'https://www.linkedin.com/company/moraforesight',
     instagramUrl: 'https://www.instagram.com/moraforesight._',
@@ -208,7 +211,8 @@ export const EVENTS: EventItem[] = [
     ],
     mainImage: '/event/Ballerina/557639154_1211833787642929_4546847834616922527_n.jpg',
     cardImage: '/event/Ballerina/557713849_1211844457641862_4457227941353633119_n.jpg',
-    websiteUrl: 'https://innovatewithballerina.com/'
+    websiteUrl: 'https://innovatewithballerina.com/',
+    albumUrl: 'https://web.facebook.com/media/set/?set=a.1211869624306012&type=3'
   },
   {
     id: 5,
@@ -246,7 +250,7 @@ export const EVENTS: EventItem[] = [
     ],
     mainImage: '/event/AGM & Award Ceremony/566320867_1222966146529693_6619199067605645621_n.jpg',
     cardImage: '/event/AGM & Award Ceremony/561721627_1222959766530331_3533758272355910556_n.jpg',
-    facebookUrl: 'https://web.facebook.com/media/set/?set=a.953390813487229&type=3'
+    albumUrl: 'https://web.facebook.com/media/set/?set=a.1222960443196930&type=3'
   },
   {
     id: 6,
@@ -292,6 +296,7 @@ export const EVENTS: EventItem[] = [
     mainImage: '/event/Mercon/540598471_1176409737852001_6607515367642355102_n (1).jpg',
     cardImage: '/event/Mercon/539417173_1176415154518126_599953372835219097_n.jpg',
     facebookUrl: 'https://facebook.com/erumercon',
+    albumUrl: 'https://web.facebook.com/media/set/?set=a.1176477611178547&type=3',
     websiteUrl: 'https://mercon.uom.lk/',
     linkedinUrl: 'https://www.linkedin.com/company/mercon-moratuwa-engineering-research-conference'
   },
@@ -320,7 +325,7 @@ export const EVENTS: EventItem[] = [
     ],
     mainImage: '/event/Robotics Day/495377340_1090887113070931_3714688918436566927_n.jpg',
     cardImage: '/event/Robotics Day/495301494_1090880113071631_3068262929101572922_n.jpg',
-    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1090920843067558&type=3'
+    albumUrl: 'https://web.facebook.com/media/set/?set=a.1090920843067558&type=3'
   },
   {
     id: 8,
@@ -347,7 +352,7 @@ export const EVENTS: EventItem[] = [
     ],
     mainImage: '/event/Finnc/524163752_1149907193835589_1666494559508167772_n.jpg',
     cardImage: '/event/Finnc/503686137_1107726958053613_4286845553822979762_n.jpg',
-    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1107733941386248&type=3'
+    albumUrl: 'https://web.facebook.com/media/set/?set=a.1149934813832827&type=3'
   },
   {
     id: 10,
@@ -385,6 +390,7 @@ export const EVENTS: EventItem[] = [
     mainImage: '/event/rum/538314147_1173265281499780_317201833541306729_n.jpg',
     cardImage: '/event/rum/537187906_1173265398166435_2200412588011600141_n.jpg',
     websiteUrl: 'https://riseupmora.lk/',
+    albumUrl: 'https://web.facebook.com/media/set/?set=a.1173281454831496&type=3',
     linkedinUrl: 'https://www.linkedin.com/company/rise-up-mora'
   },
   {
@@ -412,7 +418,7 @@ export const EVENTS: EventItem[] = [
     ],
     mainImage: '/event/NFB Championship/481252349_1033836118776031_472465518764129267_n.jpg',
     cardImage: '/event/NFB Championship/480836742_1033834842109492_8551140352823286849_n.jpg',
-    facebookUrl: 'https://web.facebook.com/media/set?vanity=ieeesbuom&set=a.626383876187926'
+    albumUrl: 'https://web.facebook.com/media/set/?set=a.626383876187926&type=3'
   },
   {
     id: 12,
@@ -439,7 +445,7 @@ export const EVENTS: EventItem[] = [
     ],
     mainImage: '/event/ICTIR/600479028_1267669762059331_4503430071750942877_n.jpg',
     cardImage: '/event/ICTIR/597258275_1267674338725540_1778343347160699941_n.jpg',
-    facebookUrl: 'https://web.facebook.com/media/set/?set=a.1267700392056268&type=3'
+    albumUrl: 'https://web.facebook.com/media/set/?set=a.1267700392056268&type=3'
   },
   {
     id: 13,
@@ -463,7 +469,7 @@ export const EVENTS: EventItem[] = [
     ],
     mainImage: '/event/jamborIEEE/541794185_748018911451847_6234089389239009766_n.jpg',
     cardImage: '/event/jamborIEEE/541423110_749931634593908_4172302328836472502_n.jpg',
-    facebookUrl: 'https://web.facebook.com/media/set/?set=a.912029977623313&type=3'
+    albumUrl: 'https://web.facebook.com/media/set/?set=a.761341682692144&type=3'
   },
   {
     id: 14,
@@ -547,6 +553,6 @@ export const EVENTS: EventItem[] = [
     ],
     mainImage: '/event/MoraUxplore/486605024_1054647973361512_1436357605641104567_n.jpg',
     cardImage: '/event/MoraUxplore/486190563_1054549363371373_865845245182204826_n.jpg',
-    facebookUrl: 'https://web.facebook.com/media/set/?set=a.912029977623313&type=3'
+    albumUrl: 'https://web.facebook.com/media/set/?set=a.912029977623313&type=3'
   }
 ];

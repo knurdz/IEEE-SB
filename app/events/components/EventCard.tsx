@@ -142,7 +142,7 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
                   <Globe size={18} />
                 </a>
               )}
-              {event.facebookUrl && (['foresight', 'mercon'].includes(event.slug)) && (
+              {event.facebookUrl && (
                 <a
                   href={event.facebookUrl}
                   target="_blank"
