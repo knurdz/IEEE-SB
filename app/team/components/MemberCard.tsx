@@ -56,17 +56,17 @@ const MemberCard = memo(function MemberCard({
         className={cn(
           "absolute top-4 left-1/2 -translate-x-1/2 rounded-full blur-2xl transition-all duration-500",
           isLead ? "w-40 h-40" : "w-32 h-32",
-          hovered ? "bg-primary/30 scale-110" : "bg-primary/0 scale-100"
+          hovered ? (isLead ? "bg-amber-400/30 scale-110" : "bg-primary/30 scale-110") : "bg-transparent scale-100"
         )}
       />
 
       {/* Circular Profile Image Container */}
       <div 
         className={cn(
-          "relative rounded-full overflow-hidden transition-all duration-500 z-20 bg-white shadow-xl",
+          "relative rounded-full overflow-hidden transition-all duration-500 z-20 bg-white",
           circleSizeClass,
-          hovered && "shadow-primary/30 scale-[1.02]",
-          isLead ? "border-2 border-primary/20" : "border border-slate-100"
+          hovered && "scale-[1.02]",
+          isLead ? "border-[3px] border-amber-400/80" : "border border-slate-200/80"
         )}
       >
         {/* Skeleton Loader */}
@@ -94,14 +94,14 @@ const MemberCard = memo(function MemberCard({
         />
       </div>
 
-      {/* Drop shadow wrapper because inset mask prevents card's native box-shadow from creating outer edge shadow well */}
+      {/* Card wrapper (border using drop-shadow to trace the cutout shape smoothly) */}
       <div 
         className={cn("w-full transition-all duration-500", isLead ? "-mt-16" : "-mt-14")}
-        style={{ filter: hovered ? "drop-shadow(0 10px 15px rgba(0,0,0,0.1))" : "drop-shadow(0 4px 6px rgba(0,0,0,0.05))" }}
+        style={{ filter: "drop-shadow(0 0 1px rgba(203, 213, 225, 0.8))" }}
       >
         {/* Info Card with true cutout mask */}
         <div 
-          className="relative z-10 w-full flex flex-col items-center bg-white rounded-3xl pb-5 px-4 transition-all duration-500"
+          className="relative z-10 w-full flex flex-col items-center bg-white rounded-xl pb-5 px-4 transition-all duration-500"
           style={{ 
             ...maskStyle, 
             paddingTop: isLead ? "5.5rem" : "4.5rem",
@@ -119,8 +119,8 @@ const MemberCard = memo(function MemberCard({
           
           <p 
             className={cn(
-              "text-center mt-1.5 font-bold tracking-[0.18em] uppercase font-orbitron",
-              isLead ? "text-[0.7rem] text-primary/80" : "text-[0.6rem] text-slate-500"
+              "text-center mt-1 font-medium tracking-wide text-[0.8rem] text-slate-500",
+              "md:min-h-[2.5rem]"
             )}
           >
             {!isLead && member.position === "Committee Member" ? "MEMBER" : member.position}

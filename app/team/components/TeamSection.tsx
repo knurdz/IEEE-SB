@@ -17,7 +17,10 @@ export default function TeamSection({
   sectionIndex: number;
 }) {
   const [hasBeenInView, setHasBeenInView] = useState(sectionIndex === 0);
-  const highlight = title.replace(/ Committee$/, '');
+  // Split title to match chapters title style
+  const words = title.split(' ');
+  const firstPart = words[0];
+  const secondPart = words.slice(1).join(' ');
 
   // Find the highest priority score in this committee to highlight the lead(s)
   const highestPriority = Math.min(...members.map((m) => m.priority));
@@ -37,15 +40,23 @@ export default function TeamSection({
       viewport={inViewOnce}
       transition={fadeUpTransition(sectionIndex * 0.12, 0.5)}
     >
-      <div className="relative rounded-3xl border border-black/5 bg-white/60 backdrop-blur-xl shadow-lg p-8 md:p-12 overflow-visible">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+      <div className="relative rounded-2xl border border-slate-200 bg-white/40 p-8 md:p-12 overflow-visible">
+        {/* Modern vertical line division instead of glowing horizontal line */}
+        {sectionIndex > 0 && (
+          <div className="absolute -top-16 md:-top-24 left-1/2 -translate-x-1/2 w-[1px] h-16 md:h-24 bg-gradient-to-b from-transparent via-slate-300 to-slate-200" />
+        )}
 
-        <div className="mb-12">
-          <SectionHeading
-            title={title}
-            highlight={highlight}
-            titleClassName="text-3xl font-bold uppercase tracking-[0.24em] text-slate-800 md:text-4xl"
-          />
+        <div className="mb-12 flex justify-center text-center">
+          <h2 className="text-3xl sm:text-4xl lg:text-[3.5rem] text-gray-800 flex flex-col gap-1 md:gap-2 font-sans tracking-tight">
+            <span className="font-light text-gray-700">
+              {firstPart}
+            </span>
+            {secondPart && (
+              <span className="font-black font-serif text-gray-900 leading-[1.1]">
+                {secondPart}
+              </span>
+            )}
+          </h2>
         </div>
 
         {hasBeenInView ? (
