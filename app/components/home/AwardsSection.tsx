@@ -9,7 +9,7 @@ export default function AwardsSection() {
   return (
     <section
       id="awards"
-      className="relative w-full py-16 lg:py-20 overflow-hidden bg-transparent"
+      className="relative w-full py-24 lg:py-32 overflow-hidden bg-transparent"
       aria-label="Awards and recognition"
     >
       <SiteBackground showTopFade={true} showBottomFade={true} />

@@ -63,7 +63,7 @@ export default function AboutSection() {
   return (
     <section 
       id="about" 
-      className="relative w-full py-16 lg:py-20 overflow-hidden bg-transparent"
+      className="relative w-full py-24 lg:py-32 overflow-hidden bg-transparent"
     >
       {/* Local Background Matrix with localized fades */}
       <SiteBackground showTopFade={true} showBottomFade={true} />

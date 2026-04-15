@@ -169,7 +169,7 @@ const itemVariants = {
 
 export default function WhyJoinBento() {
   return (
-    <section className="relative overflow-hidden z-10 py-16 lg:py-20 bg-transparent">
+    <section className="relative overflow-hidden z-10 py-24 lg:py-32 bg-transparent">
       {/* Local Background Matrix with localized fades */}
       <SiteBackground showTopFade={true} showBottomFade={true} />
 
