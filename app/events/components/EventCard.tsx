@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { 
   Globe 
 } from 'lucide-react';
+import { OptimizedImage } from '@/app/components/ui/OptimizedImage';
 import type { EventItem } from '../data';
 import StaticSiteLink from '@/app/components/ui/StaticSiteLink';
 
@@ -66,7 +67,7 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1.2, ease: 'easeInOut' }}
             >
-              <Image
+              <OptimizedImage
                 src={displayImage}
                 alt={event.name || 'Event image'}
                 fill

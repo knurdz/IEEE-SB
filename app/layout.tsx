@@ -5,6 +5,9 @@ import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import BackToTop from "./components/layout/BackToTop";
 
+// Inlined at build time from next.config.ts → env.NEXT_PUBLIC_BASE_PATH
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -75,9 +78,9 @@ export const metadata: Metadata = {
     images: ["/logo/ieeesblogo.png"],
   },
   icons: {
-    icon: "/favicon.png",
-    shortcut: "/favicon.png",
-    apple: "/favicon.png",
+    icon: `${BASE}/favicon.png`,
+    shortcut: `${BASE}/favicon.png`,
+    apple: `${BASE}/favicon.png`,
   },
 };
 
