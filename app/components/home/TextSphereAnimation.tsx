@@ -2,6 +2,8 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { resolveStaticAssetUrl, resolveStaticFileAssetPath } from '@/lib/static-site';
+import { EARTH_MASK_DATA_URL } from '@/lib/earth-mask-image';
 
 export default function TextSphereAnimation() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -14,16 +16,22 @@ export default function TextSphereAnimation() {
     initialized.current = true;
 
     const earthImage = new Image();
-    earthImage.src = '/earth_specular_2048.jpg';
+    earthImage.src = EARTH_MASK_DATA_URL;
 
     const loadScript = (src: string): Promise<void> => {
       return new Promise((resolve, reject) => {
-        if (document.querySelector(`script[src="${src}"]`)) {
+        const resolvedSrc = resolveStaticAssetUrl(src);
+        const runtimeSrc = resolveStaticFileAssetPath(src);
+        const alreadyLoaded = Array.from(document.scripts).some(
+          (script) => script.src === resolvedSrc,
+        );
+
+        if (alreadyLoaded) {
           resolve();
           return;
         }
         const script = document.createElement('script');
-        script.src = src;
+        script.src = runtimeSrc;
         script.onload = () => resolve();
         script.onerror = reject;
         document.head.appendChild(script);
@@ -44,11 +52,16 @@ export default function TextSphereAnimation() {
 
         await loadScript('/lib/bas.js');
 
-        await new Promise((resolve) => {
+        await new Promise((resolve, reject) => {
           if (earthImage.complete) {
-            resolve(null);
+            if (earthImage.naturalWidth > 0 && earthImage.naturalHeight > 0) {
+              resolve(null);
+            } else {
+              reject(new Error('Earth mask image failed to load.'));
+            }
           } else {
             earthImage.onload = () => resolve(null);
+            earthImage.onerror = () => reject(new Error('Earth mask image failed to load.'));
           }
         });
         setIsLoading(false);

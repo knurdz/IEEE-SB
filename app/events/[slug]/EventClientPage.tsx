@@ -2,11 +2,12 @@
 
 import React, { useState, useEffect, useCallback, use } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
 import Image from 'next/image';
 import { EVENTS } from '../data';
 import type { EventItem } from '../data';
 import SiteBackground from '../../components/layout/SiteBackground';
+import StaticSiteLink from '@/app/components/ui/StaticSiteLink';
+import { resolveStaticAssetUrl } from '@/lib/static-site';
 
 interface EventPageProps {
   params: Promise<{ slug: string }>;
@@ -32,7 +33,7 @@ export default function EventDetailPageClient({ params }: EventPageProps) {
       <div className="min-h-screen flex items-center justify-center bg-white text-primary">
         <div className="text-center">
           <h1 className="text-4xl font-orbitron font-bold mb-4">Event Not Found</h1>
-          <Link href="/events" className="glow-button">Back to Events</Link>
+          <StaticSiteLink href="/events" className="glow-button">Back to Events</StaticSiteLink>
         </div>
       </div>
     );
@@ -48,13 +49,13 @@ export default function EventDetailPageClient({ params }: EventPageProps) {
       {/* Hero Section */}
       <section className="relative pt-32 pb-16 px-4 z-10">
         <div className="max-w-6xl mx-auto">
-          <Link 
+          <StaticSiteLink 
             href="/events" 
             className="inline-flex items-center gap-2 text-primary hover:text-accent mb-8 transition-colors group"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:-translate-x-1 transition-transform"><path d="m15 18-6-6 6-6"/></svg>
             <span className="font-medium">Back to Events</span>
-          </Link>
+          </StaticSiteLink>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-12">
@@ -215,7 +216,7 @@ export default function EventDetailPageClient({ params }: EventPageProps) {
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
             </button>
             <motion.img
-              src={selectedImage}
+              src={resolveStaticAssetUrl(selectedImage)}
               alt="Full view"
               className="max-w-full max-h-[90vh] object-contain rounded-lg"
               initial={{ scale: 0.9 }}

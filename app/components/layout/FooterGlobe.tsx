@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { EARTH_MASK_DATA_URL } from '@/lib/earth-mask-image';
 
 const GLOBE_CENTER = {
   lat: -8.5,
@@ -321,7 +322,7 @@ export default function FooterGlobe() {
       draw();
     };
 
-    earthImage.src = '/earth_specular_2048.jpg';
+    earthImage.src = EARTH_MASK_DATA_URL;
     if (earthImage.complete) {
       buildEarthMask();
     } else {
