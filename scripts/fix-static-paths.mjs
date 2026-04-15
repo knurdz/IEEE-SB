@@ -246,6 +246,15 @@ function rewritePaths(content, relativePrefix, fileExt = '') {
   return result;
 }
 
+const BRAND_COMMENT = '<!-- Designed & Developed By Knurdz -->';
+
+/**
+ * Inject brand comment at the very start and end of an HTML string.
+ */
+function injectBrandComment(content) {
+  return `${BRAND_COMMENT}\n${content.trimEnd()}\n${BRAND_COMMENT}`;
+}
+
 // --- Main ---
 console.log('🔧 Fixing static paths for file:// protocol support...\n');
 
@@ -256,13 +265,19 @@ let totalFixed = 0;
 for (const filePath of files) {
   const relPrefix = getRelativePrefix(filePath);
   const relName = path.relative(outDir, filePath);
-  
+  const fileExt = path.extname(filePath).toLowerCase();
+
   // Skip map files as they are binary-ish/generated and usually not needed for runtime
   if (relName.endsWith('.map')) continue;
 
   try {
     const original = fs.readFileSync(filePath, 'utf-8');
-    const fixed = rewritePaths(original, relPrefix, path.extname(filePath).toLowerCase());
+    let fixed = rewritePaths(original, relPrefix, fileExt);
+
+    // Inject brand comment into every HTML page
+    if (fileExt === '.html') {
+      fixed = injectBrandComment(fixed);
+    }
 
     if (original !== fixed) {
       fs.writeFileSync(filePath, fixed, 'utf-8');
