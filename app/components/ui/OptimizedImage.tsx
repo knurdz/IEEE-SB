@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import NextImage, { ImageProps } from 'next/image';
 import { cn } from '@/lib/cn';
+import { resolveStaticAssetUrl } from '@/lib/static-site';
 
 export interface OptimizedImageProps extends Omit<ImageProps, 'src'> {
   src: string | any; // allow any for static imports
@@ -26,6 +27,10 @@ export function OptimizedImage({
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
+  // Apply basePath for HTTP servers (GitHub Pages etc.).
+  // unoptimized=true bypasses the custom loader, so we resolve the path here.
+  const resolvedSrc = typeof src === 'string' ? resolveStaticAssetUrl(src) : src;
+
   return (
     <div className={cn("relative overflow-hidden w-full h-full", wrapperClassName)}>
       {/* Background Skeleton */}
@@ -40,7 +45,7 @@ export function OptimizedImage({
       
       {!hasError ? (
         <NextImage
-          src={src}
+          src={resolvedSrc}
           alt={alt || "Image"}
           className={cn(
             "transition-opacity duration-500 ease-in-out z-10",

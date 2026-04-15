@@ -1,6 +1,9 @@
 const NEXT_ASSET_MARKER = '/_next/';
 const SPECIAL_URL_PATTERN = /^(?:[a-zA-Z][a-zA-Z\d+\-.]*:|\/\/|#)/;
 
+// Inlined at build time from next.config.ts → env.NEXT_PUBLIC_BASE_PATH
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+
 let cachedStaticRootUrl: string | null | undefined;
 
 export function isFileProtocol() {
@@ -80,34 +83,49 @@ export function resolveStaticAssetUrl(path: string) {
     return path;
   }
 
+  // file:// protocol → compute full file URL relative to the static root
   const rootUrl = getStaticExportRootUrl();
-  if (!rootUrl) {
-    return path;
+  if (rootUrl) {
+    const normalizedPath = normalizeStaticPath(path);
+    return normalizedPath ? new URL(normalizedPath, rootUrl).toString() : rootUrl;
   }
 
-  const normalizedPath = normalizeStaticPath(path);
+  // HTTP server (GitHub Pages etc.) → prepend basePath to absolute paths
+  if (path.startsWith('/') && BASE_PATH && !path.startsWith(BASE_PATH)) {
+    return `${BASE_PATH}${path}`;
+  }
 
-  return normalizedPath ? new URL(normalizedPath, rootUrl).toString() : rootUrl;
+  return path;
 }
 
 export function resolveStaticFileAssetPath(path: string) {
-  if (SPECIAL_URL_PATTERN.test(path) || !isFileProtocol()) {
+  if (SPECIAL_URL_PATTERN.test(path)) {
     return path;
   }
 
-  const rootUrl = getStaticExportRootUrl();
-  if (!rootUrl || typeof window === 'undefined') {
-    return path;
+  // file:// protocol → compute a relative path from the current page to the asset
+  if (isFileProtocol()) {
+    const rootUrl = getStaticExportRootUrl();
+    if (!rootUrl || typeof window === 'undefined') {
+      return path;
+    }
+
+    const normalizedPath = normalizeStaticPath(path);
+    if (!normalizedPath) {
+      return '.';
+    }
+
+    const targetUrl = new URL(normalizedPath, rootUrl).toString();
+    const currentDirectoryUrl = new URL('.', window.location.href).toString();
+    return getRelativePath(currentDirectoryUrl, targetUrl);
   }
 
-  const normalizedPath = normalizeStaticPath(path);
-  if (!normalizedPath) {
-    return '.';
+  // HTTP server (GitHub Pages etc.) → prepend basePath to absolute paths
+  if (path.startsWith('/') && BASE_PATH && !path.startsWith(BASE_PATH)) {
+    return `${BASE_PATH}${path}`;
   }
 
-  const targetUrl = new URL(normalizedPath, rootUrl).toString();
-  const currentDirectoryUrl = new URL('.', window.location.href).toString();
-  return getRelativePath(currentDirectoryUrl, targetUrl);
+  return path;
 }
 
 export function resolveStaticRouteHref(href: string) {
@@ -115,21 +133,27 @@ export function resolveStaticRouteHref(href: string) {
     return href;
   }
 
+  // file:// protocol → rewrite to relative .html paths
   const rootUrl = getStaticExportRootUrl();
-  if (!rootUrl) {
-    return href;
+  if (rootUrl) {
+    const routeUrl = new URL(href, 'https://static.local');
+    let routePath = routeUrl.pathname.replace(/^\/+/, '');
+
+    if (!routePath) {
+      routePath = 'index.html';
+    } else if (!/\.[^/]+$/.test(routePath)) {
+      routePath = `${routePath}.html`;
+    }
+
+    return new URL(`${routePath}${routeUrl.search}${routeUrl.hash}`, rootUrl).toString();
   }
 
-  const routeUrl = new URL(href, 'https://static.local');
-  let routePath = routeUrl.pathname.replace(/^\/+/, '');
-
-  if (!routePath) {
-    routePath = 'index.html';
-  } else if (!/\.[^/]+$/.test(routePath)) {
-    routePath = `${routePath}.html`;
+  // HTTP server (GitHub Pages etc.) → prepend basePath if missing
+  if (BASE_PATH && !href.startsWith(BASE_PATH)) {
+    return `${BASE_PATH}${href}`;
   }
 
-  return new URL(`${routePath}${routeUrl.search}${routeUrl.hash}`, rootUrl).toString();
+  return href;
 }
 
 export function getCurrentStaticRoutePathname() {
