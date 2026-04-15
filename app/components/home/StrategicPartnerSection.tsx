@@ -24,6 +24,22 @@ export default function StrategicPartnerSection() {
                 </span>
               </h2>
 
+              <div className="w-full flex lg:hidden items-center justify-center relative min-h-[8.75rem] mb-8">
+                {/* Skeleton Loader */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+                  <div className="w-48 h-12 bg-slate-200 animate-pulse rounded-lg" />
+                </div>
+                
+                <Image
+                  src="/partners/IFS.png"
+                  alt="IFS strategic partner logo"
+                  width={560}
+                  height={280}
+                  className="w-full max-w-[17.5rem] sm:max-w-[21.25rem] h-auto object-contain relative z-10"
+                  priority={false}
+                />
+              </div>
+
               <p className="text-base sm:text-lg leading-relaxed text-slate-600 max-w-2xl text-justify">
                 Our collaboration with IFS strengthens how we build, lead, and
                 innovate as a student branch. Through this alliance, members
@@ -43,7 +59,7 @@ export default function StrategicPartnerSection() {
               </div>
             </div>
 
-            <div className="lg:col-span-5 flex items-center justify-center p-8 sm:p-10 lg:p-12 bg-transparent">
+            <div className="hidden lg:flex lg:col-span-5 items-center justify-center p-8 sm:p-10 lg:p-12 bg-transparent">
               <div className="w-full flex items-center justify-center relative min-h-[8.75rem]">
                 {/* Skeleton Loader */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
