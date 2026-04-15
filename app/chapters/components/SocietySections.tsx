@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { societies } from "../data";
 import Image from "next/image";
+import { OptimizedImage } from '@/app/components/ui/OptimizedImage';
 import SocialLinks from "./SocialLinks";
 
 const WavyLine = ({ className }: { className?: string }) => (
@@ -251,24 +252,13 @@ export default function SocietySections() {
                       className="relative w-full h-full bg-gray-50 flex items-center justify-center overflow-hidden"
                       style={{ clipPath: `url(#hexClipImg-${society.id})` }}
                     >
-                      {/* Loading Skeleton */}
-                      <div className="absolute inset-0 bg-gray-100 animate-pulse flex items-center justify-center">
-                        <div className="w-1/3 h-1/3 bg-gray-200 rounded-full blur-xl opacity-50" />
-                      </div>
-                      
-                      <Image
+                      <OptimizedImage
                         src={society.logo || "/chapter-logos/society_logo.png"}
                         alt={society.title}
                         fill
                         sizes="(max-width: 48rem) 100vw, (max-width: 75rem) 50vw, 25rem"
-                        className="object-contain p-10 lg:p-16 transition-all duration-1000 ease-out hover:scale-110 opacity-0"
-                        onLoad={(e) => {
-                          const img = e.currentTarget;
-                          img.classList.remove('opacity-0');
-                          // Find the skeleton sibling and hide it
-                          const skeleton = img.previousElementSibling;
-                          if (skeleton) skeleton.classList.add('opacity-0', 'pointer-events-none');
-                        }}
+                        className="object-contain p-10 lg:p-16 hover:scale-110"
+                        skeletonClassName="bg-gray-100 flex items-center justify-center after:w-1/3 after:h-1/3 after:bg-gray-200 after:rounded-full after:blur-xl after:opacity-50"
                       />
                     </div>
                   </motion.div>

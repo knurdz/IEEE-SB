@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback, use } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { OptimizedImage } from '@/app/components/ui/OptimizedImage';
 import { EVENTS } from '../data';
 import type { EventItem } from '../data';
 import SiteBackground from '../../components/layout/SiteBackground';
@@ -83,7 +84,7 @@ export default function EventDetailPageClient({ params }: EventPageProps) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
                 >
-                  <Image 
+                  <OptimizedImage 
                     src={event.mainImage} 
                     alt={event.name}
                     fill
