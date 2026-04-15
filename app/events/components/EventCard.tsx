@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
 import Image from 'next/image';
 import { 
   Globe 
 } from 'lucide-react';
 import type { EventItem } from '../data';
+import StaticSiteLink from '@/app/components/ui/StaticSiteLink';
 
 interface EventCardProps {
   event: EventItem;
@@ -54,7 +54,7 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
         boxShadow: "0 1.25rem 2.5rem rgba(0, 87, 157, 0.12), 0 0 0.0625rem rgba(0, 87, 157, 0.1) inset"
       }}
     >
-      <Link href={`/events/${event.slug}`} className="absolute inset-0 z-20 cursor-pointer" aria-label={`View ${event.name}`} />
+      <StaticSiteLink href={`/events/${event.slug}`} className="absolute inset-0 z-20 cursor-pointer" aria-label={`View ${event.name}`} />
       
       <div className="flex flex-col md:flex-row min-h-[18.75rem] md:min-h-[16.25rem]">
         {/* Left Side: Image */}

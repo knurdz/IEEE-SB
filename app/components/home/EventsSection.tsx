@@ -2,10 +2,10 @@
 
 import { AnimatePresence, motion, type PanInfo } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import SiteBackground from "@/app/components/layout/SiteBackground";
 import { homeEvents, type HomeEvent } from "./data";
+import StaticSiteLink from "@/app/components/ui/StaticSiteLink";
 
 interface EventCardProps {
   event: HomeEvent;
@@ -106,7 +106,7 @@ function EventCard({ event, offset, dragOffset, onClick }: EventCardProps) {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3 }}
               >
-                <Link
+                <StaticSiteLink
                   href={event.link || "/events"}
                   className="inline-flex items-center gap-2 rounded-sm bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-black transition-all hover:bg-[#008be6] hover:text-white group/btn shadow-xl ring-1 ring-black/5"
                   onClick={(e) => {
@@ -127,7 +127,7 @@ function EventCard({ event, offset, dragOffset, onClick }: EventCardProps) {
                       d="M14 5l7 7-7 7"
                     />
                   </svg>
-                </Link>
+                </StaticSiteLink>
               </motion.div>
             )}
           </div>

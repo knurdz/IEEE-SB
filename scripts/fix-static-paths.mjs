@@ -58,47 +58,133 @@ function getRelativePrefix(filePath) {
 function rewritePaths(content, relativePrefix, fileExt = '') {
   let result = content;
 
+  const normalizeInternalHref = (pathPart) => {
+    if (pathPart.startsWith('#')) {
+      return `index.html${pathPart}`;
+    }
+
+    return pathPart;
+  };
+
+  const rewriteInternalHref = (pathPart) => {
+    const normalizedPath = normalizeInternalHref(pathPart);
+    const routeUrl = new URL(`/${normalizedPath}`, 'https://static.local');
+
+    let routePath = routeUrl.pathname.replace(/^\/+/, '');
+    if (!routePath) {
+      routePath = 'index.html';
+    } else if (!/\.[^/]+$/.test(routePath)) {
+      routePath = `${routePath}.html`;
+    }
+
+    return `${routePath}${routeUrl.search}${routeUrl.hash}`;
+  };
+
+  const rewriteSrcsetValue = (value) => {
+    return value
+      .split(',')
+      .map((entry) => {
+        const trimmed = entry.trim();
+        if (!trimmed) {
+          return trimmed;
+        }
+
+        const [url, ...descriptor] = trimmed.split(/\s+/);
+        if (!url.startsWith('/') || url.startsWith('//') || url.match(/^(http|https|data:|mailto:|tel:)/i)) {
+          return trimmed;
+        }
+
+        const pathPart = url.slice(1);
+        const rewrittenUrl = `${getPrefix(pathPart)}${pathPart}`;
+        return descriptor.length > 0 ? `${rewrittenUrl} ${descriptor.join(' ')}` : rewrittenUrl;
+      })
+      .join(', ');
+  };
+
   // For JS files, internal _next/ chunk references use import() which resolves
   // relative to the JS file itself, so they need the depth-based prefix.
   // Similarly, Next.js internal RSC payloads rely on the depth prefix to not crash.
   // BUT user assets (images, etc.) are loaded via DOM operations (e.g. img.src)
   // which resolve relative to the HTML page, so they MUST use './'.
-  const getPrefix = (pathPart) => {
-    if (fileExt === '.js') {
-      if (/\.(png|jpe?g|gif|svg|webp|ico|avif|mp4|webm|pdf)$/i.test(pathPart)) {
-        return './';
-      }
-      return relativePrefix;
+  const getPrefix = () => relativePrefix;
+
+  const rewriteTurbopackRuntimePrefix = (value) => {
+    if (fileExt !== '.js') {
+      return value;
     }
-    return relativePrefix;
+
+    return value
+      .replace(
+        'let t="/_next/",r=',
+        'let t=(()=>{let e=document?.currentScript?.src;if("string"==typeof e&&e.startsWith("file:")){let t=e.indexOf("/_next/");if(-1!==t)return e.slice(0,t+7)}return"/_next/"})(),r=',
+      )
+      .replace(
+        'if(e)return{src:e.getAttribute("src")};',
+        'if(e)return{src:e.src||e.getAttribute("src"),relSrc:e.getAttribute("src")||e.src};',
+      )
+      .replace(
+        'if(e)return{src:e.src||e.getAttribute("src")};',
+        'if(e)return{src:e.src||e.getAttribute("src"),relSrc:e.getAttribute("src")||e.src};',
+      )
+      .replace(
+        'if(D("string"==typeof e?N(e):e.src).resolve(),null!=r){',
+        'if(D("string"==typeof e?N(e):e.src).resolve(),"string"!=typeof e&&e.relSrc&&e.relSrc!==e.src&&D(e.relSrc).resolve(),null!=r){',
+      );
   };
+
+  const rewriteEmbeddedNextAssetStrings = (value) => {
+    return value.replace(
+      /((?:\\)?["'])\/(_next\/static\/(?:chunks|media)\/[^"'\\\]\s]+)((?:\\)?["'])/g,
+      (match, openingQuote, pathPart, closingQuote) => {
+        const openingQuoteChar = openingQuote.slice(-1);
+        const closingQuoteChar = closingQuote.slice(-1);
+
+        if (openingQuoteChar !== closingQuoteChar) {
+          return match;
+        }
+
+        return `${openingQuote}${getPrefix(pathPart)}${pathPart}${closingQuote}`;
+      },
+    );
+  };
+
+  if (fileExt === '.js') {
+    result = rewriteEmbeddedNextAssetStrings(result);
+    result = rewriteTurbopackRuntimePrefix(result);
+    return result;
+  }
 
   // 1. HTML attributes and basic strings: src="/", href="/", srcset="/", etc.
   // We match "/" that isn't followed by another "/" (protocol relative) or whitespace.
   result = result.replace(
-    /((?:src|href|srcset|poster|action|url|content)=["']?)\/(?!\/)(.*?)(["']|[\s>)]|$)/gi,
-    (match, prefix, pathPart, suffix) => {
+    /(((src|href|poster|action|url|content)=)(["']))\/(?!\/)(.*?)(\4)/gi,
+    (match, prefix, _attrWithEquals, attr, _quote, pathPart, suffix) => {
       // Skip external/protocol URLs or data-URIs
-      if (pathPart.match(/^(http|https|data:|mailto:|tel:|#)/i)) {
+      if (pathPart.match(/^(http|https|data:|mailto:|tel:)/i)) {
         return match;
       }
-      return `${prefix}${getPrefix(pathPart)}${pathPart}${suffix}`;
+
+      const newPath = attr.toLowerCase() === 'href'
+        ? rewriteInternalHref(pathPart)
+        : normalizeInternalHref(pathPart);
+
+      return `${prefix}${getPrefix(newPath)}${newPath}${suffix}`;
     }
   );
 
   // 2. JSON-embedded paths: "src":"/path" or 'src':'/path'
   // Handles standard JSON
   result = result.replace(
-    /(["'](?:src|href|url|logo|image|icon|path)["']\s*[:=]\s*["'])\/(?!\/)(.*?)(["'])/gi,
-    (match, prefix, pathPart, suffix) => {
-      if (pathPart.match(/^(http|https|data:|mailto:|tel:|#)/i)) {
+    /(["'](src|href|url|logo|image|icon|path)["']\s*[:=]\s*["'])\/(?!\/)(.*?)(["'])/gi,
+    (match, prefix, key, pathPart, suffix) => {
+      if (pathPart.match(/^(http|https|data:|mailto:|tel:)/i)) {
         return match;
       }
-      // Add .html to internal links if they don't have an extension
-      let newPath = pathPart;
-      if (prefix.includes('href') && !newPath.includes('.') && !newPath.includes('#') && newPath.length > 0) {
-        newPath += '.html';
-      }
+
+      const newPath = key.toLowerCase() === 'href'
+        ? rewriteInternalHref(pathPart)
+        : normalizeInternalHref(pathPart);
+
       return `${prefix}${getPrefix(newPath)}${newPath}${suffix}`;
     }
   );
@@ -106,41 +192,17 @@ function rewritePaths(content, relativePrefix, fileExt = '') {
   // 3. Escaped JSON-embedded paths: \"src\":\"/path\"
   // Next.js RSC data often uses this.
   result = result.replace(
-    /(\\"(?:src|href|url|logo|image|icon|path)\\"\s*[:=]\s*\\")\/(?!\/)(.*?)(?=\\")/gi,
-    (match, prefix, pathPart) => {
-      if (pathPart.match(/^(http|https|data:|mailto:|tel:|#)/i)) {
+    /(\\"(src|href|url|logo|image|icon|path)\\"\s*[:=]\s*\\")\/(?!\/)(.*?)(?=\\")/gi,
+    (match, prefix, key, pathPart) => {
+      if (pathPart.match(/^(http|https|data:|mailto:|tel:)/i)) {
         return match;
       }
-      // Add .html to internal links if they don't have an extension
-      let newPath = pathPart;
-      if (prefix.includes('href') && !newPath.includes('.') && !newPath.includes('#') && newPath.length > 0) {
-        newPath += '.html';
-      }
-      return `${prefix}${getPrefix(newPath)}${newPath}`;
-    }
-  );
 
-  // 4. HTML attributes and basic strings: src="/", href="/", etc.
-  result = result.replace(
-    /((?:src|href|srcset|poster|action|content)=["']?)\/(?!\/)(.*?)(["']|[\s>)]|$)/gi,
-    (match, prefix, pathPart, suffix) => {
-      if (pathPart.match(/^(http|https|data:|mailto:|tel:|#)/i)) {
-        return match;
-      }
-      
-      let newPath = pathPart;
-      
-      // Standardize empty or root path to index.html for links
-      if (prefix.includes('href')) {
-        if (newPath === "" || newPath === "/") {
-          newPath = "index.html";
-        } else if (!newPath.includes('.') && !newPath.includes('#') && newPath.length > 0) {
-          // It's likely a route, append .html
-          newPath += '.html';
-        }
-      }
-      
-      return `${prefix}${getPrefix(newPath)}${newPath}${suffix}`;
+      const newPath = key.toLowerCase() === 'href'
+        ? rewriteInternalHref(pathPart)
+        : normalizeInternalHref(pathPart);
+
+      return `${prefix}${getPrefix(newPath)}${newPath}`;
     }
   );
 
@@ -167,6 +229,19 @@ function rewritePaths(content, relativePrefix, fileExt = '') {
       return `${getPrefix(pathPart)}${pathPart}`;
     }
   );
+
+  result = result.replace(
+    /((?:srcset|imageSrcSet)\s*=\s*["'])(.*?)(["'])/gi,
+    (match, prefix, value, suffix) => `${prefix}${rewriteSrcsetValue(value)}${suffix}`
+  );
+
+  result = result.replace(
+    /(["'](?:srcset|imageSrcSet)["']\s*[:=]\s*["'])(.*?)(["'])/gi,
+    (match, prefix, value, suffix) => `${prefix}${rewriteSrcsetValue(value)}${suffix}`
+  );
+
+  result = rewriteEmbeddedNextAssetStrings(result);
+  result = rewriteTurbopackRuntimePrefix(result);
 
   return result;
 }

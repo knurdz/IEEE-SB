@@ -1,11 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/cn';
 import { primaryNavItems } from '@/lib/site';
+import StaticSiteLink from '@/app/components/ui/StaticSiteLink';
+import { getCurrentStaticRoutePathname } from '@/lib/static-site';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -13,6 +14,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const [activeAnchor, setActiveAnchor] = useState('');
+  const [currentPathname, setCurrentPathname] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,13 +24,19 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    setCurrentPathname(getCurrentStaticRoutePathname() ?? pathname);
+  }, [pathname]);
+
   const isLinkActive = (href: string) => {
     // Never highlight the Contact button as active
     if (href === '/#contact') return false;
+    if (!currentPathname) return false;
+
     if (href.startsWith('/#')) {
-      return pathname === '/' && activeAnchor === href;
+      return currentPathname === '/' && activeAnchor === href;
     }
-    return pathname === href;
+    return currentPathname === href;
   };
 
   return (
@@ -41,7 +49,7 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="flex items-center justify-between h-20">
-            <Link
+            <StaticSiteLink
               href="/"
               className={cn(
                 "relative flex items-center gap-3 px-4 py-2 rounded-full transition-all duration-300",
@@ -59,7 +67,7 @@ export default function Navbar() {
                 style={{ width: 'auto', height: '36px' }}
                 priority
               />
-            </Link>
+            </StaticSiteLink>
 
             <div className={cn(
               "hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-300",
@@ -71,7 +79,7 @@ export default function Navbar() {
                 const isActive = isLinkActive(link.href);
 
                 return (
-                  <Link
+                  <StaticSiteLink
                     key={link.href}
                     href={link.href}
                     className={cn(
@@ -93,7 +101,7 @@ export default function Navbar() {
                       <span className="absolute inset-0 bg-slate-100 transition-opacity duration-200" style={{ borderRadius: '624.938rem' }} />
                     )}
                     <span className="relative z-10">{link.label}</span>
-                  </Link>
+                  </StaticSiteLink>
                 );
               })}
             </div>
@@ -134,7 +142,7 @@ export default function Navbar() {
 
           <div className="animate-fade-up relative flex h-full flex-col items-center justify-center gap-8">
             {primaryNavItems.map((link) => (
-              <Link
+              <StaticSiteLink
                 key={link.href}
                 href={link.href}
                 className="text-3xl font-light text-[#0B132B]/80 hover:text-[#0B132B] transition-colors"
@@ -146,7 +154,7 @@ export default function Navbar() {
                 }}
               >
                 {link.label}
-              </Link>
+              </StaticSiteLink>
             ))}
           </div>
         </div>
