@@ -1,10 +1,17 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useInView } from '../hooks/useInView';
 
 export default function ClosingCTA() {
   const shouldReduceMotion = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const { ref, inView } = useInView<HTMLElement>({
     triggerOnce: true,
     threshold: 0.3,
@@ -12,10 +19,11 @@ export default function ClosingCTA() {
 
   return (
     <motion.section
+      key={mounted ? 'ready' : 'init'}
       ref={ref}
       className="py-16 lg:py-20 px-4 bg-transparent flex flex-col items-center justify-center text-center relative overflow-hidden"
-      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 40 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
+      initial={mounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      animate={inView || mounted ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8 }}
     >
       <h2 className="font-orbitron font-bold text-3xl sm:text-4xl text-foreground mb-4">

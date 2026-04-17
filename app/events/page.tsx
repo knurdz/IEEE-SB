@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function EventsPage() {
   return (
-    <main className="min-h-screen relative bg-white text-foreground overflow-hidden">
+    <main className="min-h-screen relative bg-white text-foreground">
       <SiteBackground />
       <EventsHero />
 
