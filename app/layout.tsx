@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     description: "Empowering future engineers through innovation and collaboration at the University of Moratuwa.",
     images: [
       {
-        url: "/logo/ieeesblogo.png",
+        url: "/logo/ieeesblogo.webp",
         width: 1200,
         height: 630,
         alt: "IEEE Student Branch University of Moratuwa",
@@ -75,12 +75,12 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "IEEE Student Branch - University of Moratuwa",
     description: "Empowering future engineers through innovation and collaboration at the University of Moratuwa.",
-    images: ["/logo/ieeesblogo.png"],
+    images: ["/logo/ieeesblogo.webp"],
   },
   icons: {
-    icon: `${BASE}/favicon.png`,
-    shortcut: `${BASE}/favicon.png`,
-    apple: `${BASE}/favicon.png`,
+    icon: `${BASE}/favicon.webp`,
+    shortcut: `${BASE}/favicon.webp`,
+    apple: `${BASE}/favicon.webp`,
   },
 };
 
@@ -105,7 +105,7 @@ export default function RootLayout({
               "@type": "NGO",
               "name": "IEEE Student Branch - University of Moratuwa",
               "url": "https://ieeesb.uom.lk",
-              "logo": "https://ieeesb.uom.lk/logo/ieeesblogo.png",
+              "logo": "https://ieeesb.uom.lk/logo/ieeesblogo.webp",
               "sameAs": [
                 "https://web.facebook.com/ieeesbuom",
                 "https://www.linkedin.com/company/ieee-student-branch-university-of-moratuwa",

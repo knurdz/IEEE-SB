@@ -25,10 +25,18 @@ export default function TeamSection({
   // Find the highest priority score in this committee to highlight the lead(s)
   const highestPriority = Math.min(...members.map((m) => m.priority));
   
-  // Separate leads from regular members for visual hierarchy, unless it's ExCom or Leadership Body
-  // where we might just want to list everyone in order. We can use a unified flow but emphasize leads.
-  const leads = members.filter((m) => m.priority === highestPriority);
-  const regularMembers = members.filter((m) => m.priority !== highestPriority);
+  // Separate leads from regular members for visual hierarchy
+  const isExecutiveCommittee = title === 'Executive Committee';
+  
+  // For Executive Committee, we want the Chairman on his own line (as the sole lead)
+  // to satisfy "show chairman in oneline", but the rest still get the premium style.
+  const leads = isExecutiveCommittee 
+    ? members.filter((m) => m.position === 'CHAIRMAN')
+    : members.filter((m) => m.priority === highestPriority);
+    
+  const regularMembers = isExecutiveCommittee 
+    ? members.filter((m) => m.position !== 'CHAIRMAN')
+    : members.filter((m) => m.priority !== highestPriority);
 
   return (
     <motion.div
@@ -83,7 +91,7 @@ export default function TeamSection({
                     key={`${member.committee}-${member.name}`}
                     member={member}
                     index={index}
-                    isLead={false}
+                    isLead={isExecutiveCommittee ? true : false}
                   />
                 ))}
               </div>

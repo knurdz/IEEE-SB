@@ -42,13 +42,13 @@ const Dots = ({ className, style }: { className?: string; style?: React.CSSPrope
   );
 };
 
-const Segment = ({x1, y1, x2, y2}: {x1:number, y1:number, x2:number, y2:number}) => {
+const Segment = ({ x1, y1, x2, y2 }: { x1: number, y1: number, x2: number, y2: number }) => {
   const px1 = 400 + x1 * 80, py1 = 200 + y1 * 80;
   const px2 = 400 + x2 * 80, py2 = 200 + y2 * 80;
-  const gap = 20; 
-  const len = Math.hypot(px2-px1, py2-py1);
+  const gap = 20;
+  const len = Math.hypot(px2 - px1, py2 - py1);
   const ratio = gap / len;
-  return <line x1={px1 + (px2-px1)*ratio} y1={py1 + (py2-py1)*ratio} x2={px2 - (px2-px1)*ratio} y2={py2 - (py2-py1)*ratio} />;
+  return <line x1={px1 + (px2 - px1) * ratio} y1={py1 + (py2 - py1) * ratio} x2={px2 - (px2 - px1) * ratio} y2={py2 - (py2 - py1) * ratio} />;
 };
 
 const ShapeNetwork = () => (
@@ -59,13 +59,13 @@ const ShapeNetwork = () => (
     {/* Branches */}
     <Segment x1={-2} y1={-1} x2={-1} y2={-1} />
     <Segment x1={-1} y1={-1} x2={-1} y2={0} />
-    
+
     <Segment x1={2} y1={1} x2={1} y2={1} />
     <Segment x1={1} y1={1} x2={1} y2={0} />
-    
+
     <Segment x1={-1} y1={1} x2={0} y2={1} />
     <Segment x1={-1} y1={2} x2={-1} y2={1} />
-    
+
     <Segment x1={1} y1={-1} x2={0} y2={-1} />
     <Segment x1={1} y1={-2} x2={1} y2={-1} />
   </>
@@ -135,10 +135,10 @@ const ShapeCareer = () => (
     {/* Rungs */}
     <Segment x1={-1} y1={1} x2={0} y2={1} />
     <Segment x1={0} y1={1} x2={1} y2={1} />
-    
+
     <Segment x1={-1} y1={0} x2={0} y2={0} />
     <Segment x1={0} y1={0} x2={1} y2={0} />
-    
+
     <Segment x1={-1} y1={-1} x2={0} y2={-1} />
     <Segment x1={0} y1={-1} x2={1} y2={-1} />
   </>
@@ -146,17 +146,17 @@ const ShapeCareer = () => (
 
 const ShapeSociety = () => (
   <>
-    {[-1,0,1].map(x => (
-       <React.Fragment key={`v${x}`}>
-         <Segment x1={x} y1={-1} x2={x} y2={0} />
-         <Segment x1={x} y1={0} x2={x} y2={1} />
-       </React.Fragment>
+    {[-1, 0, 1].map(x => (
+      <React.Fragment key={`v${x}`}>
+        <Segment x1={x} y1={-1} x2={x} y2={0} />
+        <Segment x1={x} y1={0} x2={x} y2={1} />
+      </React.Fragment>
     ))}
-    {[-1,0,1].map(y => (
-       <React.Fragment key={`h${y}`}>
-         <Segment x1={-1} y1={y} x2={0} y2={y} />
-         <Segment x1={0} y1={y} x2={1} y2={y} />
-       </React.Fragment>
+    {[-1, 0, 1].map(y => (
+      <React.Fragment key={`h${y}`}>
+        <Segment x1={-1} y1={y} x2={0} y2={y} />
+        <Segment x1={0} y1={y} x2={1} y2={y} />
+      </React.Fragment>
     ))}
   </>
 );
@@ -167,35 +167,35 @@ const ShapeImpact = () => (
     <Segment x1={0} y1={0} x2={0} y2={1} />
     <Segment x1={0} y1={0} x2={-1} y2={0} />
     <Segment x1={0} y1={0} x2={1} y2={0} />
-    
+
     <Segment x1={-1} y1={-1} x2={0} y2={-1} />
     <Segment x1={-1} y1={-1} x2={-1} y2={0} />
-    
+
     <Segment x1={1} y1={-1} x2={0} y2={-1} />
     <Segment x1={1} y1={-1} x2={1} y2={0} />
-    
+
     <Segment x1={-1} y1={1} x2={0} y2={1} />
     <Segment x1={-1} y1={1} x2={-1} y2={0} />
-    
+
     <Segment x1={1} y1={1} x2={0} y2={1} />
     <Segment x1={1} y1={1} x2={1} y2={0} />
-    
+
     <Segment x1={-2} y1={-2} x2={-1} y2={-2} />
     <Segment x1={-2} y1={-2} x2={-2} y2={-1} />
-    
+
     <Segment x1={2} y1={-2} x2={1} y2={-2} />
     <Segment x1={2} y1={-2} x2={2} y2={-1} />
-    
+
     <Segment x1={-2} y1={2} x2={-1} y2={2} />
     <Segment x1={-2} y1={2} x2={-2} y2={1} />
-    
+
     <Segment x1={2} y1={2} x2={1} y2={2} />
     <Segment x1={2} y1={2} x2={2} y2={1} />
   </>
 );
 
 const ShapeIEEE = () => (
-  <image href="/favicon.png" x="336" y="136" width="128" height="128" preserveAspectRatio="xMidYMid meet" transform="rotate(-45 400 200)" />
+  <image href="/favicon.webp" x="336" y="136" width="128" height="128" preserveAspectRatio="xMidYMid meet" transform="rotate(-45 400 200)" />
 );
 
 interface HexBentoGraphicProps {
@@ -207,21 +207,21 @@ interface HexBentoGraphicProps {
 }
 
 const HexBentoGraphic = ({ color, strokeColor, Shape, patternType = 'crosses', className }: HexBentoGraphicProps) => {
-  const patternId = `grid-${patternType}-${color.replace('#','')}`;
-  
+  const patternId = `grid-${patternType}-${color.replace('#', '')}`;
+
   return (
     <div className={`absolute pointer-events-none flex items-center justify-center ${className || 'bottom-6 left-0 right-0 h-[15rem]'}`}>
-      
+
       {/* Background Grid Layer */}
       <div className="absolute inset-0 w-full h-full [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
         <div className="absolute inset-0 w-full h-full [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)] [-webkit-mask-image:linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)]">
           <svg viewBox="0 0 800 400" className="w-full h-full opacity-[0.14]" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <pattern 
-                id={patternId} 
+              <pattern
+                id={patternId}
                 x="40" y="0"
-                width="80" height="80" 
-                patternTransform={patternType === 'diagonal-dashes' ? 'rotate(45 400 200)' : ''} 
+                width="80" height="80"
+                patternTransform={patternType === 'diagonal-dashes' ? 'rotate(45 400 200)' : ''}
                 patternUnits="userSpaceOnUse"
               >
                 {patternType === 'crosses' && (
@@ -240,15 +240,15 @@ const HexBentoGraphic = ({ color, strokeColor, Shape, patternType = 'crosses', c
       {/* Foreground Shape Layer */}
       <div className="absolute inset-0 w-full h-full">
         <svg viewBox="0 0 800 400" className="w-full h-full" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-          <g 
-            stroke={strokeColor} 
-            strokeWidth="8" 
-            fill="none" 
-            strokeLinecap="round" 
+          <g
+            stroke={strokeColor}
+            strokeWidth="8"
+            fill="none"
+            strokeLinecap="round"
             strokeLinejoin="round"
             transform={patternType === 'diagonal-dashes' ? 'rotate(45 400 200)' : ''}
           >
-             <Shape />
+            <Shape />
           </g>
         </svg>
       </div>
@@ -342,8 +342,8 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] as const }
   },
@@ -358,11 +358,11 @@ export default function WhyJoinBento() {
       {/* Background Decorative Elements */}
       <WavyLine className="absolute top-0 left-0 w-full h-[18.75rem] text-purple-100/40 -translate-x-1/4 z-0 pointer-events-none" />
       <WavyLine className="absolute bottom-0 right-0 w-[150%] h-[18.75rem] text-orange-100/40 translate-x-1/4 z-0 pointer-events-none transform rotate-180" />
-      
+
       {/* Blurred decorative blobs */}
       <div className="absolute top-1/4 right-0 w-96 h-96 bg-blue-50/50 rounded-full filter blur-3xl opacity-60 -translate-y-1/2 translate-x-1/2 z-0" />
       <div className="absolute bottom-1/4 left-0 w-64 h-64 bg-indigo-50/50 rounded-full filter blur-3xl opacity-60 translate-y-1/2 -translate-x-1/2 z-0" />
-      
+
       {/* Hexagonal dots cluster */}
       <Dots className="absolute top-20 right-10 text-blue-200/40 z-0 scale-150" />
       <Dots className="absolute bottom-40 left-10 text-indigo-200/40 z-0 scale-125" />
@@ -383,7 +383,7 @@ export default function WhyJoinBento() {
         >
           {bentoContent.map((item, index) => {
             const { title, description, bg, text, desc, className, Graphic } = item;
-            
+
             return (
               <motion.div
                 key={index}
@@ -398,7 +398,7 @@ export default function WhyJoinBento() {
                     {description}
                   </p>
                 </div>
-                
+
                 <Graphic />
               </motion.div>
             );

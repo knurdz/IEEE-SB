@@ -7,7 +7,6 @@ import {
   TeamSectionData,
 } from './types';
 
-const PLACEHOLDER_IMAGES = ['/member6.png', '/member7.png', '/member8.png'] as const;
 
 const POSITION_PRIORITY: Record<PositionName, number> = {
   CHAIRMAN: 1,
@@ -53,7 +52,7 @@ export function withMemberMetadata(member: MemberInput, sourceIndex: number): Me
   return {
     ...member,
     committee: normalizeCommitteeName(member.committee),
-    image: member.image || PLACEHOLDER_IMAGES[sourceIndex % PLACEHOLDER_IMAGES.length],
+    image: member.image || "/member.webp",
     priority: getPositionPriority(member.position),
     sourceIndex,
     imageScale: member.imageScale ?? 1.0,

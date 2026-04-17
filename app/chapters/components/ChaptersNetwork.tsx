@@ -18,25 +18,25 @@ const RIGHT_SHIFT = 245;
 // All node centers in SVG viewBox coords (origin = center of the scene)
 const ALL_NODES = [
   // left cluster
-  { id: 1, x: -3 * DX + LEFT_SHIFT,  y: 0        },
-  { id: 2, x: -2 * DX + LEFT_SHIFT,  y: -DY      },
-  { id: 3, x: -2 * DX + LEFT_SHIFT,  y:  DY      },
-  { id: 4, x: -1 * DX + LEFT_SHIFT,  y: -2 * DY  },
-  { id: 5, x: -1 * DX + LEFT_SHIFT,  y: 0        },
-  { id: 6, x: -1 * DX + LEFT_SHIFT,  y:  2 * DY  },
-  { id: 7, x:  0 * DX + LEFT_SHIFT,  y: -DY      },
-  { id: 8, x:  0 * DX + LEFT_SHIFT,  y:  DY      },
+  { id: 1, x: -3 * DX + LEFT_SHIFT, y: 0 },
+  { id: 2, x: -2 * DX + LEFT_SHIFT, y: -DY },
+  { id: 3, x: -2 * DX + LEFT_SHIFT, y: DY },
+  { id: 4, x: -1 * DX + LEFT_SHIFT, y: -2 * DY },
+  { id: 5, x: -1 * DX + LEFT_SHIFT, y: 0 },
+  { id: 6, x: -1 * DX + LEFT_SHIFT, y: 2 * DY },
+  { id: 7, x: 0 * DX + LEFT_SHIFT, y: -DY },
+  { id: 8, x: 0 * DX + LEFT_SHIFT, y: DY },
   // right cluster
-  { id: 9, x:  0 * DX + RIGHT_SHIFT, y: -DY      },
-  { id: 10, x:  0 * DX + RIGHT_SHIFT, y:  DY      },
-  { id: 11, x:  1 * DX + RIGHT_SHIFT, y: -2 * DY  },
-  { id: 12, x:  1 * DX + RIGHT_SHIFT, y: 0        },
-  { id: 13, x:  1 * DX + RIGHT_SHIFT, y:  2 * DY  },
-  { id: 14, x:  2 * DX + RIGHT_SHIFT, y: -DY      },
-  { id: 15, x:  2 * DX + RIGHT_SHIFT, y:  DY      },
-  { id: 16, x:  3 * DX + RIGHT_SHIFT, y: 0        },
+  { id: 9, x: 0 * DX + RIGHT_SHIFT, y: -DY },
+  { id: 10, x: 0 * DX + RIGHT_SHIFT, y: DY },
+  { id: 11, x: 1 * DX + RIGHT_SHIFT, y: -2 * DY },
+  { id: 12, x: 1 * DX + RIGHT_SHIFT, y: 0 },
+  { id: 13, x: 1 * DX + RIGHT_SHIFT, y: 2 * DY },
+  { id: 14, x: 2 * DX + RIGHT_SHIFT, y: -DY },
+  { id: 15, x: 2 * DX + RIGHT_SHIFT, y: DY },
+  { id: 16, x: 3 * DX + RIGHT_SHIFT, y: 0 },
   // Extra node for the 17th chapter, positioned above the right side cluster logos for better balance
-  { id: 17, x:  2 * DX + RIGHT_SHIFT, y: -3 * DY  }, 
+  { id: 17, x: 2 * DX + RIGHT_SHIFT, y: -3 * DY },
 ];
 
 export default function ChaptersNetwork() {
@@ -85,7 +85,7 @@ export default function ChaptersNetwork() {
           }
         }
       `}</style>
-      
+
       <div className="relative w-full max-w-[75rem] h-[13.75rem] min-[23.4375rem]:h-[16.25rem] min-[30rem]:h-[18.75rem] sm:h-[21.875rem] md:h-[31.25rem] lg:h-[37.5rem] xl:h-[40.625rem] flex items-center justify-center z-20 overflow-visible">
         <div className="network-container relative w-full h-full flex items-center justify-center transition-transform duration-500 ease-out">
           {/* ── CENTER IEEE HEXAGON (z-30) ── */}
@@ -122,11 +122,11 @@ export default function ChaptersNetwork() {
               >
                 <div className="relative group hover:scale-110 transition-transform duration-300">
                   <svg width='150' height='130' viewBox='0 0 150 130' className="absolute inset-0 pointer-events-none text-[#008be6]/15 overflow-visible">
-                    <polygon points='46,16 104,16 134,65 104,114 46,114 16,65' fill='none' stroke='currentColor' strokeWidth='34' strokeLinejoin='round'/>
+                    <polygon points='46,16 104,16 134,65 104,114 46,114 16,65' fill='none' stroke='currentColor' strokeWidth='34' strokeLinejoin='round' />
                   </svg>
                   <div
                     onClick={() => {
-                      const society = societies.find(s => s.logo === `/chapter-logos/CL${node.id}.png`);
+                      const society = societies.find(s => s.logo === `/chapter-logos/CL${node.id}.webp`);
                       if (society) {
                         const el = document.getElementById(`society-${society.id}`);
                         if (el) {
@@ -138,12 +138,12 @@ export default function ChaptersNetwork() {
                     className="relative cursor-pointer w-[9.375rem] h-[8.125rem] bg-white flex items-center justify-center p-4 overflow-hidden"
                     style={{ maskImage: SMALL_ROUNDED_HEX, WebkitMaskImage: SMALL_ROUNDED_HEX }}
                   >
-                    <OptimizedImage 
-                      src={`/chapter-logos/CL${node.id}.png`} 
-                      alt={`Partner ${node.id}`} 
-                      width={80} 
-                      height={80} 
-                      className="object-contain w-full h-full" 
+                    <OptimizedImage
+                      src={`/chapter-logos/CL${node.id}.webp`}
+                      alt={`Partner ${node.id}`}
+                      width={80}
+                      height={80}
+                      className="object-contain w-full h-full"
                       priority={i < 4}
                       skeletonClassName="bg-gray-50/50"
                     />
@@ -166,11 +166,11 @@ export default function ChaptersNetwork() {
               >
                 <div className="relative group hover:scale-110 transition-transform duration-300">
                   <svg width='150' height='130' viewBox='0 0 150 130' className="absolute inset-0 pointer-events-none text-[#008be6]/15 overflow-visible">
-                    <polygon points='46,16 104,16 134,65 104,114 46,114 16,65' fill='none' stroke='currentColor' strokeWidth='34' strokeLinejoin='round'/>
-                    </svg>
+                    <polygon points='46,16 104,16 134,65 104,114 46,114 16,65' fill='none' stroke='currentColor' strokeWidth='34' strokeLinejoin='round' />
+                  </svg>
                   <div
                     onClick={() => {
-                      const society = societies.find(s => s.logo === `/chapter-logos/CL${node.id}.png`);
+                      const society = societies.find(s => s.logo === `/chapter-logos/CL${node.id}.webp`);
                       if (society) {
                         const el = document.getElementById(`society-${society.id}`);
                         if (el) {
@@ -182,12 +182,12 @@ export default function ChaptersNetwork() {
                     className="relative cursor-pointer w-[9.375rem] h-[8.125rem] bg-white flex items-center justify-center p-4 overflow-hidden"
                     style={{ maskImage: SMALL_ROUNDED_HEX, WebkitMaskImage: SMALL_ROUNDED_HEX }}
                   >
-                    <OptimizedImage 
-                      src={`/chapter-logos/CL${node.id}.png`} 
-                      alt={`Partner ${node.id}`} 
-                      width={80} 
-                      height={80} 
-                      className="object-contain w-full h-full" 
+                    <OptimizedImage
+                      src={`/chapter-logos/CL${node.id}.webp`}
+                      alt={`Partner ${node.id}`}
+                      width={80}
+                      height={80}
+                      className="object-contain w-full h-full"
                       priority={i < 4}
                       skeletonClassName="bg-gray-50/50"
                     />

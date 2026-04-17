@@ -121,9 +121,8 @@ export default function SocietySections() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, ease: "easeOut" }}
               key={society.id}
-              className={`flex flex-col md:flex-row items-center gap-10 md:gap-12 lg:gap-28 py-10 md:py-16 ${
-                isReversed ? "md:flex-row-reverse" : ""
-              }`}
+              className={`flex flex-col md:flex-row items-center gap-10 md:gap-12 lg:gap-28 py-10 md:py-16 ${isReversed ? "md:flex-row-reverse" : ""
+                }`}
             >
               {/* SVG Definitions for dynamic curved clip-paths since CSS clip-path: polygon doesn't support border-radius */}
               <svg
@@ -253,7 +252,7 @@ export default function SocietySections() {
                       style={{ clipPath: `url(#hexClipImg-${society.id})` }}
                     >
                       <OptimizedImage
-                        src={society.logo || "/chapter-logos/society_logo.png"}
+                        src={society.logo}
                         alt={society.title}
                         fill
                         sizes="(max-width: 48rem) 100vw, (max-width: 75rem) 50vw, 25rem"
