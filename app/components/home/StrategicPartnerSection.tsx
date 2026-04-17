@@ -29,9 +29,9 @@ export default function StrategicPartnerSection() {
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
                   <div className="w-48 h-12 bg-slate-200 animate-pulse rounded-lg" />
                 </div>
-                
+
                 <Image
-                  src="/partners/IFS.png"
+                  src="/partners/IFS.webp"
                   alt="IFS strategic partner logo"
                   width={560}
                   height={280}
@@ -65,9 +65,9 @@ export default function StrategicPartnerSection() {
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
                   <div className="w-48 h-12 bg-slate-200 animate-pulse rounded-lg" />
                 </div>
-                
+
                 <Image
-                  src="/partners/IFS.png"
+                  src="/partners/IFS.webp"
                   alt="IFS strategic partner logo"
                   width={560}
                   height={280}

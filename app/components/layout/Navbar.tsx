@@ -53,13 +53,13 @@ export default function Navbar() {
               href="/"
               className={cn(
                 "relative flex items-center gap-3 px-4 py-2 rounded-full transition-all duration-300",
-                isScrolled 
-                  ? "bg-white/80 backdrop-blur-md border border-slate-200 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]" 
+                isScrolled
+                  ? "bg-white/80 backdrop-blur-md border border-slate-200 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]"
                   : "bg-transparent border-transparent shadow-none"
               )}
             >
               <Image
-                src="/logo/ieeesblogo-light2.png"
+                src="/logo/ieeesblogo-light2.webp"
                 alt="IEEE SB Logo"
                 className="object-contain"
                 width={172}
@@ -71,8 +71,8 @@ export default function Navbar() {
 
             <div className={cn(
               "hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-300",
-              isScrolled 
-                ? "bg-white/80 backdrop-blur-md border border-slate-200 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]" 
+              isScrolled
+                ? "bg-white/80 backdrop-blur-md border border-slate-200 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]"
                 : "bg-transparent border-transparent shadow-none"
             )}>
               {primaryNavItems.map((link) => {
@@ -113,19 +113,16 @@ export default function Navbar() {
             >
               <div className="relative w-6 h-5">
                 <span
-                  className={`absolute left-0 w-full h-0.5 bg-[#0B132B] rounded-full transition-all duration-300 ${
-                    mobileMenuOpen ? 'top-1/2 rotate-45 -translate-y-1/2' : 'top-0'
-                  }`}
+                  className={`absolute left-0 w-full h-0.5 bg-[#0B132B] rounded-full transition-all duration-300 ${mobileMenuOpen ? 'top-1/2 rotate-45 -translate-y-1/2' : 'top-0'
+                    }`}
                 />
                 <span
-                  className={`absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 bg-[#0B132B] rounded-full transition-all duration-300 ${
-                    mobileMenuOpen ? 'opacity-0 scale-x-0' : 'opacity-100 scale-x-100'
-                  }`}
+                  className={`absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 bg-[#0B132B] rounded-full transition-all duration-300 ${mobileMenuOpen ? 'opacity-0 scale-x-0' : 'opacity-100 scale-x-100'
+                    }`}
                 />
                 <span
-                  className={`absolute left-0 w-full h-0.5 bg-[#0B132B] rounded-full transition-all duration-300 ${
-                    mobileMenuOpen ? 'bottom-1/2 -rotate-45 translate-y-1/2' : 'bottom-0'
-                  }`}
+                  className={`absolute left-0 w-full h-0.5 bg-[#0B132B] rounded-full transition-all duration-300 ${mobileMenuOpen ? 'bottom-1/2 -rotate-45 translate-y-1/2' : 'bottom-0'
+                    }`}
                 />
               </div>
             </button>

@@ -17,11 +17,11 @@ export default function Footer() {
       {/* Main Footer Content */}
       <div className="relative z-10 mx-auto px-6 md:px-12 w-full max-w-[85rem]">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 pb-12 lg:pb-16 border-b border-slate-800 mb-6">
-          
+
           {/* Brand Column */}
           <div className="flex flex-col gap-6 max-w-sm z-20">
             <Image
-              src="/logo/ieeesblogo.png"
+              src="/logo/ieeesblogo.webp"
               alt="IEEE University of Moratuwa Student Branch"
               className="w-56 md:w-64 drop-shadow-md"
               width={280}
@@ -29,8 +29,8 @@ export default function Footer() {
               priority
             />
             <p className="text-slate-300 text-sm leading-relaxed">
-              Empowering future engineers through innovation and collaboration. 
-              The IEEE Student Branch of the University of Moratuwa is the largest 
+              Empowering future engineers through innovation and collaboration.
+              The IEEE Student Branch of the University of Moratuwa is the largest
               and most active student branch in Sri Lanka.
             </p>
 
@@ -60,7 +60,7 @@ export default function Footer() {
 
           {/* Unified Contact Column */}
           <div className="flex flex-col items-start gap-10 z-20">
-            
+
             {/* Email Part */}
             <div className="flex items-start gap-4 group">
               <div className="h-9 w-9 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-blue-400 group-hover:border-blue-500/50 group-hover:bg-blue-500/5 transition-all duration-300 shrink-0">

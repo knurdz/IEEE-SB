@@ -165,6 +165,7 @@ body {
   0% {
     transform: translateX(-100%) skewX(-12deg);
   }
+
   100% {
     transform: translateX(200%) skewX(-12deg);
   }
@@ -235,7 +236,8 @@ body {
   height: 100%;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.03; /* Slightly higher opacity for light backgrounds */
+  opacity: 0.03;
+  /* Slightly higher opacity for light backgrounds */
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
@@ -371,7 +373,7 @@ button {
 .card-bg-image {
   position: absolute;
   inset: 0;
-  background-image: url('/partners/ifs_image.png');
+  background-image: url('/partners/ifs_image.webp');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -652,7 +654,8 @@ button {
   display: flex;
   flex-direction: column;
   gap: clamp(1rem, 2vw, 3rem);
-  padding-right: clamp(15rem, 40vw, 50rem); /* Reduced clearance to bring content closer to globe */
+  padding-right: clamp(15rem, 40vw, 50rem);
+  /* Reduced clearance to bring content closer to globe */
   padding-bottom: clamp(0.75rem, 1.5vw, 1.75rem);
 }
 
@@ -675,16 +678,18 @@ button {
 
 .footer-brand-desc {
   color: #ececec;
-  font-size: clamp(0.85rem, 1vw, 1rem); /* Slightly larger for better readability */
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  /* Slightly larger for better readability */
   line-height: 1.8;
-  max-width: 36.25rem; /* Expanded to fill space elegantly without overlapping globe */
+  max-width: 36.25rem;
+  /* Expanded to fill space elegantly without overlapping globe */
   margin: 0;
 }
 
 /* Social links strip */
 .footer-social {
   display: flex;
-  gap: 0.75rem; 
+  gap: 0.75rem;
 }
 
 
@@ -705,12 +710,14 @@ button {
   width: 100%;
   height: 100%;
   display: block;
-  opacity: 1; /* Increased from 0.8 for clarity */
+  opacity: 1;
+  /* Increased from 0.8 for clarity */
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .footer-social-link:hover {
-  background: rgba(255, 255, 255, 0.2); /* Changed from blue tint to white for better visibility on blue background */
+  background: rgba(255, 255, 255, 0.2);
+  /* Changed from blue tint to white for better visibility on blue background */
   border-color: rgba(255, 255, 255, 0.4);
   transform: translateY(-0.125rem);
   box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.15);
@@ -883,7 +890,7 @@ button {
 
   .footer-content {
     /* Maintain generous clearance for globe on tablets */
-    padding-right: 35%; 
+    padding-right: 35%;
   }
 
   .footer-brand {
@@ -1122,7 +1129,8 @@ button {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background: #f1f5f9; /* Slate 100 for premium light gray feel */
+  background: #f1f5f9;
+  /* Slate 100 for premium light gray feel */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1136,8 +1144,10 @@ button {
   max-width: 81.25rem;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Changed to equal columns for better symmetry in large space */
-  gap: 8rem; /* Significantly increased gap for a more expansive, premium feel */
+  grid-template-columns: 1fr 1fr;
+  /* Changed to equal columns for better symmetry in large space */
+  gap: 8rem;
+  /* Significantly increased gap for a more expansive, premium feel */
   align-items: center;
   z-index: 2;
   margin: 0 auto;
@@ -1157,7 +1167,8 @@ button {
   align-items: center;
   justify-content: flex-start;
   gap: 1rem;
-  margin-bottom: -1.5rem; /* Reduced negative margin */
+  margin-bottom: -1.5rem;
+  /* Reduced negative margin */
   width: 100%;
   position: relative;
   z-index: 1;
@@ -1181,7 +1192,8 @@ button {
   font-family: var(--font-header);
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 800;
-  color: #1e293b; /* Slate 800 for dark text */
+  color: #1e293b;
+  /* Slate 800 for dark text */
   line-height: 1;
   margin: 0;
   text-transform: uppercase;
@@ -1193,13 +1205,15 @@ button {
   font-size: clamp(1.1rem, 2vw, 1.4rem);
   line-height: 1.6;
   font-weight: 500;
-  color: #475569; /* Slate 600 for secondary text */
+  color: #475569;
+  /* Slate 600 for secondary text */
   margin: 0;
   max-width: 37.5rem;
   position: relative;
   letter-spacing: normal;
   z-index: 2;
-  text-transform: none; /* Changed from uppercase for better hierarchy */
+  text-transform: none;
+  /* Changed from uppercase for better hierarchy */
 }
 
 .state-enter .word {
@@ -1234,9 +1248,11 @@ button {
 }
 
 .body-text-p {
-  font-size: 1.1rem; /* Slightly larger text for the 100vh space */
+  font-size: 1.1rem;
+  /* Slightly larger text for the 100vh space */
   line-height: 1.8;
-  color: #475569; /* Slate 600 for dark readability */
+  color: #475569;
+  /* Slate 600 for dark readability */
   font-weight: 450;
   opacity: 0;
   transform: translateX(-1.25rem);
@@ -1267,10 +1283,26 @@ button {
   justify-items: center;
 }
 
-.stat-wrapper:nth-child(1) { grid-area: 1 / 2 / 2 / 3; } /* Top */
-.stat-wrapper:nth-child(2) { grid-area: 2 / 1 / 3 / 2; } /* Left */
-.stat-wrapper:nth-child(3) { grid-area: 2 / 3 / 3 / 4; } /* Right */
-.stat-wrapper:nth-child(4) { grid-area: 3 / 2 / 4 / 3; } /* Bottom */
+.stat-wrapper:nth-child(1) {
+  grid-area: 1 / 2 / 2 / 3;
+}
+
+/* Top */
+.stat-wrapper:nth-child(2) {
+  grid-area: 2 / 1 / 3 / 2;
+}
+
+/* Left */
+.stat-wrapper:nth-child(3) {
+  grid-area: 2 / 3 / 3 / 4;
+}
+
+/* Right */
+.stat-wrapper:nth-child(4) {
+  grid-area: 3 / 2 / 4 / 3;
+}
+
+/* Bottom */
 
 .stat-wrapper {
   transform: none;
@@ -1292,19 +1324,35 @@ button {
   }
 
   .stats-grid {
-     grid-template-columns: repeat(3, 4.875rem);
-     grid-template-rows: repeat(3, 8.4375rem);
-     gap: 0;
+    grid-template-columns: repeat(3, 4.875rem);
+    grid-template-rows: repeat(3, 8.4375rem);
+    gap: 0;
   }
 
   .stat-wrapper {
     transform: scale(0.85);
   }
 
-  .stat-wrapper:nth-child(1) { grid-area: 1 / 2 / 2 / 3; transform: scale(0.85) translateY(0); }
-    .stat-wrapper:nth-child(2) { grid-area: 2 / 1 / 3 / 2; transform: scale(0.85) translate(0, 0); }
-    .stat-wrapper:nth-child(3) { grid-area: 2 / 3 / 3 / 4; transform: scale(0.85) translate(0, 0); }
-  .stat-wrapper:nth-child(4) { grid-area: 3 / 2 / 4 / 3; transform: scale(0.85) translateY(0); }
+  .stat-wrapper:nth-child(1) {
+    grid-area: 1 / 2 / 2 / 3;
+    transform: scale(0.85) translateY(0);
+  }
+
+  .stat-wrapper:nth-child(2) {
+    grid-area: 2 / 1 / 3 / 2;
+    transform: scale(0.85) translate(0, 0);
+  }
+
+  .stat-wrapper:nth-child(3) {
+    grid-area: 2 / 3 / 3 / 4;
+    transform: scale(0.85) translate(0, 0);
+  }
+
+  .stat-wrapper:nth-child(4) {
+    grid-area: 3 / 2 / 4 / 3;
+    transform: scale(0.85) translateY(0);
+  }
+
   .stat-wrapper:hover {
     transform: scale(0.9) translateY(-0.3125rem);
     z-index: 10;
@@ -1317,19 +1365,34 @@ button {
   }
 
   .stats-grid {
-     grid-template-columns: repeat(3, 4.0625rem);
-     grid-template-rows: repeat(3, 7.03125rem);
-     gap: 0;
+    grid-template-columns: repeat(3, 4.0625rem);
+    grid-template-rows: repeat(3, 7.03125rem);
+    gap: 0;
   }
 
   .stat-wrapper {
     transform: scale(0.7);
   }
 
-  .stat-wrapper:nth-child(1) { grid-area: 1 / 2 / 2 / 3; transform: scale(0.7) translateY(0); }
-    .stat-wrapper:nth-child(2) { grid-area: 2 / 1 / 3 / 2; transform: scale(0.7) translate(0, 0); }
-    .stat-wrapper:nth-child(3) { grid-area: 2 / 3 / 3 / 4; transform: scale(0.7) translate(0, 0); }
-  .stat-wrapper:nth-child(4) { grid-area: 3 / 2 / 4 / 3; transform: scale(0.7) translateY(0); }
+  .stat-wrapper:nth-child(1) {
+    grid-area: 1 / 2 / 2 / 3;
+    transform: scale(0.7) translateY(0);
+  }
+
+  .stat-wrapper:nth-child(2) {
+    grid-area: 2 / 1 / 3 / 2;
+    transform: scale(0.7) translate(0, 0);
+  }
+
+  .stat-wrapper:nth-child(3) {
+    grid-area: 2 / 3 / 3 / 4;
+    transform: scale(0.7) translate(0, 0);
+  }
+
+  .stat-wrapper:nth-child(4) {
+    grid-area: 3 / 2 / 4 / 3;
+    transform: scale(0.7) translateY(0);
+  }
 
   .eyebrow-text {
     font-size: 3rem;

@@ -22,7 +22,7 @@ export const featuredAward: AwardItem = {
   id: "international-award",
   year: "",
   title: "Most Outstanding Student Branch in the Asia-Pacific Region at the IEEE Region 10 SAC Awards",
-  image: "/awards/International awrd.jpeg",
+  image: "/awards/International awrd.webp",
   imageAlt: "Most Outstanding Student Branch in the Asia-Pacific Region Award",
   badge: "International Recognition",
 };
@@ -32,7 +32,7 @@ export const secondaryAwards: AwardItem[] = [
     id: "sls-best-branch-award",
     year: "",
     title: "Best Student Branch Project Award (MoraForesight)",
-    image: "/awards/Sl award1.jpg",
+    image: "/awards/Sl award1.webp",
     imageAlt: "Best Student Branch Project Award stage moment",
     description: "The Best Student Branch Project award for MoraForesight was presented at IEEE Sri Lanka Section awards"
   },
@@ -40,7 +40,7 @@ export const secondaryAwards: AwardItem[] = [
     id: "sls-outstanding-tech-initiative-award",
     year: "",
     title: "Best Industry Collaborative Project Award (Rise Up Mora)",
-    image: "/awards/Sl award2.jpg",
+    image: "/awards/Sl award2.webp",
     imageAlt: "Best Industry Collaborative Project Award stage moment",
     description: "The Best Industry Collaborative Project award for Rise Up Mora was presented at IEEE Sri Lanka Section awards"
   },
@@ -48,7 +48,7 @@ export const secondaryAwards: AwardItem[] = [
     id: "sls-community-impact-award",
     year: "",
     title: "Outstanding Technical Chapter Award (IEEE EMBS)",
-    image: "/awards/Sl award3.jpg",
+    image: "/awards/Sl award3.webp",
     imageAlt: "Outstanding Technical Chapter Award stage moment",
     description: "The Outstanding Technical Chapter award for IEEE EMBS was presented at IEEE Sri Lanka Section awards"
   },
@@ -61,7 +61,7 @@ export const homeEvents: HomeEvent[] = [
     category: "Workshop",
     description:
       "A deep dive into the Ballerina programming language, exploring cloud-native development and integration patterns for modern engineers.",
-    image: "/events-assets/Ballerina/banner.jpg",
+    image: "/events-assets/Ballerina/banner.webp",
     link: "/events/ballerina",
   },
   {
@@ -70,7 +70,7 @@ export const homeEvents: HomeEvent[] = [
     category: "Symposium",
     description:
       "Bridging the gap between academia and industry through expert talks on AI, robotics, and the future of engineering job markets.",
-    image: "/events-assets/Foresight/banner.jpg",
+    image: "/events-assets/Foresight/banner.webp",
     link: "/events/foresight",
   },
   {
@@ -79,7 +79,7 @@ export const homeEvents: HomeEvent[] = [
     category: "Conference",
     description:
       "Our premier annual conference celebrating research excellence and technical innovation across all engineering disciplines.",
-    image: "/events-assets/Mercon/banner.jpg",
+    image: "/events-assets/Mercon/banner.webp",
     link: "/events/mercon",
   },
   {
@@ -88,7 +88,7 @@ export const homeEvents: HomeEvent[] = [
     category: "Hackathon",
     description:
       "A national-level competitive programming championship where the best coders solve complex algorithmic problems under pressure.",
-    image: "/events-assets/Moraxtreme/banner.jpg",
+    image: "/events-assets/Moraxtreme/banner.webp",
     link: "/events/moraxtreme",
   },
   {
@@ -97,7 +97,7 @@ export const homeEvents: HomeEvent[] = [
     category: "Career",
     description:
       "An internship-focused career development initiative connecting students with top industry partners and mentorship opportunities.",
-    image: "/events-assets/RUM/banner.jpg",
+    image: "/events-assets/RUM/banner.webp",
     link: "/events/rise-up-mora",
   },
-  ];
+];

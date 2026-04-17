@@ -64,9 +64,11 @@ const MemberCard = memo(function MemberCard({
       {/* Glow Effect Behind Circle */}
       <div 
         className={cn(
-          "absolute top-4 left-1/2 -translate-x-1/2 rounded-full blur-2xl transition-all duration-500",
-          isLead ? "w-40 h-40" : "w-32 h-32",
-          hovered ? (isLead ? "bg-amber-400/30 scale-110" : "bg-primary/30 scale-110") : "bg-transparent scale-100"
+          "absolute top-4 left-1/2 -translate-x-1/2 rounded-full blur-2xl transition-all duration-700",
+          isLead ? "w-44 h-44" : "w-32 h-32",
+          hovered 
+            ? (isLead ? "bg-amber-400/40 scale-125 opacity-100" : "bg-primary/30 scale-110 opacity-100") 
+            : "bg-transparent scale-100 opacity-0"
         )}
       />
 
@@ -75,8 +77,10 @@ const MemberCard = memo(function MemberCard({
         className={cn(
           "relative rounded-full overflow-hidden transition-all duration-500 z-20 bg-white",
           circleSizeClass,
-          hovered && "scale-[1.02]",
-          isLead ? "border-[3px] border-amber-400/80" : "border border-slate-200/80"
+          hovered && (isLead ? "scale-[1.04] shadow-[0_0_20px_rgba(251,191,36,0.4)]" : "scale-[1.02]"),
+          isLead 
+            ? "border-[3px] border-amber-400 ring-2 ring-amber-400/20" 
+            : "border border-slate-200/80"
         )}
       >
         {/* Skeleton Loader */}

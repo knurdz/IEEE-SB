@@ -26,7 +26,7 @@ export default function AnimatedLogoProcedural({ className }: { className?: stri
       {/* Background Rotating Layer - Optimized via Next.js Image */}
       <div className="absolute inset-0 animate-rotate scale-110">
         <Image
-          src="/logo-animated/ieee-sb-logo-animated-layer-01-2.png"
+          src="/logo-animated/ieee-sb-logo-animated-layer-01-2.webp"
           alt=""
           fill
           priority
@@ -38,7 +38,7 @@ export default function AnimatedLogoProcedural({ className }: { className?: stri
       {/* Static Center Branding */}
       <div className="absolute inset-0 z-10">
         <Image
-          src="/logo-animated/ieee-sb-logo-animated-center.png"
+          src="/logo-animated/ieee-sb-logo-animated-center.webp"
           alt="IEEE SB Logo"
           fill
           priority

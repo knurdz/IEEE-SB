@@ -60,7 +60,7 @@ export default function AwardsSection() {
                           <div className="relative rounded-lg bg-white overflow-hidden p-0.5">
                             <div className="relative rounded-md overflow-hidden bg-slate-100">
                               <Image
-                                src={featuredAward.image || "/event/placeholder-cert.jpg"}
+                                src={featuredAward.image}
                                 alt={featuredAward.imageAlt}
                                 width={3309}
                                 height={2310}
