@@ -14,11 +14,13 @@ export default function StrategicPartnerSection() {
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-cyan-50/70 rounded-full blur-3xl opacity-70 translate-y-1/2 -translate-x-1/4 z-0" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="rounded-3xl border border-black/10 bg-white/90 shadow-[0_20px_50px_-28px_rgba(0,0,0,0.35)] overflow-hidden">
+        <div className="rounded-3xl border border-white/80 bg-white/70 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_50px_rgba(0,88,158,0.1)] transition-all duration-700 overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
             <div className="lg:col-span-7 p-8 sm:p-10 lg:p-12">
               <h2 className="text-3xl lg:text-5xl text-gray-800 flex flex-wrap items-baseline justify-start gap-x-4 font-sans tracking-tight mb-8">
-                <span className="font-light text-gray-700">Official Strategic</span>
+                <span className="font-light text-gray-700">
+                  Official Strategic
+                </span>
                 <span className="font-black font-serif text-gray-900 uppercase">
                   Partner
                 </span>

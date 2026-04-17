@@ -83,7 +83,7 @@ const bentoContent: BentoItem[] = [
     bg: "bg-[#eff6ff]",
     text: "text-[#00589e]",
     desc: "text-[#00589e]",
-    className: "md:col-span-1 lg:col-span-1 min-h-[18.75rem]",
+    className: "md:col-span-1 lg:col-span-1 md:min-h-[18.75rem]",
   },
   {
     title: "Connect with a global network of engineers and innovators",
@@ -92,7 +92,7 @@ const bentoContent: BentoItem[] = [
     bg: "bg-[#f2fdf5]",
     text: "text-[#1a1a1a]",
     desc: "text-gray-600",
-    className: "md:col-span-1 lg:col-span-1 min-h-[18.75rem]",
+    className: "md:col-span-1 lg:col-span-1 md:min-h-[18.75rem]",
   },
   {
     title: "Gain access to cutting-edge technical knowledge and resources",
@@ -101,7 +101,7 @@ const bentoContent: BentoItem[] = [
     bg: "bg-[#fcfaff]",
     text: "text-[#1a1a1a]",
     desc: "text-gray-600",
-    className: "md:col-span-1 lg:col-span-1 min-h-[18.75rem]",
+    className: "md:col-span-1 lg:col-span-1 md:min-h-[18.75rem]",
   },
   {
     title: "Develop critical skills for engineering and innovation",
@@ -110,7 +110,7 @@ const bentoContent: BentoItem[] = [
     bg: "bg-[#f0f9ff]",
     text: "text-[#1a1a1a]",
     desc: "text-gray-600",
-    className: "md:col-span-1 lg:col-span-1 min-h-[18.75rem]",
+    className: "md:col-span-1 lg:col-span-1 md:min-h-[18.75rem]",
   },
   {
     title: "Stay updated on emerging technologies and trends",
@@ -119,7 +119,7 @@ const bentoContent: BentoItem[] = [
     bg: "bg-[#f8fafc]",
     text: "text-[#1a1a1a]",
     desc: "text-gray-600",
-    className: "md:col-span-1 lg:col-span-1 min-h-[18.75rem]",
+    className: "md:col-span-1 lg:col-span-1 md:min-h-[18.75rem]",
   },
   {
     title: "Enhance your career through lifelong learning and certifications",
@@ -128,7 +128,7 @@ const bentoContent: BentoItem[] = [
     bg: "bg-[#fff1f2]",
     text: "text-[#1a1a1a]",
     desc: "text-gray-600",
-    className: "md:col-span-1 lg:col-span-1 min-h-[18.75rem]",
+    className: "md:col-span-1 lg:col-span-1 md:min-h-[18.75rem]",
   },
   {
     title: "Contribute to global engineering initiatives that benefit society",
@@ -137,7 +137,7 @@ const bentoContent: BentoItem[] = [
     bg: "bg-[#fefce8]",
     text: "text-[#1a1a1a]",
     desc: "text-gray-600",
-    className: "md:col-span-1 lg:col-span-1 min-h-[18.75rem]",
+    className: "md:col-span-1 lg:col-span-1 md:min-h-[18.75rem]",
   },
   {
     title: "Apply your knowledge to innovate and achieve real-world impact",
@@ -146,7 +146,7 @@ const bentoContent: BentoItem[] = [
     bg: "bg-[#171717]",
     text: "text-white",
     desc: "text-gray-400",
-    className: "md:col-span-1 lg:col-span-1 min-h-[18.75rem]",
+    className: "md:col-span-1 lg:col-span-1 md:min-h-[18.75rem]",
   },
 ];
 
@@ -199,14 +199,13 @@ export default function WhyJoinBento() {
           className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6"
         >
           {bentoContent.map((item, index) => {
-            const { title, description, bg, text, desc, className } =
-              item;
+            const { title, description, bg, text, desc, className } = item;
 
             return (
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className={`relative overflow-hidden rounded-2xl p-8 flex transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl ${bg} ${className}`}
+                className={`relative overflow-hidden rounded-2xl p-5 md:p-8 flex transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl ${bg} ${className}`}
               >
                 <div className="relative z-20 flex flex-col">
                   <h3
