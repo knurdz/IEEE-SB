@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import Image from 'next/image';
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function ContactMap() {
   return (
@@ -67,15 +67,18 @@ export default function ContactMap() {
           alt="University of Moratuwa Map"
           fill
           priority
-          className="object-cover scale-[1.02] lg:scale-[1.05] transition-opacity duration-700 [@media(min-width:48rem)_and_(max-width:64rem)]:scale-[1.04]"
+          className="object-cover scale-[1.02] translate-y-4 sm:translate-y-0 lg:scale-[1.05] transition-opacity duration-700 [@media(min-width:48rem)_and_(max-width:64rem)]:scale-[1.04]"
           style={{
-            filter: 'grayscale(0.15) sepia(0.15) contrast(1.1) brightness(1.02)'
+            filter:
+              "grayscale(0.15) sepia(0.15) contrast(1.1) brightness(1.02)",
           }}
         />
 
         {/* Skeleton/Placeholder overlay */}
-        <div className="absolute inset-0 bg-[#e4dfd0] animate-pulse pointer-events-none transition-opacity duration-1000 -z-0"
-          style={{ opacity: 0.5 }} />
+        <div
+          className="absolute inset-0 bg-[#e4dfd0] animate-pulse pointer-events-none transition-opacity duration-1000 -z-0"
+          style={{ opacity: 0.5 }}
+        />
       </div>
     </motion.div>
   );

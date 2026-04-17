@@ -89,7 +89,6 @@ export default function TextSphereAnimation() {
 
         await imageLoadPromise;
 
-        setIsLoading(false);
         initAnimation();
       } catch (error) {
         console.error("Failed to load resources:", error);
@@ -1129,6 +1128,12 @@ export default function TextSphereAnimation() {
             }
           });
         }
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            setIsLoading(false);
+          });
+        });
       }
     };
 
