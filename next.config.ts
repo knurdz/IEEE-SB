@@ -13,7 +13,13 @@ const nextConfig: NextConfig = {
   images: {
     loader: 'custom',
     loaderFile: './lib/image-loader.ts',
+    formats: ['image/avif', 'image/webp'],
   },
+  // Optimization settings
+  compress: true,
+  reactStrictMode: true,
+  poweredByHeader: false,
+  productionBrowserSourceMaps: false, // Reduce build size
 };
 
 export default nextConfig;
