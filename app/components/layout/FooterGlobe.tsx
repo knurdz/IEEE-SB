@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { EARTH_MASK_DATA_URL } from '@/lib/earth-mask-image';
+import { useEffect, useRef, memo } from "react";
+import { EARTH_MASK_DATA_URL } from "@/lib/earth-mask-image";
 
 const GLOBE_CENTER = {
   lat: -8.5,
@@ -17,6 +17,15 @@ const VIEWBOX_SIZE = 900;
 const GLOBE_CENTER_X = VIEWBOX_SIZE * 0.67;
 const GLOBE_CENTER_Y = VIEWBOX_SIZE * 0.57;
 const GLOBE_RADIUS = VIEWBOX_SIZE * 0.41;
+
+// Debounce resize handler
+const debounce = (func: () => void, delay: number) => {
+  let timeoutId: NodeJS.Timeout;
+  return () => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(func, delay);
+  };
+};
 type EarthMask = {
   data: Uint8ClampedArray;
   width: number;
@@ -76,7 +85,7 @@ function projectPoint(
   };
 }
 
-export default function FooterGlobe() {
+function FooterGlobe() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const markerPoint = projectPoint(
     UNIVERSITY_LOCATION.lat,
@@ -94,7 +103,7 @@ export default function FooterGlobe() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
     const earthImage = new Image();
     let earthMask: EarthMask | null = null;
@@ -115,10 +124,17 @@ export default function FooterGlobe() {
       const cy = GLOBE_CENTER_Y;
       const radius = GLOBE_RADIUS;
 
-      const halo = ctx.createRadialGradient(cx, cy, radius * 0.74, cx, cy, radius * 1.34);
-      halo.addColorStop(0, 'rgba(255, 255, 255, 0)');
-      halo.addColorStop(0.66, 'rgba(255, 255, 255, 0.08)');
-      halo.addColorStop(1, 'rgba(255, 255, 255, 0.15)');
+      const halo = ctx.createRadialGradient(
+        cx,
+        cy,
+        radius * 0.74,
+        cx,
+        cy,
+        radius * 1.34,
+      );
+      halo.addColorStop(0, "rgba(255, 255, 255, 0)");
+      halo.addColorStop(0.66, "rgba(255, 255, 255, 0.08)");
+      halo.addColorStop(1, "rgba(255, 255, 255, 0.15)");
 
       ctx.beginPath();
       ctx.arc(cx, cy, radius * 1.3, 0, Math.PI * 2);
@@ -138,8 +154,8 @@ export default function FooterGlobe() {
         cy,
         radius * 1.05,
       );
-      sphereFill.addColorStop(0, 'rgba(0, 60, 140, 0.95)');
-      sphereFill.addColorStop(1, 'rgba(0, 20, 60, 1)');
+      sphereFill.addColorStop(0, "rgba(0, 60, 140, 0.95)");
+      sphereFill.addColorStop(1, "rgba(0, 20, 60, 1)");
 
       ctx.fillStyle = sphereFill;
       ctx.fillRect(cx - radius, cy - radius, radius * 2, radius * 2);
@@ -152,7 +168,13 @@ export default function FooterGlobe() {
               continue;
             }
 
-            const point = projectPoint(lat, lon, radius, GLOBE_CENTER.lat, GLOBE_CENTER.lon);
+            const point = projectPoint(
+              lat,
+              lon,
+              radius,
+              GLOBE_CENTER.lat,
+              GLOBE_CENTER.lon,
+            );
             if (point.z <= radius * 0.035) {
               continue;
             }
@@ -160,7 +182,8 @@ export default function FooterGlobe() {
             const depth = point.z / radius;
             const x2d = cx + point.x;
             const y2d = cy - point.y;
-            const shimmer = Math.sin(toRadians(lat * 7 + lon * 3)) * 0.14 + 0.86;
+            const shimmer =
+              Math.sin(toRadians(lat * 7 + lon * 3)) * 0.14 + 0.86;
             const dotSize = 0.82 + depth * 1.18;
             const alpha = 0.22 + depth * 0.58;
             const tone = 214 + Math.round(depth * 26);
@@ -178,7 +201,13 @@ export default function FooterGlobe() {
         let started = false;
 
         for (let lon = -180; lon <= 180; lon += 2) {
-          const point = projectPoint(lat, lon, radius, GLOBE_CENTER.lat, GLOBE_CENTER.lon);
+          const point = projectPoint(
+            lat,
+            lon,
+            radius,
+            GLOBE_CENTER.lat,
+            GLOBE_CENTER.lon,
+          );
           if (point.z <= 0) {
             started = false;
             continue;
@@ -195,7 +224,7 @@ export default function FooterGlobe() {
           }
         }
 
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.026)';
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.026)";
         ctx.lineWidth = 0.8;
         ctx.stroke();
       }
@@ -205,7 +234,13 @@ export default function FooterGlobe() {
         let started = false;
 
         for (let lat = -85; lat <= 85; lat += 2) {
-          const point = projectPoint(lat, lon, radius, GLOBE_CENTER.lat, GLOBE_CENTER.lon);
+          const point = projectPoint(
+            lat,
+            lon,
+            radius,
+            GLOBE_CENTER.lat,
+            GLOBE_CENTER.lon,
+          );
           if (point.z <= 0) {
             started = false;
             continue;
@@ -222,7 +257,7 @@ export default function FooterGlobe() {
           }
         }
 
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.02)';
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.02)";
         ctx.lineWidth = 0.8;
         ctx.stroke();
       }
@@ -230,7 +265,13 @@ export default function FooterGlobe() {
       for (let index = 0; index < 72; index += 1) {
         const lat = -55 + ((index * 17) % 110);
         const lon = -170 + ((index * 29) % 340);
-        const point = projectPoint(lat, lon, radius, GLOBE_CENTER.lat, GLOBE_CENTER.lon);
+        const point = projectPoint(
+          lat,
+          lon,
+          radius,
+          GLOBE_CENTER.lat,
+          GLOBE_CENTER.lon,
+        );
         if (point.z <= radius * 0.08) {
           continue;
         }
@@ -249,22 +290,21 @@ export default function FooterGlobe() {
 
       // Removed globe shadow gradient for a cleaner look
 
-
       ctx.beginPath();
       ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(214, 231, 255, 0.16)';
+      ctx.strokeStyle = "rgba(214, 231, 255, 0.16)";
       ctx.lineWidth = 1.3;
       ctx.stroke();
 
       ctx.beginPath();
       ctx.arc(cx, cy, radius * 1.02, 0.9 * Math.PI, 1.73 * Math.PI);
-      ctx.strokeStyle = 'rgba(157, 235, 211, 0.9)';
+      ctx.strokeStyle = "rgba(157, 235, 211, 0.9)";
       ctx.lineWidth = 3;
       ctx.stroke();
 
       ctx.beginPath();
       ctx.arc(cx, cy, radius * 1.02, 1.72 * Math.PI, 0.26 * Math.PI);
-      ctx.strokeStyle = 'rgba(252, 218, 104, 0.78)';
+      ctx.strokeStyle = "rgba(252, 218, 104, 0.78)";
       ctx.lineWidth = 3;
       ctx.stroke();
 
@@ -281,14 +321,14 @@ export default function FooterGlobe() {
 
       ctx.beginPath();
       ctx.arc(mapPinX, mapPinY, 5, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.98)';
+      ctx.fillStyle = "rgba(255, 255, 255, 0.98)";
       ctx.shadowBlur = 26;
-      ctx.shadowColor = 'rgba(255, 255, 255, 0.9)';
+      ctx.shadowColor = "rgba(255, 255, 255, 0.9)";
       ctx.fill();
 
       ctx.beginPath();
       ctx.arc(mapPinX, mapPinY, 12, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(140, 192, 255, 0.28)';
+      ctx.strokeStyle = "rgba(140, 192, 255, 0.28)";
       ctx.lineWidth = 1.3;
       ctx.stroke();
 
@@ -298,21 +338,32 @@ export default function FooterGlobe() {
     const buildEarthMask = () => {
       if (disposed) return;
 
-      const maskCanvas = document.createElement('canvas');
+      const maskCanvas = document.createElement("canvas");
       maskCanvas.width = earthImage.naturalWidth || 2048;
       maskCanvas.height = earthImage.naturalHeight || 1024;
 
-      const maskContext = maskCanvas.getContext('2d');
+      const maskContext = maskCanvas.getContext("2d");
       if (!maskContext) {
         draw();
         return;
       }
 
-      maskContext.filter = 'blur(0.09375rem)';
-      maskContext.drawImage(earthImage, 0, 0, maskCanvas.width, maskCanvas.height);
-      maskContext.filter = 'none';
+      maskContext.filter = "blur(0.09375rem)";
+      maskContext.drawImage(
+        earthImage,
+        0,
+        0,
+        maskCanvas.width,
+        maskCanvas.height,
+      );
+      maskContext.filter = "none";
 
-      const imageData = maskContext.getImageData(0, 0, maskCanvas.width, maskCanvas.height);
+      const imageData = maskContext.getImageData(
+        0,
+        0,
+        maskCanvas.width,
+        maskCanvas.height,
+      );
       earthMask = {
         data: imageData.data,
         width: maskCanvas.width,
@@ -331,12 +382,13 @@ export default function FooterGlobe() {
       draw();
     }
 
-    const handleResize = () => draw();
-    window.addEventListener('resize', handleResize);
+    // Debounce resize events to avoid excessive redraws (max every 100ms)
+    const handleResize = debounce(() => draw(), 100);
+    window.addEventListener("resize", handleResize);
 
     return () => {
       disposed = true;
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -354,3 +406,6 @@ export default function FooterGlobe() {
     </div>
   );
 }
+
+// Memoize the component to prevent unnecessary re-renders
+export default memo(FooterGlobe);
