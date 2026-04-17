@@ -5,7 +5,7 @@ export default function StrategicPartnerSection() {
   return (
     <section
       id="strategic-partner-section"
-      className="relative w-full py-24 lg:py-32 overflow-hidden bg-transparent"
+      className="relative w-full py-12 lg:py-32 overflow-hidden bg-transparent"
       aria-label="Strategic partner"
     >
       <SiteBackground showTopFade={true} showBottomFade={true} />

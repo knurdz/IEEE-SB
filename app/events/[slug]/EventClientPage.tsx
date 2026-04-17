@@ -158,7 +158,7 @@ export default function EventDetailPageClient({ params }: EventPageProps) {
               <div className="flex-1 h-[0.125rem] bg-gradient-to-r from-primary to-transparent opacity-20" />
             </div>
 
-            <div className="flex flex-col gap-16">
+            <div className="flex flex-col gap-10 lg:gap-16">
               {groupedGallery.map((group, gIdx) => (
                 <div key={group.name}>
                   <h3 className="text-2xl font-orbitron font-bold text-primary/80 mb-6 border-b border-primary/10 pb-2">
