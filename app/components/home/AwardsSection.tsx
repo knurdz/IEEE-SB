@@ -9,7 +9,7 @@ export default function AwardsSection() {
   return (
     <section
       id="awards"
-      className="relative w-full py-24 lg:py-32 overflow-hidden bg-transparent"
+      className="relative w-full py-12 lg:py-32 overflow-hidden bg-transparent"
       aria-label="Awards and recognition"
     >
       <SiteBackground showTopFade={true} showBottomFade={true} />
@@ -27,7 +27,7 @@ export default function AwardsSection() {
           </p>
         </div>
 
-        <div className="relative flex flex-col gap-16 lg:gap-24">
+        <div className="relative flex flex-col gap-10 lg:gap-24">
           
           {/* Top Section: International Certificate */}
           <div className="flex flex-col gap-6 w-full relative z-20">
