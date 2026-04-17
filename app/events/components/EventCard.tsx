@@ -14,6 +14,7 @@ interface EventCardProps {
   event: EventItem;
   index: number;
   priority?: boolean;
+  isPageMounted?: boolean;
 }
 
 function ArrowRight({ className }: { className?: string }) {
@@ -36,7 +37,7 @@ function ArrowRight({ className }: { className?: string }) {
   );
 }
 
-const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, priority = false }) {
+const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, priority = false, isPageMounted = false }) {
   const [imgFailed, setImgFailed] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
@@ -46,9 +47,9 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
   return (
     <motion.div
       className="group relative w-full glass-fiber border-primary/10 rounded-2xl overflow-hidden hover:border-primary/40 transition-all duration-500"
-      initial={{ opacity: 0, y: 30 }}
+      initial={false}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "0px 0px -50px 0px" }}
+      viewport={{ once: true }}
       transition={{ duration: 0.8, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ 
         y: -5,

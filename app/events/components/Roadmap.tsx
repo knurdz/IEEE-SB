@@ -76,9 +76,15 @@ export default function Roadmap() {
           </div>
         </div>
 
-        <div className="relative max-w-6xl mx-auto z-10 space-y-8">
+        <div key={mounted ? 'ready' : 'init'} className="relative max-w-6xl mx-auto z-10 space-y-8">
           {EVENTS.map((event, index) => (
-            <EventCard key={event.id} event={event} index={index} priority={index < 2} />
+            <EventCard 
+              key={event.id} 
+              event={event} 
+              index={index} 
+              priority={index < 2} 
+              isPageMounted={mounted}
+            />
           ))}
         </div>
       </section>

@@ -1,9 +1,15 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 
 export default function EventsHero() {
   const shouldReduceMotion = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <section className="relative min-h-[25vh] md:min-h-[30vh] flex items-center justify-center overflow-hidden bg-transparent pb-0">
@@ -256,11 +262,11 @@ export default function EventsHero() {
         </svg>
       </div>
 
-      <div className="relative z-10 flex flex-col items-center pt-32 pb-0">
+      <div key={mounted ? 'ready' : 'init'} className="relative z-10 flex flex-col items-center pt-32 pb-0">
         <motion.p
           className="text-accent tracking-[0.2em] uppercase font-semibold text-sm mb-6 font-mono"
-          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-          animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+          initial={false}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
         >
           {/* Tagline placeholder if needed */}
@@ -268,8 +274,8 @@ export default function EventsHero() {
 
         <motion.h1
           className="font-orbitron font-bold text-4xl sm:text-5xl md:text-6xl text-foreground mb-4 tracking-tight"
-          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 30 }}
-          animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+          initial={false}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.6 }}
         >
           A Legacy of <span className="text-gradient">Innovation</span>
@@ -277,8 +283,8 @@ export default function EventsHero() {
 
         <motion.p
           className="text-muted font-sans text-lg sm:text-xl max-w-2xl mb-8 text-center"
-          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-          animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+          initial={false}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
         >
           Explore the events that define IEEE UOM
@@ -286,8 +292,8 @@ export default function EventsHero() {
 
         <motion.div
           className="h-[0.125rem] w-[3.75rem] bg-accent origin-left rounded-full fiber-glow"
-          initial={shouldReduceMotion ? { opacity: 0 } : { scaleX: 0 }}
-          animate={shouldReduceMotion ? { opacity: 1 } : { scaleX: 1 }}
+          initial={false}
+          animate={{ scaleX: 1 }}
           transition={{ delay: 0.8, duration: 0.8, ease: 'circOut' }}
         />
       </div>
