@@ -83,11 +83,12 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
           {/* Category Badge on Image (Mobile) */}
           <div className="absolute top-4 left-4 md:hidden z-10">
              <span
-              className="px-3 py-1 rounded-full text-[0.625rem] font-bold tracking-widest uppercase backdrop-blur-md shadow-lg"
+              className="px-3.5 py-1.5 rounded-full text-[0.625rem] font-bold tracking-widest uppercase shadow-xl flex items-center justify-center font-orbitron border"
               style={{
-                backgroundColor: `${event.categoryColor}33`,
-                border: `0.0625rem solid ${event.categoryColor}`,
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                borderColor: `${event.categoryColor}80`,
                 color: event.categoryColor,
+                textShadow: '0 0 1px rgba(0,0,0,0.05)'
               }}
             >
               {event.category}
@@ -102,10 +103,10 @@ const EventCard = React.memo<EventCardProps>(function EventCard({ event, index, 
           <div>
             <div className="hidden md:flex items-center justify-between mb-4">
               <span
-                className="px-3 py-1 rounded-full text-[0.625rem] font-bold tracking-widest uppercase font-orbitron"
+                className="px-3 py-1.5 rounded-full text-[0.625rem] font-bold tracking-widest uppercase font-orbitron"
                 style={{
-                  backgroundColor: `${event.categoryColor}15`,
-                  border: `0.0625rem solid ${event.categoryColor}40`,
+                  backgroundColor: `${event.categoryColor}25`,
+                  border: `0.0625rem solid ${event.categoryColor}50`,
                   color: event.categoryColor,
                 }}
               >
