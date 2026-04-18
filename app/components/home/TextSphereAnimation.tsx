@@ -40,7 +40,7 @@ const loadScript = (src: string): Promise<void> => {
   return promise;
 };
 
-export default function TextSphereAnimation() {
+export default function TextSphereAnimation({ onLoaded }: { onLoaded?: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const hitAreaRef = useRef<HTMLDivElement>(null);
   const initialized = useRef(false);
@@ -93,6 +93,7 @@ export default function TextSphereAnimation() {
       } catch (error) {
         console.error("Failed to load resources:", error);
         setIsLoading(false);
+        onLoaded?.();
       }
     };
 
@@ -1132,6 +1133,7 @@ export default function TextSphereAnimation() {
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
             setIsLoading(false);
+            onLoaded?.();
           });
         });
       }
@@ -1142,20 +1144,6 @@ export default function TextSphereAnimation() {
 
   return (
     <div className="relative w-full h-[65vh] md:h-screen bg-white overflow-hidden">
-      {/* Loading Indicator */}
-      {isLoading && (
-        <div className="absolute inset-0 z-50 flex items-center justify-center bg-white">
-          <div className="text-center">
-            <div className="relative w-20 h-20 mx-auto mb-6">
-              <div className="absolute inset-0 border-4 border-blue-700/20 rounded-full"></div>
-              <div className="absolute inset-0 border-4 border-transparent border-t-blue-700 rounded-full animate-spin"></div>
-            </div>
-            <p className="text-blue-700/80 text-sm font-jetbrains tracking-[0.3em] animate-pulse">
-              LOADING
-            </p>
-          </div>
-        </div>
-      )}
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;700;800&display=swap');
