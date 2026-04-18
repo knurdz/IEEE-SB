@@ -50,15 +50,17 @@ export default function AwardsSection() {
                <div className="relative w-full rounded-[2rem] bg-gradient-to-br from-white/80 via-white/60 to-white/90 backdrop-blur-xl border border-white/80 shadow-[0_8px_30px_rgb(0,0,0,0.06)] overflow-hidden flex flex-col md:flex-row shadow-[#00589e]/5 group-hover:shadow-[0_20px_50px_rgba(0,88,158,0.1)] transition-all duration-700">
                   
                   {/* Certificate Image Area */}
-                  <div className="relative w-full md:w-[50%] lg:w-[50%] min-h-[300px] md:min-h-[450px] bg-gradient-to-b from-slate-800 to-slate-900 p-6 sm:p-10 flex items-center justify-center overflow-hidden border-r border-white/10">
+                  <div className="relative w-full md:w-[50%] lg:w-[50%] min-h-[300px] md:min-h-[450px] bg-sky-50 p-6 sm:p-10 flex items-center justify-center overflow-hidden">
+                     {/* Horizontal Fade toward the text area */}
+                     <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white/40 to-transparent z-10 pointer-events-none hidden md:block" />
+                     
                      {/* Ambient inner glow */}
-                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent opacity-50" />
-                     <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent mix-blend-overlay z-20 pointer-events-none transform -skew-x-12 -translate-x-[150%] md:group-hover:translate-x-full transition-transform duration-[1.5s] ease-in-out" />
+                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent opacity-60" />
                      
                      <div className="relative w-full max-w-xl transform transition-transform duration-700 group-hover:scale-[1.02] group-hover:-translate-y-1">
-                        <div className="relative rounded-xl p-1 bg-gradient-to-br from-slate-300 via-slate-100 to-slate-400 shadow-[0_15px_40px_rgba(0,0,0,0.3)] group-hover:shadow-[0_25px_50px_rgba(0,88,158,0.2)] transition-all duration-500">
-                          <div className="relative rounded-lg bg-white overflow-hidden p-0.5">
-                            <div className="relative rounded-md overflow-hidden bg-slate-100">
+                        <div className="relative rounded-xl p-0.5 bg-[#00589e] shadow-[0_20px_50px_rgba(0,0,0,0.1)] group-hover:shadow-[0_25px_60px_rgba(0,88,158,0.15)] transition-all duration-500">
+                          <div className="relative rounded-[10px] bg-[#dcecf9] overflow-hidden p-1.5 sm:p-2">
+                            <div className="relative rounded-md overflow-hidden bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] border border-[#00589e]/10">
                               <Image
                                 src={featuredAward.image}
                                 alt={featuredAward.imageAlt}
@@ -80,13 +82,13 @@ export default function AwardsSection() {
                           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00589e] opacity-75"></span>
                           <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00589e]"></span>
                         </span>
-                        <span className="text-[11px] font-bold text-[#00589e] uppercase tracking-widest">{featuredAward.badge || 'Global Achievement'}</span>
+                        <span className="text-[11px] font-bold text-[#00589e] uppercase tracking-widest leading-none translate-y-[0.5px]">{featuredAward.badge || 'Global Achievement'}</span>
                      </div>
                      
-                     <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black uppercase text-gray-900 mb-4 leading-tight tracking-tight">
+                     <h3 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-black uppercase text-slate-900 mb-5 leading-[1.1] tracking-tight">
                        Most Outstanding <br/><span className="text-[#00589e]">Student Branch</span>
                      </h3>
-                     <div className="h-1.5 w-12 bg-[#00589e] mb-6 rounded-full shadow-[0_0_10px_rgba(0,88,158,0.3)]"></div>
+                     <div className="h-1.5 w-12 bg-[#00589e] mb-8 rounded-full shadow-[0_4px_12px_rgba(0,88,158,0.25)]"></div>
                      <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-medium">
                        Secured at the IEEE Region 10 SAC Awards in the Asia-Pacific Region. A testament to relentless dedication and global excellence.
                      </p>
