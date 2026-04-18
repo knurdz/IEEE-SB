@@ -1,10 +1,10 @@
 import type { NextConfig } from "next";
 
-const BASE_PATH = '/IEEE-SB-Static';
+const BASE_PATH = '';
 
 const nextConfig: NextConfig = {
   output: 'export',
-  // Required for GitHub Pages: repo is served at knurdz.github.io/IEEE-SB
+  // Required for root domain hosting
   basePath: BASE_PATH,
   // Expose basePath to client bundles (used by the custom image loader)
   env: {

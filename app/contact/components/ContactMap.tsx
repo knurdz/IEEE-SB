@@ -17,7 +17,7 @@ export default function ContactMap() {
       <div className="relative w-full h-full z-10 overflow-hidden shadow-sm bg-[#e4dfd0] rounded-[0.375rem]">
         {/* Aesthetic Map Overlay Pin - Adjusted for uom.webp location */}
         <motion.div
-          className="absolute top-[31%] left-[51%] -translate-x-1/2 -translate-y-[calc(100%+0.5rem)] z-30 pointer-events-none flex flex-col items-center [@media(min-width:48rem)_and_(max-width:64rem)]:top-[32%]"
+          className="absolute top-[50%] lg:top-[31%] left-[51%] -translate-x-1/2 -translate-y-[calc(100%+0.5rem)] z-30 pointer-events-none flex flex-col items-center"
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -56,7 +56,7 @@ export default function ContactMap() {
               </div>
 
               {/* Subtle Glow beneath the pin */}
-              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 lg:w-10 h-2 bg-black/20 blur-md rounded-[100%] group-hover:w-10 lg:group-hover:w-12 group-hover:h-3 transition-all duration-300 [@media(min-width:48rem)_and_(max-width:64rem)]:w-9" />
+              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 lg:w-10 h-2 bg-black/20 blur-md rounded-[100%] group-hover:w-10 lg:group-hover:w-12 group-hover:h-3 transition-all duration-300" />
             </div>
           </a>
         </motion.div>
@@ -67,7 +67,7 @@ export default function ContactMap() {
           alt="University of Moratuwa Map"
           fill
           priority
-          className="object-cover scale-[1.02] translate-y-4 sm:translate-y-0 lg:scale-[1.05] transition-opacity duration-700 [@media(min-width:48rem)_and_(max-width:64rem)]:scale-[1.04]"
+          className="object-cover scale-[1.5] translate-y-[10%] lg:translate-y-0 lg:scale-[1.05] transition-opacity duration-700"
           style={{
             filter:
               "grayscale(0.15) sepia(0.15) contrast(1.1) brightness(1.02)",
